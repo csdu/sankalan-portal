@@ -2,12 +2,12 @@ require('./bootstrap');
 
 import Vue from 'vue';
 
-import ExampleComponent from "./components/ExampleComponent.vue";
+import QuizArea from "./components/QuizComponent.vue";
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component("example-component", ExampleComponent);
+Vue.component("quiz-area", QuizArea);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
