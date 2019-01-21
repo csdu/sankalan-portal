@@ -47,7 +47,15 @@ export default {
             return this.dataQuestion.options.length;
         }
     },
+    watch: {
+        value() {
+            this.selectedResponseIndex = this.indexOfResponse(this.value);
+        }
+    },
     methods: {
+        indexOfResponse(value) {
+            return this.dataQuestion.options.findIndex(option => option.value == value);
+        },
         selectNextResponse() {
             this.selectResponse( 
                 (this.selectedResponseIndex + 1) % this.optionsCount
@@ -71,8 +79,6 @@ export default {
         clearResponse() {
             this.selectResponse(-1);
         }
-    },
-    mounted() {
     }
 }
 </script>

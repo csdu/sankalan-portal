@@ -10,5 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'HomeController@home');
+Route::get('/', 'PagesController@index')->name('homepage');
+Auth::routes(['verify' => true]);
+Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
+    Route::get('/', 'HomeController@index')->name('dashboard');
+});

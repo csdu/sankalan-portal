@@ -1,9 +1,9 @@
 <template>
-    <div class="flex h-screen" v-if="isLive" 
+    <div class="flex h-full" v-if="isLive" 
             @keydown.right="nextQuestion"
             @keydown.left="previousQuestion"
             @keydown.enter="submit">
-        <div class="question-area w-3/4 h-screen border-r px-4 py-8 overflow-auto">
+        <div class="question-area w-3/4 h-full border-r px-4 overflow-auto">
             <h1 class="my-8 text-center">Event Quiz Title</h1>
             <quiz-question 
             :data-question="currentQuestion" 
@@ -16,7 +16,7 @@
                 <button v-else class="px-4 py-1 font-semibold text-lg text-white bg-green hover:bg-green-dark border border-green-dark rounded" @click="submit()">Submit</button>
             </div>
         </div>
-        <div class="navigation flex flex-col h-screen w-1/4 px-3 py-8 overflow-x-hidden">
+        <div class="navigation flex flex-col h-full w-1/4 px-3 overflow-auto">
             <ul class="questions-nav list-reset flex flex-wrap -m-1">
                 <li v-for="questionNumber in questions.length" 
                 :key="questionNumber" 
@@ -157,9 +157,8 @@ import QuizQuestion from './QuizQuestion.vue';
             }
         },
         created() {
-            this.responses = new Array(this.questions.length).fill(null);
+            this.responses = new Array(this.dataQuestions.length).fill(null);
             this.questions = this.dataQuestions.map(question => {
-                question.options = _.shuffle(question.options);
                 question.visited = false;
                 return question;
             })
