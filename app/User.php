@@ -15,9 +15,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -27,4 +25,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected static function boot() {
+        parent::boot();
+
+        static::created(function($user){
+            $user->update(['uid' => env("ID_PREFIX", "SNKLN-") . str_pad("$user->id", 3, "0", STR_PAD_LEFT)]);
+        });
+    }
 }

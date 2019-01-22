@@ -42,7 +42,7 @@
                     @else
                         <li class="group relative inline-block">
                             <a id="navbarDropdown" class="h-full px-2 py-1 uppercase tracking-wide text-xs font-semibold inline-flex items-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
+                                {{ Auth::user()->name }} ({{ Auth::user()->uid }})
                                 <svg viewBox="0 0 15 10" style="height: .5em" class="ml-1 text-white">
                                     <polygon points="0,0 15,0 7.5,10" fill="currentColor"></polygon>
                                 </svg>

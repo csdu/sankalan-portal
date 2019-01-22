@@ -26,6 +26,24 @@
                     @endif
                 </div>
                 <div class="mb-4">
+                    <input type="text" placeholder="College Name" class="w-full p-2 bg-white text-grey-darker border hover:border-blue focus:border-blue{{ $errors->has('college') ? ' border-red' : '' }}" name="college" required>
+
+                    @if ($errors->has('college'))
+                        <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
+                            <strong>{{ $errors->first('college') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="mb-4">
+                    <input type="text" placeholder="Course (Year)" class="w-full p-2 bg-white text-grey-darker border hover:border-blue focus:border-blue{{ $errors->has('course') ? ' border-red' : '' }}" name="course" required>
+
+                    @if ($errors->has('course'))
+                        <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
+                            <strong>{{ $errors->first('course') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="mb-4">
                     <input type="password" placeholder="Password" class="w-full p-2 bg-white text-grey-darker border hover:border-blue focus:border-blue{{ $errors->has('password') ? ' border-red' : '' }}" name="password" required>
 
                     @if ($errors->has('password'))
