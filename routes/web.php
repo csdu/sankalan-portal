@@ -11,7 +11,9 @@
 |
 */
 Route::get('/', 'PagesController@index')->name('homepage');
-Auth::routes(['verify' => true]);
+
+Auth::routes();
+
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
     Route::get('/', 'HomeController@index')->name('dashboard');
 });
