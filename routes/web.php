@@ -16,4 +16,6 @@ Auth::routes();
 
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
     Route::get('/', 'HomeController@index')->name('dashboard');
+    Route::get('/teams', 'TeamController@index')->name('teams');
+    Route::post('/teams', 'TeamController@store')->name('teams.store');
 });

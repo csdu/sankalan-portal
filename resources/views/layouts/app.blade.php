@@ -26,6 +26,9 @@
 
                 <!-- Left Side Of Navbar -->
                 <ul class="list-reset flex items-center mx-auto">
+                    <li>
+                        <a class="h-full px-2 py-1 uppercase tracking-wide text-xs font-semibold inline-flex items-center" href="{{ route('teams') }}">Teams</a>
+                    </li>
 
                 </ul>
 

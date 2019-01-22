@@ -33,4 +33,8 @@ class User extends Authenticatable
             $user->update(['uid' => env("ID_PREFIX", "SNKLN-") . str_pad("$user->id", 3, "0", STR_PAD_LEFT)]);
         });
     }
+
+    public function teams() {
+        return $this->belongsToMany(Team::class);
+    }
 }
