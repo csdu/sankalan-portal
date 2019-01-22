@@ -15,15 +15,13 @@ class EventParticipationController extends Controller
             'team_id' => ['sometimes', 'integer', 'exists:teams,id']
         ]);
         
-        if(!array_key_exists('team_id', $requestData)) {
-            $success = $event->participate();
-        } else {
-            $success = $event->participateAsTeam($requestData['team_id']);
-        }
+        $team_id = $requestData['team_id'] ?? 
+            optional(auth()->user()->individualTeam)->id ?? 
+            auth()->user()->createTeam(auth()->user()->name)->id;
 
-        if($success) {
-            Session::flash('success', 'We have registered you for "'. $event->name .'" event!');
-        }
+        $event->participate($team_id);
+
+        Session::flash('success', 'We have registered you for "'. $event->name .'" event!');
 
         return redirect()->back();
     }

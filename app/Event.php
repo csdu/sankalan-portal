@@ -8,21 +8,11 @@ class Event extends Model
 {
     public function teams()
     {
-        return $this->morphedByMany(Team::class, 'participant');
+        return $this->belongsToMany(Team::class, 'participants');
     }
 
-    public function users()
-    {
-        return $this->morphedByMany(User::class, 'participant');
-    }
-
-    public function participateAsTeam($team_id)
+    public function participate($team_id)
     {
         return $this->teams()->attach($team_id);
-    }
-
-    public function participate()
-    {
-        return $this->users()->attach(auth()->id());
     }
 }

@@ -16,8 +16,8 @@ class CreateParticipantsTable extends Migration
         Schema::create('participants', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('event_id')->index();
-            $table->unsignedInteger('participant_id')->index();
-            $table->string('participant_type')->index();
+            $table->unsignedInteger('team_id')->index();
+            $table->unique(['event_id', 'team_id']);
             $table->timestamps();
         });
     }

@@ -20,14 +20,10 @@ class TeamController extends Controller
     {
         $data = request()->validate([
             'name' => ['required', 'string', 'min:3', 'max:190'],
-            'members' => ['required', 'array', 'min:1', 'max:2'],
-            'members.*' => ['required', 'integer', 'exists:users,id'],
+            'member_id' => ['sometimes', 'integer', 'exists:users,id'],
         ]);
 
-        array_push($data['members'], Auth::id());
-
-        $team = Team::create(['name' => $data['name']]);
-        $team->members()->sync($data['members']);
+        Auth::user()->createTeam($data['name'], $data['member_id'] ?? null);
 
         return redirect()->back();
     }

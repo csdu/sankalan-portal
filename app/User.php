@@ -37,4 +37,23 @@ class User extends Authenticatable
     public function teams() {
         return $this->belongsToMany(Team::class);
     }
+
+    public function individualTeam() {
+        return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function createTeam($name, $member_id = null) {
+        $team = Team::create(compact('name'));
+        
+        if($member_id) {
+            $team->members()->attach([$this->id, $member_id]);
+            return $team;
+        } 
+        
+        $team->members()->attach($this->id);
+        $this->individualTeam()->associate($team);
+        $this->save();
+
+        return $team;
+    }
 }
