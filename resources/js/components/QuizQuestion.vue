@@ -8,15 +8,15 @@
         <p v-html="dataQuestion.question"></p>
         <div class="flex">
             <ul class="options-list list-reset mt-4 flex-1">
-                <li v-for="option in dataQuestion.options" :key="option.value" class="mb-3">
+                <li v-for="(option, optionIndex) in dataQuestion.options" :key="option.value" class="mb-3">
                     <label :for="`option-${option.value}`"
                         class="flex items-center bg-grey-light border p-2 rounded cursor-pointer hover:bg-grey"
-                        :class="{'text-white bg-green border-green-dark hover:bg-green-dark': isSelected(option.value)}">
+                        :class="{'text-white bg-green border-green-dark hover:bg-green-dark': isSelected(optionIndex)}">
                         <input :id="`option-${option.value}`" 
                         type="radio" 
                         class="hidden"
                         :name="`question-${index + 1}`" 
-                        @change="selectResponse(index)"
+                        @input="selectResponse(optionIndex)"
                         :value="option.value">
                         <span class="ml-1" v-text="option.text"></span>
                     </label>
@@ -69,12 +69,13 @@ export default {
             );
         },
         selectResponse(index) {
+            console.log(index);
             this.selectedResponseIndex = index;
             const response = index == -1 ? null : this.dataQuestion.options[this.selectedResponseIndex].value;
             this.$emit('input',  response);
         },
-        isSelected(value) {
-            return this.value == value;
+        isSelected(index) {
+            return this.selectedResponseIndex == index;
         },
         clearResponse() {
             this.selectResponse(-1);
