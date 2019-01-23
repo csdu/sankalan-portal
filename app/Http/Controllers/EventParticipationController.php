@@ -24,9 +24,11 @@ class EventParticipationController extends Controller
             $team = $user->individualTeam ?? $user->createTeam($user->name);
         }
         
-        $team->participate($event);
-
-        flash("We have registered your team '{$team->uid}' for '{$event->name}' event!")->success();
+        if($team->participate($event)) {
+            flash("We have registered your team '{$team->uid}' for '{$event->title}' event!")->success();
+        } else {
+            flash('We do not allow same person to participate in same event twice, not even as a different team')->error();
+        }
 
         return redirect()->back();
     }

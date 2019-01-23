@@ -10,4 +10,14 @@ class Event extends Model
     {
         return $this->belongsToMany(Team::class, 'participants');
     }
+
+    public function allParticipantMembers()
+    {
+        return $this->teams()->with('members')->get()->flatMap->members;
+    }
+
+    public function isAnyParticipating($members)
+    {
+        return !!$this->allParticipantMembers()->pluck('id')->intersect($members->pluck('id'))->count();
+    }
 }

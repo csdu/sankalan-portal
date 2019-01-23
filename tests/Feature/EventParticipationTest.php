@@ -126,4 +126,28 @@ class EventParticipationTest extends TestCase
         $this->assertCount(1, $team->events()->get());
         $this->assertEquals($event->id, $team->events()->first()->id);
     }
+
+    /** @test */
+    public function a_team_cannot_participate_in_a_event_if_any_of_its_member_is_already_participating()
+    {
+        $users = factory(User::class, 3)->create();
+        $team1 = $users[0]->createTeam("EK or EK GYARAH", $users[1]);
+        $team2 = $users[0]->createTeam("DO DUNI CHAR", $users[2]);
+        $event = factory(Event::class)->create();
+
+        $team1->participate($event);
+
+        $this->withoutExceptionHandling()->be($users[0]);
+
+        $this->assertCount(0, $team2->events()->get());
+
+        $this->post(route('events.participate', $event), [
+            'team_id' => $team2->id
+        ])->assertSessionHas('flash_notification');
+
+        $this->assertEquals('danger', \Session::get('flash_notification')->first()->level);
+        $this->assertCount(0, $team2->events()->get());
+    }
+
+    
 }
