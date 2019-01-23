@@ -5,23 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Event;
 use Session;
+use Auth;
 use App\Team;
 
 class EventParticipationController extends Controller
 {
     public function store(Event $event)
     {
-        $requestData = request()->validate([
-            'team_id' => ['sometimes', 'integer', 'exists:teams,id']
+        request()->validate([
+            'team_id' => ['nullable', 'integer', 'exists:teams,id']
         ]);
+
+        $user = Auth::user();
+
+        if($teamId = request('team_id')) {
+            $team = Team::find($teamId);
+        } else {
+            $team = $user->individualTeam ?? $user->createTeam($user->name);
+        }
         
-        $team_id = $requestData['team_id'] ?? 
-            optional(auth()->user()->individualTeam)->id ?? 
-            auth()->user()->createTeam(auth()->user()->name)->id;
+        $team->participate($event);
 
-        $event->participate($team_id);
-
-        flash('We have registered your team for "'. $event->name .'" event!')->success();
+        flash("We have registered your team '{$team->uid}' for '{$event->name}' event!")->success();
 
         return redirect()->back();
     }

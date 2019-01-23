@@ -10,9 +10,4 @@ class Event extends Model
     {
         return $this->belongsToMany(Team::class, 'participants');
     }
-
-    public function participate($team_id)
-    {
-        return $this->teams()->attach($team_id);
-    }
 }

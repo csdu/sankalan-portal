@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Event;
 
 class Team extends Model
 {
@@ -20,5 +21,15 @@ class Team extends Model
     public function members() 
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'participants');
+    }
+
+    public function participate($event) {
+        $this->events()->attach($event->id);
+        return $this;
     }
 }
