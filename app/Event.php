@@ -13,11 +13,16 @@ class Event extends Model
 
     public function allParticipantMembers()
     {
-        return $this->teams()->with('members')->get()->flatMap->members;
+        return $this->teams->load('members')->flatMap->members;
     }
 
     public function isAnyParticipating($members)
     {
         return !!$this->allParticipantMembers()->pluck('id')->intersect($members->pluck('id'))->count();
+    }
+
+    public function isParticipating($user)
+    {
+        return $this->allParticipantMembers()->pluck('id')->contains($user->id);
     }
 }
