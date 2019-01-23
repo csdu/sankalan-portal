@@ -32,12 +32,14 @@
     <h2 class="mb-6">Your Teams</h2>
     @forelse($teams as $team)
     <div class="card mb-4">
-        <h3 class="mb-4 capitalize">{{ $team->name }}</h3>
+        <h3 class="mb-4 capitalize">{{ $team->name }}
+        <small class="text-sm text-grey-darker ml-2">({{ $team->uid }})</small>
+        </h3>
         <ul>
             @foreach($team->members as $member)
                 <li class="{{ $member->id == Auth::id() ? 'text-grey-dark font-semibold' : '' }}">
                     {{ $member->id == Auth::id() ? 'You' : $member->name }}  
-                    <span class="ml-2 font-normal">({{ $member->uid }})</span>
+                    <span class="text-sm ml-2 font-normal">({{ $member->uid }})</span>
                 </li>
             @endforeach
         </ul>

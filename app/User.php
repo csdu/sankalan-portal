@@ -30,7 +30,7 @@ class User extends Authenticatable
         parent::boot();
 
         static::created(function($user){
-            $user->update(['uid' => env("ID_PREFIX", "SNKLN-") . str_pad("$user->id", 3, "0", STR_PAD_LEFT)]);
+            $user->update(['uid' => env("ID_PREFIX", "SNKLN") . "-U" . str_pad("$user->id", 3, "0", STR_PAD_LEFT)]);
         });
     }
 

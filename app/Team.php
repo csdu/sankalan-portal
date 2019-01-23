@@ -13,7 +13,7 @@ class Team extends Model
         parent::boot();
 
         static::created(function ($team) {
-            $team->update(['uid' => env("ID_PREFIX", "SNKLN-") . str_pad("$team->id", 3, "0", STR_PAD_LEFT)]);
+            $team->update(['uid' => env("ID_PREFIX", "SNKLN") ."-T". str_pad("$team->id", 3, "0", STR_PAD_LEFT)]);
         });
     }
 
