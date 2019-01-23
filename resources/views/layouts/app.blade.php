@@ -71,6 +71,7 @@
         <main class="py-4 flex-1">
             @yield('content')
         </main>
+        @include('flash::message')
     </div>
     <script src="{{ mix('js/app.js') }}" defer></script>
 </body>

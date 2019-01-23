@@ -21,7 +21,7 @@ class EventParticipationController extends Controller
 
         $event->participate($team_id);
 
-        Session::flash('success', 'We have registered you for "'. $event->name .'" event!');
+        flash('We have registered your team for "'. $event->name .'" event!')->success();
 
         return redirect()->back();
     }

@@ -27,6 +27,9 @@ class TeamController extends Controller
 
         if($this->canCreateTeam($user)) {
             $team = $user->createTeam($data['name'], $data['member_id'] ?? null);
+            flash('Your team was created! TeamId: '. $team->uid )->success();
+        } else {
+            flash('You already have this Team!')->warning();
         }
         
         return redirect()->back();
