@@ -42,11 +42,11 @@ class User extends Authenticatable
         return $this->belongsTo(Team::class, 'team_id');
     }
 
-    public function createTeam($name, $member_id = null) {
+    public function createTeam($name, $member = null) {
         $team = $this->teams()->create(compact('name'));
         
-        if($member_id) {
-            $team->members()->attach($member_id);
+        if($member) {
+            $team->members()->attach($member);
             return $team;
         } 
         

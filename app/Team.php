@@ -29,7 +29,7 @@ class Team extends Model
     }
 
     public function participate($event) {
-        $this->events()->attach($event->id);
+        $this->events()->syncWithoutDetaching($event->id);
         return $this;
     }
 }

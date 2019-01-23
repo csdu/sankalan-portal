@@ -12,9 +12,8 @@ use App\User;
 class EventParticipationTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * @test
-     */
+
+    /** @test */
     public function user_can_participate_in_any_event_as_a_single_member_team_when_he_has_no_team()
     {
         $event = factory(Event::class)->create();
@@ -38,9 +37,8 @@ class EventParticipationTest extends TestCase
             $this->assertEquals($participatingTeams->first()->id, $team->id);
         });
     }
-    /**
-     * @test
-     */
+
+    /** @test */
     public function user_can_participate_in_any_event_as_a_single_member_team_when_he_has_a_single_member_team()
     {
         $event = factory(Event::class)->create();
@@ -63,11 +61,7 @@ class EventParticipationTest extends TestCase
         });
     }
 
-    /**
-     * @test
-     *
-     * @return void
-     */
+    /** @test */
     public function user_can_participate_in_any_event_as_a_team_when_he_specifies_team_explicitly()
     {
         $event = factory(Event::class)->create();
@@ -91,5 +85,45 @@ class EventParticipationTest extends TestCase
             $this->assertCount(1, $participatingTeams);
             $this->assertEquals($participatingTeams->first()->id, $team->id);
         });
+    }
+
+    /** @test */
+    public function a_team_can_participate_in_multiple_different_events()
+    {
+        $users = factory(User::class, 2)->create();
+        $team = $users[0]->createTeam("EK or EK GYARAH", $users[1]);
+        $events = factory(Event::class, 2)->create();
+        $team->participate($events[0]);
+
+        $this->be($users[0]);
+
+        $this->assertCount(1, $team->events()->get());
+        
+        $this->post(route('events.participate', $events[1]), [
+            'team_id' => $team->id
+        ]);
+
+        $this->assertCount(2, $team->events()->get());
+        $this->assertArraySubset($events->pluck('id'), $team->events()->get()->pluck('id'));
+    }
+
+    /** @test */
+    public function a_team_cannot_participate_in_same_event_again()
+    {
+        $users = factory(User::class, 2)->create();
+        $team = $users[0]->createTeam("EK or EK GYARAH", $users[1]);
+        $event = factory(Event::class)->create();
+        $team->participate($event);
+
+        $this->withoutExceptionHandling()->be($users[0]);
+
+        $this->assertCount(1, $team->events()->get());
+
+        $this->post(route('events.participate', $event), [
+            'team_id' => $team->id
+        ]);
+
+        $this->assertCount(1, $team->events()->get());
+        $this->assertEquals($event->id, $team->events()->first()->id);
     }
 }
