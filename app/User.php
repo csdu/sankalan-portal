@@ -43,14 +43,13 @@ class User extends Authenticatable
     }
 
     public function createTeam($name, $member_id = null) {
-        $team = Team::create(compact('name'));
+        $team = $this->teams()->create(compact('name'));
         
         if($member_id) {
-            $team->members()->attach([$this->id, $member_id]);
+            $team->members()->attach($member_id);
             return $team;
         } 
         
-        $team->members()->attach($this->id);
         $this->individualTeam()->associate($team);
         $this->save();
 
