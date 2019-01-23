@@ -20,11 +20,28 @@ class TeamController extends Controller
     {
         $data = request()->validate([
             'name' => ['required', 'string', 'min:3', 'max:190'],
-            'member_id' => ['sometimes', 'integer', 'exists:users,id'],
+            'member_id' => ['nullable', 'integer', 'exists:users,id'],
         ]);
 
-        Auth::user()->createTeam($data['name'], $data['member_id'] ?? null);
+        $user = Auth::user();
 
+        if($this->canCreateTeam($user)) {
+            $team = $user->createTeam($data['name'], $data['member_id'] ?? null);
+        }
+        
         return redirect()->back();
+
+    }
+
+
+    protected function canCreateTeam($user) {
+        if(!request('member_id')) {
+            return $user->team_id === null;
+        }
+
+        // Does user already have any team containing the same member?
+        return !$user->teams()->whereHas('members', function($query) {
+            return $query->where('team_user.user_id', request('member_id'));
+        })->exists();
     }
 }

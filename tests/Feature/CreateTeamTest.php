@@ -65,7 +65,93 @@ class CreateTeamTest extends TestCase
             $this->assertEquals($name, $team->name);
         });
         $this->assertNull($user->individualTeam);
+    }
 
+    /**
+     * @test
+     */
+    public function user_can_not_create_team_with_more_than_two_members()
+    {
+        $this->withExceptionHandling();
+        $this->be($user = factory(User::class)->create());
+        $otherUser = factory(User::class)->create();
+        $anotherUser = factory(User::class)->create();
 
+        $this->assertCount(0, $teams = Team::all());
+
+        $response = $this->post(route('teams.store'), [
+            'name' => 'Team Name',
+            'member_id' => [$anotherUser->id, $otherUser->id]
+        ]);
+
+        $response->assertRedirect()->assertSessionHasErrors('member_id');
+
+        // No Team is Created!
+        $this->assertCount(0, $teams = Team::all());
+        $this->assertNull($user->individualTeam);
+    }
+
+    /**
+     * @test
+     */
+    public function user_can_create_single_member_team_with_empty_member_id()
+    {
+        $this->withExceptionHandling();
+        $this->be($user = factory(User::class)->create());
+        $otherUser = factory(User::class)->create();
+        $anotherUser = factory(User::class)->create();
+
+        $this->assertCount(0, $teams = Team::all());
+
+        $response = $this->post(route('teams.store'), [
+            'name' => 'Team Name',
+            'member_id' => '',
+        ]);
+
+        // Individual Team is Created!
+        $this->assertCount(1, $teams = Team::all());
+        $this->assertInstanceOf(Team::class ,$user->individualTeam);
+    }
+
+    /**
+     * @test
+     */
+    public function user_cannot_create_single_member_team_if_already_exists()
+    {
+        $user = factory(User::class)->create();
+        $otherUser = factory(User::class)->create();
+        $team = $user->createTeam('My Team');
+        $groupTeam = $user->createTeam('Group Team', $otherUser->id);
+
+        $this->withoutExceptionHandling()
+            ->be($user);
+
+        // assert User has individual Team Before
+        $this->assertCount(2, $user->teams()->get());
+        $this->assertInstanceOf(Team::class, $user->individualTeam);
+
+        // try creating another individual team
+        $response = $this->post(route('teams.store'), [
+            'name' => 'Team Name',
+            'member_id' => '',
+        ]);
+        
+        $response->assertRedirect();
+
+        // Another Individual Team is not Created!
+        $this->assertCount(2, $user->teams()->get());
+        $this->assertInstanceOf(Team::class, $user->fresh()->individualTeam);
+        $this->assertEquals($team->id, $user->fresh()->individualTeam->id);
+
+        // try creating another team with same member
+        $response = $this->post(route('teams.store'), [
+            'name' => 'Team Name',
+            'member_id' => $otherUser->id,
+        ]);
+
+        $response->assertRedirect();
+
+        // Another Team is not Created!
+        $this->assertCount(2, $user->teams()->get());
     }
 }

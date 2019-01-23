@@ -15,8 +15,9 @@
                 <input type="text" name="name" multiple class="block w-full px-2 py-1 bg-white text-black border" placeholder="Team Name">
             </div>
             <div class="mb-4">
-                <label for="users" class="block mb-2">Select Members: </label>
-                <select id="users" type="text" name="members[]" multiple class="block w-full px-2 py-1 bg-white text-black border	">
+                <label for="users" class="block mb-2">Select a Member: </label>
+                <select id="users" type="text" name="member_id" class="block w-full px-2 py-1 bg-white text-black border">
+                    <option value="">Individual</option>
                     @foreach ($users as $user)
                     <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->uid }})</option>
                     @endforeach
@@ -31,7 +32,7 @@
     <h2 class="mb-6">Your Teams</h2>
     @forelse($teams as $team)
     <div class="card mb-4">
-        <h1 class="mb-4 capitalize">{{ $team->name }}</h1>
+        <h3 class="mb-4 capitalize">{{ $team->name }}</h3>
         <ul>
             @foreach($team->members as $member)
                 <li class="{{ $member->id == Auth::id() ? 'text-grey-dark font-semibold' : '' }}">
