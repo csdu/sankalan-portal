@@ -54,7 +54,13 @@
                             @endif
                         </form>
                     @else 
-                    <p>You are participating in this event as <strong class="text-xs">{{ $participatingTeam->name }} - {{ $participatingTeam->uid }}</strong>!</p>
+                    <div class="flex-1 flex items-center">
+                        <p class="flex-1">Participating as <strong class="text-xs">{{ $participatingTeam->name }} - {{ $participatingTeam->uid }}</strong>!</p>
+                        <form action="{{ route('events.withdraw-part', $event) }}" method="POST">
+                            @csrf @method('delete')
+                            <button class="btn is-red is-sm">Withdraw</button>
+                        </form>
+                    </div>
                     @endif
                 </div>
             </div>
