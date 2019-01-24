@@ -32,4 +32,20 @@ class EventParticipationController extends Controller
 
         return redirect()->back();
     }
+
+    public function destroy(Event $event)
+    {
+        $team = $event->participatingTeamByUser(Auth::user());
+
+        if(!$team) {
+            flash('You are not participating in this event!')->error();
+            return redirect()->back();
+        }
+
+        $team->withdrawParticipation($event);
+
+        flash('We have withdrawn your Participation')->success();
+
+        return redirect()->back();
+    }
 }

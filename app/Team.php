@@ -35,4 +35,10 @@ class Team extends Model
         $this->events()->syncWithoutDetaching($event->id);
         return true;
     }
+
+    public function withdrawParticipation($event)
+    {
+        $this->events()->detach($event->id);
+        return true;
+    }
 }
