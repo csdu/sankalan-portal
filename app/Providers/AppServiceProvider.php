@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         View::composer('dashboard', function($view) {
-            return $view->with(['signedInUser' => auth()->user()->load(['teams'])]);
+            return $view->with(['signedInUser' => auth()->user()->load('teams')]);
         });
     }
 

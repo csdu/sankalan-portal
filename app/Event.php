@@ -21,8 +21,10 @@ class Event extends Model
         return !!$this->allParticipantMembers()->pluck('id')->intersect($members->pluck('id'))->count();
     }
 
-    public function isParticipating($user)
+    public function participatingTeamByUser($user)
     {
-        return $this->allParticipantMembers()->pluck('id')->contains($user->id);
+        return $this->loadMissing('teams.members')->teams->first(function($team) use ($user){
+            return $team->members->pluck('id')->contains($user->id);
+        });
     }
 }

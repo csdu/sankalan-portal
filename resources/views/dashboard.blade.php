@@ -33,7 +33,7 @@
                 </div>
         
                 <div class="card-footer flex">
-                    @if(!$event->isParticipating($signedInUser))
+                    @if(!$participatingTeam = $event->participatingTeamByUser($signedInUser))
                         <form action="{{ route('events.participate', $event) }}" method="POST" class="flex items-center">
                             @csrf
                             <button type="submit" class="btn is-blue is-sm">
@@ -41,7 +41,7 @@
                             </button>
                             @if(count($signedInUser->teams))
                                 <span class="ml-3">as:</span> 
-                                <select name="member_id" class="ml-1 control is-sm">
+                                <select name="team_id" class="ml-1 control is-sm">
                                     @if(!$signedInUser->team_id)
                                         <option value="">Individual</option>
                                     @endif
@@ -54,7 +54,7 @@
                             @endif
                         </form>
                     @else 
-                        <p>You are participating in this event!</p>
+                    <p>You are participating in this event as <strong class="text-xs">{{ $participatingTeam->name }} - {{ $participatingTeam->uid }}</strong>!</p>
                     @endif
                 </div>
             </div>

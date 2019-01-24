@@ -42,6 +42,11 @@ class User extends Authenticatable
         return $this->belongsTo(Team::class, 'team_id');
     }
 
+    public function getEmailHashAttribute()
+    {
+        return md5(strtolower(trim($this->email)));
+    }
+
     public function createTeam($name, $member = null) {
         $team = $this->teams()->create(compact('name'));
         

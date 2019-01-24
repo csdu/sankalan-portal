@@ -37,14 +37,34 @@
             <small class="text-sm text-grey-darker ml-2">({{ $team->uid }})</small>
         </h4>
         <div class="card-content">
-            <ul class="list-reset">
-                @foreach($team->members as $member)
-                    <li class="{{ $member->id == Auth::id() ? 'text-grey-dark font-semibold' : '' }}">
-                        {{ $member->id == Auth::id() ? 'You' : $member->name }}  
-                        <span class="text-sm ml-2 font-normal">({{ $member->uid }})</span>
-                    </li>
-                @endforeach
-            </ul>
+            <div class="flex">
+                <div class="flex-1">
+                    <h4 class="mb-2">Participations</h4>
+                    <ul class="list-reset">
+                        @forelse($team->events as $event)
+                        <li class="py-1 capitalize">{{ $event->title }}</li>
+                        @empty
+                        <li>You have not participated in any event.</li>
+                        @endforelse
+                    </ul>
+                </div>
+                <div class="flex-1">
+                    <h4 class="mb-2">Members</h4>
+                    <ul class="list-reset">
+                        @foreach($team->members as $member)
+                            <li class="py-1{{ $member->id == Auth::id() ? 'text-grey-dark font-semibold' : '' }}">
+                                <div class="flex items-center">
+                                <img class="w-6 h-6 rounded mr-2" src="https://www.gravatar.com/avatar/{{ $member->emailHash }}?s=50&d=retro" alt="">
+                                    <p>
+                                        {{ $member->id == Auth::id() ? 'You' : $member->name }}  
+                                        <span class="text-sm ml-2 font-normal">({{ $member->uid }})</span>
+                                    </p>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
     @empty
