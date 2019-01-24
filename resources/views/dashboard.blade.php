@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mx-auto">
-    <div class="card mb-16">
+    <div class="card my-8">
         <h1 class="card-header">Dashboard</h1>
 
         <div class="card-content">
@@ -19,10 +19,10 @@
     <h2 class="mb-6">Events</h2>
     @foreach($events as $event)
     <div class="card seperated mb-4">
-        <h4 class="card-header capitalize">
+        <h4 class="card-header capitalize flex items-center">
             {{ $event->title }} 
             @if($event->hasQuiz)
-                <span class="ml-2 p-1 text-xs uppercase bg-blue text-white">Online Quiz</span> 
+                <span class="ml-2 p-1 text-xs uppercase bg-blue text-white rounded">Online</span> 
             @endif
         </h4>
 

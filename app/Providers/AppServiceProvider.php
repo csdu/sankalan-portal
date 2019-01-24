@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        View::composer('home', function($view) {
+        View::composer('dashboard', function($view) {
             return $view->with(['signedInUser' => auth()->user()->load(['teams'])]);
         });
     }

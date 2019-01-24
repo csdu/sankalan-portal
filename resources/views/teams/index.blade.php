@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mx-auto">
-    <div class="mb-16">
+    <div class="my-8">
         <h1 class="text-center">Manage Teams</h1>
     </div>
 

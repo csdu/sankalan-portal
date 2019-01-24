@@ -68,7 +68,7 @@
             </div>
         </nav>
 
-        <main class="py-4 flex-1">
+        <main class="flex-1">
             @yield('content')
         </main>
         @include('flash::message')

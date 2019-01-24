@@ -10,12 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'PagesController@index')->name('homepage');
+Route::get('/', 'PagesController@index')->name('homepage')->middleware('guest');
 
 Auth::routes();
 
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
-    Route::get('/', 'HomeController@index')->name('dashboard');
+    Route::get('/', 'DashboardController@index')->name('dashboard');
     Route::get('/teams', 'TeamController@index')->name('teams');
     Route::post('/teams', 'TeamController@store')->name('teams.store');
     Route::post('/events/{event}/participate', 'EventParticipationController@store')->name('events.participate');
