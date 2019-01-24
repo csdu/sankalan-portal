@@ -13,7 +13,7 @@ class Event extends Model
 
     public function allParticipantMembers()
     {
-        return $this->teams->load('members')->flatMap->members;
+        return $this->loadMissing('teams.members')->teams->flatMap->members;
     }
 
     public function isAnyParticipating($members)

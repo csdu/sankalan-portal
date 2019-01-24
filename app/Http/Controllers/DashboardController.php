@@ -14,7 +14,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $events = Event::all();
+        $events = Event::with('teams.members')->get();
         return view('dashboard', compact('events'));
     }
 }
