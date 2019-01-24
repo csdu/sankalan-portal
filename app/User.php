@@ -26,12 +26,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected static function boot() {
-        parent::boot();
-
-        static::created(function($user){
-            $user->update(['uid' => env("ID_PREFIX", "SNKLN") . "-U" . str_pad("$user->id", 3, "0", STR_PAD_LEFT)]);
-        });
+    public function getUidAttribute()
+    {
+        return env("ID_PREFIX", "SNKLN") . "-U" . str_pad("$this->id", 3, "0", STR_PAD_LEFT);
     }
 
     public function teams() {

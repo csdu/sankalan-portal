@@ -9,13 +9,8 @@ class Team extends Model
 {
     protected $guarded = [];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($team) {
-            $team->update(['uid' => env("ID_PREFIX", "SNKLN") ."-T". str_pad("$team->id", 3, "0", STR_PAD_LEFT)]);
-        });
+    public function getUidAttribute() {
+        return env("ID_PREFIX", "SNKLN") . "-T" . str_pad("$this->id", 3, "0", STR_PAD_LEFT);
     }
 
     public function members() 
