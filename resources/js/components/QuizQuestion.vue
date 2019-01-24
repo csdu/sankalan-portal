@@ -10,8 +10,8 @@
             <ul class="options-list list-reset mt-4 flex-1">
                 <li v-for="(option, optionIndex) in dataQuestion.options" :key="option.value" class="mb-3">
                     <label :for="`option-${option.value}`"
-                        class="flex items-center bg-grey-light border p-2 rounded cursor-pointer hover:bg-grey"
-                        :class="{'text-white bg-green border-green-dark hover:bg-green-dark': isSelected(optionIndex)}">
+                        class="flex items-center btn"
+                        :class="{'is-green': isSelected(optionIndex)}">
                         <input :id="`option-${option.value}`" 
                         type="radio" 
                         class="hidden"
@@ -23,7 +23,7 @@
                 </li>
             </ul>
             <div class="w-64 flex justify-center items-center">
-                <button class="px-4 py-1 rounded bg-grey-light text-black" @click="clearResponse"> 
+                <button class="btn" @click="clearResponse"> 
                     <span class="font-bold text-red text-lg">&times;</span> Clear
                 </button>
             </div>

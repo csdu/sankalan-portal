@@ -1,18 +1,18 @@
-
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito')
 
 // Tailwind Normalize
 @tailwind preflight
-a 
-    color: inherit
-    @apply no-underline
+
+@import 'defaults'
 
 // Tailwind components
 @tailwind components
 
-.card
-    @apply bg-white p-6 border rounded shadow text-black
+@import 'components/card'
+@import 'components/buttons'
+@import 'components/form'
+
 
 // Tailwind Utilities
 @tailwind utilities

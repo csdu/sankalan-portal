@@ -16,7 +16,7 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="font-sans text-black">
+<body class="font-sans bg-grey-lighter text-black">
     <div id="app" class="min-h-screen flex flex-col">
         <nav class="bg-blue text-white">
             <div class="container mx-auto flex flex-col md:flex-row">

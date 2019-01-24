@@ -11,9 +11,9 @@
             v-model="responses[currentQuestionIndex]">
             </quiz-question>
             <div class="navigate flex">
-                <button v-if="!isFirstQuestion" class="mr-2 px-4 py-1 font-semibold text-lg text-black bg-grey-light hover:bg-grey border rounded" @click="previousQuestion()">Previous</button>
-                <button v-if="!isLastQuestion" class="px-4 py-1 font-semibold text-lg text-white bg-green hover:bg-green-dark border border-green-dark rounded" @click="nextQuestion()">Next</button>
-                <button v-else class="px-4 py-1 font-semibold text-lg text-white bg-green hover:bg-green-dark border border-green-dark rounded" @click="submit()">Submit</button>
+                <button v-if="!isFirstQuestion" class="mr-2 btn" @click="previousQuestion()">Previous</button>
+                <button v-if="!isLastQuestion" class="btn is-green" @click="nextQuestion()">Next</button>
+                <button v-else class="btn is-green" @click="submit()">Submit</button>
             </div>
         </div>
         <div class="navigation flex flex-col h-full w-1/4 px-3 overflow-auto">
@@ -22,7 +22,7 @@
                 :key="questionNumber" 
                 >
                 <button 
-                class="mx-1 my-1 w-6 h-6 flex justify-center items-center text-xs border border-black text-black rounded" v-text="questionNumber" 
+                class="mx-1 my-1 w-6 h-6 p-0 flex justify-center items-center text-xs border border-black text-black rounded" v-text="questionNumber" 
                 @click.prevent="setCurrentQuestion(questionNumber-1)" 
                 :class="{
                     'border-black bg-black text-white': isCurrentQuestion(questionNumber-1),
@@ -32,16 +32,16 @@
                 </li>
             </ul>
             <div class="navigate flex justify-end my-8">
-                <button v-if="!isFirstQuestion" class="px-4 py-1 font-semibold text-black bg-grey-light hover:bg-grey border rounded" @click="previousQuestion()">Previous</button>
-                <button v-if="!isLastQuestion" class="ml-4 px-4 py-1 font-semibold text-white bg-green hover:bg-green-dark border border-green-dark rounded" @click="nextQuestion()">Next</button>
-                <button v-else class="ml-4 px-4 py-1 font-semibold text-white bg-green hover:bg-green-dark border border-green-dark rounded" @click="submit()">Submit</button>
+                <button v-if="!isFirstQuestion" class="btn" @click="previousQuestion()">Previous</button>
+                <button v-if="!isLastQuestion" class="ml-4 btn is-green" @click="nextQuestion()">Next</button>
+                <button v-else class="ml-4 btn is-green" @click="submit()">Submit</button>
             </div>
             <countdown-timer :duration="timeLimit" :hurry="300"
             class="inline-flex justify-center my-8 text-lg font-bold font-mono" 
             :class="{'animation-vibrate text-red': hurry}"
             @timeup="endQuiz" @hurryup="hurry=true"></countdown-timer>
             <div class="mt-auto mb-8 text-center">
-                <button class="px-4 py-1 border border-green-dark bg-green text-white font-semibold rounded" @click.prevent="submit">Submit</button>
+                <button class="btn is-green" @click.prevent="submit">Submit</button>
             </div>
         </div>
     </div>

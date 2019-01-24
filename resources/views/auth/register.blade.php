@@ -3,13 +3,12 @@
 @section('content')
 <div class="container mx-auto flex justify-center h-full items-center px-4">
     <div class="w-full sm:w-3/4 lg:w-1/3">
-        <div class="p-6 bg-white shadow rounded-lg border">
-            <h1 class="mb-6">{{ __('Register') }}</h1>
-
-            <form method="POST" action="{{ route('register') }}">
+        <div class="card">
+            <h2 class="card-header">{{ __('Register') }}</h2>
+            <form method="POST" action="{{ route('register') }}" class="card-content">
                 @csrf
                 <div class="mb-3">
-                    <input type="name" placeholder="Full Name" class="w-full p-2 bg-white text-grey-darker border hover:border-blue focus:border-blue{{ $errors->has('name') ? ' border-red' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                    <input type="name" placeholder="Full Name" class="control{{ $errors->has('name') ? ' border-red' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
                     @if ($errors->has('name'))
                         <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
                             <strong>{{ $errors->first('name') }}</strong>
@@ -18,7 +17,7 @@
                 </div>
                 
                 <div class="mb-3">
-                    <input type="email" placeholder="Email" class="w-full p-2 bg-white text-grey-darker border hover:border-blue focus:border-blue{{ $errors->has('email') ? ' border-red' : '' }}" name="email" value="{{ old('email') }}" required>
+                    <input type="email" placeholder="Email" class="control{{ $errors->has('email') ? ' border-red' : '' }}" name="email" value="{{ old('email') }}" required>
                     @if ($errors->has('email'))
                         <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
                             <strong>{{ $errors->first('email') }}</strong>
@@ -26,7 +25,7 @@
                     @endif
                 </div>
                 <div class="mb-4">
-                    <input type="text" placeholder="College Name" class="w-full p-2 bg-white text-grey-darker border hover:border-blue focus:border-blue{{ $errors->has('college') ? ' border-red' : '' }}" name="college" required>
+                    <input type="text" placeholder="College Name" class="control{{ $errors->has('college') ? ' border-red' : '' }}" name="college" required>
 
                     @if ($errors->has('college'))
                         <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
@@ -35,7 +34,7 @@
                     @endif
                 </div>
                 <div class="mb-4">
-                    <input type="text" placeholder="Course (Year)" class="w-full p-2 bg-white text-grey-darker border hover:border-blue focus:border-blue{{ $errors->has('course') ? ' border-red' : '' }}" name="course" required>
+                    <input type="text" placeholder="Course (Year)" class="control{{ $errors->has('course') ? ' border-red' : '' }}" name="course" required>
 
                     @if ($errors->has('course'))
                         <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
@@ -44,7 +43,7 @@
                     @endif
                 </div>
                 <div class="mb-4">
-                    <input type="password" placeholder="Password" class="w-full p-2 bg-white text-grey-darker border hover:border-blue focus:border-blue{{ $errors->has('password') ? ' border-red' : '' }}" name="password" required>
+                    <input type="password" placeholder="Password" class="control{{ $errors->has('password') ? ' border-red' : '' }}" name="password" required>
 
                     @if ($errors->has('password'))
                         <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
@@ -53,10 +52,10 @@
                     @endif
                 </div>
                 <div class="mb-4">
-                    <input type="password" placeholder="Confirm Password" class="w-full p-2 bg-white text-grey-darker border hover:border-blue focus:border-blue{{ $errors->has('password') ? ' border-red' : '' }}" name="password_confirmation" required>
+                    <input type="password" placeholder="Confirm Password" class="control{{ $errors->has('password') ? ' border-red' : '' }}" name="password_confirmation" required>
                 </div>
-                <div class="flex justify-between">
-                    <button type="submit" class="px-3 py-2 uppercase text-xs tracking-wide bg-blue text-white hover:bg-blue-dark">
+                <div>
+                    <button type="submit" class="btn is-blue">
                         {{ __('Register') }}
                     </button>
                 </div>

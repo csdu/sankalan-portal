@@ -1,0 +1,12 @@
+label.control
+    @apply block w-full px-2 py-1 font-semibold text-grey-dark uppercase tracking-wide
+
+input, select, textarea
+    &.control
+        @apply block w-full px-3 py-2 border rounded bg-white text-grey-darker
+        &:hover, &:focus
+            @apply border-blue
+        &.is-lg
+            @apply px-4 py-3 text-lg 
+        &.is-sm
+            @apply px-2 py-1 text-sm
