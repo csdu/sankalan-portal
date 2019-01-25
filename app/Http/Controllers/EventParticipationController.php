@@ -7,13 +7,20 @@ use App\Event;
 use Session;
 use Auth;
 use App\Team;
+use Illuminate\Validation\Rule;
 
 class EventParticipationController extends Controller
 {
     public function store(Event $event)
     {
         request()->validate([
-            'team_id' => ['nullable', 'integer', 'exists:teams,id']
+            'team_id' => [
+                'nullable', 
+                'integer', 
+                Rule::exists('team_user', 'team_id')->where(function($query){
+                    $query->where('user_id', auth()->id());
+                }),
+            ]
         ]);
 
         $user = Auth::user();

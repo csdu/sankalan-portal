@@ -149,5 +149,22 @@ class EventParticipationTest extends TestCase
         $this->assertCount(0, $team2->events()->get());
     }
 
-    
+    /** @test */
+    public function user_cannot_participate_as_team_of_which_he_is_not_a_member()
+    {
+        $users = factory(User::class,2)->create();
+
+        $this->be($currentUser = factory(User::class)->create());
+
+        $event = factory(Event::class)->create();
+        $otherTeam = $users[0]->createTeam('2 Person Team', $users[1]->id);
+        $userTeam = $currentUser->createTeam('My Team');
+
+        $this->post(route('events.participate', $event), [
+            'team_id' => $otherTeam->id
+        ])->assertRedirect()
+            ->assertSessionHasErrors('team_id');
+
+        $this->assertCount(0, $otherTeam->events()->get());
+    }
 }
