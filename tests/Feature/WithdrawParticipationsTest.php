@@ -15,8 +15,8 @@ class WithdrawParticipationsTest extends TestCase
     /** @test */
     public function user_can_withdraw_individual_participation_from_an_event()
     {
-        $user = factory(User::class)->create();
-        $events = factory(Event::class, 4)->create();
+        $user = create(User::class);
+        $events = create(Event::class,4);
         $team = $user->createTeam('My Team');
         $team->participate($events[0]);
 
@@ -38,8 +38,8 @@ class WithdrawParticipationsTest extends TestCase
     /** @test */
     public function user_can_withdraw_group_participation_from_an_event()
     {
-        $users = factory(User::class, 2)->create();
-        $events = factory(Event::class, 4)->create();
+        $users = create(User::class,2);
+        $events = create(Event::class,4);
         $team = $users[0]->createTeam('My Team', $users[1]);
         $team->participate($events[0]);
         $team->participate($events[1]);

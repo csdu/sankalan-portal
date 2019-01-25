@@ -43,6 +43,7 @@
         ]
     },
     "autoload-dev": {
+        "files": ["tests/helpers.php"],
         "psr-4": {
             "Tests\\": "tests/"
         }

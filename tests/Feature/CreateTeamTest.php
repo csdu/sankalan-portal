@@ -18,7 +18,7 @@ class CreateTeamTest extends TestCase
     public function user_can_create_individual_team()
     {
         $this->withoutExceptionHandling();
-        $this->be($user = factory(User::class)->create());
+        $this->be($user = create(User::class));
 
         $this->assertCount(0, $teams = Team::all());
 
@@ -43,8 +43,8 @@ class CreateTeamTest extends TestCase
     public function user_can_create_two_members_team()
     {
         $this->withoutExceptionHandling();
-        $this->be($user = factory(User::class)->create());
-        $anotherUser = factory(User::class)->create();
+        $this->be($user = create(User::class));
+        $anotherUser = create(User::class);
 
         $this->assertCount(0, $teams = Team::all());
 
@@ -73,9 +73,9 @@ class CreateTeamTest extends TestCase
     public function user_can_not_create_team_with_more_than_two_members()
     {
         $this->withExceptionHandling();
-        $this->be($user = factory(User::class)->create());
-        $otherUser = factory(User::class)->create();
-        $anotherUser = factory(User::class)->create();
+        $this->be($user = create(User::class));
+        $otherUser = create(User::class);
+        $anotherUser = create(User::class);
 
         $this->assertCount(0, $teams = Team::all());
 
@@ -97,9 +97,9 @@ class CreateTeamTest extends TestCase
     public function user_can_create_single_member_team_with_empty_member_id()
     {
         $this->withExceptionHandling();
-        $this->be($user = factory(User::class)->create());
-        $otherUser = factory(User::class)->create();
-        $anotherUser = factory(User::class)->create();
+        $this->be($user = create(User::class));
+        $otherUser = create(User::class);
+        $anotherUser = create(User::class);
 
         $this->assertCount(0, $teams = Team::all());
 
@@ -118,8 +118,8 @@ class CreateTeamTest extends TestCase
      */
     public function user_cannot_create_single_member_team_if_already_exists()
     {
-        $user = factory(User::class)->create();
-        $otherUser = factory(User::class)->create();
+        $user = create(User::class);
+        $otherUser = create(User::class);
         $team = $user->createTeam('My Team');
         $groupTeam = $user->createTeam('Group Team', $otherUser->id);
 

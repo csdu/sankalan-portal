@@ -16,8 +16,8 @@ class EventParticipationTest extends TestCase
     /** @test */
     public function user_can_participate_in_any_event_as_a_single_member_team_when_he_has_no_team()
     {
-        $event = factory(Event::class)->create();
-        $user = factory(User::class)->create();
+        $event = create(Event::class);
+        $user = create(User::class);
 
         $this->withoutExceptionHandling()->be($user);
         
@@ -41,9 +41,9 @@ class EventParticipationTest extends TestCase
     /** @test */
     public function user_can_participate_in_any_event_as_a_single_member_team_when_he_has_a_single_member_team()
     {
-        $event = factory(Event::class)->create();
-        $user = factory(User::class)->create();
-        $user2 = factory(User::class)->create();
+        $event = create(Event::class);
+        $user = create(User::class);
+        $user2 = create(User::class);
 
         $twoMembersTeam = $user->createTeam('Two Members Rock', $user2->id);
         $team = $user->createTeam($teamName = 'Team Name');
@@ -64,10 +64,10 @@ class EventParticipationTest extends TestCase
     /** @test */
     public function user_can_participate_in_any_event_as_a_team_when_he_specifies_team_explicitly()
     {
-        $event = factory(Event::class)->create();
-        $user = factory(User::class)->create();
-        $user2 = factory(User::class)->create();
-        $user3 = factory(User::class)->create();
+        $event = create(Event::class);
+        $user = create(User::class);
+        $user2 = create(User::class);
+        $user3 = create(User::class);
 
         $otherTeam = $user->createTeam('Team Name', $user3->id);
         $team = $user->createTeam('Two Members Rock', $user2->id);
@@ -90,9 +90,9 @@ class EventParticipationTest extends TestCase
     /** @test */
     public function a_team_can_participate_in_multiple_different_events()
     {
-        $users = factory(User::class, 2)->create();
+        $users = create(User::class,2);
         $team = $users[0]->createTeam("EK or EK GYARAH", $users[1]);
-        $events = factory(Event::class, 2)->create();
+        $events = create(Event::class,2);
         $team->participate($events[0]);
 
         $this->be($users[0]);
@@ -110,9 +110,9 @@ class EventParticipationTest extends TestCase
     /** @test */
     public function a_team_cannot_participate_in_same_event_again()
     {
-        $users = factory(User::class, 2)->create();
+        $users = create(User::class,2);
         $team = $users[0]->createTeam("EK or EK GYARAH", $users[1]);
-        $event = factory(Event::class)->create();
+        $event = create(Event::class);
         $team->participate($event);
 
         $this->withoutExceptionHandling()->be($users[0]);
@@ -130,10 +130,10 @@ class EventParticipationTest extends TestCase
     /** @test */
     public function a_team_cannot_participate_in_a_event_if_any_of_its_member_is_already_participating()
     {
-        $users = factory(User::class, 3)->create();
+        $users = create(User::class,3);
         $team1 = $users[0]->createTeam("EK or EK GYARAH", $users[1]);
         $team2 = $users[0]->createTeam("DO DUNI CHAR", $users[2]);
-        $event = factory(Event::class)->create();
+        $event = create(Event::class);
 
         $team1->participate($event);
 
@@ -152,11 +152,11 @@ class EventParticipationTest extends TestCase
     /** @test */
     public function user_cannot_participate_as_team_of_which_he_is_not_a_member()
     {
-        $users = factory(User::class,2)->create();
+        $users = create(User::class,2);
 
-        $this->be($currentUser = factory(User::class)->create());
+        $this->be($currentUser = create(User::class));
 
-        $event = factory(Event::class)->create();
+        $event = create(Event::class);
         $otherTeam = $users[0]->createTeam('2 Person Team', $users[1]->id);
         $userTeam = $currentUser->createTeam('My Team');
 
