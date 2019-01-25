@@ -11,4 +11,4 @@ if (mix.inProduction()) {
   mix.version()
 }
 
-mix.browserSync('ducsportal.test')
+mix.browserSync('sankalan-portal.test')
