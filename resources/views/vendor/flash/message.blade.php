@@ -1,6 +1,8 @@
 @php
     if(count($errors)) {
-        flash('Validation Failed!')->error();
+        foreach($errors->all() as $error) {
+            flash($error)->error();
+        }
     }
 @endphp
 <v-flash :data-messages="{{ 
