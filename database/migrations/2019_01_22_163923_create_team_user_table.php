@@ -18,6 +18,9 @@ class CreateTeamUserTable extends Migration
             $table->unsignedInteger('team_id')->index();
             $table->unsignedInteger('user_id')->index();
             $table->timestamps();
+
+            $table->foreign('team_id')->references('id')->on('teams');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

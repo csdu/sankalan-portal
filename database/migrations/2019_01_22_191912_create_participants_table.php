@@ -19,6 +19,9 @@ class CreateParticipantsTable extends Migration
             $table->unsignedInteger('team_id')->index();
             $table->unique(['event_id', 'team_id']);
             $table->timestamps();
+
+            $table->foreign('event_id')->references('id')->on('events');
+            $table->foreign('team_id')->references('id')->on('teams');
         });
     }
 
