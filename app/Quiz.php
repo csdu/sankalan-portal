@@ -36,6 +36,11 @@ class Quiz extends Model
         return $this->teams->pluck('id')->contains($team->id);
     }
 
+    public function isTimeLimitExceeded($team) {
+        $timeTaken = $this->participationByTeam($team)->started_at->diffInMinutes(now());
+        return $timeTaken > ($this->timeLimit + 2);
+    }
+
     public function allowTeam(Team $team) {
         $this->teams()->attach($team);
     }
