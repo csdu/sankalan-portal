@@ -23,6 +23,7 @@ class QuizController extends Controller
             flash('You are not allowed for this Quiz! Please contact help desk.')->error();
             return redirect()->route('dashboard');
         }
+        $quiz->participationByTeam($team)->update(['started_at' => now()]);
         return view('quiz.index')->withQuiz($quiz->load('questions'));
     }
 }

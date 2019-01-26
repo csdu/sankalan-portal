@@ -17,6 +17,7 @@ class CreateQuizParticipationsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('quiz_id')->index();
             $table->unsignedInteger('team_id')->index();
+            $table->timestamp('started_at')->nullable();
             $table->timestamps();
         });
     }

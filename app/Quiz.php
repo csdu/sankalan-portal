@@ -20,6 +20,10 @@ class Quiz extends Model
         return $this->belongsToMany(Team::class, 'quiz_participations');
     }
 
+    public function participations() {
+        return $this->hasMany(QuizParticipation::class, 'quiz_id');
+    }
+
     public function setActive() {
         $this->event->update(['active_quiz_id' => $this->id]);
     }
@@ -34,5 +38,9 @@ class Quiz extends Model
 
     public function allowTeam(Team $team) {
         $this->teams()->attach($team);
+    }
+
+    public function participationByTeam(Team $team) {
+        return $this->participations()->where('team_id', $team->id)->first();
     }
 }

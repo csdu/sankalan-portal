@@ -10,6 +10,7 @@ use App\Quiz;
 use App\Event;
 use Illuminate\Support\Facades\Session;
 use App\Question;
+use Carbon\Carbon;
 
 class TeamTakesQuizTest extends TestCase
 {
@@ -95,6 +96,29 @@ class TeamTakesQuizTest extends TestCase
         $this->assertInstanceOf(Quiz::class, $viewQuiz);
         $this->assertArrayHasKey('questions', $viewQuiz->toArray());
         $this->assertCount(10, $viewQuiz->questions);
+    }
+
+    /** @test */
+    public function when_team_takes_quiz_start_time_is_marked_appropriately()
+    {
+        $users = create(User::class, 2);
+        $team = $users[0]->createTeam('Team', $users[1]);
+        $event = create(Event::class);
+        $team->participate($event);
+        $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
+        create(Question::class, 10, ['quiz_id' => $quiz->id]);
+
+        $quiz->setActive();
+        $quiz->allowTeam($team);
+        $participation = $quiz->participationByTeam($team);
+
+        $this->withoutExceptionHandling()->be($users[0]);
+        $this->assertNull($participation->started_at);
+
+        $this->get(route('quizzes.take', $quiz))->assertSuccessful();
+
+        $this->assertInstanceOf(Carbon::class, $participation->fresh()->started_at);
+        $this->assertEquals(0, $participation->fresh()->started_at->diffInSeconds(now()));
     }
     
 }
