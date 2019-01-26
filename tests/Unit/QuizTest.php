@@ -38,4 +38,14 @@ class QuizTest extends TestCase
             $this->assertSame($relatedQuestions->pluck('id')->toArray(), $questions->pluck('id')->toArray());
         });
     }
+
+    /** @test */
+    public function quiz_has_a_time_limit_with_30_as_default()
+    {
+        $quiz = create(Quiz::class)->fresh();
+        $this->assertEquals(30, $quiz->timeLimit);
+
+        $quiz->update(['timeLimit' => 45]);
+        $this->assertEquals(45, $quiz->fresh()->timeLimit);
+    }
 }

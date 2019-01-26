@@ -16,6 +16,7 @@ class CreateQuizzesTable extends Migration
         Schema::create('quizzes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->unsignedInteger('timeLimit')->default(30);
             $table->unsignedInteger('event_id')->index();
             $table->timestamps();
         });
