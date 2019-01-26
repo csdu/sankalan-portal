@@ -21,10 +21,18 @@ class Quiz extends Model
     }
 
     public function setActive() {
-        $this->event->activeQuiz()->associate($this);
+        $this->event->update(['active_quiz_id' => $this->id]);
+    }
+
+    public function isActive() {
+        return $this->id == $this->event->active_quiz_id;
     }
 
     public function isTeamAllowed(Team $team) {
-        $this->teams->pluck('id')->contains($team->id);
+        return $this->teams->pluck('id')->contains($team->id);
+    }
+
+    public function allowTeam(Team $team) {
+        $this->teams()->attach($team);
     }
 }

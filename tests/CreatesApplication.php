@@ -4,6 +4,7 @@ namespace Tests;
 
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Testing\TestResponse;
 
 trait CreatesApplication
 {
@@ -19,6 +20,11 @@ trait CreatesApplication
         $app->make(Kernel::class)->bootstrap();
 
         \DB::statement('PRAGMA foreign_keys = ON');
+
+        TestResponse::macro('viewData', function($key) {
+            $this->assertViewHas($key);
+            return $this->original->getData()[$key];
+        });
 
         return $app;
     }

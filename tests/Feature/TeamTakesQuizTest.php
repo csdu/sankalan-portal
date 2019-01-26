@@ -9,6 +9,7 @@ use App\User;
 use App\Quiz;
 use App\Event;
 use Illuminate\Support\Facades\Session;
+use App\Question;
 
 class TeamTakesQuizTest extends TestCase
 {
@@ -22,6 +23,7 @@ class TeamTakesQuizTest extends TestCase
         $events = create(Event::class,2);
         $team->participate($events[0]);
         $quiz = create(Quiz::class, 1, ['event_id' => $events[1]->id]);
+        $quiz->setActive();
 
         $this->withoutExceptionHandling()->be($users[0]);
 
@@ -69,5 +71,30 @@ class TeamTakesQuizTest extends TestCase
         $this->assertContains('not allowed', Session::get('flash_notification')->first()->message);
     }
 
+    /** @test */
+    public function participating_teams_are_can_take_active_quiz_if_they_are_marked_as_quiz_participant()
+    {
+        $users = create(User::class, 2);
+        $team = $users[0]->createTeam('Team', $users[1]);
+        $event = create(Event::class);
+        $team->participate($event);
+        $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
+        create(Question::class, 10, ['quiz_id' => $quiz->id]);
+
+        $quiz->setActive();
+        $quiz->allowTeam($team);
+
+        $this->withoutExceptionHandling()->be($users[0]);
+
+        $response = $this->get(route('quizzes.take', $quiz));
+
+        $response->assertSuccessful()->assertViewIs('quiz.index');
+            
+        $viewQuiz = $response->viewData('quiz');
+        
+        $this->assertInstanceOf(Quiz::class, $viewQuiz);
+        $this->assertArrayHasKey('questions', $viewQuiz->toArray());
+        $this->assertCount(10, $viewQuiz->questions);
+    }
     
 }
