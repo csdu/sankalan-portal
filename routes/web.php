@@ -20,4 +20,5 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
     Route::post('/teams', 'TeamController@store')->name('teams.store');
     Route::post('/events/{event}/participate', 'EventParticipationController@store')->name('events.participate');
     Route::delete('/events/{event}/participate', 'EventParticipationController@destroy')->name('events.withdraw-part');
+    Route::get('/quiz/{quiz}', 'QuizController@show')->name('quizzes.take');
 });

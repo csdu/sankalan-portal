@@ -11,6 +11,11 @@ class Event extends Model
         return $this->belongsToMany(Team::class, 'participants');
     }
 
+    public function activeQuiz()
+    {
+        return $this->belongsTo(Quiz::class);
+    }
+
     public function allParticipantMembers()
     {
         return $this->loadMissing('teams.members')->teams->flatMap->members;
