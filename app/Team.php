@@ -36,4 +36,17 @@ class Team extends Model
         $this->events()->detach($event->id);
         return true;
     }
+
+    public function endQuiz(Quiz $quiz, $responses)
+    {
+        $responses = $quiz->recordResponses($this, $responses);
+        $quiz->participationByTeam($this)->update(['finished_at' => now()]);
+        return $responses;
+    }
+
+    public function beginQuiz(Quiz $quiz)
+    {
+        return $quiz->participationByTeam($this)->update(['started_at' => now()]);
+    }
+
 }

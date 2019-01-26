@@ -43,4 +43,10 @@ class Quiz extends Model
     public function participationByTeam(Team $team) {
         return $this->participations()->where('team_id', $team->id)->first();
     }
+    
+    public function recordResponses(Team $team, $responses) {
+        return $this->participationByTeam($team)
+            ->responses()
+            ->createMany($responses);
+    }
 }
