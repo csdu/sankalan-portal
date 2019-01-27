@@ -11,6 +11,7 @@ use App\Event;
 use Illuminate\Support\Facades\Session;
 use App\Question;
 use Carbon\Carbon;
+use App\AnswerChoice;
 
 class TeamTakesQuizTest extends TestCase
 {
@@ -80,7 +81,10 @@ class TeamTakesQuizTest extends TestCase
         $event = create(Event::class);
         $team->participate($event);
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
-        create(Question::class, 10, ['quiz_id' => $quiz->id]);
+        create(Question::class, 10, ['quiz_id' => $quiz->id])
+            ->each(function($question) {
+                create(AnswerChoice::class, 4, ['question_id' => $question->id]);
+            });
 
         $quiz->setActive();
         $quiz->allowTeam($team);
@@ -97,6 +101,8 @@ class TeamTakesQuizTest extends TestCase
         $this->assertInstanceOf(Quiz::class, $viewQuiz);
         $this->assertArrayHasKey('questions', $viewQuiz->toArray());
         $this->assertCount(10, $viewQuiz->questions);
+        $this->assertArrayHasKey('choices', $viewQuiz->questions->first()->toArray());
+        $this->assertCount(4, $viewQuiz->questions->first()->choices);
         $this->assertInstanceOf(Carbon::class, $participation->fresh()->started_at);
         $this->assertEquals(0, $participation->fresh()->started_at->diffInSeconds(now()));
     }

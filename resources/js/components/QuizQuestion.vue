@@ -5,20 +5,20 @@
     @keydown.backspace="clearResponse"
     @keydown.delete="clearResponse">
         <strong class="float-left mr-2" v-text="`Q${index+1}.`"></strong>
-        <p v-html="dataQuestion.question"></p>
+        <p v-html="dataQuestion.text"></p>
         <div class="flex">
-            <ul class="options-list list-reset mt-4 flex-1">
-                <li v-for="(option, optionIndex) in dataQuestion.options" :key="option.value" class="mb-3">
-                    <label :for="`option-${option.value}`"
+            <ul class="choices-list list-reset mt-4 flex-1">
+                <li v-for="(choice, choiceIndex) in dataQuestion.choices" :key="choice.id" class="mb-3">
+                    <label :for="`choice-${choice.key}`"
                         class="flex items-center btn"
-                        :class="{'is-green': isSelected(optionIndex)}">
-                        <input :id="`option-${option.value}`" 
+                        :class="{'is-green': isSelected(choiceIndex)}">
+                        <input :id="`choice-${choice.key}`" 
                         type="radio" 
                         class="hidden"
-                        :name="`question-${index + 1}`" 
-                        @input="selectResponse(optionIndex)"
-                        :value="option.value">
-                        <span class="ml-1" v-text="option.text"></span>
+                        :name="`question-${choice.question_id}`" 
+                        @input="selectResponse(choiceIndex)"
+                        :value="choice.value">
+                        <span class="ml-1" v-text="choice.text"></span>
                     </label>
                 </li>
             </ul>
@@ -43,8 +43,8 @@ export default {
         }
     },
     computed: {
-        optionsCount() {
-            return this.dataQuestion.options.length;
+        choicesCount() {
+            return this.dataQuestion.choices.length;
         }
     },
     watch: {
@@ -54,24 +54,27 @@ export default {
     },
     methods: {
         indexOfResponse(value) {
-            return this.dataQuestion.options.findIndex(option => option.value == value);
+            if(!value) {
+                return -1;
+            }
+            return this.dataQuestion.choices.findIndex(choice => choice.key == value.key);
         },
         selectNextResponse() {
             this.selectResponse( 
-                (this.selectedResponseIndex + 1) % this.optionsCount
+                (this.selectedResponseIndex + 1) % this.choicesCount
             );
         },
         selectPreviousResponse() {
             this.selectResponse(
                 this.selectedResponseIndex <= 0 ? 
-                    (this.optionsCount - 1) 
+                    (this.choicesCount - 1) 
                     : (this.selectedResponseIndex - 1)
             );
         },
         selectResponse(index) {
             console.log(index);
             this.selectedResponseIndex = index;
-            const response = index == -1 ? null : this.dataQuestion.options[this.selectedResponseIndex].value;
+            const response = index == -1 ? null : this.dataQuestion.choices[this.selectedResponseIndex];
             this.$emit('input',  response);
         },
         isSelected(index) {

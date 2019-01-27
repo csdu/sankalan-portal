@@ -21,6 +21,6 @@ class QuizController extends Controller
 
         $quiz->participationByTeam($team)->update(['started_at' => now()]);
 
-        return view('quiz.index')->withQuiz($quiz->load('questions'));
+        return view('quiz.index')->withQuiz($quiz->load('questions.choices'));
     }
 }
