@@ -3,12 +3,13 @@
             @keydown.right="nextQuestion"
             @keydown.left="previousQuestion"
             @keydown.enter="submit">
-        <div class="question-area w-3/4 h-full border-r px-4 overflow-auto">
-            <h1 class="my-8 text-center">Event Quiz Title</h1>
+        <div class="question-area flex flex-col w-full lg:w-3/4 h-full border-r px-4 overflow-auto">
+            <slot name="header"></slot>
             <quiz-question 
-            :data-question="currentQuestion" 
-            :index="currentQuestionIndex" 
-            v-model="responses[currentQuestionIndex]">
+                class="flex-1"
+                :data-question="currentQuestion" 
+                :index="currentQuestionIndex" 
+                v-model="responses[currentQuestionIndex]">
             </quiz-question>
             <div class="navigate flex">
                 <button v-if="!isFirstQuestion" class="mr-2 btn" @click="previousQuestion()">Previous</button>
@@ -17,7 +18,7 @@
             </div>
         </div>
         <div class="navigation flex flex-col h-full w-1/4 px-3 overflow-auto">
-            <ul class="questions-nav list-reset flex flex-wrap -m-1">
+            <ul class="questions-nav list-reset flex flex-wrap -mx-1 -mb-1 mt-4">
                 <li v-for="questionNumber in questions.length" 
                 :key="questionNumber" 
                 >
@@ -117,10 +118,14 @@ import QuizQuestion from './QuizQuestion.vue';
                 return this.currentQuestionIndex == index;
             },
             isQuestionAnswered(index) {
-                return !this.isCurrentQuestion(index) && this.questions[index].visited && this.responses[index] != null;
+                return !this.isCurrentQuestion(index) &&
+                    this.questions[index].visited &&
+                    this.responses[index].length;
             },
             isQuestionSkipped(index) {
-                return !this.isCurrentQuestion(index) && this.questions[index].visited && this.responses[index] == null;
+                return !this.isCurrentQuestion(index) &&
+                    this.questions[index].visited &&
+                    !this.responses[index].length;
             },
             setCurrentQuestion(index) {
                 if (index >= 0 && index < this.questions.length ) {
@@ -153,11 +158,10 @@ import QuizQuestion from './QuizQuestion.vue';
             },
             sendResponses() {
                 return new Promise((resolve, reject) => setTimeout(() => resolve(true), 2500))
-                // alert('Your Response has been submitted! Thank you for your participation.');
             }
         },
         created() {
-            this.responses = new Array(this.dataQuestions.length).fill(null);
+            this.responses = new Array(this.dataQuestions.length).fill([]);
             this.questions = this.dataQuestions.map(question => {
                 question.visited = false;
                 return question;
