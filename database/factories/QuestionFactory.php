@@ -9,6 +9,7 @@ $factory->define(App\Question::class, function (Faker $faker) {
         'quiz_id' => function() {
             return factory(Quiz::class)->create()->id;
         },
-        'answer_keys' => implode(',', $faker->randomElements(['a', 'b', 'c', 'd'])),
+        'is_multiple' => $faker->boolean(),
+        'answer_keys' => $faker->randomLetter,
     ];
 });

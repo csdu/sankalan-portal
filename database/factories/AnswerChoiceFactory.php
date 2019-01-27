@@ -2,12 +2,16 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\AnswerChoice::class, function (Faker $faker) {
+$factory->define(App\AnswerChoice::class, function (Faker $faker, $attributes) {
+
+    if(array_key_exists('question_id', $attributes)) {
+        $question_id = $attributes['question_id'];
+    } else {
+        $question_id = factory(Question::class)->create()->id;
+    }
     return [
-        'key' => $faker->unique()->word,
+        'key' => str_before($faker->unique()->bothify("???##-$question_id"), '-'),
         'text' => $faker->sentence,
-        'question_id' => function() {
-            return factory(Question::class)->create()->id;
-        },
+        'question_id' => $question_id,
     ];
 });
