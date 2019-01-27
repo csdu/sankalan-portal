@@ -37,7 +37,7 @@
                         <form action="{{ route('events.participate', $event) }}" method="POST" class="flex items-center">
                             @csrf
                             <button type="submit" class="btn is-blue is-sm">
-                                {{ count($signedInUser->teams) ? 'Participate' : 'Participate as single-person Team' }}
+                                {{ count($signedInUser->teams) ? 'Participate' : 'Participate Alone' }}
                             </button>
                             @if(count($signedInUser->teams))
                                 <span class="ml-3">as:</span> 
@@ -50,7 +50,10 @@
                                     @endforeach
                                 </select>
                             @else
-                                <p>You have not created any teams yet, you can participate as <em>single-person</em> Team or <a href="{{ route('teams') }}" class="hover:underline text-blue">create team</a> </p>
+                                <p class="text-xs text-grey-dark ml-3">
+                                    You have not created any teams yet, you can participate <em>alone</em> or <a href="{{ route('teams') }}" class="hover:underline text-blue">Create Team</a>.
+                                    When you participate <em>alone</em>, a team will be created with a name <strong>"{{ $signedInUser->name }}"</strong>
+                                </p>
                             @endif
                         </form>
                     @else 
