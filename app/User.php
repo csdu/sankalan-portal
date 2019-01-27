@@ -31,17 +31,22 @@ class User extends Authenticatable
         return env("ID_PREFIX", "SNKLN") . "-U" . str_pad("$this->id", 3, "0", STR_PAD_LEFT);
     }
 
+    public function getNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+    
+    public function getEmailHashAttribute()
+    {
+        return md5(strtolower(trim($this->email)));
+    }
+
     public function teams() {
         return $this->belongsToMany(Team::class);
     }
 
     public function individualTeam() {
         return $this->belongsTo(Team::class, 'team_id');
-    }
-
-    public function getEmailHashAttribute()
-    {
-        return md5(strtolower(trim($this->email)));
     }
 
     public function createTeam($name, $member = null) {

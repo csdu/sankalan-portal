@@ -15,7 +15,9 @@ use Faker\Generator as Faker;
 
 $factory->define(App\User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'phone' => substr(str_replace(' ', '', $faker->unique()->phoneNumber), -10, 10),
         'email' => $faker->unique()->safeEmail,
         'college' => $faker->words(4, true),
         'course' => $faker->randomElement(['Bsc', 'Msc', 'MCA', 'Phd']),
