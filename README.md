@@ -4,16 +4,18 @@ Sankalan is the annual tech fest organised by students of Department of Computer
 ## Local Development
 This is project is built with Laravel & Vue.js. Before you can start local development you need to take care of a few prerequisites, required by laravel. 
 
-You can also setup a Local Development Environment using [Laravel Homestead](https://laravel.com/docs/5.7/homestead). Here are some one-time steps to get you started:
+You can also setup a Local Development Environment using [Laravel Homestead](https://laravel.com/docs/5.7/homestead). Here is one-time setup guide to get you started:
 
 - [Installing Prerequisites](#installing-prerequisites)
 - [Clone Project](#clone-project)
 - [Install project dependencies](#install-project-dependencies)
 - [Configure Application](#application-configuration)
+- [Start Local Development Server](#start-local-development-server)
 
 ### Installing Prerequisites
-You can find the server prequisites listed in [laravel docs](https://laravel.com/docs/5.7/installation#server-requirements), Additionally, you would require to install (composer)[https://getcomposer.org/] & (nodejs)[https://nodejs.org/en/] to pull in all the project dependencies. For Linux, you can follow the instructions below to get all the prerequisites under the hood.
+You can find the server prequisites listed in [laravel docs](https://laravel.com/docs/5.7/installation#server-requirements), Additionally, you would require to install [composer](https://getcomposer.org/) & [nodejs](https://nodejs.org/en/) to pull in all the project dependencies. For Linux, you can follow the instructions below to get all the prerequisites under the hood.
 
+> ##### Note:
 > Please note that these instructions are not tested yet, and *may not* work in first place.
 
 ##### Using `apt` package manager (Debian/Ubuntu)
@@ -75,7 +77,17 @@ This will install all the php packages required by the project. Similarly, we wo
 npm install
 ```
 
-This will install all the php packages required by the project.
+This will install all the JavaScript packages required by the project. After installing JavaScript dependencies, you should compile down the frontend assets using,
+
+```
+npm run dev
+```
+
+This will compile down our stylesheets (CSS) & javascript files. You can also run a watcher to automatically compile the assets, whenever the files are changed. This is recommended when you're working with SASS or the javascript, you do not need to run `npm run dev` again and again, you can simply run:
+
+```
+npm run watch
+```
 
 ### Application Configuration
 
@@ -113,7 +125,7 @@ To begin browsing & testing the portal you'd need to start a local development s
 php artisan serve
 ```
 
-This serve your website at `localhost:8000`, you can now open this up in your browser.
+This will serve your website at `localhost:8000`, you can now open this up in your browser.
 
 But, wait a minute! we have not created the tables in our database, you might get error on some pages even. To create all the tables & seed your database with dummy data, run:
 
