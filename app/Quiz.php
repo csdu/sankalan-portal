@@ -54,4 +54,9 @@ class Quiz extends Model
             ->responses()
             ->createMany($responses);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

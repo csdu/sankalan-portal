@@ -35,4 +35,9 @@ class Event extends Model
             return $team->members->pluck('id')->contains($user->id);
         });
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
