@@ -46,7 +46,11 @@ class Team extends Model
 
     public function beginQuiz(Quiz $quiz)
     {
-        return $quiz->participationByTeam($this)->update(['started_at' => now()]);
+        $participation = $quiz->participationByTeam($this);
+        if(!$participation->started_at) {
+            return $participation->update(['started_at' => now()]);
+        }
+        return false;
     }
 
 }

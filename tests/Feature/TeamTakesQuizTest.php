@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 use App\Question;
 use Carbon\Carbon;
 use App\AnswerChoice;
+use App\QuizParticipation;
 
 class TeamTakesQuizTest extends TestCase
 {
@@ -88,7 +89,6 @@ class TeamTakesQuizTest extends TestCase
 
         $quiz->setActive();
         $quiz->allowTeam($team);
-        $participation = $quiz->participationByTeam($team);
 
         $this->withoutExceptionHandling()->be($users[0]);
 
@@ -99,11 +99,53 @@ class TeamTakesQuizTest extends TestCase
         $viewQuiz = $response->viewData('quiz');
         
         $this->assertInstanceOf(Quiz::class, $viewQuiz);
+
+        $this->assertArrayHasKey('participations', $viewQuiz->toArray());
+        $this->assertCount(1, $viewQuiz->participations);
+        $this->assertNull($viewQuiz->participations->first()->started_at);
+        tap($viewQuiz->participations->first()->fresh(), function($participation) {
+            $this->assertInstanceOf(Carbon::class, $participation->started_at);
+            $this->assertEquals(0, $participation->started_at->diffInSeconds(now()));
+        });
+        
         $this->assertArrayHasKey('questions', $viewQuiz->toArray());
         $this->assertCount(10, $viewQuiz->questions);
         $this->assertArrayHasKey('choices', $viewQuiz->questions->first()->toArray());
         $this->assertCount(4, $viewQuiz->questions->first()->choices);
-        $this->assertInstanceOf(Carbon::class, $participation->fresh()->started_at);
-        $this->assertEquals(0, $participation->fresh()->started_at->diffInSeconds(now()));
+    }
+
+    /** @test */
+    public function team_starts_quiz_and_revisits_or_reload_after_sometime_before_their_timer_is_gone_they_can_take_quiz_within_remaining_time()
+    {
+        $users = create(User::class, 2);
+        $team = $users[0]->createTeam('Team', $users[1]);
+        $event = create(Event::class);
+        $team->participate($event);
+        $quiz = create(Quiz::class, 1, ['event_id' => $event->id])->fresh();
+
+        $quiz->setActive();
+        $quiz->allowTeam($team);
+
+        $startTime = now();
+        $team->beginQuiz($quiz);
+        
+
+        $this->withoutExceptionHandling()->be($users[0]);
+
+        Carbon::setTestNow(now()->addMinutes(10));
+        
+        $response = $this->get(route('quizzes.take', $quiz));
+
+        $response->assertSuccessful()->assertViewIs('quiz.index');
+
+        $viewQuiz = $response->viewData('quiz');
+
+        $this->assertInstanceOf(Quiz::class, $viewQuiz);
+
+        $this->assertArrayHasKey('timeLeft', $viewQuiz->participations->toArray()[0]);
+        tap($viewQuiz->participations->first()->fresh(), function($participation) use ($viewQuiz, $startTime){
+            $this->assertEquals($startTime->getTimestamp(), $participation->started_at->getTimestamp());
+            $this->assertEquals($viewQuiz->timeLimit-10, $participation->timeLeft);
+        });
     }
 }

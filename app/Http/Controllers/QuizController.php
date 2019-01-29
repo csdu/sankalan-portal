@@ -19,8 +19,15 @@ class QuizController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $quiz->participationByTeam($team)->update(['started_at' => now()]);
+        $quiz->load([
+            'questions.choices', 
+            'participations' => function($query) use ($team) {
+                $query->where('quiz_participations.team_id', $team->id);
+            },
+        ]);
 
-        return view('quiz.index')->withQuiz($quiz->load('questions.choices'));
+        $team->beginQuiz($quiz);
+
+        return view('quiz.index', compact('quiz'));
     }
 }
