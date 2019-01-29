@@ -37,8 +37,8 @@ class Quiz extends Model
     }
 
     public function isTimeLimitExceeded($team) {
-        $timeTaken = $this->participationByTeam($team)->started_at->diffInMinutes(now());
-        return $timeTaken > ($this->timeLimit + 2);
+        $timeTaken = $this->participationByTeam($team)->started_at->diffInSeconds(now());
+        return $timeTaken > ($this->timeLimit + 1*60); // Add 1 Minute Extra
     }
 
     public function allowTeam(Team $team) {

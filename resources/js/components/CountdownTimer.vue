@@ -2,8 +2,8 @@
     <div>
         <span v-if="timeLeft.hours" >{{timeLeft.hours | format(2)}}:</span>
         <span>{{ timeLeft.mins | format(2) }}:</span>
-        <span>{{ timeLeft.secs | format(2) }}:</span>
-        <span>{{ timeLeft.millis | format(3) }}</span>
+        <span>{{ timeLeft.secs | format(2) }}.</span>
+        <span class="text-sm">{{ timeLeft.millis | format(3) }}</span>
     </div>
 </template>
 <script>
@@ -16,7 +16,7 @@ export default {
         return {
             timer: null,
             framesDuration: 1000/25,   //25 frames per second
-            timeLimit: this.duration * 60 * 1000
+            timeLimit: this.duration * 1000 // seconds to millis
         }
     },
     methods: {

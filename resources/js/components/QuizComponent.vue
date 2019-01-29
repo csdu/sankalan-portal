@@ -3,7 +3,7 @@
             @keydown.right="nextQuestion"
             @keydown.left="previousQuestion"
             @keydown.enter="submit">
-        <div class="question-area flex flex-col w-full lg:w-3/4 h-full border-r px-4 overflow-auto">
+        <div class="question-area flex flex-col w-full lg:w-3/4 h-full px-4 overflow-auto">
             <slot name="header"></slot>
             <quiz-question 
                 class="flex-1"
@@ -17,7 +17,7 @@
                 <button v-else class="btn is-green" @click="submit()">Submit</button>
             </div>
         </div>
-        <div class="navigation flex flex-col h-full w-1/4 px-3 overflow-auto">
+        <div class="navigation flex flex-col border-l h-full w-1/4 px-3 overflow-auto">
             <ul class="questions-nav list-reset flex flex-wrap -mx-1 -mb-1 mt-4">
                 <li v-for="questionNumber in questions.length" 
                 :key="questionNumber" 
@@ -38,7 +38,7 @@
                 <button v-else class="ml-4 btn is-green" @click="submit()">Submit</button>
             </div>
             <countdown-timer :duration="timeLimit" :hurry="300"
-            class="inline-flex justify-center my-8 text-lg font-bold font-mono" 
+            class="inline-flex justify-center items-baseline my-8 text-lg font-bold font-mono" 
             :class="{'animation-vibrate text-red': hurry}"
             @timeup="endQuiz" @hurryup="hurry=true"></countdown-timer>
             <div class="mt-auto mb-8 text-center">
