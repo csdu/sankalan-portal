@@ -40,12 +40,15 @@ class QuizTest extends TestCase
     }
 
     /** @test */
-    public function quiz_has_a_time_limit_with_30_as_default()
+    public function quiz_has_a_time_limit_with_1800_as_default()
     {
-        $quiz = create(Quiz::class)->fresh();
-        $this->assertEquals(30, $quiz->timeLimit);
+        $quiz = make(Quiz::class);
+        unset($quiz->timeLimit);
+        $quiz->save();
 
-        $quiz->update(['timeLimit' => 45]);
-        $this->assertEquals(45, $quiz->fresh()->timeLimit);
+        $this->assertEquals(1800, $quiz->fresh()->timeLimit);
+
+        $quiz->update(['timeLimit' => 2700]);
+        $this->assertEquals(2700, $quiz->fresh()->timeLimit);
     }
 }

@@ -145,7 +145,7 @@ class TeamTakesQuizTest extends TestCase
         $this->assertArrayHasKey('timeLeft', $viewQuiz->participations->toArray()[0]);
         tap($viewQuiz->participations->first()->fresh(), function($participation) use ($viewQuiz, $startTime){
             $this->assertEquals($startTime->getTimestamp(), $participation->started_at->getTimestamp());
-            $this->assertEquals($viewQuiz->timeLimit-10, $participation->timeLeft);
+            $this->assertEquals($viewQuiz->timeLimit-(10*60), $participation->timeLeft);
         });
     }
 }
