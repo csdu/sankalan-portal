@@ -78,7 +78,11 @@
                 repeatCount="indefinite"
                 />
         </svg>	
-        <p class="text-center mt-6" v-text="submission.text"></p>
+        <p class="text-center my-6" v-text="submission.text"></p>
+        <p class="text-center my-6" v-if="submission.success">
+            You will be redirected to dashboard in 3 seconds.
+            Click <button @click="redirect" class="font-normal text-blue hover:undeline">here</button> to redirect manually.
+        </p>
     </div>
 </template>
 
@@ -89,6 +93,7 @@ import QuizQuestion from './QuizQuestion.vue';
         components: {CountdownTimer, QuizQuestion},
         props: {
             action: {required: true},
+            redirectTo: {required: true},
             dataQuestions: {default: []},
             timeLimit: {default: 30},
         },
@@ -180,6 +185,10 @@ import QuizQuestion from './QuizQuestion.vue';
                     success: data.message.level == 'success',
                     text: data.message.message,
                 }
+                setTimeout(this.redirect, 3*1000);
+            },
+            redirect() {
+                window.location.replace(this.redirectTo);
             },
             onFailure({response}) {
                 this.submission = {

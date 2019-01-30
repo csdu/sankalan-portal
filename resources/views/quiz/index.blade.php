@@ -2,6 +2,7 @@
 @section('content')
     <div class="container mx-auto h-full">
         <quiz-area 
+            redirect-to="{{ route('dashboard') }}"
             action="{{ route('quizzes.response.store', $quiz) }}"
             :data-questions="{{ $quiz->questions }}" 
             :time-limit="{{ $quiz->participations->first()->timeLeft }}">
