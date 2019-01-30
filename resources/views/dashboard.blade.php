@@ -61,7 +61,9 @@
                             <span class="inline-block w-2 h-2 rounded-full bg-green mr-2"></span>
                             <p class="flex-1 text-sm text-grey-dark">
                                 A quiz on this event is live.
-                                @if($event->activeQuiz->isTeamAllowed($event->participatingTeamByUser($signedInUser)))
+                                @if($event->activeQuiz->hasTeamResponded($event->participatingTeamByUser($signedInUser)))
+                                    <span class="text-green"> You have already taken this Quiz.</span>
+                                @elseif($event->activeQuiz->isTeamAllowed($event->participatingTeamByUser($signedInUser)))
                                     <a href="{{ route('quizzes.take', $event->activeQuiz) }}" class="whitespace-no-wrap font-semibold text-green hover:underline">Take Quiz</a>
                                 @else
                                     <span class="text-red">Go to Venue to take Quiz</span>

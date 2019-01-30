@@ -25,7 +25,8 @@ class TeamCanTakeQuiz {
     public function perform() {
         return $this->isTeamParticipating() && 
             $this->isQuizActive() && 
-            $this->isTeamAllowedForQuiz();
+            $this->isTeamAllowedForQuiz() &&
+            $this->teamHasNotSubmittedResponse();
     }
 
     private function isTeamParticipating() {
@@ -54,6 +55,16 @@ class TeamCanTakeQuiz {
         }
 
         flash('You are not allowed for this Quiz! Please contact help desk.')->error();
+        return false;
+    }
+
+    private function teamHasNotSubmittedResponse()
+    {
+        if(!$this->quiz->hasTeamResponded($this->team)) {
+            return true;
+        }
+
+        flash('You already have submitted the response for this quiz.')->warning();
         return false;
     }
 }

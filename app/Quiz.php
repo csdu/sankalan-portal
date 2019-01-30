@@ -55,6 +55,10 @@ class Quiz extends Model
             ->createMany($responses);
     }
 
+    public function hasTeamResponded(Team $team) {
+        return $this->participationByTeam($team)->finished_at != null;
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

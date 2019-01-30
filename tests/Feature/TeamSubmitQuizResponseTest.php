@@ -62,7 +62,7 @@ class TeamSubmitQuizResponseTest extends TestCase
     }
 
     /** @test */
-    public function if_user_sumbits_another_response_it_is_ignored()
+    public function if_user_sumbits_another_response_warning_message_is_shown()
     {
         $user = create(User::class);
         $event = create(Event::class);
@@ -99,7 +99,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         ])->assertStatus(Response::HTTP_FORBIDDEN)
         ->json();
 
-        $this->assertEquals('danger', $json['message']['level']);
+        $this->assertEquals('warning', $json['message']['level']);
         $quizParticipation = $quiz->participationByTeam($team);
         $this->assertEquals(5, $quizParticipation->finished_at->diffInMinutes(now()), 'Time Difference does not match');
         $this->assertCount(10, $quizParticipation->responses);

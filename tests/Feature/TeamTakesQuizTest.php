@@ -148,4 +148,43 @@ class TeamTakesQuizTest extends TestCase
             $this->assertEquals($viewQuiz->timeLimit-(10*60), $participation->timeLeft);
         });
     }
+
+    /** @test */
+    public function team_submits_quiz_response_and_cannot_revisit_quiz_once_submitted()
+    {
+        $user = create(User::class);
+        $event = create(Event::class);
+        $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
+        $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
+        $questions->each(function ($question) {
+            create(AnswerChoice::class, 4, ['question_id' => $question->id]);
+        });
+
+        $this->withoutExceptionHandling()->be($user);
+
+        $team = $user->createTeam($user->name);
+        $team->participate($event);
+        $quiz->setActive();
+        $quiz->allowTeam($team);
+
+        $team->beginQuiz($quiz);
+
+        $responses = $questions->map(function ($question) {
+            return [
+                'question_id' => $question->id,
+                'response_key' => $question->choices->random()->key,
+            ];
+        })->toArray();
+
+        // End Quiz 5 minutes before
+        Carbon::setTestNow(now()->addSeconds($quiz->timeLeft - 5*60));
+
+        $team->endQuiz($quiz, $responses);
+
+        $this->get(route('quizzes.take', $quiz))
+            ->assertRedirect()
+            ->assertSessionHas('flash_notification');
+
+        $this->assertEquals('warning', Session::get('flash_notification')->first()->level);
+    }
 }
