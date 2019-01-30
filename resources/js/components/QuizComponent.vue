@@ -47,21 +47,25 @@
         </div>
     </div>
     <div class="fixed pin-x pin-t z-50 bg-white h-screen flex flex-col justify-center items-center" v-else>
-        <svg viewBox="0 0 100 100" class="text-green w-32" v-if="submitted">
-            <path d="M10 50 L40 80 L90 10" stroke="currentColor" fill="none" stroke-width="15"></path>	
-        </svg>	
-        <svg viewBox="0 0 110 110" class="text-green w-32 mb-4" v-else>
-            <circle id="loader-circle" cx="55" cy="55" r="50" stroke-dasharray="290" stroke-dashoffset="290" stroke="currentColor" fill="none" stroke-width="10"></circle>	
+        <svg viewBox="0 0 100 100" class="text-green w-32" v-if="submission.done && submission.success">
+            <path d="M10 50 L40 80 L90 10" stroke="currentColor" fill="none" stroke-width="15" stroke-dasharray="129"></path>	
+        </svg>
+        <svg viewBox="0 0 100 100" class="text-red w-32" v-else-if="submission.done">
+            <path d="M10 10 L90 90" stroke="currentColor" fill="none" stroke-width="15" stroke-dasharray="114" ></path>	
+            <path d="M90 10 L10 90" stroke="currentColor" fill="none" stroke-width="15" stroke-dasharray="114" ></path>	
+        </svg>
+        <svg viewBox="0 0 110 110" class="text-blue w-32" v-else>
+            <circle id="loader-circle" cx="55" cy="55" r="50" stroke-dasharray="314.16" stroke="currentColor" fill="none" stroke-width="10"></circle>	
             <animate 
                 xlink:href="#loader-circle"
                 attributeName="stroke-dashoffset"
                 attributeType="XML"
-                from="290"
-                to="290" 
-                dur="0.8s"
+                from="314.16"
+                to="314.16" 
+                dur="2s"
                 begin="0s"
-                keyTimes="0; 0.5; 1;"
-                values="290; 0; 290;"
+                keyTimes="0; 0.25; 0.5; 0.75; 1;"
+                values="314.16; 0; -314.16; 0; 314.16;"
                 repeatCount="indefinite"/>
             <animateTransform 
                 xlink:href="#loader-circle"
@@ -70,12 +74,11 @@
                 type="rotate"
                 from="0 55 55"
                 to="360 55 55" 
-                dur="1s"
-                begin="0s"
+                dur="3s"
                 repeatCount="indefinite"
                 />
         </svg>	
-        <p class="text-center" v-text="submissionStatus"></p>
+        <p class="text-center mt-6" v-text="submission.text"></p>
     </div>
 </template>
 
@@ -85,15 +88,19 @@ import QuizQuestion from './QuizQuestion.vue';
     export default {
         components: {CountdownTimer, QuizQuestion},
         props: {
+            action: {required: true},
             dataQuestions: {default: []},
             timeLimit: {default: 30},
         },
         data() {
             return {
                 isLive: true,
-                submitted: false,
+                submission: {
+                    done: false,
+                    success: false,
+                    text: 'Please wait! While we record your response.',
+                },
                 hurry: false,
-                submissionStatus: 'Please wait! While we submit your Response.',
                 currentQuestionIndex: 0,
                 responses: [],
                 questions: []
@@ -150,14 +157,36 @@ import QuizQuestion from './QuizQuestion.vue';
             },
             endQuiz() {
                 this.isLive = false;
-                this.sendResponses().then(this.postSubmitCallback);
-            },
-            postSubmitCallback() {
-                this.submitted = true;
-                this.submissionStatus = "Your response has been submitted! Thank you for participation. Result's will be announced soon.";
+                this.sendResponses();
             },
             sendResponses() {
-                return new Promise((resolve, reject) => setTimeout(() => resolve(true), 2500))
+                    const responses = this.getResponses();
+                    axios.post(this.action, {responses})
+                        .catch(this.onFailure)
+                        .then(this.onSuccess);
+            },
+            getResponses() {
+                return this.responses.filter(answers => !!answers.length)
+                    .map(answers => {
+                        return {
+                            question_id: answers[0].question_id, 
+                            response_key: answers.map(answer => answer.key).join(':')
+                        };
+                    });
+            },
+            onSuccess({data}) {
+                this.submission = {
+                    done: true,
+                    success: data.message.level == 'success',
+                    text: data.message.message,
+                }
+            },
+            onFailure({response}) {
+                this.submission = {
+                    done: true,
+                    success: response.data.message.level != 'danger',
+                    text: response.data.message.message,
+                }
             }
         },
         created() {

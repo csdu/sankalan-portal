@@ -48,7 +48,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         Carbon::setTestNow(now()->addSeconds($quiz->timeLimit - 60)); //Submit 60secs before timeout.
 
         $json = $this->postJson(
-            route('quizzes.response.submit', $quiz),
+            route('quizzes.response.store', $quiz),
             ['responses' => $responses]
         )->assertSuccessful()->json();
 
@@ -94,7 +94,7 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         Carbon::setTestNow(now()->addMinutes(5)); //after 5 min try submitting other response
 
-        $json = $this->postJson( route('quizzes.response.submit', $quiz), [
+        $json = $this->postJson( route('quizzes.response.store', $quiz), [
             'responses' => $responses
         ])->assertStatus(Response::HTTP_FORBIDDEN)
         ->json();
@@ -135,7 +135,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         //fast forward time to exceed time limit by 5 mins.
         Carbon::setTestNow(now()->addMinutes($quiz->timeLimit + 5));
 
-        $json = $this->postJson(route('quizzes.response.submit', $quiz), [
+        $json = $this->postJson(route('quizzes.response.store', $quiz), [
             'responses' => $responses
         ])->assertStatus(Response::HTTP_REQUEST_TIMEOUT)
         ->json();
@@ -162,7 +162,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         // $team->participate($event); //They're not participating
         // $quiz->allowTeam($team); //They're not allowed to take Quiz
 
-        $json = $this->postJson(route('quizzes.response.submit', $quiz))
+        $json = $this->postJson(route('quizzes.response.store', $quiz))
             ->assertStatus(Response::HTTP_FORBIDDEN)
             ->json();
 
@@ -185,7 +185,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         // $quiz->setActive(); // Quiz is not active
         // $quiz->allowTeam($team); // They're not allowed to take Quiz
 
-        $json = $this->postJson(route('quizzes.response.submit', $quiz))
+        $json = $this->postJson(route('quizzes.response.store', $quiz))
             ->assertStatus(Response::HTTP_FORBIDDEN)
             ->json();
 
@@ -208,7 +208,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         $quiz->setActive();
         // $quiz->allowTeam($team); // They're not allowed to take Quiz
 
-        $json = $this->postJson(route('quizzes.response.submit', $quiz))
+        $json = $this->postJson(route('quizzes.response.store', $quiz))
             ->assertStatus(Response::HTTP_FORBIDDEN)
             ->json();
 
@@ -232,7 +232,7 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         // $quiz->begin($team); //They've not yet started taking quiz, They're trying something fishhy.
 
-        $json = $this->postJson(route('quizzes.response.submit', $quiz))
+        $json = $this->postJson(route('quizzes.response.store', $quiz))
             ->assertStatus(Response::HTTP_FORBIDDEN)
             ->json();
 

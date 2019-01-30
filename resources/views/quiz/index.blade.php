@@ -2,6 +2,7 @@
 @section('content')
     <div class="container mx-auto h-full">
         <quiz-area 
+            action="{{ route('quizzes.response.store', $quiz) }}"
             :data-questions="{{ $quiz->questions }}" 
             :time-limit="{{ $quiz->participations->first()->timeLeft }}">
             <div class="mt-4 mb-12" slot="header">

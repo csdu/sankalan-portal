@@ -21,5 +21,5 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
     Route::post('/events/{event}/participate', 'EventParticipationController@store')->name('events.participate');
     Route::delete('/events/{event}/participate', 'EventParticipationController@destroy')->name('events.withdraw-part');
     Route::get('/quiz/{quiz}', 'QuizController@show')->name('quizzes.take');
-    Route::post('/quiz/{quiz}', 'QuizResponseController@store')->name('quizzes.response.submit');
+    Route::post('/quiz/{quiz}', 'QuizResponseController@store')->name('quizzes.response.store');
 });

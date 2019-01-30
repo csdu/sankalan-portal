@@ -13,7 +13,7 @@ class QuizResponseController extends Controller
     public function store(Quiz $quiz)
     {
         $data = request()->validate([
-            'responses' => ['sometimes','array', 'min:1', "max:{$quiz->questions()->count()}"],
+            'responses' => ['sometimes','array', "max:{$quiz->questions()->count()}"],
             'responses.*.response_key' => ['required', 'string'],
             'responses.*.question_id' => ['required', 'integer', 'exists:questions,id'],
         ]);
