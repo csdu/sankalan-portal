@@ -6,6 +6,7 @@ use App\Checks\TeamCanSubmitQuizResponse;
 use Illuminate\Http\Request;
 use App\Quiz;
 use Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class QuizResponseController extends Controller
 {
@@ -20,17 +21,29 @@ class QuizResponseController extends Controller
         $team = $quiz->event->participatingTeamByUser(Auth::user());
         
         if(!TeamCanSubmitQuizResponse::check($team, $quiz)) {
-            return redirect()->back();
+            return $this->getJsonOrRedirect(Response::HTTP_FORBIDDEN);
         }
         
         $team->endQuiz($quiz, request('responses') ?? []);
 
         if ($quiz->isTimeLimitExceeded($team)) {
-            flash('You tried messing with timer, you are disqualified!')->error();
+            flash('Your time limit exceeded, you are disqualified!')->error();
+            $status = Response::HTTP_REQUEST_TIMEOUT;
         } else {
             flash('Your response has been recorded! All The Best!')->success();
+            $status = Response::HTTP_ACCEPTED;
         }
 
-        return redirect()->back();
+        return $this->getJsonOrRedirect($status);
+    }
+
+    private function getJsonOrRedirect($status = 202) {
+        if(!request()->expectsJson()) {
+            return redirect()->back();
+        } 
+
+        return response()->json([
+            'message' => \Session::get('flash_notification')->toArray()[0],
+        ], $status);
     }
 }
