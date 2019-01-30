@@ -6,6 +6,7 @@ use App\Checks\TeamCanSubmitQuizResponse;
 use Illuminate\Http\Request;
 use App\Quiz;
 use Auth;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuizResponseController extends Controller
@@ -38,12 +39,12 @@ class QuizResponseController extends Controller
     }
 
     private function getJsonOrRedirect($status = 202) {
-        if(!request()->expectsJson()) {
+        if(! request()->expectsJson()) {
             return redirect()->back();
         } 
 
         return response()->json([
-            'message' => \Session::get('flash_notification')->toArray()[0],
+            'message' => Session::pull('flash_notification')->toArray()[0],
         ], $status);
     }
 }
