@@ -51,7 +51,7 @@ class CreateTeamTest extends TestCase
         $name = 'Team Name';
         $this->post(route('teams.store'), [
             'name' => $name,
-            'member_id' => $anotherUser->id
+            'member_email' => $anotherUser->email
         ]);
 
         $this->assertCount(1, $teams = Team::all());
@@ -81,10 +81,10 @@ class CreateTeamTest extends TestCase
 
         $response = $this->post(route('teams.store'), [
             'name' => 'Team Name',
-            'member_id' => [$anotherUser->id, $otherUser->id]
+            'member_email' => [$anotherUser->email, $otherUser->email]
         ]);
 
-        $response->assertRedirect()->assertSessionHasErrors('member_id');
+        $response->assertRedirect()->assertSessionHasErrors('member_email');
 
         // No Team is Created!
         $this->assertCount(0, $teams = Team::all());
@@ -94,7 +94,7 @@ class CreateTeamTest extends TestCase
     /**
      * @test
      */
-    public function user_can_create_single_member_team_with_empty_member_id()
+    public function user_can_create_single_member_team_with_empty_member_email()
     {
         $this->withExceptionHandling();
         $this->be($user = create(User::class));
@@ -105,7 +105,7 @@ class CreateTeamTest extends TestCase
 
         $response = $this->post(route('teams.store'), [
             'name' => 'Team Name',
-            'member_id' => '',
+            'member_email' => '',
         ]);
 
         // Individual Team is Created!
@@ -121,7 +121,7 @@ class CreateTeamTest extends TestCase
         $user = create(User::class);
         $otherUser = create(User::class);
         $team = $user->createTeam('My Team');
-        $groupTeam = $user->createTeam('Group Team', $otherUser->id);
+        $groupTeam = $user->createTeam('Group Team', $otherUser);
 
         $this->withoutExceptionHandling()
             ->be($user);
@@ -133,7 +133,7 @@ class CreateTeamTest extends TestCase
         // try creating another individual team
         $response = $this->post(route('teams.store'), [
             'name' => 'Team Name',
-            'member_id' => '',
+            'member_email' => '',
         ]);
         
         $response->assertRedirect();
@@ -146,7 +146,7 @@ class CreateTeamTest extends TestCase
         // try creating another team with same member
         $response = $this->post(route('teams.store'), [
             'name' => 'Team Name',
-            'member_id' => $otherUser->id,
+            'member_email' => $otherUser->email,
         ]);
 
         $response->assertRedirect();

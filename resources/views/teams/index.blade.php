@@ -8,19 +8,13 @@
 
     <div class="card mb-16">
         <h3 class="card-header">Create a Team</h3>
-        <form action="{{ route('teams') }}" method="POST" class="card-content">
+        <form action="{{ route('teams') }}" method="POST" class="card-content flex flex-col sm:flex-row">
             @csrf
-            <div class="mb-4">
-                <input type="text" name="name" multiple class="control" placeholder="Team Name">
+            <div class="mb-4 sm:flex-1 sm:mr-3 sm:mb-0">
+                <input type="text" name="name" class="control" placeholder="Team Name" required>
             </div>
-            <div class="mb-4">
-                <label for="users" class="control">Select Member</label>
-                <select id="users" type="text" name="member_id" class="control">
-                    <option value="">Individual</option>
-                    @foreach ($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->uid }})</option>
-                    @endforeach
-                </select>
+            <div class="mb-4 sm:flex-1 sm:mr-3 sm:mb-0">
+                <input type="email" name="member_email" class="control" placeholder="Partner's registered Email" required>
             </div>
             <div>
                 <button type="submit" class="btn is-blue">Create Team</button>

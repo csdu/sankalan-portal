@@ -20,13 +20,14 @@ class TeamController extends Controller
     {
         $data = request()->validate([
             'name' => ['required', 'string', 'min:3', 'max:190'],
-            'member_id' => ['nullable', 'integer', 'exists:users,id'],
+            'member_email' => ['nullable', 'email', 'exists:users,email'],
         ]);
 
         $user = Auth::user();
+        $member = request()->has('member_email') ? User::whereEmail(request('member_email'))->first() : null;
 
-        if($this->canCreateTeam($user)) {
-            $team = $user->createTeam($data['name'], $data['member_id'] ?? null);
+        if($this->canCreateTeam($user, $member)) {
+            $team = $user->createTeam($data['name'], $member);
             flash('Your team was created! TeamId: '. $team->uid )->success();
         } else {
             flash('You already have this Team!')->warning();
@@ -37,14 +38,15 @@ class TeamController extends Controller
     }
 
 
-    protected function canCreateTeam($user) {
-        if(!request('member_id')) {
+    protected function canCreateTeam($user, $member = null) {
+        if(!$member) {
             return $user->team_id === null;
         }
 
         // Does user already have any team containing the same member?
-        return !$user->teams()->whereHas('members', function($query) {
-            return $query->where('team_user.user_id', request('member_id'));
-        })->exists();
+        return !$user->teams()
+            ->whereHas('members', function($query) use($member) {
+                return $query->where('team_user.user_id', $member->id);
+            })->exists();
     }
 }
