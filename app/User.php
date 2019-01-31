@@ -49,6 +49,11 @@ class User extends Authenticatable
         return $this->belongsTo(Team::class, 'team_id');
     }
 
+    public function isAdmin()
+    {
+        return !!$this->is_admin;
+    }
+
     public function createTeam($name, $member = null) {
         $team = $this->teams()->create(compact('name'));
         

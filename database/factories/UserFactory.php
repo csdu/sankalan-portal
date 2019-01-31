@@ -20,7 +20,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'phone' => substr(str_replace(' ', '', $faker->unique()->phoneNumber), -10, 10),
         'email' => $faker->unique()->safeEmail,
         'college' => $faker->words(4, true),
-        'course' => $faker->randomElement(['Bsc', 'Msc', 'MCA', 'Phd']),
+        'course' => $faker->randomElement(['Bsc I', 'Msc II', 'MCA I', 'MCA II']),
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
         'remember_token' => str_random(10),
     ];

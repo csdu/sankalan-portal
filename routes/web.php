@@ -23,3 +23,5 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
     Route::get('/quiz/{quiz}', 'QuizController@show')->name('quizzes.take');
     Route::post('/quiz/{quiz}', 'QuizResponseController@store')->name('quizzes.response.store');
 });
+
+Route::get('/admin/dashboard', 'Admin\DashboardController@index')->name('admin.dashboard')->middleware('admin');
