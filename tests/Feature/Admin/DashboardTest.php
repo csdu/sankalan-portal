@@ -15,9 +15,7 @@ class DashboardTest extends TestCase
     /** @test */
     public function admin_can_access_admins_dashboard()
     {
-        $this->withoutExceptionHandling()->be(
-            $user = create(User::class, 1, ['is_admin' => true])
-        );
+        $this->withoutExceptionHandling()->signInAdmin();
 
         $this->get(route('admin.dashboard'))
             ->assertSuccessful()
@@ -27,9 +25,7 @@ class DashboardTest extends TestCase
     /** @test */
     public function normal_user_cannot_access_admins_dashboard()
     {
-        $this->withExceptionHandling()->be(
-            $user = create(User::class, 1, ['is_admin' => false])
-        );
+        $this->withExceptionHandling()->signIn();
 
         $this->get(route('admin.dashboard'))
             ->assertStatus(Response::HTTP_FORBIDDEN); 

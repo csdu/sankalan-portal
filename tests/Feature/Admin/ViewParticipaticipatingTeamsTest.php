@@ -26,7 +26,7 @@ class ViewParticipaticipatingTeamsTest extends TestCase
             });
         });
 
-        $this->withoutExceptionHandling()->be(create(User::class, 1, ['is_admin' => true]));
+        $this->withoutExceptionHandling()->signInAdmin();
 
         $results = $this->get(route('participations.index'))
             ->assertSuccessful()

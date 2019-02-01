@@ -16,9 +16,8 @@ class EventGoesLiveTest extends TestCase
     public function event_can_be_set_live_by_admin()
     {
         $events = create(Event::class, 4);
-        $admin = create(User::class, 1, ['is_admin' => true]);
 
-        $this->withoutExceptionHandling()->be($admin);
+        $this->withoutExceptionHandling()->signInAdmin();
 
         $json = $this->postJson(route('events.go-live', $events[0]))
             ->assertSuccessful()

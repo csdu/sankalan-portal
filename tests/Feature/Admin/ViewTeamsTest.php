@@ -16,7 +16,7 @@ class ViewTeamsTest extends TestCase
     public function list_all_Teams()
     {
         $teams = create(Team::class, 5);
-        $this->withoutExceptionHandling()->be(create(User::class, 1, ['is_admin' => true]));
+        $this->withoutExceptionHandling()->signInAdmin();
 
         $resultTeams = $this->get(route('teams.index'))->viewData('teams');
 

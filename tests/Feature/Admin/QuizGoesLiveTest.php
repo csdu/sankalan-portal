@@ -16,11 +16,10 @@ class QuizGoesLiveTest extends TestCase
     /** @test */
     public function quiz_is_set_active_in_the_event()
     {
-        $admin = create(User::class, 1, ['is_admin' => true]);
         $events = create(Event::class, 2, ['is_live' => true]);
         $quizzes = create(Quiz::class, 2, ['event_id' => $events[0]->id]);
 
-        $this->withoutExceptionHandling()->be($admin);
+        $this->withoutExceptionHandling()->signInAdmin();
 
         $response = $this->postJson(route('quizzes.go-live', $quizzes[0]))
             ->assertSuccessful()

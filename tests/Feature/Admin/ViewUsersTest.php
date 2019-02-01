@@ -17,7 +17,7 @@ class ViewUsersTest extends TestCase
         $users = create(User::class, 5);
         $admins = create(User::class, 2, ['is_admin' => true]);
 
-        $this->withoutExceptionHandling()->be($admins[0]);
+        $this->withoutExceptionHandling()->signIn($admins[0]);
 
         $resultUsers = $this->get(route('users.index'))->viewData('users');
 

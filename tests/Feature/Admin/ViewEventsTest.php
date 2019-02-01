@@ -16,7 +16,7 @@ class ViewEventsTest extends TestCase
     public function list_all_events()
     {
         $events = create(Event::class, 5);
-        $this->withoutExceptionHandling()->be(create(User::class, 1, ['is_admin' => true]));
+        $this->withoutExceptionHandling()->signInAdmin();
 
         $resultEvents = $this->get(route('events.index'))->viewData('events');
 
