@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Admin;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminDashboardTest extends TestCase
+class DashboardTest extends TestCase
 {
     use RefreshDatabase;
 
