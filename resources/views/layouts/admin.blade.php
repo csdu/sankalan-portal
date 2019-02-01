@@ -17,9 +17,27 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="font-sans bg-grey-lighter text-black">
-    <div id="app" class="min-h-screen flex flex-col">
-        <main class="flex-1">
-            @yield('content')
+    <div id="app" class="min-h-screen flex flex-col container mx-auto">
+        <main class="flex-1 flex flex-col my-4">
+            <h1 class="border-b py-3 mb-6">Sankalan</h1>
+            <div class="flex-1 flex">
+                <div class="w-64">
+                    <div class="nav-bar flex flex-col">
+                        <div class="nav-bar-item border-grey px-4">
+                            <h3 class="font-light py-3">Events</h3>
+                        </div>
+                        <div class="nav-bar-item border-grey px-4">
+                            <h3 class="font-light py-5"><a href="participations">Participations</a></h3>
+                        </div>
+                        <div class="nav-bar-item border-grey px-4">
+                            <h3 class="font-light py-5">Logout</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    @yield('content')
+                </div>
+            </div>
         </main>
         @include('flash::message')
         <footer class="py-3 {{ Request::is('/') ? 'bg-blue' : '' }}">
