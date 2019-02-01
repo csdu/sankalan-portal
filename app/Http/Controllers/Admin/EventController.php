@@ -31,4 +31,20 @@ class EventController extends Controller
         ]);
 
     }
+
+    public function end(Event $event)
+    {
+        if (!$event->end()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Event has ended!'
+        ]);
+
+    }
 }

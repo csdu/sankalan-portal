@@ -9,6 +9,8 @@ class Event extends Model
 
     protected $guarded = [];
 
+    protected $dates = ['started_at', 'ended_at'];
+
     public function teams()
     {
         return $this->belongsToMany(Team::class, 'participants');
@@ -56,11 +58,20 @@ class Event extends Model
             return true;
         }
 
-        return $this->update(['is_live' => true]);
+        return $this->update(['started_at' => now()]);
+    }
+
+    public function end()
+    {
+        if ($this->isLive()) {
+            return $this->update(['ended_at' => now()]);
+        }
+        
+        return true;
     }
 
     public function isLive() {
-        return !!$this->is_live;
+        return !! $this->started_at && ! $this->ended_at;
     }
 
     public function getRouteKeyName()

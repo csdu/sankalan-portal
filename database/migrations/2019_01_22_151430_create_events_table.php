@@ -20,8 +20,9 @@ class CreateEventsTable extends Migration
             $table->text('description', 800);
             $table->unsignedInteger('rounds');
             $table->boolean('hasQuiz');
-            $table->boolean('is_live')->default(false);
             $table->unsignedInteger('active_quiz_id')->nullable()->index();
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('ended_at')->nullable();
             $table->timestamps();
         });
     }

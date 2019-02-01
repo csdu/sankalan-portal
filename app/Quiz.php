@@ -8,7 +8,7 @@ class Quiz extends Model
 {
     protected $guarded = [];
 
-    protected $dates = ['closed_at'];
+    protected $dates = ['closed_at', 'opened_at'];
 
     public function event() {
         return $this->belongsTo(Event::class);
@@ -27,7 +27,8 @@ class Quiz extends Model
     }
 
     public function setActive() {
-        return $this->event->update(['active_quiz_id' => $this->id]);
+        return $this->event->update(['active_quiz_id' => $this->id]) &&
+            $this->update(['opened_at' => now()]);
     }
 
     public function setOffline() {

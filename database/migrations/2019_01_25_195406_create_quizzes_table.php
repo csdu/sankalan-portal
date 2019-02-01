@@ -20,6 +20,7 @@ class CreateQuizzesTable extends Migration
             $table->unsignedInteger('timeLimit')->default(1800);
             $table->unsignedInteger('questionsLimit')->default(30);
             $table->unsignedInteger('event_id')->index();
+            $table->timestamp('opened_at')->nullable();
             $table->timestamp('closed_at')->nullable();
             $table->timestamps();
         });
