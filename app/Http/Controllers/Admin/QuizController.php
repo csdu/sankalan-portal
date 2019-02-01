@@ -23,4 +23,19 @@ class QuizController extends Controller
             'message' => 'Quiz is now Live!'
         ];
     }
+
+    public function close(Quiz $quiz)
+    {
+        if(!$quiz->setOffline()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong',
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return [
+            'status' => 'success',
+            'message' => 'Quiz is now Closed!'
+        ];
+    }
 }
