@@ -42,7 +42,7 @@ class Quiz extends Model
     }
 
     public function allowTeam(Team $team) {
-        $this->teams()->attach($team);
+        return $this->teams()->attach($team);
     }
 
     public function participationByTeam(Team $team) {

@@ -31,5 +31,6 @@ Route::group(['prefix' => 'manage', 'middleware' => 'admin', 'namespace' => 'Adm
     Route::get('users', 'UserController@index')->name('users.index');
     Route::get('events', 'EventController@index')->name('events.index');
     Route::post('events/{event}', 'EventController@goLive')->name('events.go-live');
+    Route::post('events/{event}/teams/{team}/paticipate-active-quiz', 'QuizParticipationController@store')->name('events.teams.allow-active-quiz');
     Route::post('quizzes/{quiz}', 'QuizController@goLive')->name('quizzes.go-live');
 });

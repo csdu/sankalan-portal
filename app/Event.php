@@ -19,6 +19,21 @@ class Event extends Model
         return $this->belongsTo(Quiz::class);
     }
 
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class);
+    }
+
+    public function allowActiveQuiz(Team $team)
+    {
+        if(!$this->active_quiz_id) {
+            return false;
+        }
+
+        $this->activeQuiz->allowTeam($team);
+        return true;
+    }
+
     public function allParticipantMembers()
     {
         return $this->loadMissing('teams.members')->teams->flatMap->members;
