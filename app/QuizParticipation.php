@@ -22,6 +22,11 @@ class QuizParticipation extends Model
         return $this->belongsTo(Quiz::class);
     }
 
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
     public function getTimeLeftAttribute() {
         $timeSpent = optional($this->started_at)->diffInSeconds(now()) ?? 0;
         return $this->quiz->timeLimit - $timeSpent;
