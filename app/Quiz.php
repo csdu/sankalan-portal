@@ -25,7 +25,7 @@ class Quiz extends Model
     }
 
     public function setActive() {
-        $this->event->update(['active_quiz_id' => $this->id]);
+        return $this->event->update(['active_quiz_id' => $this->id]);
     }
 
     public function isActive() {
