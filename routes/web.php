@@ -29,4 +29,5 @@ Route::group(['prefix' => 'manage', 'middleware' => 'admin', 'namespace' => 'Adm
     Route::get('participations', 'EventParticipationController@index')->name('participations.index');
     Route::get('teams', 'TeamController@index')->name('teams.index');
     Route::get('users', 'UserController@index')->name('users.index');
+    Route::get('events', 'EventController@index')->name('events.index');
 });
