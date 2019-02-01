@@ -36,6 +36,18 @@ class Event extends Model
         });
     }
 
+    public function setLive() {
+        if($this->isLive()) {
+            return true;
+        }
+
+        return $this->update(['is_live' => true]);
+    }
+
+    public function isLive() {
+        return !!$this->is_live;
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';
