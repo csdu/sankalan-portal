@@ -1,24 +1,25 @@
 @extends('layouts.admin')
 @section('title', 'Admin Dashboard')
 @section('content')
-<events-page inline-template :data-events="{{ $events }}">
-    <div class="card seperated h-full">
-        <div class="card-header">
-            <h2 class="text-xl font-normal">Events</h2>
-        </div>
-        <table class="w-full border-collapse">
-            <thead>
-                <tr class="bg-grey-light">
-                    <th class="text-xs uppercase font-thin text-left pl-6 py-2">Status</th>
-                    <th class="text-xs uppercase font-thin text-left px-4 py-2">Event</th>
-                    <th class="text-xs uppercase font-thin text-left px-4 py-2">Rounds</th>
-                    <th class="text-xs uppercase font-thin text-left px-4 py-2">Teams</th>
-                    <th class="text-xs uppercase font-thin text-left px-4 py-2">Quizzes</th>
-                    <th class="text-xs uppercase font-thin text-left pr-6 py-2"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="border-t hover:bg-grey-lighter" v-for="event in events" :key="event.id">
+<div class="card seperated h-full">
+    <div class="card-header">
+        <h2 class="text-xl font-normal">Events</h2>
+    </div>
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="bg-grey-light">
+                <th class="text-xs uppercase font-thin text-left pl-6 py-2">Status</th>
+                <th class="text-xs uppercase font-thin text-left px-4 py-2">Event</th>
+                <th class="text-xs uppercase font-thin text-left px-4 py-2">Rounds</th>
+                <th class="text-xs uppercase font-thin text-left px-4 py-2">Teams</th>
+                <th class="text-xs uppercase font-thin text-left px-4 py-2">Quizzes</th>
+                <th class="text-xs uppercase font-thin text-left pr-6 py-2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($events as $event)
+            <tr class="border-t hover:bg-grey-lighter" is="event-row" :data-event="{{ $event }}">
+                <template slot-scope="{ event, onComplete }">
                     <td class="table-fit text-left pl-6 py-2">
                         <span v-if="event.isLive" class="p-1 uppercase text-xs rounded bg-green text-white">Live</span>
                         <span v-else-if="event.hasEnded" class="p-1 uppercase text-xs rounded bg-blue text-white">Ended</span>
@@ -39,16 +40,17 @@
                     </td>
                     <td class="table-fit text-right pr-6 py-2">
                         <ajax-button v-if="event.isLive" @success="onComplete" @failure="onComplete"
-                        :action="route('events.end', event)" method="POST" class="btn is-sm is-red">End</ajax-button>
+                        :action="route('events.end', event.slug)" method="POST" class="btn is-sm is-red">End</ajax-button>
                         <ajax-button v-else-if="!event.hasEnded" @success="onComplete" @failure="onComplete"
-                        :action="route('events.go-live', event)" method="POST" class="btn is-sm is-green">Begin</ajax-button>
+                        :action="route('events.go-live', event.slug)" method="POST" class="btn is-sm is-green">Begin</ajax-button>
                     </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="card-footer">
-            <p class="text-center text-grey">That's all folks!</p>
-        </div>
+                </template>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <div class="card-footer">
+        <p class="text-center text-grey">That's all folks!</p>
     </div>
-</events-page>
+</div>
 @endsection
