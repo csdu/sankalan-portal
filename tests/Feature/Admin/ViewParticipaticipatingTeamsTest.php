@@ -63,4 +63,28 @@ class ViewParticipaticipatingTeamsTest extends TestCase
         $this->assertInstanceOf(Collection::class, $results);
         $this->assertEquals($events[0]->teams()->count(), $results->count());
     }
+
+    /** @test */
+    public function admin_lists_all_particpating_teams_when_event_query_is_empty_string()
+    {
+        $events = create(Event::class, 3);
+        $teams = create(Team::class, 10);
+
+        $teams->random(5)->each(function ($team) use ($events) {
+            $team->participate($events[0]);
+        });
+
+        $teams->random(5)->each(function ($team) use ($events) {
+            $team->participate($events[1]);
+        });
+
+        $this->withoutExceptionHandling()->be(create(User::class, 1, ['is_admin' => true]));
+
+        $results = $this->get(route('participations.index') . '?' . http_build_query(['event' => '']))
+            ->assertSuccessful()
+            ->viewData('participations');
+
+        $this->assertInstanceOf(Collection::class, $results);
+        $this->assertEquals(10, $results->count());
+    }
 }

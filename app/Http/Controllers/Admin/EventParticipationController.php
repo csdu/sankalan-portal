@@ -12,7 +12,7 @@ class EventParticipationController extends Controller
         
         $query = EventParticipation::with(['team', 'event']);
 
-        if($request->has('event')) {
+        if($request->event) {
             $query = $query->where('event_id', $request->query('event'));
         }
 
