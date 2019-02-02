@@ -17,7 +17,7 @@ class QuizGoesLiveTest extends TestCase
     /** @test */
     public function quiz_is_set_active_in_the_event()
     {
-        $events = create(Event::class, 2, ['is_live' => true]);
+        $events = create(Event::class, 2, ['started_at' => now()]);
         $quizzes = create(Quiz::class, 2, ['event_id' => $events[0]->id]);
 
         $this->withoutExceptionHandling()->signInAdmin();
