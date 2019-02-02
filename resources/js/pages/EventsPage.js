@@ -2,17 +2,10 @@ export default {
     props: ['dataEvents'],
     data() {
         return {
-            events: this.dataEvents,
-            routes: {
-                'end': '/manage/events/{event}/end',
-                'start': '/manage/events/{event}/start'
-            }
+            events: this.dataEvents
         }
     },
     methods: {
-        route(name, event) {
-            return this.routes[name].replace('{event}', event.slug);
-        },
         onComplete({data}) {
             if(data.hasOwnProperty('event')) {
                 const index = this.events.findIndex(event => event.id == data.event.id)

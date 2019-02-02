@@ -27,6 +27,14 @@ window.flash = (message, level = 'success', important = false) => {
     });
 };
 
+Vue.mixin({
+    methods: {
+        route: route,
+        flash: flash
+    }
+});
+
+
 const app = new Vue({
     el: '#app'
 });

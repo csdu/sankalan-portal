@@ -39,9 +39,9 @@
                     </td>
                     <td class="table-fit text-right pr-6 py-2">
                         <ajax-button v-if="event.isLive" @success="onComplete" @failure="onComplete"
-                        :action="route('end', event)" method="POST" class="btn is-sm is-red">End</ajax-button>
+                        :action="route('events.end', event)" method="POST" class="btn is-sm is-red">End</ajax-button>
                         <ajax-button v-else-if="!event.hasEnded" @success="onComplete" @failure="onComplete"
-                        :action="route('start', event)" method="POST" class="btn is-sm is-green">Begin</ajax-button>
+                        :action="route('events.go-live', event)" method="POST" class="btn is-sm is-green">Begin</ajax-button>
                     </td>
                 </tr>
             </tbody>
