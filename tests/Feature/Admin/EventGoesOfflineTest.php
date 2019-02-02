@@ -27,9 +27,11 @@ class EventGoesOfflineTest extends TestCase
             ->json();
 
         $this->assertArrayHasKey('status', $json);
+        $this->assertArrayHasKey('event', $json);
+        $this->assertArrayHasKey('id', $json['event']);
         $this->assertEquals('success', $json['status']);
         $this->assertArrayHasKey('message', $json);
-        $this->assertFalse($events[0]->fresh()->isLive());
+        $this->assertFalse($events[0]->fresh()->isLive);
         $this->assertInstanceOf(Carbon::class, $events[0]->fresh()->ended_at);
         $this->assertEqualsWithDelta(now()->getTimestamp(), $events[0]->fresh()->ended_at->getTimestamp(), 2);
     }

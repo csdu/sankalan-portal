@@ -11,7 +11,7 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::all();
+        $events = Event::withCount(['teams', 'quizzes'])->with('activeQuiz')->get();
 
         return view('admin.events.index', compact('events'));
     }
@@ -27,11 +27,12 @@ class EventController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Event is live now!'
+            'message' => 'Event is live now!',
+            'event' => $event
         ]);
 
     }
-
+    
     public function end(Event $event)
     {
         if (!$event->end()) {
@@ -43,7 +44,8 @@ class EventController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Event has ended!'
+            'message' => 'Event has ended!',
+            'event' => $event
         ]);
 
     }

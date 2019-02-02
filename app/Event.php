@@ -11,6 +11,8 @@ class Event extends Model
 
     protected $dates = ['started_at', 'ended_at'];
 
+    protected $appends = ['isLive', 'hasEnded'];
+
     public function teams()
     {
         return $this->belongsToMany(Team::class, 'participants');
@@ -54,7 +56,7 @@ class Event extends Model
     }
 
     public function setLive() {
-        if($this->isLive()) {
+        if($this->isLive) {
             return true;
         }
 
@@ -63,15 +65,25 @@ class Event extends Model
 
     public function end()
     {
-        if ($this->isLive()) {
+        if ($this->isLive) {
             return $this->update(['ended_at' => now()]);
         }
         
         return true;
     }
 
-    public function isLive() {
-        return !! $this->started_at && ! $this->ended_at;
+    public function getIsLiveAttribute() {
+        return $this->hasStarted && ! $this->hasEnded;
+    }
+
+    public function getHasStartedAttribute()
+    {
+        return !!$this->started_at;
+    }
+    
+    public function getHasEndedAttribute()
+    {
+        return !!$this->ended_at;
     }
 
     public function getRouteKeyName()

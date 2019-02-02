@@ -16,24 +16,26 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="font-sans bg-grey-lighter text-black">
-    <div id="app" class="min-h-screen flex flex-col container mx-auto">
+<body class="font-sans bg-grey-lighter text-black overflow-x-auto" style="min-width: 1024px;">
+    <div id="app" class="min-h-screen flex flex-col px-4 md:px-10">
         <main class="flex-1 flex flex-col my-4">
-            <h1 class="border-b py-3 mb-6">Sankalan</h1>
+            <div class="flex items-baseline justify-between mb-6 border-b">
+                <h1 class="mb-3">Sankalan</h1>
+                <a href="#logout" class="btn is-red">Logout</a>
+            </div>
             <div class="flex-1 flex">
-                <div class="w-64">
-                    <div class="nav-bar flex flex-col">
-                        <div class="nav-bar-item border-grey px-4">
-                            <h3 class="font-light py-3">Events</h3>
-                        </div>
-                        <div class="nav-bar-item border-grey px-4">
-                            <h3 class="font-light py-5"><a href="participations">Participations</a></h3>
-                        </div>
-                        <div class="nav-bar-item border-grey px-4">
-                            <h3 class="font-light py-5">Logout</h3>
-                        </div>
-                    </div>
-                </div>
+                <aside class="w-48 pt-4 mr-4">
+                    <ul class="nav-bar list-reset">
+                        <li class="nav-bar-item">
+                            <a href="{{ route('events.index') }}" 
+                            class="inline-block w-full text-grey-dark hover:text-black px-4 py-2 rounded">Events</a>
+                        </li>
+                        <li class="nav-bar-item">
+                            <a href="{{ route('participations.index') }}" 
+                            class="inline-block w-full text-grey-dark hover:text-black px-4 py-2 rounded">Participations</a></a>
+                        </li>
+                    </ul>
+                </aside>
                 <div class="flex-1">
                     @yield('content')
                 </div>

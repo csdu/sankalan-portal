@@ -25,9 +25,11 @@ class EventGoesLiveTest extends TestCase
             ->json();
 
         $this->assertArrayHasKey('status', $json);
+        $this->assertArrayHasKey('event', $json);
+        $this->assertArrayHasKey('id', $json['event']);
         $this->assertEquals('success', $json['status']);
         $this->assertArrayHasKey('message', $json);
-        $this->assertTrue($events[0]->fresh()->isLive());
+        $this->assertTrue($events[0]->fresh()->isLive);
         $this->assertInstanceOf(Carbon::class, $events[0]->fresh()->started_at);
         $this->assertEqualsWithDelta(now()->getTimestamp(), $events[0]->fresh()->started_at->getTimestamp(), 2);
     }
