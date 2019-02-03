@@ -10,7 +10,7 @@ class TeamController extends Controller
 {
     public function index()
     {
-        $teams = Team::with('members')->get();
+        $teams = Team::withCount(['events'])->with(['members'])->paginate(15);
         return view('admin.teams.index', compact('teams'));
     }
 }
