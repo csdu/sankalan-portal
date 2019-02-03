@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Support\Collection;
 use App\Team;
 use App\Event;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ViewEventsTeamsTest extends TestCase
 {
@@ -18,10 +19,10 @@ class ViewEventsTeamsTest extends TestCase
     public function admin_lists_all_particpating_teams()
     {
         $events = create(Event::class, 5);
-        $teams = create(Team::class, 3);
+        $teams = create(Team::class, 20);
 
         $teams->each(function($team) use ($events){
-            $events->random(3)->each(function($event) use($team) {
+            $events->random(2)->each(function($event) use($team) {
                 $team->participate($event);
             });
         });
@@ -38,9 +39,10 @@ class ViewEventsTeamsTest extends TestCase
         $this->assertArrayHasKey('slug', $viewEvents->first()->toArray());
         $this->assertArrayHasKey('title', $viewEvents->first()->toArray());
 
-        $this->assertInstanceOf(Collection::class, $results);
-        $this->assertCount(9, $results);
-        $results->map->toArray()->each(function($result) {
+        $this->assertInstanceOf(LengthAwarePaginator::class, $results);
+        $this->assertCount(15, $results->toArray()['data']);
+        $this->assertEquals(40, $results->toArray()['total']);
+        collect($results->toArray()['data'])->each(function($result) {
             $this->assertArrayHasKey('event', $result);
             $this->assertArrayHasKey('team', $result);
             $this->assertArrayHasKey('members', $result['team']);
@@ -68,10 +70,10 @@ class ViewEventsTeamsTest extends TestCase
 
         $this->assertCount(3, $viewEvents);
         
-        $this->assertInstanceOf(Collection::class, $results);
+        $this->assertInstanceOf(LengthAwarePaginator::class, $results);
         $this->assertCount(2, $results);
-        $results->each(function($result) use ($events){
-            $this->assertEquals($events[0]->id, $result->event_id);
+        collect($results->toArray()['data'])->each(function($result) use ($events){
+            $this->assertEquals($events[0]->id, $result['event_id']);
         });
     }
 }

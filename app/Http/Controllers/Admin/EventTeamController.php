@@ -22,7 +22,7 @@ class EventTeamController extends Controller
             });
         }
         
-        $events_teams = $query->with(['event','team.members'])->get();
+        $events_teams = $query->with(['event','team.members'])->paginate(15);
         return view('admin.events_teams.index', compact('events_teams', 'events', 'event'));
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <tr>
-       <slot :team="eventTeam.team" :event="eventTeam.event" :members="members" :onComplete="onComplete"></slot> 
+       <slot :team="eventTeam.team" :event="eventTeam.event" :onComplete="onComplete"></slot> 
     </tr>
 </template>
 <script>
@@ -9,11 +9,6 @@ export default {
     data() {
         return {
             eventTeam: this.dataEventTeam,
-        }
-    },
-    computed: {
-        members() {
-            return this.eventTeam.team.members.map(member => member.first_name).join(', ');
         }
     },
     methods: {

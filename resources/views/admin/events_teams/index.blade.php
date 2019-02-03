@@ -10,7 +10,7 @@
                     @else
                         <h3 class="text-xl font-normal">Participations</h3>
                     @endif
-                    <span class="ml-2 bg-blue text-white rounded-full p-1 text-xs">{{ $events_teams->count() }}</span>
+                    <span class="ml-2 bg-blue text-white rounded-full p-1 text-xs">{{ $events_teams->total() }}</span>
                 </div>
                 <get-routes class="flex" 
                     select-classes="control is-sm"
@@ -41,8 +41,15 @@
                     <tr class="border-t hover:bg-grey-lighter" is="event-team-row" :data-event-team="{{$event_team}}">
                         <template slot-scope="{team, event, members, onComplete}">
                             <td class="table-fit text-left pl-6 py-2 text-sm" v-text="team.uid"></td>
-                            <td class="text-left px-4 py-2" v-text="team.name"></td>
-                            <td class="table-fit text-left px-4 py-2" v-text="members"></td>
+                            <td class="table-fit text-left px-4 py-2" v-text="team.name"></td>
+                            <td class="text-left px-4 py-2">
+                                <div class="flex -mx-1">
+                                    <span class="p-1 mx-1 bg-blue text-white text-xs font-semibold rounded" 
+                                    v-for="member in team.members" 
+                                    :key="member.id"
+                                    v-text="member.first_name"></span>
+                                </div>
+                            </td>
                             @if(!$event)
                             <td class="text-left px-4-6 py-2 capitalize" v-text="event.title"></td>
                             @endif
@@ -54,6 +61,8 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="card-footer">
+            {{ $events_teams->links('partials.pagination') }}
         </div>
     </div>
 @endsection
