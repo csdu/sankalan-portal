@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ViewUsersTest extends TestCase
 {
@@ -14,13 +15,15 @@ class ViewUsersTest extends TestCase
     /** @test */
     public function list_all_Users()
     {
-        $users = create(User::class, 5);
+        $users = create(User::class, 25);
         $admins = create(User::class, 2, ['is_admin' => true]);
 
         $this->withoutExceptionHandling()->signIn($admins[0]);
 
         $resultUsers = $this->get(route('admin.users.index'))->viewData('users');
 
-        $this->assertCount(5, $resultUsers);
+        $this->assertInstanceOf(LengthAwarePaginator::class, $resultUsers);
+        $this->assertCount(15, $resultUsers);
+        $this->assertEquals(25, $resultUsers->total());
     }
 }

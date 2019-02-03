@@ -63,6 +63,12 @@
                                 Teams
                             </a>
                         </li>
+                        <li class="nav-bar-item">
+                            <a href="{{ route('admin.users.index') }}" 
+                            class="inline-block w-full text-grey-darker hover:text-blue px-4 py-2 rounded{{ Request::segment(2) === 'users' ? ' text-blue font-semibold' : ' ' }}">
+                                Users
+                            </a>
+                        </li>
                     </ul>
                 </aside>
                 <div class="flex-1">
