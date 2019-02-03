@@ -8,6 +8,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Event;
 use App\Quiz;
 use App\QuizParticipation;
+use App\Team;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ViewQuizParticipationsTest extends TestCase
 {
@@ -16,24 +18,68 @@ class ViewQuizParticipationsTest extends TestCase
     /** @test */
     public function admin_can_view_all_quiz_participations()
     {
-        $quiz = create(Quiz::class);
-        create(QuizParticipation::class, 5, ['quiz_id' => $quiz->id]);
+        $quizzes = create(Quiz::class, 4);
+        $teams = create(Team::class, 12);
 
-        $viewParticipations = $this->signInAdmin()
+        $teams->random(8)->each(function($team) use ($quizzes) {
+            $quizzes->each(function($quiz) use ($team) {
+                $team->participate($quiz->event);
+                $quiz->setActive();
+                $quiz->allowTeam($team);
+            });
+        });
+
+        $response = $this->signInAdmin()
             ->withoutExceptionHandling()
-            ->get(route('quizzes.participations.index', $quiz))
+            ->get(route('admin.quizzes.teams.index'))
             ->assertSuccessful()
-            ->assertViewIs('admin.quiz-participations.index')
-            ->viewData('participations');
+            ->assertViewIs('admin.quizzes_teams.index');
 
-        $this->assertCount(5, $viewParticipations);
+        $viewParticipations = $response->viewData('quizzes_teams');
+        $quiz = $response->viewData('quiz');
+        $quizzes = $response->viewData('quizzes');
+
+        $this->assertCount(4, $quizzes);
+        $this->assertInstanceOf(LengthAwarePaginator::class, $viewParticipations);
+        $this->assertEquals(32, $viewParticipations->total());
+        $this->assertCount(15, $viewParticipations);
+        $this->assertNull($quiz);
 
         tap($viewParticipations->first(), function($firstParticipation) {
             $this->assertArrayHasKey('quiz', $firstParticipation->toArray());
             $this->assertArrayHasKey('team', $firstParticipation->toArray());
-            $this->assertArrayHasKey('responses', $firstParticipation->toArray());
-            $this->assertCount(0, $firstParticipation->responses);
+            $this->assertArrayHasKey('questions_count', $firstParticipation->toArray()['quiz']);
+            $this->assertArrayHasKey('responses_count', $firstParticipation->toArray());
         });
+    }
+
+    /** @test */
+    public function admin_can_view_specific_quiz_participations()
+    {
+        $quizzes = create(Quiz::class, 4);
+        $teams = create(Team::class, 4);
+
+        $quizzes->each(function ($quiz, $index) use ($teams) {
+            $teams->random($index+1)->each(function ($team) use ($quiz) {
+                $team->participate($quiz->event);
+                $quiz->setActive();
+                $quiz->allowTeam($team);
+            });
+        });
+
+        $response = $this->signInAdmin()
+            ->withoutExceptionHandling()
+            ->get(route('admin.quizzes.teams.index', $quizzes[2]))
+            ->assertSuccessful()
+            ->assertViewIs('admin.quizzes_teams.index');
+
+        $viewParticipations = $response->viewData('quizzes_teams');
+        $quiz = $response->viewData('quiz');
+        $quizzes = $response->viewData('quizzes');
+
+        $this->assertCount(4, $quizzes);
+        $this->assertCount(3, $viewParticipations);
+        $this->assertNotNull($quiz);
 
     }
 }

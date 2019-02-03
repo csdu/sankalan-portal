@@ -62,7 +62,7 @@
             </tbody>
         </table>
         <div class="card-footer">
-            {{ $events_teams->links('partials.pagination') }}
+            {{ $events_teams->links() }}
         </div>
     </div>
 @endsection

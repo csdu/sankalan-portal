@@ -42,6 +42,10 @@ class Quiz extends Model
     }
 
     public function getIsActiveAttribute() {
+        if($this->event_id === null) {
+            return null;
+        }
+        
         return $this->id == $this->event->active_quiz_id &&
             $this->opened_at && !$this->closed_at;
     }

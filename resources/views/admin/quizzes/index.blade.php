@@ -38,7 +38,11 @@
                         </td>
                         <td class="table_fit text-left px-4 py-2" v-text="timeLimit"></td>
                         <td class="table_fit text-center px-4 py-2" >
-                            <a href="#" class="link text-xs" v-text="`Teams (${quiz.participations_count})`"></a>
+                            <a v-if="quiz.participations_count" 
+                            :href="route('admin.quizzes.teams.index', quiz.slug)" 
+                            class="link text-xs" 
+                            v-text="`Teams (${quiz.participations_count})`"></a>
+                            <span v-else class="text-red text-xs">No Teams</span>
                         </td>
                         <td class="table_fit text-center px-4 py-2">
                             <span class="px-2 py-1 rounded-full bg-grey text-xs" v-text="quiz.questions_count"></span>

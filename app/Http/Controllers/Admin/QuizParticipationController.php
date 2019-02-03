@@ -8,15 +8,29 @@ use App\Team;
 use App\Event;
 use Symfony\Component\HttpFoundation\Response;
 use App\Quiz;
+use App\QuizParticipation;
 
 class QuizParticipationController extends Controller
 {
-    public function index(Quiz $quiz)
+    public function index(Quiz $quiz = null)
     {
-        $participations = $quiz->participations()->with(['team', 'responses'])->get();
+        
+        $query = QuizParticipation::withCount('responses');
+        $quizzes = Quiz::select(['slug', 'title'])->get();
+        if($quiz) {
+            $query->whereHas('quiz', function($query) use ($quiz) {
+                $query->where('slug', $quiz->slug);
+            });
+        }
 
-        return view('admin.quiz-participations.index')
-            ->with(compact('participations'));
+        $quizzes_teams = $query->with(['team',
+            'quiz' => function($query) {
+                $query->withCount('questions');
+            }
+        ])->paginate(15);
+
+        return view('admin.quizzes_teams.index')
+            ->with(compact('quizzes_teams', 'quiz', 'quizzes'));
     }
     
     public function store(Event $event, Team $team)
