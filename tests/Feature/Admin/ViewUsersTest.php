@@ -19,7 +19,7 @@ class ViewUsersTest extends TestCase
 
         $this->withoutExceptionHandling()->signIn($admins[0]);
 
-        $resultUsers = $this->get(route('users.index'))->viewData('users');
+        $resultUsers = $this->get(route('admin.users.index'))->viewData('users');
 
         $this->assertCount(5, $resultUsers);
     }

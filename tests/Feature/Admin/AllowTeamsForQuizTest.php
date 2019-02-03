@@ -28,7 +28,7 @@ class AllowTeamsForQuizTest extends TestCase
         $this->withoutExceptionHandling()->signInAdmin();
 
         $response = $this->postJson(
-            route('events.teams.allow-active-quiz', [$events->first(), $team])
+            route('admin.events.teams.allow-active-quiz', [$events->first(), $team])
         )->assertSuccessful()->json();
 
         tap($events->first()->fresh()->activeQuiz, function($activeQuiz) {
@@ -56,7 +56,7 @@ class AllowTeamsForQuizTest extends TestCase
         $this->withoutExceptionHandling()->signInAdmin();
 
         $response = $this->postJson(
-            route('events.teams.allow-active-quiz', [$events->first(), $team])
+            route('admin.events.teams.allow-active-quiz', [$events->first(), $team])
         )->assertStatus(Response::HTTP_BAD_REQUEST)->json();
 
         tap($events->first()->quizzes->first()->fresh(), function ($activeQuiz) {

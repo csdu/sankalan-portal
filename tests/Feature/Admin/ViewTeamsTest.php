@@ -18,7 +18,7 @@ class ViewTeamsTest extends TestCase
         $teams = create(Team::class, 5);
         $this->withoutExceptionHandling()->signInAdmin();
 
-        $resultTeams = $this->get(route('teams.index'))->viewData('teams');
+        $resultTeams = $this->get(route('admin.teams.index'))->viewData('teams');
 
         $this->assertCount(5, $resultTeams);
     }

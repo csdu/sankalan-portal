@@ -22,7 +22,7 @@ class EventGoesOfflineTest extends TestCase
 
         $events[0]->setLive();
 
-        $json = $this->postJson(route('events.end', $events[0]))
+        $json = $this->postJson(route('admin.events.end', $events[0]))
             ->assertSuccessful()
             ->json();
 

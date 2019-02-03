@@ -34,7 +34,7 @@
                             </a>
                         </li>
                         <li class="nav-bar-item">
-                            <a href="{{ route('events.index') }}" 
+                            <a href="{{ route('admin.events.index') }}" 
                                 class="inline-block w-full text-grey-darker hover:text-blue px-4 py-2 rounded{{ Request::segment(2) === 'events' ? ' text-blue font-semibold' : ' ' }}">
                                 Events
                             </a>
@@ -55,6 +55,12 @@
                             <a href="{{ route('admin.quizzes.teams.index') }}" 
                                 class="inline-block w-full text-grey-darker hover:text-blue px-4 py-2 rounded{{ Request::segment(2) === 'quizzes_teams' ? ' text-blue font-semibold' : ' ' }}">
                                 Quiz Participations
+                            </a>
+                        </li>
+                        <li class="nav-bar-item">
+                            <a href="{{ route('admin.teams.index') }}" 
+                            class="inline-block w-full text-grey-darker hover:text-blue px-4 py-2 rounded{{ Request::segment(2) === 'teams' ? ' text-blue font-semibold' : ' ' }}">
+                                Teams
                             </a>
                         </li>
                     </ul>

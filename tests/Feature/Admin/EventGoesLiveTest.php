@@ -20,7 +20,7 @@ class EventGoesLiveTest extends TestCase
 
         $this->withoutExceptionHandling()->signInAdmin();
 
-        $json = $this->postJson(route('events.go-live', $events[0]))
+        $json = $this->postJson(route('admin.events.go-live', $events[0]))
             ->assertSuccessful()
             ->json();
 
