@@ -32,7 +32,8 @@ window.flash = (message, level = 'success', important = false) => {
 Vue.mixin({
     methods: {
         route: route,
-        flash: flash
+        flash: flash,
+        reload: () => window.location.reload(),
     }
 });
 

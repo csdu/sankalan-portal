@@ -22,7 +22,7 @@
         <main class="flex-1 flex flex-col my-4">
             <div class="flex items-baseline justify-between mb-6 border-b">
                 <h1 class="mb-3">Sankalan</h1>
-                <a href="#logout" class="btn is-red">Logout</a>
+                <ajax-button action="{{ route('logout') }}" method="post" @success="reload()" class="btn is-red font-normal">Logout</a>
             </div>
             <div class="flex-1 flex">
                 <aside class="w-48 pt-4 mr-4">
