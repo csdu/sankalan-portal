@@ -28,20 +28,34 @@
                 <aside class="w-48 pt-4 mr-4">
                     <ul class="nav-bar list-reset">
                         <li class="nav-bar-item">
+                            <a href="{{ route('admin.dashboard') }}" 
+                                class="inline-block w-full text-grey-darker hover:text-blue px-4 py-2 rounded{{ Request::segment(2) === 'dashboard' ? ' text-blue font-semibold' : ' ' }}">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-bar-item">
                             <a href="{{ route('events.index') }}" 
-                            class="inline-block w-full text-grey-dark hover:text-black px-4 py-2 rounded">Events</a>
+                                class="inline-block w-full text-grey-darker hover:text-blue px-4 py-2 rounded{{ Request::segment(2) === 'events' ? ' text-blue font-semibold' : ' ' }}">
+                                Events
+                            </a>
                         </li>
                         <li class="nav-bar-item">
                             <a href="{{ route('admin.events.teams.index') }}" 
-                            class="inline-block w-full text-grey-dark hover:text-black px-4 py-2 rounded">Participations</a></a>
+                                class="inline-block w-full text-grey-darker hover:text-blue px-4 py-2 rounded{{ Request::segment(2) === 'events_teams' ? ' text-blue font-semibold' : ' ' }}">
+                                Participations
+                            </a>
                         </li>
                         <li class="nav-bar-item">
                             <a href="{{ route('admin.quizzes.index') }}" 
-                            class="inline-block w-full text-grey-dark hover:text-black px-4 py-2 rounded">Quizzes</a></a>
+                                class="inline-block w-full text-grey-darker hover:text-blue px-4 py-2 rounded{{ Request::segment(2) === 'quizzes' ? ' text-blue font-semibold' : ' ' }}">
+                                Quizzes
+                            </a>
                         </li>
                         <li class="nav-bar-item">
                             <a href="{{ route('admin.quizzes.teams.index') }}" 
-                            class="inline-block w-full text-grey-dark hover:text-black px-4 py-2 rounded">Quiz Participations</a></a>
+                                class="inline-block w-full text-grey-darker hover:text-blue px-4 py-2 rounded{{ Request::segment(2) === 'quizzes_teams' ? ' text-blue font-semibold' : ' ' }}">
+                                Quiz Participations
+                            </a>
                         </li>
                     </ul>
                 </aside>

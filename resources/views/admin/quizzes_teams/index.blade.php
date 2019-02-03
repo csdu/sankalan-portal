@@ -23,13 +23,13 @@
     <table class="w-full">
         <thead>
             <tr class="bg-grey-light">
-                <th class="text-xs uppercase font-thin text-left pl-6 py-2">Status</th>
-                <th class="text-xs uppercase font-thin text-left px-4 py-2">Team</th>
-                <th class="text-xs uppercase font-thin text-left px-4 py-2">Quiz</th>
-                <th class="text-xs uppercase font-thin text-left px-4 py-2">Questions</th>
-                <th class="text-xs uppercase font-thin text-left px-4 py-2">Responses</th>
-                <th class="text-xs uppercase font-thin text-left px-4 py-2">Started</th>
-                <th class="text-xs uppercase font-thin text-left px-4 py-2">Finished</th>
+                <th class="text-xs uppercase font-light text-left pl-6 py-2">Status</th>
+                <th class="text-xs uppercase font-light text-left px-4 py-2">Team</th>
+                <th class="text-xs uppercase font-light text-left px-4 py-2">Quiz</th>
+                <th class="text-xs uppercase font-light text-left px-4 py-2">Questions</th>
+                <th class="text-xs uppercase font-light text-left px-4 py-2">Responses</th>
+                <th class="text-xs uppercase font-light text-left px-4 py-2">Started</th>
+                <th class="text-xs uppercase font-light text-left px-4 py-2">Finished</th>
             </tr>
         </thead>
         <tbody>

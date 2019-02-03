@@ -27,13 +27,13 @@
         <table class="w-full">
             <thead>
                 <tr class="bg-grey-light">
-                    <th class="text-xs uppercase font-thin text-left pl-6 py-2">Team ID</th>
-                    <th class="text-xs uppercase font-thin text-left px-4 py-2">Team Name</th>
-                    <th class="text-xs uppercase font-thin text-left px-4 py-2">Memebers</th>
+                    <th class="text-xs uppercase font-light text-left pl-6 py-2">Team ID</th>
+                    <th class="text-xs uppercase font-light text-left px-4 py-2">Team Name</th>
+                    <th class="text-xs uppercase font-light text-left px-4 py-2">Memebers</th>
                     @if(!$event)
-                        <th class="text-xs uppercase font-thin text-left pl-4 py-2">Event Name</th>
+                        <th class="text-xs uppercase font-light text-left pl-4 py-2">Event Name</th>
                     @endif
-                    <th class="text-xs uppercase font-thin text-left pl-6 py-2">Actions</th>
+                    <th class="text-xs uppercase font-light text-left pl-6 py-2">Actions</th>
                 </tr>
             </thead>
             <tbody>
