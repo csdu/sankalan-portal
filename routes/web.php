@@ -24,7 +24,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
     Route::post('/quiz/{quiz}', 'QuizResponseController@store')->name('quizzes.response.store');
 });
 
-Route::group(['prefix' => 'manage', 'middleware' => 'admin', 'namespace' => 'Admin'], function() {
+Route::group(['prefix' => 'manage', 'middleware' => ['auth','admin'], 'namespace' => 'Admin'], function() {
     Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
     Route::get('events_teams/{event?}', 'EventTeamController@index')->name('admin.events.teams.index');
     Route::get('teams', 'TeamController@index')->name('admin.teams.index');
