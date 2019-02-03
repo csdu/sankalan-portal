@@ -9,18 +9,29 @@ use Symfony\Component\HttpFoundation\Response;
 
 class QuizController extends Controller
 {
+    public function index()
+    {
+        $quizzes = Quiz::withCount(['participations', 'questions'])
+            ->with(['event'])
+            ->get();
+
+        return view('admin.quizzes.index', compact('quizzes'));
+    }
+    
     public function goLive(Quiz $quiz)
     {
         if(!$quiz->setActive()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong',
+                'quiz' => $quiz
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return [
             'status' => 'success',
-            'message' => 'Quiz is now Live!'
+            'message' => 'Quiz is now Live!',
+            'quiz' => $quiz
         ];
     }
 
@@ -30,12 +41,14 @@ class QuizController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong',
+                'quiz' => $quiz
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return [
             'status' => 'success',
-            'message' => 'Quiz is now Closed!'
+            'message' => 'Quiz is now Closed!',
+            'quiz' => $quiz
         ];
     }
 }

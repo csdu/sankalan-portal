@@ -18,12 +18,21 @@ class QuizGoesOfflineTest extends TestCase
         $quiz = create(Quiz::class);
         $quiz->setActive();
 
-        $this->withoutExceptionHandling()
+        $response = $this->withoutExceptionHandling()
             ->signInAdmin()
-            ->post(route('quizzes.close', $quiz))
-            ->assertSuccessful();
+            ->postJson(route('admin.quizzes.close', $quiz))
+            ->assertSuccessful()
+            ->json();
 
-        $this->assertFalse($quiz->fresh()->isActive(), 'quiz is still active after being closed.');
+        $this->assertArrayHasKey('status', $response);
+        $this->assertArrayHasKey('message', $response);
+        $this->assertArrayHasKey('quiz', $response);
+        $this->assertArrayHasKey('event', $response['quiz']);
+        $this->assertEquals($quiz->fresh()->opened_at->toDateTimeString(), $response['quiz']['opened_at']);
+        $this->assertFalse($response['quiz']['isActive']);
+        $this->assertTrue($response['quiz']['isClosed']);
+
+        $this->assertFalse($quiz->fresh()->isActive, 'quiz is still active after being closed.');
         $this->assertInstanceOf(Carbon::class, $quiz->fresh()->closed_at);
         $this->assertEqualsWithDelta(now()->getTimestamp(), $quiz->fresh()->closed_at->getTimestamp(), 1);
 

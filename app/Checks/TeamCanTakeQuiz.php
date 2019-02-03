@@ -40,7 +40,7 @@ class TeamCanTakeQuiz {
 
     private function isQuizActive()
     {
-        if ($this->quiz->isActive()) {
+        if ($this->quiz->isActive) {
             return true;
         }
 

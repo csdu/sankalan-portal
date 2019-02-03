@@ -33,7 +33,8 @@ Route::group(['prefix' => 'manage', 'middleware' => 'admin', 'namespace' => 'Adm
     Route::post('events/{event}/start', 'EventController@goLive')->name('events.go-live');
     Route::post('events/{event}/end', 'EventController@end')->name('events.end');
     Route::post('events/{event}/teams/{team}/paticipate-active-quiz', 'QuizParticipationController@store')->name('events.teams.allow-active-quiz');
-    Route::post('quizzes/{quiz}/open', 'QuizController@goLive')->name('quizzes.go-live');
-    Route::post('quizzes/{quiz}/close', 'QuizController@close')->name('quizzes.close');
+    Route::get('quizzes', 'QuizController@index')->name('admin.quizzes.index');
+    Route::post('quizzes/{quiz}/open', 'QuizController@goLive')->name('admin.quizzes.go-live');
+    Route::post('quizzes/{quiz}/close', 'QuizController@close')->name('admin.quizzes.close');
     Route::get('quizzes/{quiz}/participations', 'QuizParticipationController@index')->name('quizzes.participations.index');
 });

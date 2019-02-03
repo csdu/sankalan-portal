@@ -8,6 +8,8 @@ class Quiz extends Model
 {
     protected $guarded = [];
 
+    protected $appends = ['isActive', 'isClosed'];
+
     protected $dates = ['closed_at', 'opened_at'];
 
     public function event() {
@@ -27,6 +29,9 @@ class Quiz extends Model
     }
 
     public function setActive() {
+        if(!$this->event->isLive) {
+            $this->event->setLive();
+        }
         return $this->event->update(['active_quiz_id' => $this->id]) &&
             $this->update(['opened_at' => now()]);
     }
@@ -36,9 +41,14 @@ class Quiz extends Model
             $this->update(['closed_at' => now()]);
     }
 
-    public function isActive() {
+    public function getIsActiveAttribute() {
         return $this->id == $this->event->active_quiz_id &&
-            !$this->closed_at;
+            $this->opened_at && !$this->closed_at;
+    }
+
+    public function getIsClosedAttribute()
+    {
+        return !!$this->closed_at;
     }
 
     public function isTeamAllowed(Team $team) {

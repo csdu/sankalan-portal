@@ -6,9 +6,9 @@
             <div class="flex justify-between items-baseline">
                 <div class="flex">
                     @if($event)
-                        <h3 class="text-xl font-normal">Teams - {{ ucwords($event->title) }} </h3>
+                        <h2 class="text-xl font-normal">Teams - {{ ucwords($event->title) }} </h2>
                     @else
-                        <h3 class="text-xl font-normal">Participations</h3>
+                        <h2 class="text-xl font-normal">Participations</h2>
                     @endif
                     <span class="ml-2 bg-blue text-white rounded-full p-1 text-xs">{{ $events_teams->total() }}</span>
                 </div>

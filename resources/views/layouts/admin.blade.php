@@ -35,6 +35,10 @@
                             <a href="{{ route('admin.events.teams.index') }}" 
                             class="inline-block w-full text-grey-dark hover:text-black px-4 py-2 rounded">Participations</a></a>
                         </li>
+                        <li class="nav-bar-item">
+                            <a href="{{ route('admin.quizzes.index') }}" 
+                            class="inline-block w-full text-grey-dark hover:text-black px-4 py-2 rounded">Quizzes</a></a>
+                        </li>
                     </ul>
                 </aside>
                 <div class="flex-1">

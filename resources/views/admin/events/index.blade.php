@@ -3,7 +3,10 @@
 @section('content')
 <div class="card seperated h-full">
     <div class="card-header">
-        <h2 class="text-xl font-normal">Events</h2>
+        <div class="flex">
+            <h2 class="text-xl font-normal">Events</h2>
+            <span class="ml-2 bg-blue text-white rounded-full p-1 text-xs">{{ $events->count() }}</span>
+        </div>
     </div>
     <table class="w-full border-collapse">
         <thead>
