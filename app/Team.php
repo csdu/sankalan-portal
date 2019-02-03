@@ -9,6 +9,8 @@ class Team extends Model
 {
     protected $guarded = [];
 
+    protected $appends = ['uid'];
+
     public function getUidAttribute() {
         return env("ID_PREFIX", "SNKLN") . "-T" . str_pad("$this->id", 3, "0", STR_PAD_LEFT);
     }

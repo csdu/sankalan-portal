@@ -32,7 +32,7 @@
                             class="inline-block w-full text-grey-dark hover:text-black px-4 py-2 rounded">Events</a>
                         </li>
                         <li class="nav-bar-item">
-                            <a href="{{ route('participations.index') }}" 
+                            <a href="{{ route('admin.events.teams.index') }}" 
                             class="inline-block w-full text-grey-dark hover:text-black px-4 py-2 rounded">Participations</a></a>
                         </li>
                     </ul>

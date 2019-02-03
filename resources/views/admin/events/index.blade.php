@@ -13,7 +13,7 @@
                 <th class="text-xs uppercase font-thin text-left px-4 py-2">Rounds</th>
                 <th class="text-xs uppercase font-thin text-left px-4 py-2">Teams</th>
                 <th class="text-xs uppercase font-thin text-left px-4 py-2">Quizzes</th>
-                <th class="text-xs uppercase font-thin text-left pr-6 py-2"></th>
+                <th class="text-xs uppercase font-thin text-right pr-6 py-2">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +31,7 @@
                     </td>
                     <td class="table-fit text-center px-4 py-2" v-text="event.rounds"></td>
                     <td class="table-fit text-center px-4 py-2">
-                        <a v-if="event.teams_count" href="" class="link text-xs" v-text="`Teams (${event.teams_count})`"></a>
+                        <a v-if="event.teams_count" :href="route('admin.events.teams.index', event.slug)" class="link text-xs" v-text="`Teams (${event.teams_count})`"></a>
                         <span v-else class="text-xs text-red">No Teams</span>
                     </td>
                     <td class="table-fit text-center px-4 py-2">
