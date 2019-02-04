@@ -60,7 +60,10 @@ class Quiz extends Model
     }
 
     public function isTimeLimitExceeded($team) {
-        $timeTaken = $this->participationByTeam($team)->started_at->diffInSeconds(now());
+        if(! $participation = $this->participationByTeam($team)) {
+            return false;
+        }
+        $timeTaken = optional($participation->started_at)->diffInSeconds(now());
         return $timeTaken > ($this->timeLimit + 1*60); // Add 1 Minute Extra
     }
 
@@ -79,7 +82,7 @@ class Quiz extends Model
     }
 
     public function hasTeamResponded(Team $team) {
-        return $this->participationByTeam($team)->finished_at != null;
+        return optional($this->participationByTeam($team))->finished_at != null;
     }
 
     public function getRouteKeyName()
