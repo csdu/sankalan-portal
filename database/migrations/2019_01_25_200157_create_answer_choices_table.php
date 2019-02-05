@@ -17,12 +17,12 @@ class CreateAnswerChoicesTable extends Migration
             $table->increments('id');
             $table->string('key')->index();
             $table->string('text');
-            $table->boolean('is_illustration')->default(false);
-            $table->boolean('is_code')->default(false);
             $table->string('illustration')->nullable();
             $table->unsignedInteger('question_id')->index();
             $table->unique(['key', 'question_id']);
             $table->timestamps();
+
+            $table->foreign('question_id')->references('id')->on('questions');
         });
     }
 
@@ -33,6 +33,10 @@ class CreateAnswerChoicesTable extends Migration
      */
     public function down()
     {
+        Schema::table('answer_choices', function(Blueprint $table) {
+            $table->dropForeign(['question_id']);
+        });
+
         Schema::dropIfExists('answer_choices');
     }
 }

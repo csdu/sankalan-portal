@@ -17,12 +17,14 @@ class CreateQuizzesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug')->unique();
-            $table->unsignedInteger('timeLimit')->default(1800);
-            $table->unsignedInteger('questionsLimit')->default(30);
+            $table->unsignedInteger('time_limit')->default(1800);
+            $table->unsignedInteger('questions_limit')->default(30);
             $table->unsignedInteger('event_id')->index();
             $table->timestamp('opened_at')->nullable();
             $table->timestamp('closed_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('event_id')->references('id')->on('events');
         });
     }
 
@@ -33,6 +35,10 @@ class CreateQuizzesTable extends Migration
      */
     public function down()
     {
+        Schema::table('quizzes', function(Blueprint $table) {
+            $table->dropForeign(['event_id']);
+        });
+
         Schema::dropIfExists('quizzes');
     }
 }

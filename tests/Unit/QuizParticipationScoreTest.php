@@ -27,19 +27,19 @@ class QuizParticipationEvaluateScoreTest extends TestCase
 
         $questions->each(function($question) {
             $choices = create(AnswerChoice::class, 4, ['question_id' => $question->id]);
-            $question->update(['answer_keys' => $choices->random()->key]);
+            $question->update(['correct_answer_keys' => $choices->random()->key]);
         });
 
         $twoCorrectResponses = $quiz->questions->take(2)->map(function($question) {
             return [
                 'question_id' => $question->id,
-                'response_key' => $question->answer_keys->implode(':'),
+                'response_keys' => $question->correct_answer_keys->implode(':'),
             ];
         });
         $threeInCorrectResponses = $quiz->questions->take(-3)->map(function($question) {
             return [
                 'question_id' => $question->id,
-                'response_key' => $question->choices->map->key->diff($question->answer_keys)->first(),
+                'response_keys' => $question->choices->map->key->diff($question->correct_answer_keys)->first(),
             ];
         });
 

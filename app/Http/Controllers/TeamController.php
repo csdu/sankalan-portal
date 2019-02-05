@@ -40,7 +40,7 @@ class TeamController extends Controller
 
     protected function canCreateTeam($user, $member = null) {
         if(!$member) {
-            return $user->team_id === null;
+            return !$user->individualTeam()->exists();
         }
 
         // Does user already have any team containing the same member?

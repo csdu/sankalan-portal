@@ -21,6 +21,9 @@ class CreateQuizParticipationsTable extends Migration
             $table->timestamp('finished_at')->nullable();
             $table->unsignedInteger('score')->index()->nullable();
             $table->timestamps();
+
+            $table->foreign('quiz_id')->references('id')->on('quizzes');
+            $table->foreign('team_id')->references('id')->on('teams');
         });
     }
 
@@ -31,6 +34,11 @@ class CreateQuizParticipationsTable extends Migration
      */
     public function down()
     {
+        Schema::table('quiz_participations', function(Blueprint $table){
+            $table->dropForeign(['team_id']);
+            $table->dropForeign(['quiz_id']);
+        });
+
         Schema::dropIfExists('quiz_participations');
     }
 }

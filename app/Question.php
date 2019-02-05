@@ -8,7 +8,7 @@ class Question extends Model
 {
     protected $guarded = [];
 
-    protected $hidden = ['answer_keys'];
+    protected $hidden = ['correct_answer_keys'];
 
     protected $casts = [
         'positive_score' => 'integer',
@@ -20,17 +20,17 @@ class Question extends Model
         return $this->hasMany(AnswerChoice::class);
     }
 
-    public function setAnswerKeysAttribute($value) {
+    public function setCorrectAnswerKeysAttribute($value) {
         if(!$value) {
-            $this->attributes['answer_keys'] = '';
+            $this->attributes['correct_answer_keys'] = '';
         } else if(is_string($value)) {
-            $this->attributes['answer_keys']  = $value;
+            $this->attributes['correct_answer_keys']  = $value;
         } else {
-            $this->attributes['answer_keys'] = implode(':', $value);
+            $this->attributes['correct_answer_keys'] = implode(':', $value);
         }
     }
 
-    public function getAnswerKeysAttribute($keys)
+    public function getCorrectAnswerKeysAttribute($keys)
     {
         return collect(explode(':', $keys));
     } 

@@ -23,17 +23,17 @@ class SingleResponseScoreTest extends TestCase
         $quizParticipations = create(QuizParticipation::class, 2, ['quiz_id' => $quiz->id]);
         $question = create(Question::class, 1, ['quiz_id' => $quiz->id, 'positive_score' => 4, 'negative_score' => 1]);
         $choices = create(AnswerChoice::class, 4, ['question_id' => $question->id]);
-        $question->update(['answer_keys' => $choices->random()->key]);
+        $question->update(['correct_answer_keys' => $choices->random()->key]);
         $question = $question->fresh();
         
         $correctResponse = $quiz->participations[0]->responses()->create([
             'question_id' => $question->id,
-            'response_key' => $question->answer_keys->implode(':'),
+            'response_keys' => $question->correct_answer_keys->implode(':'),
         ]);
 
         $inCorrectResponse = $quiz->participations[1]->responses()->create([
             'question_id' => $question->id,
-            'response_key' => $question->choices->map->key->diff($question->answer_keys)->random(),
+            'response_keys' => $question->choices->map->key->diff($question->correct_answer_keys)->random(),
         ]);
 
         $this->assertEquals($question->positive_score, $correctResponse->score);

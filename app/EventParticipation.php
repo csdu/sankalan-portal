@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventParticipation extends Model
 {
-    protected $table = 'participants';
-
     public function team() 
     {
         return $this->belongsTo(Team::class);    

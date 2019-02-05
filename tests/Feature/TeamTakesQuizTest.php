@@ -172,7 +172,7 @@ class TeamTakesQuizTest extends TestCase
         $responses = $questions->map(function ($question) {
             return [
                 'question_id' => $question->id,
-                'response_key' => $question->choices->random()->key,
+                'response_keys' => $question->choices->random()->key,
             ];
         })->toArray();
 

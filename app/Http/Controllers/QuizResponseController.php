@@ -15,7 +15,7 @@ class QuizResponseController extends Controller
     {
         $data = request()->validate([
             'responses' => ['sometimes','array', "max:{$quiz->questions()->count()}"],
-            'responses.*.response_key' => ['required', 'string'],
+            'responses.*.response_keys' => ['required', 'string'],
             'responses.*.question_id' => ['required', 'integer', 'exists:questions,id'],
         ]);
 

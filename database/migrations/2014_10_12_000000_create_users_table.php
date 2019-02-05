@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('course');
             $table->string('password');
             $table->boolean('is_admin')->default(false);
-            $table->unsignedInteger('team_id')->nullable()->index();
+            $table->unsignedInteger('individual_team_id')->nullable()->index();
             $table->rememberToken();
             $table->timestamps();
         });

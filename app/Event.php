@@ -15,7 +15,7 @@ class Event extends Model
 
     public function teams()
     {
-        return $this->belongsToMany(Team::class, 'participants');
+        return $this->belongsToMany(Team::class, 'event_participations');
     }
 
     public function activeQuiz()

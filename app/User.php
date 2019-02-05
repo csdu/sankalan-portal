@@ -46,7 +46,7 @@ class User extends Authenticatable
     }
 
     public function individualTeam() {
-        return $this->belongsTo(Team::class, 'team_id');
+        return $this->belongsTo(Team::class);
     }
 
     public function isAdmin()

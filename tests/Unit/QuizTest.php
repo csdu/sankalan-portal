@@ -43,12 +43,12 @@ class QuizTest extends TestCase
     public function quiz_has_a_time_limit_with_1800_as_default()
     {
         $quiz = make(Quiz::class);
-        unset($quiz->timeLimit);
+        unset($quiz->time_limit);
         $quiz->save();
 
-        $this->assertEquals(1800, $quiz->fresh()->timeLimit);
+        $this->assertEquals(1800, $quiz->fresh()->time_limit);
 
-        $quiz->update(['timeLimit' => 2700]);
-        $this->assertEquals(2700, $quiz->fresh()->timeLimit);
+        $quiz->update(['time_limit' => 2700]);
+        $this->assertEquals(2700, $quiz->fresh()->time_limit);
     }
 }

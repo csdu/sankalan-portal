@@ -16,14 +16,16 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
             $table->text('text', 1200);
-            $table->text('code', 2000)->nullable();
+            $table->text('code', 400)->nullable();
             $table->string('illustration')->nullable();
             $table->unsignedInteger('quiz_id')->index();
             $table->boolean('is_multiple')->default(false);
             $table->unsignedInteger('positive_score')->default(4);
             $table->unsignedInteger('negative_score')->default(1);
-            $table->string('answer_keys')->nullable();
+            $table->string('correct_answer_keys')->nullable();
             $table->timestamps();
+
+            $table->foreign('quiz_id')->references('id')->on('quizzes');
         });
     }
 
@@ -34,6 +36,9 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
+        Schema::table('questions', function(Blueprint $table) {
+            $table->dropForeign(['quiz_id']);
+        });
         Schema::dropIfExists('questions');
     }
 }

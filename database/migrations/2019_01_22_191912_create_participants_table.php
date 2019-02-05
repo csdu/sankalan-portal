@@ -13,7 +13,7 @@ class CreateParticipantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('participants', function (Blueprint $table) {
+        Schema::create('event_participations', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('event_id')->index();
             $table->unsignedInteger('team_id')->index();
@@ -32,6 +32,10 @@ class CreateParticipantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('participants');
+        Schema::table('event_participations', function (Blueprint $table) {
+            $table->dropForeign(['event_id']);
+            $table->dropForeign(['team_id']);
+        });
+        Schema::dropIfExists('event_participations');
     }
 }

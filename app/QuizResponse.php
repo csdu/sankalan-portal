@@ -15,7 +15,7 @@ class QuizResponse extends Model
     
     public function getScoreAttribute() {
 
-        $diff = $this->question->answer_keys->diff($this->response_key);
+        $diff = $this->question->correct_answer_keys->diff($this->response_keys);
         
         if($diff->count() === 0) {
             return $this->question->positive_score;
@@ -24,7 +24,7 @@ class QuizResponse extends Model
         return -$this->question->negative_score;
     }
 
-    public function getResponseKeyAttribute($response_key) {
-        return collect(explode(':', $response_key));
+    public function getResponseKeysAttribute($response_keys) {
+        return collect(explode(':', $response_keys));
     }
 }
