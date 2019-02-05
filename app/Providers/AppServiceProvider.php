@@ -7,6 +7,7 @@ use Laravel\Telescope\TelescopeServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,14 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView('partials.pagination');
         View::composer('dashboard', function($view) {
             return $view->with(['signedInUser' => auth()->user()->load('teams')]);
+        });
+        Collection::macro('recursive', function () {
+            return $this->map(function ($value) {
+                if (is_array($value) || is_object($value)) {
+                    return collect($value)->recursive();
+                }
+                return $value;
+            });
         });
     }
 

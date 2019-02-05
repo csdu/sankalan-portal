@@ -18,6 +18,7 @@ class CreateAnswerChoicesTable extends Migration
             $table->string('key')->index();
             $table->string('text');
             $table->string('illustration')->nullable();
+            $table->string('code')->nullable();
             $table->unsignedInteger('question_id')->index();
             $table->unique(['key', 'question_id']);
             $table->timestamps();
