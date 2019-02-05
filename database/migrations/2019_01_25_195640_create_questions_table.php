@@ -20,7 +20,9 @@ class CreateQuestionsTable extends Migration
             $table->string('illustration')->nullable();
             $table->unsignedInteger('quiz_id')->index();
             $table->boolean('is_multiple')->default(false);
-            $table->string('answer_keys');
+            $table->unsignedInteger('positive_score')->default(4);
+            $table->unsignedInteger('negative_score')->default(1);
+            $table->string('answer_keys')->nullable();
             $table->timestamps();
         });
     }

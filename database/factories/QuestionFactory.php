@@ -9,7 +9,14 @@ $factory->define(App\Question::class, function (Faker $faker) {
         'quiz_id' => function() {
             return factory(Quiz::class)->create()->id;
         },
-        'is_multiple' => $faker->boolean(),
-        'answer_keys' => $faker->randomLetter,
+        'is_multiple' => false,
+        'answer_keys' => null,
+    ];
+});
+
+$factory->state(App\Question::class, 'multiple', function (Faker $faker) {
+    return [
+        'is_multiple' => true,
+        'answer_keys' => $faker->words($faker->numberBetween(0,4)),
     ];
 });
