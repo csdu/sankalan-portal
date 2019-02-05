@@ -31,4 +31,18 @@ class QuizParticipation extends Model
         $timeSpent = optional($this->started_at)->diffInSeconds(now()) ?? 0;
         return $this->quiz->timeLimit - $timeSpent;
     }
+
+    public function evaluate() {
+        $question_ids = $this->quiz->questions->pluck('id', 'id');
+
+        $score = $this->responses->filter(function ($response) use ($question_ids) {
+            return $question_ids->has($response->question_id);
+        })->sum->score;
+        
+        return $this->update(compact('score')) ? $score : false;
+    }
+
+    public function recordResponses($responses) {
+        return $this->responses()->createMany($responses);
+    }
 }

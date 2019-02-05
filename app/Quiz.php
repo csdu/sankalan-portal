@@ -76,9 +76,7 @@ class Quiz extends Model
     }
     
     public function recordResponses(Team $team, $responses) {
-        return $this->participationByTeam($team)
-            ->responses()
-            ->createMany($responses);
+        return $this->participationByTeam($team)->recordResponses($responses);
     }
 
     public function hasTeamResponded(Team $team) {

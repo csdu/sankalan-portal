@@ -10,6 +10,11 @@ class Question extends Model
 
     protected $hidden = ['answer_keys'];
 
+    protected $casts = [
+        'positive_score' => 'integer',
+        'negative_score' => 'integer'
+    ];
+
     public function choices()
     {
         return $this->hasMany(AnswerChoice::class);
