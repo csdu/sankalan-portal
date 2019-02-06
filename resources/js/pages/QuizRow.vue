@@ -13,7 +13,7 @@ export default {
     },
     computed: {
         timeLimit() {
-            return Math.floor(this.quiz.timeLimit / 60) + ':' + this.format(this.quiz.timeLimit % 60, 2);
+            return Math.floor(this.quiz.time_limit / 60) + ':' + this.format(this.quiz.time_limit % 60, 2);
         }
     },
     methods: {

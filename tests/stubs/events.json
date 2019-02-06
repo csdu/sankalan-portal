@@ -3,7 +3,7 @@
     "title": "Event Title",
     "slug": "event-title",
     "description": [
-      "some long description max 800 characters. notice that this event has only one online quiz and 2 rounds.",
+      "some long description max 800 characters. <br>notice that this event has only one online quiz and 2 rounds.",
       "Also, its only quiz has time limit of 30 mins"
     ],
     "rounds": 2,

@@ -1,12 +1,11 @@
 <template>
-    <div class="flex h-full" v-if="isLive" 
+    <div class="flex flex-1" v-if="isLive" 
             @keydown.right="nextQuestion"
             @keydown.left="previousQuestion"
             @keydown.enter="submit">
-        <div class="question-area flex flex-col w-full lg:w-3/4 h-full px-4 overflow-auto">
-            <slot name="header"></slot>
+        <div class="question-area flex flex-col w-full lg:w-3/4 px-4 overflow-auto py-4">
             <quiz-question 
-                class="flex-1"
+                class="flex flex-col"
                 :data-question="currentQuestion" 
                 :index="currentQuestionIndex" 
                 v-model="responses[currentQuestionIndex]">
@@ -17,8 +16,8 @@
                 <button v-else class="btn is-green" @click="submit()">Submit</button>
             </div>
         </div>
-        <div class="navigation flex flex-col border-l h-full w-1/4 px-3 overflow-auto">
-            <ul class="questions-nav list-reset flex flex-wrap -mx-1 -mb-1 mt-4">
+        <div class="navigation flex flex-col md:w-64 px-3 overflow-auto py-4">
+            <ul class="questions-nav list-reset justify-center flex flex-wrap -mx-1 -mb-1 mt-4">
                 <li v-for="questionNumber in questions.length" 
                 :key="questionNumber" 
                 >
@@ -37,10 +36,12 @@
                 <button v-if="!isLastQuestion" class="ml-4 btn is-green" @click="nextQuestion()">Next</button>
                 <button v-else class="ml-4 btn is-green" @click="submit()">Submit</button>
             </div>
-            <countdown-timer :duration="timeLimit" :hurry="300"
-            class="inline-flex justify-center items-baseline my-8 text-lg font-bold font-mono" 
-            :class="{'animation-vibrate text-red': hurry}"
-            @timeup="endQuiz" @hurryup="hurry=true"></countdown-timer>
+            <div class="flex justify-center">
+                <countdown-timer :duration="timeLimit" :hurry="300"
+                class="inline-flex justify-center items-baseline my-8 text-lg font-bold font-mono" 
+                :class="{'animation-vibrate text-red': hurry}"
+                @timeup="endQuiz" @hurryup="hurry=true"></countdown-timer>
+            </div>
             <div class="mt-auto mb-8 text-center">
                 <button class="btn is-green" @click.prevent="submit">Submit</button>
             </div>

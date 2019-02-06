@@ -12,7 +12,12 @@
             <strong class="float-left mr-2" v-text="`Q${index+1}.`"></strong>
             <p v-html="dataQuestion.text"></p>
         </div>
-        <ul class="choices-list list-reset my-12 flex flex-wrap -mx-2">
+        <pre v-if="dataQuestion.code" 
+        class="card p-4 font-mono my-4" v-text="dataQuestion.code"></pre>
+        <div class="flex justify-center my-4" v-if="dataQuestion.illustration">
+            <img :src="dataQuestion.illustration" class="max-w-full rounded shadow-lg">
+        </div>
+        <ul class="choices-list list-reset my-8 flex flex-wrap -mx-2">
             <li v-for="(choice, choiceIndex) in dataQuestion.choices" 
                 :key="choice.id" 
                 class="mb-3 w-full md:w-1/2 px-2">
@@ -37,7 +42,11 @@
                         :name="`question-${choice.question_id}`" 
                         @input="toggleResponse(choiceIndex)"
                         :value="choice.key">
-                    <span class="ml-1" v-text="choice.text"></span>
+                    <div>
+                    <img v-if="choice.illustration" :src="choice.illustration" :alt="choice.text" class="rounded my-2 max-w-full">
+                    <pre v-if="choice.code" v-html="choice.code" class="my-2"></pre>
+                    <p class="ml-1" v-html="choice.text"></p>
+                    </div>
                 </label>
             </li>
         </ul>

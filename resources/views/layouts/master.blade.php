@@ -12,6 +12,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         @stack('stylesheets')
+        @routes
     </head>
     <body class="font-sans text-black leading-tight bg-grey-lighter">
         <div id="app" class="min-h-screen flex flex-col">
