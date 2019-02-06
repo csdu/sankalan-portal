@@ -29,7 +29,7 @@
                 </h4>
         
                 <div class="card-content flex-1">
-                    <p>{{ $event->description }}</p>
+                    <p>{!! $event->description !!}</p>
                 </div>
         
                 <div class="card-footer">

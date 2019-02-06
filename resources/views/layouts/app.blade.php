@@ -15,6 +15,7 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    @routes
 </head>
 <body class="font-sans bg-grey-lighter text-black">
     <div id="app" class="min-h-screen flex flex-col">
