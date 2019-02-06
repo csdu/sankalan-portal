@@ -47,4 +47,14 @@ class QuizParticipationController extends Controller
             'message' => 'Team is now ready to take quiz!'
         ];
     }
+
+    public function evaluate(QuizParticipation $quizParticipation) {
+        $score = $quizParticipation->evaluate();
+
+        return [
+            'status' => 'success',
+            'message' => 'Score has been evaluated.',
+            'score' => $score
+        ];
+    }
 }

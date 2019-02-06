@@ -176,7 +176,7 @@ import QuizQuestion from './QuizQuestion.vue';
                     .map(answers => {
                         return {
                             question_id: answers[0].question_id, 
-                            response_key: answers.map(answer => answer.key).join(':')
+                            response_keys: answers.map(answer => answer.key).join(':')
                         };
                     });
             },

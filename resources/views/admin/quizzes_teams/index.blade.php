@@ -30,12 +30,14 @@
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Responses</th>
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Started</th>
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Finished</th>
+                <th class="text-xs uppercase font-light text-center px-4 py-2">Score</th>
+                <th class="text-xs uppercase font-light text-right pr-6 py-2">Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($quizzes_teams as $quiz_team)
                 <tr class="border-t hover:bg-grey-lighter" is="quiz-team-row" :data-quiz-team="{{$quiz_team}}">
-                    <template slot-scope="{quiz, team, responses_count, start_time, finish_time, onComplete}">
+                    <template slot-scope="{quiz, team, responses_count, start_time, finish_time, onComplete, score, participationId}">
                         <td class="table-fit text-left pl-6 py-2 text-sm">
                             <span v-if="quiz.isSubmitted" class="p-1 ml-1 rounded bg-red text-white font-thin text-xs uppercase leading-none">Submitted</span>
                             <span v-else-if="quiz.isStarted" class="p-1 ml-1 rounded bg-green text-white font-thin text-xs uppercase leading-none">Started</span>
@@ -52,11 +54,23 @@
                         <td class="table_fit text-center px-4 py-2">
                             <span class="px-2 py-1 rounded-full bg-grey text-xs" v-text="responses_count"></span>
                         </td>
-                        <td class="table_fit text-center px-4 py-2">
+                        <td class="table_fit text-left px-4 py-2">
                             <span v-if="start_time" v-text="start_time"></span>
                         </td>
-                        <td class="table_fit text-center px-4 py-2">
+                        <td class="table_fit text-left px-4 py-2">
                             <span v-if="finish_time" v-text="finish_time"></span>
+                        </td>
+                        <td class="table_fit text-center px-4 py-2">
+                            <span v-if="score != null" class="p-1 bg-green text-white text-xs font-semibold rounded-full" v-text="score"></span>
+                            <span v-else class="p-1 bg-grey text-xs rounded">Not Evaluated</span>
+                        </td>
+                        <td class="table_fit text-center px-4 py-2">
+                            <ajax-button v-if="finish_time" class="btn is-blue is-sm"
+                            :action="route('admin.quizzes.teams.evaluate', participationId)"
+                            method="POST"
+                            @success="onComplete"
+                            >Evaluate</ajax-button>
+                            <span v-else class="p-1 bg-grey text-xs rounded">Not Completed</span>
                         </td>
                     </template>
                 </tr>

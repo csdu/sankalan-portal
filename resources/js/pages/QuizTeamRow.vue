@@ -1,12 +1,13 @@
 <template>
     <tr>
-       <slot :quiz="quizTeam.quiz" 
+       <slot :quiz="quizTeam.quiz"
+        :participation-id="quizTeam.id" 
         :team="quizTeam.team" 
         :responses_count="quizTeam.responses_count" 
         :start_time="quizTeam.started_at"
         :finish_time="quizTeam.finished_at"
-        :onComplete="onComplete" 
-        :time-limit="timeLimit"></slot> 
+        :score="quizTeam.score"
+        :onComplete="onComplete"></slot> 
     </tr>
 </template>
 <script>
@@ -19,6 +20,9 @@ export default {
     },
     methods: {
         onComplete({data}) {
+            if(data.hasOwnProperty('score')) {
+                this.quizTeam.score = data.score;
+            }
             flash(data.message, data.status);
         }
     }
