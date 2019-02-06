@@ -29,7 +29,7 @@ class QuizParticipation extends Model
 
     public function getTimeLeftAttribute() {
         $timeSpent = optional($this->started_at)->diffInSeconds(now()) ?? 0;
-        return $this->quiz->timeLimit - $timeSpent;
+        return $this->quiz->time_limit - $timeSpent;
     }
 
     public function evaluate() {

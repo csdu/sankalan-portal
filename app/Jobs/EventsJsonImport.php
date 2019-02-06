@@ -53,7 +53,7 @@ class EventsJsonImport
         $this->events = collect(json_decode($contents, true))->recursive();
         return $this;
     }
-
+    
     public function createEvents() {
         $this->events->transform(function($event) {
             $quizzes = $event->pull('quizzes') ?? collect([]);
@@ -77,6 +77,8 @@ class EventsJsonImport
         $this->quizzes->transform(function ($quiz) {
             $questions = $quiz->pull('questions') ?? collect([]);
 
+            $quiz['time_limit'] = $quiz['time_limit'] * 60;
+
             $quiz = Quiz::create($quiz->toArray());
 
             $this->questions = $this->questions->concat(
@@ -96,7 +98,7 @@ class EventsJsonImport
             }
 
             if ($question->has('code') && !is_string($question['code'])) {
-                $question['code'] = $question['code']->implode('\n');
+                $question['code'] = $question['code']->implode('<br>');
             }
 
             if ($question->has('correct_answer_keys') && !is_string($question['correct_answer_keys'])) {
@@ -116,7 +118,7 @@ class EventsJsonImport
     {
         $this->choices->map(function ($choice) {
             if ($choice->has('code') && !is_string($choice['code'])) {
-                $choice['code'] = $choice['code']->implode('\n');
+                $choice['code'] = $choice['code']->implode('<br>');
             }
 
             return AnswerChoice::create($choice->toArray());
