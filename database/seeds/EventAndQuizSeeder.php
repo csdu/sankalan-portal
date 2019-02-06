@@ -11,7 +11,6 @@ class EventAndQuizSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\Event', 4)->states('withoutQuiz')->create();
         factory('App\Event', 8)->create()
         ->each(function($event) {
             factory('App\Quiz', $event->rounds-1)
@@ -20,8 +19,8 @@ class EventAndQuizSeeder extends Seeder
                 factory('App\Question', $quiz->questionsLimit)->create(['quiz_id' => $quiz->id])
                 ->each(function($question) {
                     $options = factory('App\AnswerChoice', 4)->create(['question_id' => $question->id]);
-                    $answer_keys = $options->random(rand(1, 4))->pluck('id')->implode(':');
-                    $question->update(compact('answer_keys'));
+                    $correct_answer_keys = $options->random(rand(1, 4))->pluck('key')->implode(':');
+                    $question->update(compact('correct_answer_keys'));
                 });
             });
         });
