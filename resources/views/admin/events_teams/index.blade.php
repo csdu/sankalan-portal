@@ -39,7 +39,7 @@
             <tbody>
                 @foreach ($events_teams as $event_team)
                     <tr class="border-t hover:bg-grey-lighter" is="event-team-row" :data-event-team="{{$event_team}}">
-                        <template slot-scope="{team, event, members, onComplete}">
+                        <template slot-scope="{team, event, members, onComplete, allowed}">
                             <td class="table-fit text-left pl-6 py-2 text-sm" v-text="team.uid"></td>
                             <td class="table-fit text-left px-4 py-2" v-text="team.name"></td>
                             <td class="text-left px-4 py-2">
@@ -54,6 +54,12 @@
                             <td class="text-left px-4-6 py-2 capitalize" v-text="event.title"></td>
                             @endif
                             <td class="table-fit text-right pr-6 py-2 capitalize">
+                                <ajax-button v-if="allowed === false"
+                                :action="route('admin.events.teams.allow-active-quiz', [event.slug, team.id])" 
+                                method="POST" 
+                                @success="onComplete"
+                                @failure="onComplete"
+                                class="btn is-green is-sm font-normal">Allow Quiz</ajax-button>
                                 <button class="btn is-red is-sm font-normal">Disqualify</button>
                             </td>
                         </template>

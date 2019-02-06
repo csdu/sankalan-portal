@@ -1,6 +1,9 @@
 <template>
     <tr>
-       <slot :team="eventTeam.team" :event="eventTeam.event" :onComplete="onComplete"></slot> 
+       <slot :team="eventTeam.team" 
+       :event="eventTeam.event" 
+       :allowed="eventTeam.isActiveQuizAllowed" 
+       :onComplete="onComplete"></slot> 
     </tr>
 </template>
 <script>
@@ -13,9 +16,8 @@ export default {
     },
     methods: {
         onComplete({data}) {
-            if(data.hasOwnProperty('event')) {
-                this.event.isLive = data.event.isLive;
-                this.event.hasEnded = data.event.hasEnded;
+            if(data.status == 'success') {
+                this.eventTeam.isActiveQuizAllowed = true;
             }
             flash(data.message, data.status);
         }
