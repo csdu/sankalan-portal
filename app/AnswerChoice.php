@@ -12,4 +12,13 @@ class AnswerChoice extends Model
     {
         return $this->belongsTo(Question::class, 'question_id');
     }
+
+    public function getIllustrationAttribute($illustration)
+    {
+        if (!$illustration) {
+            return $illustration;
+        }
+
+        return asset("/images$illustration");
+    }
 }

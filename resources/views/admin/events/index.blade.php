@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Admin Dashboard')
 @section('content')
-<div class="card seperated h-full">
+<div class="card seperated">
     <div class="card-header">
         <div class="flex">
             <h2 class="text-xl font-normal">Events</h2>
@@ -30,7 +30,7 @@
                     </td>
                     <td class="text-left capitalize px-4 py-2">
                         <span v-text="event.title"></span>
-                        <a v-if="event.active_quiz != null" href="#" class="btn is-green is-sm ml-1" v-text="'Active Quiz'"></a>
+                        <a v-if="event.active_quiz != null" href="#" class="btn is-green is-sm ml-1" v-text="event.active_quiz.title"></a>
                     </td>
                     <td class="table-fit text-center px-4 py-2">
                         <span v-if="event.rounds > 1" class="px-2 py-1 rounded-full bg-grey text-xs" v-text="event.rounds"></span>

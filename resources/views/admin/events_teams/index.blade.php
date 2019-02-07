@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Admin Dashboard')
 @section('content')
-    <div class="card seperated h-full">
+    <div class="card seperated">
         <div class="card-header">
             <div class="flex justify-between items-baseline">
                 <div class="flex">

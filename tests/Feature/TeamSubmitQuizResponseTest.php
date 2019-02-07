@@ -133,7 +133,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         })->toArray();
 
         //fast forward time to exceed time limit by 5 mins.
-        Carbon::setTestNow(now()->addMinutes($quiz->timeLimit + 5));
+        Carbon::setTestNow(now()->addMinutes($quiz->time_limit + 5*60));
 
         $json = $this->postJson(route('quizzes.response.store', $quiz), [
             'responses' => $responses

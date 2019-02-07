@@ -30,6 +30,15 @@ class Question extends Model
         }
     }
 
+    public function getIllustrationAttribute($illustration)
+    {
+        if(!$illustration) {
+            return $illustration;
+        }
+
+        return asset("/images$illustration");
+    }
+
     public function getCorrectAnswerKeysAttribute($keys)
     {
         return collect(explode(':', $keys));

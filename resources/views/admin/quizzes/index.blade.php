@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Quizzes')
 @section('content')
-<div class="card seperated h-full">
+<div class="card seperated">
     <div class="card-header">
         <div class="flex">
             <h2 class="text-xl font-normal">Quizzes</h2>

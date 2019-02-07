@@ -64,7 +64,7 @@ class Quiz extends Model
             return false;
         }
         $timeTaken = optional($participation->started_at)->diffInSeconds(now());
-        return $timeTaken > ($this->timeLimit + 1*60); // Add 1 Minute Extra
+        return $timeTaken > ($this->time_limit + 1*60); // Add 1 Minute Extra
     }
 
     public function allowTeam(Team $team) {

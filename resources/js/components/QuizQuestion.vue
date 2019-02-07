@@ -1,9 +1,9 @@
 <template>
     <div class="question outline-none" tabindex="1"
-        @keydown.down="highlightNextResponse"
-        @keydown.up="highlightPreviousResponse"
-        @keydown.space="toggleResponse(highlightedResponseIndex)"
-        @keydown.delete="clearResponse">
+        @keydown.down.prevent="highlightNextResponse"
+        @keydown.up.prevent="highlightPreviousResponse"
+        @keydown.space.prevent="toggleResponse(highlightedResponseIndex)"
+        @keydown.delete.prevent="clearResponse">
         <div class="card px-3 pt-3 pb-6 relative overflow-hidden">
             <span v-if="dataQuestion.is_multiple"
                 class="absolute pin-r pin-b p-1 bg-blue-light text-white text-xs">
@@ -13,7 +13,7 @@
             <p v-html="dataQuestion.text"></p>
         </div>
         <pre v-if="dataQuestion.code" 
-        class="card p-4 font-mono my-4" v-text="dataQuestion.code"></pre>
+        class="card p-4 font-mono my-4 leading-normal tracking-wide whitespace-pre-line" v-text="escapedCode"></pre>
         <div class="flex justify-center my-4" v-if="dataQuestion.illustration">
             <img :src="dataQuestion.illustration" class="max-w-full rounded shadow-lg">
         </div>
@@ -67,6 +67,9 @@ export default {
     computed: {
         choicesCount() {
             return this.dataQuestion.choices.length;
+        },
+        escapedCode() {
+            return this.dataQuestion.code.replace(/\n/g, '\\n').replace(/<br>/g, "\n");
         }
     },
     methods: {
