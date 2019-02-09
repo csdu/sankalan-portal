@@ -1,9 +1,9 @@
 <template>
     <div>
-        <span v-if="timeLeft.hours" >{{timeLeft.hours | format(2)}}:</span>
-        <span>{{ timeLeft.mins | format(2) }}:</span>
-        <span>{{ timeLeft.secs | format(2) }}.</span>
-        <span class="text-sm">{{ timeLeft.millis | format(3) }}</span>
+        <span v-if="hours" >{{hours | format(2)}}:</span>
+        <span>{{ minutes | format(2) }}:</span>
+        <span>{{ seconds | format(2) }}.</span>
+        <span class="text-sm">{{ milliseconds | format(3) }}</span>
     </div>
 </template>
 <script>
@@ -15,18 +15,40 @@ export default {
     data() {
         return {
             timer: null,
-            framesDuration: 1000/25,   //25 frames per second
-            timeLimit: this.duration * 1000 // seconds to millis
+            startTime: new Date().getTime(),
+            currentTime: new Date().getTime(),
+            framesDuration: 1000/30,
+        }
+    },
+    computed: {
+        timeSpent() {
+            return this.currentTime - this.startTime;
+        },
+        timeLeft() {
+            return (this.duration * 1000) - this.timeSpent;
+        },
+        milliseconds() {
+            return this.timeLeft % 1000;
+        },
+        seconds() {
+            return Math.floor(this.timeLeft / 1000) % 60;
+        },
+        minutes() {
+            return Math.floor(this.timeLeft / 1000 / 60) % 60;
+        },
+        hours() {
+            return Math.floor(this.timeLeft / 1000 / 60 / 60);
         }
     },
     methods: {
-        count() {
-            this.timeLimit -= this.framesDuration;
-            if(this.timeLimit <= 0) {
+        refreshTime() {
+            this.currentTime = new Date().getTime();
+            if(this.timeLeft <= this.framesDuration) {
+                this.currentTime += this.timeLeft; // to make timer goto zero
                 clearInterval(this.timer);
                 this.$emit('timeup');
             }
-            if(this.timeLimit <= this.hurry * 1000) {
+            if(this.timeLeft <= this.hurry * 1000) {
                 this.$emit('hurryup');
             }
         }
@@ -40,17 +62,8 @@ export default {
             return (new Array(minDigits-digits)).fill(0).join("").concat(number)
         }
     },
-    computed: {
-        timeLeft() {
-            const millis = this.timeLimit % 1000;
-            const secs = Math.floor(this.timeLimit / 1000) % 60;
-            const mins = Math.floor(this.timeLimit / 1000 / 60) % 60;
-            const hours = Math.floor(this.timeLimit / 1000 / 60 / 60);
-            return {hours, mins, secs, millis};
-        }
-    },
     mounted() {
-        this.timer = setInterval(this.count, this.framesDuration);
+        this.timer = setInterval(this.refreshTime, this.framesDuration);
     }
 }
 </script>
