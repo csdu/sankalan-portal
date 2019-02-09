@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto flex justify-center h-full items-center px-4">
+<div class="container mx-auto flex-1 flex justify-center items-center px-4">
     <div class="w-full sm:w-3/4 lg:w-1/3">
         <div class="card">
             <h2 class="card-header">{{ __('Login') }}</h2>

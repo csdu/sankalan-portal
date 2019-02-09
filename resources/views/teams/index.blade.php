@@ -71,7 +71,7 @@
     </div>
     @empty
     <div class="card mb-4">
-        <p class="caard-content"> You have not created any teams yet.</p>
+        <p class="card-content"> You have not created any teams yet.</p>
     </div>
     @endforelse
 </div>

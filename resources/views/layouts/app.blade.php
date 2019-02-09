@@ -71,7 +71,7 @@
             </div>
         </nav>
 
-        <main class="flex-1">
+        <main class="flex flex-col flex-1">
             @yield('content')
         </main>
         @include('flash::message')
