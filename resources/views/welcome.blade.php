@@ -3,11 +3,12 @@
 @section('content')
 <div class="bg-blue flex flex-col justify-center flex-1 text-white">
     <div class="container mx-auto px-4">
-        <h1>Intra Sankalan 2019 is here! </h1>
-        <h3 class="mb-4">Pull up your socks</h3>
-        <p>
-            <a href="{{ route('login') }}" class="btn mr-1">Login</a>
-            <a href="{{ route('register') }}" class="btn mr-1">Register</a>
+        <h1>Sankalan 2019 is here! </h1>
+        <h3 class="mb-6">Pull up your socks</h3>
+        <p class="flex items-baseline">
+            <a href="{{ route('register') }}" class="btn is-white shadow font-bold">Register</a>
+            <span class="mx-2">or</span>
+            <a href="{{ route('login') }}" class="text-white font-bold hover:underline">Login</a>
         </p>
     </div>
 </div>

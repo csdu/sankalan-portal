@@ -2,9 +2,13 @@
 
 @section('content')
 <div class="container mx-auto flex-1 flex justify-center items-center px-4">
-    <div class="w-full sm:w-3/4 lg:w-1/3">
+    <div class="w-full md:w-3/4 lg:w-1/3">
         <div class="card my-4">
-            <h2 class="card-header">{{ __('Register') }}</h2>
+            <h2 class="card-header">
+                {{ __('Register') }}
+                <span class="text-xs text-grey-dark mx-1">or</span>
+                <a class="text-sm uppercase text-blue" href="{{ route('login') }}">Login</a>
+            </h2>
             <form method="POST" action="{{ route('register') }}" class="card-content">
                 @csrf
                 <div class="flex mb-3">

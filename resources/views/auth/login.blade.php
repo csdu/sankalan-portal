@@ -2,9 +2,13 @@
 
 @section('content')
 <div class="container mx-auto flex-1 flex justify-center items-center px-4">
-    <div class="w-full sm:w-3/4 lg:w-1/3">
+    <div class="w-full md:w-3/4 lg:w-1/3">
         <div class="card">
-            <h2 class="card-header">{{ __('Login') }}</h2>
+            <h2 class="card-header">
+                {{ __('Login') }}
+                <span class="text-xs text-grey-dark mx-1">or</span>
+                <a class="text-sm uppercase text-blue" href="{{ route('register') }}">Register</a>
+            </h2>
 
             <form method="POST" action="{{ route('login') }}" class="card-content">
                 @csrf
@@ -27,24 +31,24 @@
                     @endif
                 </div>
 
-                <div class="flex items-center mb-4">
+                <div class="whitespace-no-wrap mb-3 flex items-center">
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                     <label class="ml-1" for="remember">
                         {{ __('Remember Me') }}
                     </label>
-                    @if (Route::has('password.request'))
-                        <a class="hover:underline ml-auto" href="{{ route('password.request') }}">
-                            {{ __('Forgot Your Password?') }}
-                        </a>
-                    @endif
                 </div>
-
-                <div class="flex justify-between">
+                
+                <div class="flex justify-between items-baseline">
                     <button type="submit" class="btn is-blue">
                         {{ __('Login') }}
                     </button>
 
+                    @if (Route::has('password.request'))
+                        <a class="hover:underline sm:text-right" href="{{ route('password.request') }}">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
+                    @endif
                 </div>
             </form>
         </div>
