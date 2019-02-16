@@ -21,7 +21,7 @@
     <div id="app" class="min-h-screen flex flex-col px-4 md:px-10">
         <main class="flex-1 flex flex-col my-4">
             <div class="flex items-baseline justify-between mb-6 border-b">
-                <h1 class="mb-3">Sankalan</h1>
+                <h1 class="mb-3 text-2xl">Sankalan<small class="ml-1 text-sm uppercase text-blue">Admin</small> </h1>
                 <ajax-button action="{{ route('logout') }}" method="post" @success="reload()" class="btn is-red font-normal">Logout</a>
             </div>
             <div class="flex-1 flex">

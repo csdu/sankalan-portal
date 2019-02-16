@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Home | ')
 @section('content')
-<div class="bg-blue flex flex-col justify-center flex-1 text-white">
+<div class="flex flex-col justify-center flex-1 text-white">
     <div class="container mx-auto px-4">
         <h1>Sankalan 2019 is here! </h1>
         <h3 class="mb-6">Pull up your socks</h3>
