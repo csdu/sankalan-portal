@@ -16,16 +16,14 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @routes
-    @if(!Request::is('/'))
     <style>
         body {
             background-color: #f1f5f8;
             background-image: url("{{ asset('/svg/circuit-bg.svg') }}");
         }
     </style>
-    @endif
 </head>
-<body class="font-sans {{ Request::is('/') ? 'bg-blue text-white' : 'bg-grey-lighter text-black'}}">
+<body class="font-sans bg-grey-lighter text-black">
     <div id="app" class="min-h-screen flex flex-col">
         @include('partials.navigation')
         <main class="flex flex-col flex-1">

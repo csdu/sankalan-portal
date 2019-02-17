@@ -2,7 +2,7 @@
     <div class="container flex flex-col sm:flex-row overflow-x-auto">
         <div class="flex py-2 justify-center sm:mr-3">
             <a class="inline-flex items-center whitespace-no-wrap" href="{{ Auth::check() ? route('dashboard') : route('homepage') }}">
-                <h1 class="text-2xl">Sakalan<small class="ml-1 text-xs {{Request::is('/') ? 'text-grey-light' : 'text-blue'}} uppercase">Portal</small></h1>
+                <h1 class="text-2xl">Sakalan<small class="ml-1 text-xs text-blue uppercase">Portal</small></h1>
             </a>
         </div>
         <div class="flex-1 flex justify-between items-baseline text-xs sm:py-2">

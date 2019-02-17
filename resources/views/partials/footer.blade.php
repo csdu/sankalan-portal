@@ -1,5 +1,5 @@
 <footer class="py-3">
-    <p class="{{ Request::is('/') ? 'text-white' : 'text-grey-dark' }} text-center">
+    <p class="text-grey-dark text-center">
         <span class="font-bold">Sankalan &copy; 2019</span>
         &mdash;
         <span class="inline-flex items-center">
