@@ -27,7 +27,7 @@ class QuizParticipationController extends Controller
             'quiz' => function($query) {
                 $query->withCount('questions');
             }
-        ])->paginate(15);
+        ])->paginate(config('app.pagination.perPage'));
 
         return view('admin.quizzes_teams.index')
             ->with(compact('quizzes_teams', 'quiz', 'quizzes'));

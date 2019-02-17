@@ -40,7 +40,7 @@ class ViewEventsTeamsTest extends TestCase
         $this->assertArrayHasKey('title', $viewEvents->first()->toArray());
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $results);
-        $this->assertCount(15, $results->toArray()['data']);
+        $this->assertCount(config('app.pagination.perPage'), $results->toArray()['data']);
         $this->assertEquals(40, $results->toArray()['total']);
         collect($results->toArray()['data'])->each(function($result) {
             $this->assertArrayHasKey('event', $result);
@@ -71,7 +71,7 @@ class ViewEventsTeamsTest extends TestCase
         $this->assertCount(3, $viewEvents);
         
         $this->assertInstanceOf(LengthAwarePaginator::class, $results);
-        $this->assertCount(2, $results);
+        $this->assertEquals(2, $results->total());
         collect($results->toArray()['data'])->each(function($result) use ($events){
             $this->assertEquals($events[0]->id, $result['event_id']);
         });

@@ -22,7 +22,7 @@ class ViewTeamsTest extends TestCase
         $resultTeams = $this->get(route('admin.teams.index'))->viewData('teams');
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $resultTeams);
-        $this->assertCount(15, $resultTeams);
+        $this->assertCount(config('app.pagination.perPage'), $resultTeams);
         $this->assertEquals(25, $resultTeams->total());
         $this->assertArrayHasKey('members', $resultTeams->first()->toArray());
         $this->assertArrayHasKey('events_count', $resultTeams->first()->toArray());

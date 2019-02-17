@@ -23,7 +23,7 @@ class ViewUsersTest extends TestCase
         $resultUsers = $this->get(route('admin.users.index'))->viewData('users');
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $resultUsers);
-        $this->assertCount(15, $resultUsers);
+        $this->assertCount(config('app.pagination.perPage'), $resultUsers);
         $this->assertEquals(25, $resultUsers->total());
     }
 }

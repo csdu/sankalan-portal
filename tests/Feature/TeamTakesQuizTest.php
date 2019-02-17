@@ -105,7 +105,7 @@ class TeamTakesQuizTest extends TestCase
         $this->assertNull($viewQuiz->participations->first()->started_at);
         tap($viewQuiz->participations->first()->fresh(), function($participation) {
             $this->assertInstanceOf(Carbon::class, $participation->started_at);
-            $this->assertEquals(0, $participation->started_at->diffInSeconds(now()));
+            $this->assertEqualsWithDelta(0, $participation->started_at->diffInSeconds(now()), 1);
         });
         
         $this->assertArrayHasKey('questions', $viewQuiz->toArray());

@@ -41,8 +41,8 @@ class ViewQuizParticipationsTest extends TestCase
 
         $this->assertCount(4, $quizzes);
         $this->assertInstanceOf(LengthAwarePaginator::class, $viewParticipations);
+        $this->assertCount(config('app.pagination.perPage'), $viewParticipations);
         $this->assertEquals(32, $viewParticipations->total());
-        $this->assertCount(15, $viewParticipations);
         $this->assertNull($quiz);
 
         tap($viewParticipations->first(), function($firstParticipation) {

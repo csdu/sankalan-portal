@@ -227,4 +227,8 @@ return [
 
     ],
 
+    'pagination' => [
+        'perPage' => 100
+    ],
+
 ];

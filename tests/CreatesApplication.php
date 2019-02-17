@@ -26,6 +26,8 @@ trait CreatesApplication
             return $this->original->getData()[$key];
         });
 
+        config(['app.pagination.perPage' => 3]);
+
         return $app;
     }
 }
