@@ -1,8 +1,5 @@
 <template>
-    <div class="flex flex-1" v-if="isLive" 
-            @keydown.right="nextQuestion"
-            @keydown.left="previousQuestion"
-            @keydown.enter="submit">
+    <div class="flex flex-1" v-if="isLive">
         <div class="question-area flex flex-col w-full lg:w-3/4 px-4 overflow-auto py-4">
             <quiz-question 
                 class="flex flex-col"
@@ -106,6 +103,11 @@ import QuizQuestion from './QuizQuestion.vue';
                     success: false,
                     text: 'Please wait! While we record your response.',
                 },
+                keyEvents: {
+                    "ArrowRight": () => this.nextQuestion(),
+                    "ArrowLeft": () => this.previousQuestion(),
+                    "Enter": () => this.submit(),
+                },
                 hurry: false,
                 currentQuestionIndex: 0,
                 responses: [],
@@ -133,12 +135,12 @@ import QuizQuestion from './QuizQuestion.vue';
             isQuestionAnswered(index) {
                 return !this.isCurrentQuestion(index) &&
                     this.questions[index].visited &&
-                    this.responses[index].length;
+                    this.responses[index];
             },
             isQuestionSkipped(index) {
                 return !this.isCurrentQuestion(index) &&
                     this.questions[index].visited &&
-                    !this.responses[index].length;
+                    !this.responses[index];
             },
             setCurrentQuestion(index) {
                 if (index >= 0 && index < this.questions.length ) {
@@ -151,10 +153,6 @@ import QuizQuestion from './QuizQuestion.vue';
             },
             previousQuestion() {
                 this.setCurrentQuestion(this.currentQuestionIndex - 1);
-            },
-            selectResponse(response) {
-                console.log(response);
-                this.responses.splice(this.currentQuestionIndex, 1, response);
             },
             submit() {
                 if(confirm('You still have time left. Are you sure you want to submit your Response?')) {
@@ -172,13 +170,12 @@ import QuizQuestion from './QuizQuestion.vue';
                         .then(this.onSuccess);
             },
             getResponses() {
-                return this.responses.filter(answers => !!answers.length)
-                    .map(answers => {
-                        return {
-                            question_id: answers[0].question_id, 
-                            response_keys: answers.map(answer => answer.key).join(':')
-                        };
-                    });
+                return this.responses.map((answers, index) => {
+                    return {
+                        question_id: this.dataQuestions[index].id, 
+                        response_keys: answers
+                    };
+                }).filter(response => !!response.response_keys);
             },
             onSuccess({data}) {
                 this.submission = {
@@ -200,11 +197,19 @@ import QuizQuestion from './QuizQuestion.vue';
             }
         },
         created() {
-            this.responses = new Array(this.dataQuestions.length).fill([]);
+            this.responses = new Array(this.dataQuestions.length).fill("");
             this.questions = this.dataQuestions.map(question => {
                 question.visited = false;
                 return question;
             })
+        },
+        mounted() {
+            window.addEventListener('keydown', ({code}) => {
+                if(this.keyEvents.hasOwnProperty(code)) {
+                    this.keyEvents[code]();
+                    return false;
+                }
+            });
         }
     }
 </script>

@@ -1,14 +1,6 @@
 <template>
-    <div class="question outline-none" tabindex="1"
-        @keydown.down.prevent="highlightNextResponse"
-        @keydown.up.prevent="highlightPreviousResponse"
-        @keydown.space.prevent="toggleResponse(highlightedResponseIndex)"
-        @keydown.delete.prevent="clearResponse">
+    <div class="question outline-none">
         <div class="card px-3 pt-3 pb-6 relative overflow-hidden">
-            <span v-if="dataQuestion.is_multiple"
-                class="absolute pin-r pin-b p-1 bg-blue-light text-white text-xs">
-                Multiple
-            </span>
             <strong class="float-left mr-2" v-text="`Q${index+1}.`"></strong>
             <p v-html="dataQuestion.text"></p>
         </div>
@@ -17,7 +9,7 @@
         <div class="flex justify-center my-4" v-if="dataQuestion.illustration">
             <img :src="dataQuestion.illustration" class="max-w-full rounded shadow-lg">
         </div>
-        <ul class="choices-list list-reset my-8 flex flex-wrap -mx-2">
+        <ul class="choices-list list-reset my-8 flex flex-wrap -mx-2" v-if="choicesCount">
             <li v-for="(choice, choiceIndex) in dataQuestion.choices" 
                 :key="choice.id" 
                 class="mb-3 w-full md:w-1/2 px-2">
@@ -37,7 +29,7 @@
                         :class="isSelected(choiceIndex) ? 'bg-white' : 'bg-green'"></span>
                     </div>
                     <input :id="`choice-${choice.key}`" 
-                        :type="dataQuestion.is_multiple ? 'checkbox' : 'radio'" 
+                        type="radio" 
                         class="hidden"
                         :name="`question-${choice.question_id}`" 
                         @input="toggleResponse(choiceIndex)"
@@ -50,6 +42,17 @@
                 </label>
             </li>
         </ul>
+        <!-- Input Answer -->
+        <div class="card my-4 p-4" v-else>
+            <div class="flex" v-if="editing">
+                <input ref="input" type="text" class="flex-1 mr-1 control" v-model="answer" autofocus @keydown.enter.prevent.stop="saveResponse">
+                <button @click="saveResponse" class="btn btn-green is-sm">Save</button>
+            </div>
+            <div class="flex" v-else>
+                <p class="flex-1 mr-1" :class="{'text-grey': !answer}" v-text="answer || 'No answer'"></p>
+                <button @click="editResponse" class="btn is-blue is-sm">Edit</button>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -61,7 +64,16 @@ export default {
     },
     data() {
         return {
-            highlightedResponseIndex: 0
+            highlightedResponseIndex: 0,
+            editing: false,
+            answer: null,
+            keyEvents: {
+                'ArrowDown': () => this.highlightNextResponse(),
+                'ArrowUp': () => this.highlightPreviousResponse(),
+                'Space': () => this.toggleResponse(this.highlightedResponseIndex),
+                'Delete': () => this.clearResponse(),
+                'Backspace': () => this.clearResponse(),
+            }
         }
     },
     computed: {
@@ -69,7 +81,10 @@ export default {
             return this.dataQuestion.choices.length;
         },
         escapedCode() {
-            return this.dataQuestion.code.replace(/\n/g, '\\n').replace(/<br>/g, "\n");
+            if(this.dataQuestion.code) {
+                return this.dataQuestion.code.replace(/\n/g, '\\n').replace(/<br>/g, "\n");
+            }
+            return null;
         }
     },
     methods: {
@@ -84,34 +99,46 @@ export default {
                 (this.choicesCount - 1) 
                 : (this.highlightedResponseIndex - 1)
         },
-        removeResponse(index) {
-            return this.value.filter((_, itemIndex) => index != itemIndex);
-        },
         toggleResponse(index) {
-            const choice = this.dataQuestion.choices[index];
-            index = this.value.findIndex(orgChoice => orgChoice.key == choice.key);
-
-            if(index != -1) {
-                this.$emit('input', this.removeResponse(index));
-            } else if (this.dataQuestion.is_multiple) {
-                this.$emit('input',  this.value.concat([choice]));
+            if(this.isSelected(index)) {
+               this.$emit('input', ''); 
             } else {
-                this.$emit('input', [choice]);
+                this.$emit('input', this.dataQuestion.choices[index].key);
             }
         },
         isSelected(index) {
             const choice = this.dataQuestion.choices[index];
-            return !!this.value.find(orgChoice => orgChoice.key == choice.key)
+            return choice && this.value == choice.key;
         },
         isHighlighted(index) {
             return this.highlightedResponseIndex == index;
         },
         clearResponse() {
-            this.$emit('input', []);
+            this.$emit('input', '');
+        },
+        editResponse() {
+            this.editing = true;
+            this.$nextTick(() => this.$refs.input.focus());
+        },
+        saveResponse() {
+            this.editing = false;
+            this.$emit('input', this.answer);
+        },
+    },
+    watch:{
+        value() {
+            this.answer = this.value || '';
         }
     },
     mounted() {
-        this.$el.focus();
+        if(this.dataQuestion.choices.length > 0) {
+            window.addEventListener('keydown', ({code}) => {
+                if(this.keyEvents.hasOwnProperty(code)) {
+                    this.keyEvents[code]();
+                    return false;
+                }
+            });
+        }
     }
 }
 </script>
