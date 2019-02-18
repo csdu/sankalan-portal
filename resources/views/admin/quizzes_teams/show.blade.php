@@ -50,11 +50,6 @@
             <div class="card-content bg-blue-lightest flex items-start">
                 <div class="question mr-4 flex-1">
                     <div class="card px-3 pt-3 pb-6 relative overflow-hidden">
-                        @if($response->question->is_multiple)
-                        <span class="absolute pin-r pin-b p-1 bg-blue-light text-white text-xs">
-                            Multiple
-                        </span>
-                        @endif
                         <strong class="float-left mr-2">#{{ $response->question->id }}</strong>
                         <p>{!! $response->question->text !!}</p>
                     </div>
@@ -68,33 +63,53 @@
                         <img src="{{ $response->question->illustration}}" class="max-w-full rounded shadow-lg">
                     </div>
                     @endif
-                    <ul class="choices-list list-reset mt-8 flex flex-wrap -mx-2">
-                        @foreach($response->question->choices as $choice)
-                        <li class="mb-3 w-full md:w-1/2 px-2">
-                        <label class="relative card flex items-center py-2 pr-3 pl-8 {{ $choice->isCorrect() && $response->isChosen($choice) ? 'bg-green text-white' : ($response->isChosen($choice) ? 'bg-red text-white' : '') }}">
-                                @if($choice->isCorrect())
+                    @if(count($response->question->choices))
+                        <ul class="choices-list list-reset mt-8 flex flex-wrap -mx-2">
+                            @foreach($response->question->choices as $choice)
+                            <li class="mb-3 w-full md:w-1/2 px-2">
+                                <label class="relative card flex items-center py-2 pr-3 pl-8 {{ $choice->isCorrect() && $response->isChosen($choice) ? 'bg-green text-white' : ($response->isChosen($choice) ? 'bg-red text-white' : '') }}">
+                                    @if($choice->isCorrect())
+                                        <div class="absolute pin-l pin-y flex items-center ml-2">
+                                            @include('svg.checkmark', ['classes' => ($response->isChosen($choice) ? '': 'text-green ') . "fill-current h-4"])
+                                        </div>
+                                    @elseif($response->isChosen($choice) && !$choice->isCorrect())
+                                        <div class="absolute pin-l pin-y flex items-center ml-2">
+                                            @include('svg.close', ['classes' => "fill-current h-4"])
+                                        </div>
+                                    @endif
+                                    
+                                    @if($choice->illustration)
+                                        <img src="{{ $choice->illustration }}" alt="{{ $choice->text }}" class="rounded my-2 max-w-full">
+                                    @endif
+                                    @if($choice->code)
+                                        <pre class="my-2">
+                                            {{ str_replace('<br>', "\n", $choice->code) }}
+                                        </pre>
+                                    @endif
+                                    <p class="ml-1">{!! $choice->text !!}</p>
+                                </label>
+                            </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <ul class="list-reset mt-8 flex flex-wrap -mx-2">
+                            <li class="w-full mb-3 px-2">
+                                <p class="{{ $response->question->correct_answer_keys->contains($response->response_keys) ? 'text-green' : 'text-red' }}">
+                                    {{ $response->response_keys }}
+                                </p>
+                            </li>
+                            @foreach($response->question->correct_answer_keys as $answer_key)
+                            <li class="mb-3 w-1/2 px-2">
+                                <div class="card py-2 pr-3 pl-8 flex border-0 {{ $answer_key == $response->response_keys ? 'bg-green text-white' : '' }}">
                                     <div class="absolute pin-l pin-y flex items-center ml-2">
-                                        @include('svg.checkmark', ['classes' => ($response->isChosen($choice) ? '': 'text-green ') . "fill-current h-4"])
+                                        @include('svg.checkmark', ['classes' => "fill-current h-4"])
                                     </div>
-                                @elseif($response->isChosen($choice) && !$choice->isCorrect())
-                                    <div class="absolute pin-l pin-y flex items-center ml-2">
-                                        @include('svg.close', ['classes' => "fill-current h-4"])
-                                    </div>
-                                @endif
-                                
-                                @if($choice->illustration)
-                                    <img src="{{ $choice->illustration }}" alt="{{ $choice->text }}" class="rounded my-2 max-w-full">
-                                @endif
-                                @if($choice->code)
-                                    <pre class="my-2">
-                                        {{ str_replace('<br>', "\n", $choice->code) }}
-                                    </pre>
-                                @endif
-                                <p class="ml-1">{!! $choice->text !!}</p>
-                            </label>
-                        </li>
-                        @endforeach
-                    </ul>
+                                    <p>{{ $answer_key }}</p>
+                                </div>
+                            </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
                 <div class="card flex text-white border-0 {{ $response->score <= 0 ? 'bg-red' : 'bg-green' }}">
                     <div class="card-content flex flex-col items-center justify-center">
