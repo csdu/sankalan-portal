@@ -54,23 +54,32 @@
                         <td class="table_fit text-center px-4 py-2">
                             <span class="px-2 py-1 rounded-full bg-grey text-xs" v-text="responses_count"></span>
                         </td>
-                        <td class="table_fit text-left px-4 py-2">
+                        <td class="table_fit text-left text-xs px-4 py-2">
                             <span v-if="start_time" v-text="start_time"></span>
                         </td>
-                        <td class="table_fit text-left px-4 py-2">
+                        <td class="table_fit text-left text-xs px-4 py-2">
                             <span v-if="finish_time" v-text="finish_time"></span>
                         </td>
                         <td class="table_fit text-center px-4 py-2">
                             <span v-if="score != null" class="p-1 bg-green text-white text-xs font-semibold rounded-full" v-text="score"></span>
                             <span v-else class="p-1 bg-grey text-xs rounded">Not Evaluated</span>
                         </td>
-                        <td class="table_fit text-center px-4 py-2">
-                            <ajax-button v-if="finish_time" class="btn is-blue is-sm"
-                            :action="route('admin.quizzes.teams.evaluate', participationId)"
-                            method="POST"
-                            @success="onComplete"
-                            >Evaluate</ajax-button>
-                            <span v-else class="p-1 bg-grey text-xs rounded">Not Completed</span>
+                        <td class="table_fit text-right pl-4 pr-6 py-2">
+                            <div class="inline-flex">
+                                <ajax-button v-if="finish_time" class="btn is-green is-sm mr-2 whitespace-no-wrap"
+                                :action="route('admin.quizzes.teams.evaluate', participationId)"
+                                method="POST"
+                                title="Evaluate"
+                                @success="onComplete"
+                                >
+                                    Evaluate
+                                </ajax-button>
+                                <span v-else class="p-1 bg-grey text-xs rounded mr-2">Not Completed</span>
+                                <a :href="route('admin.quiz-participations.show', participationId)"
+                                title="View Details">
+                                    @include('svg.view-show', ['classes' => 'text-grey hover:text-blue fill-current h-6'])
+                                </a>
+                            </div>
                         </td>
                     </template>
                 </tr>

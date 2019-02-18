@@ -27,4 +27,8 @@ class QuizResponse extends Model
     public function getResponseKeysAttribute($response_keys) {
         return collect(explode(':', $response_keys));
     }
+
+    public function isChosen(AnswerChoice $choice) {
+        return $this->response_keys->contains($choice->key);
+    }
 }

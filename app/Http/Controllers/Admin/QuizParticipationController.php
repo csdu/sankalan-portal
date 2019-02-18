@@ -48,6 +48,13 @@ class QuizParticipationController extends Controller
         ];
     }
 
+    public function show(QuizParticipation $quizParticipation)
+    {
+        $quizParticipation->load(['team.members', 'responses.question.choices']);
+        
+        return view('admin.quizzes_teams.show', compact('quizParticipation'));
+    }
+
     public function evaluate(QuizParticipation $quizParticipation) {
         $score = $quizParticipation->evaluate();
 

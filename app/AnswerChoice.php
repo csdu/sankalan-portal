@@ -21,4 +21,8 @@ class AnswerChoice extends Model
 
         return asset("/images$illustration");
     }
+
+    public function isCorrect() {
+        return $this->question->correct_answer_keys->contains($this->key);
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\Question;
 
 $factory->define(App\AnswerChoice::class, function (Faker $faker, $attributes) {
 
