@@ -41,6 +41,14 @@ class Question extends Model
 
     public function getCorrectAnswerKeysAttribute($keys)
     {
-        return collect(explode(':', $keys));
+        return collect(explode(':', $keys))->map(function ($answer_key) {
+            return strtolower(trim(
+                preg_replace(
+                    '~[^a-zA-Z0-9]+~', 
+                    '',
+                    preg_replace('~( |_|\-)+~' , ' ', $answer_key)
+                )
+            ));
+        });
     } 
 }
