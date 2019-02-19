@@ -43,7 +43,12 @@
                             <span v-else-if="quiz.isStarted" class="p-1 ml-1 rounded bg-green text-white font-thin text-xs uppercase leading-none">Started</span>
                             <span v-else class="p-1 ml-1 rounded bg-grey font-thin text-xs uppercase leading-none">Waiting</span>
                         </td>
-                        <td class="table-fit text-left px-4 py-2" v-text="team.name"></td>
+                        <td class="table-fit text-left px-4 py-2">
+                            <div class="text-sm mb-1" v-text="team.name"></div>
+                            <div class="flex -mx-1">
+                                <span v-for="member in team.members" class="p-1 bg-blue text-white text-xs capitalize mx-1 rounded" v-text="member.first_name"></span>
+                            </div>
+                        </td>
                         <td class="text-left px-4 py-2">
                             <a href="#" v-text="quiz.title" class="capitalize link"></a>
                             <span v-if="quiz.isActive" class="p-1 ml-1 rounded bg-green text-white font-normal text-xs uppercase leading-none">LIVE</span>

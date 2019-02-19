@@ -22,6 +22,17 @@ class AnswerChoice extends Model
         return asset("/images$illustration");
     }
 
+    public function getKeyAttribute($key)
+    {
+        return strtolower(trim(
+            preg_replace(
+                '~[^a-zA-Z0-9]+~',
+                '',
+                preg_replace('~( |_|\-)+~', ' ', $key)
+            )
+        ));
+    }
+
     public function isCorrect() {
         return $this->question->correct_answer_keys->contains($this->key);
     }

@@ -48,6 +48,7 @@ class ViewQuizParticipationsTest extends TestCase
         tap($viewParticipations->first(), function($firstParticipation) {
             $this->assertArrayHasKey('quiz', $firstParticipation->toArray());
             $this->assertArrayHasKey('team', $firstParticipation->toArray());
+            $this->assertArrayHasKey('members', $firstParticipation->toArray()['team']);
             $this->assertArrayHasKey('questions_count', $firstParticipation->toArray()['quiz']);
             $this->assertArrayHasKey('responses_count', $firstParticipation->toArray());
         });

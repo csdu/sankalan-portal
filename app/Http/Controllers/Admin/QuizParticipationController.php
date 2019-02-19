@@ -23,7 +23,7 @@ class QuizParticipationController extends Controller
             });
         }
 
-        $quizzes_teams = $query->with(['team',
+        $quizzes_teams = $query->with(['team.members',
             'quiz' => function($query) {
                 $query->withCount('questions');
             }
