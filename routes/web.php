@@ -36,6 +36,7 @@ Route::group(['prefix' => 'manage', 'middleware' => ['auth','admin'], 'namespace
     Route::get('quizzes', 'QuizController@index')->name('admin.quizzes.index');
     Route::post('quizzes/{quiz}/open', 'QuizController@goLive')->name('admin.quizzes.go-live');
     Route::post('quizzes/{quiz}/close', 'QuizController@close')->name('admin.quizzes.close');
+    Route::post('quizzes/{quiz}/evaluate', 'QuizController@evaluate')->name('admin.quizzes.evaluate');
     Route::get('quizzes_teams/{quiz?}', 'QuizParticipationController@index')->name('admin.quizzes.teams.index');
     Route::post('quizzes_teams/{quizParticipation}/evaluate', 'QuizParticipationController@evaluate')->name('admin.quizzes.teams.evaluate');
     Route::get('quiz_participations/{quizParticipation}', 'QuizParticipationController@show')->name('admin.quiz-participations.show');

@@ -51,4 +51,15 @@ class QuizController extends Controller
             'quiz' => $quiz
         ];
     }
+
+    public function evaluate(Quiz $quiz)
+    {
+        $scores = $quiz->participations->map->evaluate();
+        
+        return [
+            'status' => 'success',
+            'message' => 'All quiz responses have been evaluated',
+            'scores' => $scores->toArray(),
+        ];
+    }
 }

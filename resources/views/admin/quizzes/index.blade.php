@@ -60,6 +60,10 @@
                                 @success="onComplete" @failure="onComplete">
                                 Go Live
                             </ajax-button>
+                            <ajax-button v-if="quiz.isClosed" class="btn is-blue is-sm font-normal" :action="route('admin.quizzes.evaluate', quiz.slug)"
+                                method="post" @success="onComplete" @failure="onComplete">
+                                Evaluate
+                            </ajax-button>
                             <button v-else
                                 class="btn is-blue is-sm font-normal">
                                 Evaluate
