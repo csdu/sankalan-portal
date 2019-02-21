@@ -3,9 +3,9 @@
 @section('content')
 <div class="flex flex-col justify-center flex-1 ">
     <div class="container mx-auto px-4 flex flex-col lg:flex-row flex-1">
-        <div class="flex flex-col justify-center flex-1">
-            <h1 class="mt-16">Sankalan 2019 is here! </h1>
-            <h3 class="mb-16">Pull up your socks</h3>
+        <div class="my-16 flex flex-col justify-center flex-1">
+            <h1 class="mb-3">Sankalan 2019 is here! </h1>
+            <h3 class="mb-6">Pull up your socks</h3>
         </div>
         <login-register inline-template>
             <div class="w-auto lg:w-1/3 flex flex-col justify-center items-center lg:items-end">

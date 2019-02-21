@@ -20,9 +20,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Paginator::defaultView('partials.pagination');
-        View::composer('dashboard', function($view) {
-            return $view->with(['signedInUser' => auth()->user()->load('teams')]);
+
+        View::composer(['events.*', 'teams.*', 'dashboard'], function($view) {
+            return $view->with([
+                'signedInUser' => optional(auth()->user())->load('teams')
+            ]);
         });
+        
         Collection::macro('recursive', function () {
             return $this->map(function ($value) {
                 if (is_array($value) || is_object($value)) {

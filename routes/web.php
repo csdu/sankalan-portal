@@ -13,9 +13,9 @@
 Route::get('/', 'PagesController@index')->name('homepage')->middleware('guest');
 
 Auth::routes();
-
-Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
-    Route::get('/', 'DashboardController@index')->name('dashboard');
+Route::get('/events', 'EventController@index')->name('events.index');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/teams', 'TeamController@index')->name('teams');
     Route::post('/teams', 'TeamController@store')->name('teams.store');
     Route::post('/events/{event}/participate', 'EventParticipationController@store')->name('events.participate');

@@ -1,21 +1,24 @@
 <nav class="py-2">
-    <div class="container flex flex-col sm:flex-row overflow-x-auto">
+    <div class="container flex flex-col items-baseline sm:flex-row overflow-x-auto">
         <div class="flex py-2 justify-center sm:mr-3">
             <a class="inline-flex items-center whitespace-no-wrap" href="{{ Auth::check() ? route('dashboard') : route('homepage') }}">
                 <h1 class="text-2xl">Sakalan<small class="ml-1 text-xs text-blue uppercase">Portal</small></h1>
             </a>
         </div>
-        <div class="flex-1 flex justify-between items-baseline text-xs sm:py-2">
+        <div class="w-full sm:flex-1 flex justify-between items-baseline sm:py-2">
             <!-- Left Side Of Navbar -->
-            <ul class="nav-center list-reset flex items-baseline">
+            <ul class="nav-center list-reset inline-flex items-baseline uppercase tracking-wide font-semibold text-xs">
+                <li class="inline-flex">
+                    <a class="px-2 py-1  inline-flex items-center" href="{{ route('events.index') }}">Events</a>
+                </li>
                 @auth
-                <li class="flex">
-                    <a class="px-2 py-1 uppercase tracking-wide font-semibold inline-flex items-center" href="{{ route('teams') }}">Teams</a>
+                <li class="inline-flex">
+                    <a class="px-2 py-1  inline-flex items-center" href="{{ route('teams') }}">Teams</a>
                 </li>
                 @endauth
             </ul>
     
-            <ul class="nav-right list-reset flex items-baseline justify-end ml-2">
+            <ul class="nav-right list-reset inline-flex items-baseline justify-end ml-2">
                 @auth
                     <li class="inline-flex items-center text-lg">
                         <div class="hidden sm:inline-flex">Hello, <span class="mx-1 font-semibold">{{ Auth::user()->first_name }}</span>!</div>
@@ -28,6 +31,11 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                             @csrf
                         </form>
+                    </li>
+                @elseif(!Route::is('homepage'))
+                    <li class="inline-flex items-baseline">
+                        <a href="{{ route('homepage') }}#login" class="link mr-4">Login</a>
+                        <a href="{{ route('homepage') }}#register" class="btn is-blue font-semibold">Register</a>
                     </li>
                 @endauth
             </ul>
