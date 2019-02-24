@@ -1,9 +1,12 @@
 <template>
     <div>
-        <span v-if="hours" >{{hours | format(2)}}:</span>
-        <span>{{ minutes | format(2) }}:</span>
-        <span>{{ seconds | format(2) }}.</span>
-        <span class="text-sm">{{ milliseconds | format(3) }}</span>
+        <slot :timer="timer" :format="format">
+            <span v-if="days" >{{ format(days, 2)}}:</span>
+            <span v-if="hours" >{{ format(hours, 2)}}:</span>
+            <span>{{ format(minutes, 2) }}:</span>
+            <span>{{ format(seconds, 2) }}.</span>
+            <span class="text-sm">{{ format(milliseconds, 3) }}</span>
+        </slot>
     </div>
 </template>
 <script>
@@ -14,7 +17,8 @@ export default {
     },
     data() {
         return {
-            timer: null,
+            intervalTimer: null,
+            ended: false,
             startTime: new Date().getTime(),
             currentTime: new Date().getTime(),
             framesDuration: 1000/30,
@@ -37,7 +41,19 @@ export default {
             return Math.floor(this.timeLeft / 1000 / 60) % 60;
         },
         hours() {
-            return Math.floor(this.timeLeft / 1000 / 60 / 60);
+            return Math.floor(this.timeLeft / 1000 / 60 / 60) % 24;
+        },
+        days() {
+            return Math.floor(this.timeLeft / 1000 / 60 / 60 / 24);
+        },
+        timer() {
+            return {
+                milliseconds: this.milliseconds,
+                seconds: this.seconds,
+                minutes: this.minutes,
+                hours: this.hours,
+                days: this.days,
+            }
         }
     },
     methods: {
@@ -45,15 +61,14 @@ export default {
             this.currentTime = new Date().getTime();
             if(this.timeLeft <= this.framesDuration) {
                 this.currentTime += this.timeLeft; // to make timer goto zero
-                clearInterval(this.timer);
+                clearInterval(this.intervalTimer);
                 this.$emit('timeup');
+                this.ended = true;
             }
             if(this.timeLeft <= this.hurry * 1000) {
                 this.$emit('hurryup');
             }
-        }
-    },
-    filters: {
+        },
         format(number, minDigits) {
             const digits = number.toString().length;
             if(digits >= minDigits) {
@@ -63,7 +78,7 @@ export default {
         }
     },
     mounted() {
-        this.timer = setInterval(this.refreshTime, this.framesDuration);
+        this.intervalTimer = setInterval(this.refreshTime, this.framesDuration);
     }
 }
 </script>

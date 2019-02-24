@@ -2,10 +2,33 @@
 @section('title', 'Home | ') 
 @section('content')
 <div class="flex flex-col justify-center flex-1 ">
-    <div class="container mx-auto px-4 flex flex-col lg:flex-row flex-1">
-        <div class="my-16 flex flex-col justify-center flex-1">
-            <h1 class="mb-3">Sankalan 2019 is here! </h1>
-            <h3 class="mb-6">Pull up your socks</h3>
+    <div class="container mx-auto px-4 flex flex-col items-center lg:flex-row flex-1">
+        <div class="logo my-4 lg:mr-6">
+            @include('svg.sankalan-logo', ['classes' => 'max-w-full text-black h-32 sm:h-64 lg:h-48'])
+        </div>
+        <div class="my-6 lg flex flex-col justify-center flex-1 text-center lg:text-left">
+            <h1 class="mb-1 text-4xl">Sankalan <span class="text-2xl text-blue">2019</span></h1>
+            <h3 class="mb-6">Compiling Innovations ...</h3>
+            <countdown-timer :duration="{{ $timeLeft }}" class="flex text-3xl sm:text-5xl -mx-4">
+                <template slot-scope="{timer, format}">
+                    <span v-if="timer.days > 0" class="inline-flex flex-col items-center justify-center p-3 md:p-6">
+                        <span v-text="timer.days"></span>
+                        <span class="mt-1 text-xs uppercase text-grey-dark tracking-wide font-semibold">Days</span>
+                    </span>
+                    <span class="inline-flex flex-col items-center justify-center p-3 md:p-6">
+                        <span v-text="format(timer.hours, 2)"></span>
+                        <span class="mt-1 text-xs uppercase text-grey-dark tracking-wide font-semibold">Hours</span>
+                    </span>
+                    <span class="inline-flex flex-col items-center justify-center p-3 md:p-6">
+                        <span v-text="format(timer.minutes, 2)"></span>
+                        <span class="mt-1 text-xs uppercase text-grey-dark tracking-wide font-semibold">Minutes</span>
+                    </span>
+                    <span class="inline-flex flex-col items-center justify-center p-3 md:p-6">
+                        <span v-text="format(timer.seconds, 2)"></span>
+                        <span class="mt-1 text-xs uppercase text-grey-dark tracking-wide font-semibold">Seconds</span>
+                    </span>
+                </template>
+            </countdown-timer>
         </div>
         <login-register inline-template>
             <div class="w-auto lg:w-1/3 flex flex-col justify-center items-center lg:items-end">
@@ -14,7 +37,7 @@
                         <h2 class="card-header">
                             {{ __('Register') }}
                             <span class="text-xs text-grey-dark mx-1">or</span>
-                            <a class="text-sm uppercase text-blue" href="#login" @click="login">Login</a>
+                            <a class="text-sm uppercase text-blue tracking-wide" href="#login" @click="login">Login</a>
                         </h2>
                         <form method="POST" action="{{ route('register') }}" class="card-content">
                             @csrf
@@ -91,7 +114,7 @@
                         <h2 class="card-header">
                             {{ __('Login') }}
                             <span class="text-xs text-grey-dark mx-1">or</span>
-                            <a class="text-sm uppercase text-blue" href="#register" @click="register">Register</a>
+                            <a class="text-sm uppercase text-blue tracking-wide" href="#register" @click="register">Register</a>
                         </h2>
 
                         <form method="POST" action="{{ route('login') }}" class="card-content">

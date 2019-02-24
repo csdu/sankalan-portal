@@ -231,4 +231,6 @@ return [
         'perPage' => 100
     ],
 
+    'sankalan_start_time' => '9 March 2019, 9:00 AM',
+
 ];
