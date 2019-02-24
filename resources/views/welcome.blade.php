@@ -3,9 +3,6 @@
 @section('content')
 <div class="flex flex-col justify-center flex-1 ">
     <div class="container mx-auto px-4 flex flex-col items-center lg:flex-row flex-1">
-        <div class="logo my-4 lg:mr-6">
-            @include('svg.sankalan-logo', ['classes' => 'max-w-full text-black h-32 sm:h-64 lg:h-48'])
-        </div>
         <div class="my-6 lg flex flex-col justify-center flex-1 text-center lg:text-left">
             <h1 class="mb-1 text-4xl">Sankalan <span class="text-2xl text-blue">2019</span></h1>
             <h3 class="mb-6">Compiling Innovations ...</h3>

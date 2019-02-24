@@ -21,6 +21,32 @@
             background-color: #f1f5f8;
             background-image: url("{{ asset('/svg/circuit-bg.svg') }}");
         }
+        body::before {
+            content: '';
+            background-image: url("{{ asset('/svg/logo.svg') }}");
+            width: calc(30vh + 10vw);
+            height: calc(30vh + 10vw);
+            background-size: calc(30vh + 10vw);
+            position: fixed;
+            left: 0;
+            top: 50%;
+            z-index: -10;
+            opacity: .3;
+            transform: translate(-50%, -50%);
+        }
+        body::after { 
+            content: ''; 
+            background-image: url("{{ asset('/svg/logo.svg') }}"); 
+            width: calc(30vw + 30vh);
+            height: calc(30vw + 30vh);
+            background-size: calc(30vw + 30vh);
+            position: fixed; 
+            right: 0; 
+            bottom: 0; 
+            z-index: -10; 
+            opacity: .2;
+            transform: translate(25%, 25%); 
+        }
     </style>
 </head>
 <body class="font-sans bg-grey-lighter text-black">
