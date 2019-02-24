@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Event;
 
 class DashboardController extends Controller
@@ -14,7 +13,15 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $events = Event::with('teams.members')->get();
-        return view('dashboard', compact('events'));
+        $teams = auth()->user()->teams()->with(['events', 'members'])->get();
+
+        $events = $teams->flatMap(function ($team) {
+            return $team->events->map(function($event) use ($team){
+                $event->team = $team;
+                return $event;
+            });
+        });
+
+        return view('dashboard', compact('teams', 'events'));
     }
 }
