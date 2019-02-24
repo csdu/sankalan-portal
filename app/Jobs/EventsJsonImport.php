@@ -113,7 +113,7 @@ class EventsJsonImport
         });
         return $this;
     }
- #endregion
+    
     public function createChoices()
     {
         $this->choices->map(function ($choice) {
