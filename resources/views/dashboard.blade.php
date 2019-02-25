@@ -1,19 +1,6 @@
 @extends('layouts.app')
 @section('content')
 <div class="container mx-auto px-3 flex-1">
-    {{-- <div class="card my-8">
-        <h1 class="card-header">Dashboard</h1>
-
-        <div class="card-content">
-            @if (session('status'))
-                <div class="bg-green-lighter text-green border border-green" role="alert">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            You are logged in!
-        </div>
-    </div> --}}
     <div class="dashboard-grid mt-4 mb-12">
         <div class="card seperated team-card">
             <div class="card-header">
@@ -25,9 +12,9 @@
                 @forelse($teams as $team)
                 <li class="py-3 px-6 hover:bg-grey-lighter">
                     <h3 class="text-base mb-3">{{ ucwords(strtolower($team->name)) }}</h3>
-                    <ul class="list-reset flex mb-1 -mx-1">
+                    <ul class="list-reset flex flex-wrap mb-1 -mx-2 my-1">
                         @foreach($team->members as $member)
-                        <li class="mx-2 bg-grey-light py-2 px-4 flex items-center rounded text-sm">
+                        <li class="mx-2 my-1 bg-grey-light py-2 px-4 flex items-center rounded text-sm whitespace-no-wrap">
                             <img src="https://gravatar.com/avatar/{{ $member->emailHash }}?s=50&d=retro" alt="" class="w-4 h-4 rounded-full mr-1">
                             <span>{{ ucwords(strtolower($member->name)) }}</span>
                         </li>
@@ -52,27 +39,58 @@
                     Participations
                 </h2>
             </div>
-            <ul class="list-reset">
+            <ul class="list-reset flex flex-col">
                 @forelse($events as $event)
-                <li class="px-6 py-3 hover:bg-grey-lighter">
-                    <h3 class="text-base mb-3">{{ $event->title }}</h3>
-                    <p class="mb-1">
-                        Participating as team <b>{{ $event->team->name }}</b> @if(count($event->team->members)) with <em>{{ $event->team->members->first()->name }}</em>                    @endif
-                    </p>
-                    @if($event->ended_at != null)
-                    <form action="{{ route('events.withdraw-part', $event) }}" method="POST">
-                        @csrf @method('delete')
-                        <button class="btn is-red is-sm">Withdraw</button>
-                    </form>
-                    @endif
-                </li>
+                    <li class="px-6 py-3 hover:bg-grey-lighter" style="order: {{$event->isLive ? 0 : ($event->hasEnded ? 3 : 1)}};">
+                        <div class="flex items-start">
+                            <img src="https://placehold.it/141x200" alt="{{ $event->title }}" class="w-16 mr-2">
+                            <div class="content flex-1 flex flex-col">
+                                <h3 class="text-lg mb-1 flex items-center">
+                                    <span>{{ $event->title }}</span>
+                                    @if($event->hasStarted || $event->hasEnded)
+                                    <span class="ml-1 w-2 h-2 inline-block rounded-full {{ $event->isLive ? 'bg-green-light' : 'bg-red' }}"></span>
+                                    @endif
+                                </h3>
+                                <p class="mb-1">
+                                    <b class="mr-1">Team:</b> 
+                                    <span class="underline">{{ ucwords(strtolower($event->team->name)) }}</span>
+                                </p>
+                                @if($event->activeQuiz)
+                                    <p class="text-grey-darker my-1">
+                                        <b>{{ $event->activeQuiz->title }}</b> is live.
+                                    </p>
+                                @elseif($event->isLive && $event->quizzes->count())
+                                    <p class="text-grey-darker font-semibold my-1">
+                                        Quiz will start soon
+                                    </p>
+                                @endif
+                                <div class="mt-auto flex-items-center">
+                                    @if($event->canBeWithdrawn($event->team))
+                                        <form action="{{ route('events.withdraw-part', $event) }}" method="POST" class="inline-block mr-2">
+                                            @csrf @method('delete')
+                                            <button class="btn is-red p-1 text-xs">Withdraw</button>
+                                        </form>
+                                    @endif
+                                    @if($event->isLive && $event->quizzes->count() && $event->activeQuiz)
+                                        @if($event->activeQuiz->hasTeamResponded($event->team))
+                                            <span class="btn p-1 text-xs cursor-not-allowed">Quiz Taken</span>
+                                        @elseif($event->activeQuiz->isTeamAllowed($event->team))
+                                            <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">Take Quiz</a>
+                                        @else
+                                            <span class="text-red">You are not allowed to take quiz, yet.</span> 
+                                        @endif
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                 @empty
-                <li class="px-6 py-4">
-                    <p class="text-grey-dark text-center">
-                        You have not particpated in any event yet. See all
-                        <a href="{{ route('events.index') }}" class="link font-bold">events</a> 
-                    </p>
-                </li>
+                    <li class="px-6 py-4">
+                        <p class="text-grey-dark text-center">
+                            You have not particpated in any event yet. See all
+                            <a href="{{ route('events.index') }}" class="link font-bold">events</a> 
+                        </p>
+                    </li>
                 @endforelse
             </ul>
         </div>

@@ -55,6 +55,13 @@ class Event extends Model
         });
     }
 
+    public function canBeWithdrawn($team)
+    {
+        return count($this->quizzes) ? 
+            (! $this->quizzes->first()->isClosed  && !$this->quizzes->first()->hasTeamResponded($team)): 
+            ! $this->isLive;
+    }
+    
     public function setLive() {
         if($this->isLive) {
             return true;

@@ -1,5 +1,4 @@
 @extends('layouts.app') 
-@section('title', 'Home | ') 
 @section('content')
 <div class="flex flex-col justify-center flex-1 ">
     <div class="container mx-auto px-4 flex flex-col items-center lg:flex-row flex-1">

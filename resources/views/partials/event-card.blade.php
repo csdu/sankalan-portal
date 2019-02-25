@@ -14,53 +14,35 @@
             <p>{!! $event->description !!}</p>
         </div>
 
-        @if($event->ended_at == null &&  !(optional($event->quizzes->first())->isClosed ?? false))
+        @if(!$event->hasEnded)
             <div class="card-footer">
                 @auth
                     @if(!$participatingTeam = $event->participatingTeamByUser($signedInUser))
-                    <form action="{{ route('events.participate', $event) }}" method="POST" class="flex items-center">
-                        @csrf
-                        <button type="submit" class="btn is-blue is-sm">
-                            {{ count($signedInUser->teams) ? 'Participate' : 'Participate Alone' }}
-                        </button> 
-                        @if(count($signedInUser->teams))
-                            <span class="ml-3">as:</span>
-                            <select name="team_id" class="ml-1 control is-sm">
-                                @if(!$signedInUser->team_id)
-                                    <option value="">Individual</option>
-                                @endif
-                                @foreach($signedInUser->teams as $team)
-                                    <option value="{{ $team->id }}">{{$team->name}} - {{$team->uid}}{{ $team->id == $signedInUser->team_id ? ' (Individual)' : '' }}</option>
-                                @endforeach
-                            </select> 
-                        @else
-                            <p class="text-xs text-grey-dark ml-3">
-                                You have not created any teams yet, you can participate <em>alone</em> or <a href="{{ route('teams') }}"
-                                    class="hover:underline text-blue">Create Team</a>. When you participate <em>alone</em>, a team will be
-                                created with a name <strong>"{{ $signedInUser->name }}"</strong>
-                            </p>
-                        @endif
-                    </form>
-                    @elseif($event->started_at != null)
-                        <div class="flex items-center">
-                            @if($event->activeQuiz)
-                                <p class="flex-1 text-sm text-grey-dark">
-                                    <b>{{ $event->activeQuiz->title }}</b> is live. 
-                                    @if($event->activeQuiz->hasTeamResponded($participatingTeam))
-                                        <span class="text-green"> We have recorded your response. Wait for the results </span> 
-                                    @elseif($event->activeQuiz->isTeamAllowed($participatingTeam))
-                                        <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="whitespace-no-wrap font-semibold text-green hover:underline">Take Quiz</a>
-                                    @else
-                                        <span class="text-red">Go to Venue to take Quiz</span> 
+                        <form action="{{ route('events.participate', $event) }}" method="POST" class="flex items-center">
+                            @csrf
+                            <button type="submit" class="btn is-blue is-sm">
+                                {{ count($signedInUser->teams) ? 'Participate' : 'Participate Alone' }}
+                            </button> 
+                            @if(count($signedInUser->teams))
+                                <span class="ml-3">as:</span>
+                                <select name="team_id" class="ml-1 control is-sm">
+                                    @if(!$signedInUser->team_id)
+                                        <option value="">Individual</option>
                                     @endif
-                                </p>
-                            @elseif($event->quizzes->count())
-                                <p>Quiz not started yet.</p>
+                                    @foreach($signedInUser->teams as $team)
+                                        <option value="{{ $team->id }}">{{$team->name}} - {{$team->uid}}{{ $team->id == $signedInUser->team_id ? ' (Individual)' : '' }}</option>
+                                    @endforeach
+                                </select> 
                             @else
-                                <p>Event has no <em>online</em> quiz.</p>
+                                <p class="text-xs text-grey-dark ml-3">
+                                    You have not created any teams yet, you can participate <em>alone</em> or <a href="{{ route('teams') }}"
+                                        class="hover:underline text-blue">Create Team</a>. When you participate <em>alone</em>, a team will be
+                                    created with a name <strong>"{{ $signedInUser->name }}"</strong>
+                                </p>
                             @endif
-                        </div>
-                    @else
+                        </form>
+                        
+                    @elseif($event->canBeWithdrawn($participatingTeam))
                         <div class="flex-1 flex items-center">
                             <p class="flex-1">Participating as <strong class="text-xs">{{ $participatingTeam->name }} - {{ $participatingTeam->uid }}</strong>!</p>
                             <form action="{{ route('events.withdraw-part', $event) }}" method="POST">
