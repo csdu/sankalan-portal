@@ -47,8 +47,10 @@
                                 <p class="flex-1 text-sm text-grey-dark">
                                     <b>{{ $event->activeQuiz->title }}</b> is live. 
                                     @if($event->activeQuiz->hasTeamResponded($participatingTeam))
-                                        <span class="text-green"> We have recorded your response. Wait for the results </span> @elseif($event->activeQuiz->isTeamAllowed($participatingTeam))
-                                        <a href="{{ route('quizzes.take', $event->activeQuiz) }}" class="whitespace-no-wrap font-semibold text-green hover:underline">Take Quiz</a>                    @else
+                                        <span class="text-green"> We have recorded your response. Wait for the results </span> 
+                                    @elseif($event->activeQuiz->isTeamAllowed($participatingTeam))
+                                        <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="whitespace-no-wrap font-semibold text-green hover:underline">Take Quiz</a>
+                                    @else
                                         <span class="text-red">Go to Venue to take Quiz</span> 
                                     @endif
                                 </p>

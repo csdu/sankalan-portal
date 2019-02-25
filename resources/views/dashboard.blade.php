@@ -32,7 +32,7 @@
                             <span>{{ ucwords(strtolower($member->name)) }}</span>
                         </li>
                         @endforeach
-                    </p>
+                    </ul>
                 </li>
                 @empty
                 <li class="py-4 px-6 text-center">

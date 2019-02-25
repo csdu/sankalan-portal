@@ -17,6 +17,7 @@ class CreateQuizzesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug')->unique();
+            $table->text('instructions');
             $table->unsignedInteger('time_limit')->default(1800);
             $table->unsignedInteger('questions_limit')->default(30);
             $table->unsignedInteger('event_id')->index();

@@ -30,7 +30,7 @@ class TeamTakesQuizTest extends TestCase
 
         $this->withoutExceptionHandling()->be($users[0]);
 
-        $response = $this->get(route('quizzes.take', $quiz));
+        $response = $this->post(route('quizzes.take', $quiz));
 
         $response->assertRedirect()->assertSessionHas('flash_notification');
         $this->assertEquals('danger', Session::get('flash_notification')->first()->level);
@@ -48,7 +48,7 @@ class TeamTakesQuizTest extends TestCase
 
         $this->withoutExceptionHandling()->be($users[0]);
 
-        $response = $this->get(route('quizzes.take', $quiz));
+        $response = $this->post(route('quizzes.take', $quiz));
 
         $response->assertRedirect()->assertSessionHas('flash_notification');
         
@@ -67,7 +67,7 @@ class TeamTakesQuizTest extends TestCase
 
         $this->withoutExceptionHandling()->be($users[0]);
 
-        $response = $this->get(route('quizzes.take', $quiz));
+        $response = $this->post(route('quizzes.take', $quiz));
 
         $response->assertRedirect()->assertSessionHas('flash_notification');
         $this->assertEquals('danger', Session::get('flash_notification')->first()->level);
@@ -92,9 +92,9 @@ class TeamTakesQuizTest extends TestCase
 
         $this->withoutExceptionHandling()->be($users[0]);
 
-        $response = $this->get(route('quizzes.take', $quiz));
+        $response = $this->post(route('quizzes.take', $quiz));
 
-        $response->assertSuccessful()->assertViewIs('quiz.index');
+        $response->assertSuccessful()->assertViewIs('quizzes.show');
             
         $viewQuiz = $response->viewData('quiz');
         
@@ -134,9 +134,9 @@ class TeamTakesQuizTest extends TestCase
 
         Carbon::setTestNow(now()->addMinutes(10));
         
-        $response = $this->get(route('quizzes.take', $quiz));
+        $response = $this->post(route('quizzes.take', $quiz));
 
-        $response->assertSuccessful()->assertViewIs('quiz.index');
+        $response->assertSuccessful()->assertViewIs('quizzes.show');
 
         $viewQuiz = $response->viewData('quiz');
 
@@ -181,7 +181,7 @@ class TeamTakesQuizTest extends TestCase
 
         $team->endQuiz($quiz, $responses);
 
-        $this->get(route('quizzes.take', $quiz))
+        $this->post(route('quizzes.take', $quiz))
             ->assertRedirect()
             ->assertSessionHas('flash_notification');
 

@@ -26,5 +26,6 @@ class EventsJsonImportTest extends TestCase
         $this->assertCount(1, $allEvents);
         $this->assertCount(1, $allEvents->first()->quizzes);
         $this->assertCount(3, $allEvents->first()->quizzes->first()->questions);
+        $this->assertCount(4, $allEvents->first()->quizzes->first()->instructions);
     }
 }

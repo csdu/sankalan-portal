@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Checks\TeamCanTakeQuiz;
-use Illuminate\Http\Request;
 use App\Quiz;
-use App\User;
-use App\Team;
 use Auth;
 
 class QuizController extends Controller
@@ -28,6 +25,12 @@ class QuizController extends Controller
 
         $team->beginQuiz($quiz);
 
-        return view('quiz.index', compact('quiz'));
+        return view('quizzes.show', compact('quiz'));
+    }
+
+    public function instructions(Quiz $quiz) {
+        $quiz->load(['event']);
+        
+        return view('quizzes.instructions', compact('quiz'));
     }
 }

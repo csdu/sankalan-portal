@@ -12,6 +12,12 @@
         "title": "Prelims Round",
         "slug": "event-title-prelims-round",
         "time_limit": 30,
+        "instructions": [
+          "Instruction Point 1",
+          "Instruction Point 2",
+          "Instruction Point 3",
+          "Instruction Point 4"
+        ],
         "questions": [
           {
             "text": "Simplest for of question. All textual options. Only one correct. text can be max 1200 characters.",

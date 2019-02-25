@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Quiz extends Model
 {
@@ -41,6 +42,23 @@ class Quiz extends Model
             $this->update(['closed_at' => now()]);
     }
 
+    public function setInstructionsAttribute($instructions) {
+        if($instructions instanceof Collection) {
+            $instructions = $instructions->toArray();
+        }
+        if(is_array($instructions)) {
+            $this->attributes['instructions'] = implode("\n", $instructions);
+        }
+    }
+
+    public function getInstructionsAttribute($instructions)
+    {
+        if($instructions) {
+            return explode("\n", $instructions);
+        }
+        return [];
+    }
+    
     public function getIsActiveAttribute() {
         if($this->event_id === null) {
             return null;
