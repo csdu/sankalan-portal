@@ -14,7 +14,7 @@
                 <input type="text" name="name" class="control" placeholder="Team Name" required>
             </div>
             <div class="mb-4 sm:flex-1 sm:mr-3 sm:mb-0">
-                <input type="email" name="member_email" class="control" placeholder="Partner's registered Email" required>
+                <input type="email" name="member_email" class="control" placeholder="Partner's Email (optional)">
             </div>
             <div>
                 <button type="submit" class="btn is-blue">Create Team</button>
