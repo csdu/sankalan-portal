@@ -2,10 +2,10 @@
 @section('content')
 <div class="flex flex-col justify-center flex-1 ">
     <div class="container mx-auto px-4 flex flex-col items-center lg:flex-row flex-1">
-        <div class="my-6 lg flex flex-col justify-center flex-1 text-center lg:text-left">
+        <div class="my-6 lg flex flex-col justify-center items-start flex-1 text-center lg:text-left">
             <h1 class="mb-1 text-4xl">Sankalan <span class="text-2xl text-blue">2019</span></h1>
             <h3 class="mb-6">Compiling Innovations ...</h3>
-            <countdown-timer :duration="{{ $timeLeft }}" class="flex text-3xl sm:text-5xl -mx-4">
+            <countdown-timer :duration="{{ $timeLeft }}" class="flex text-3xl sm:text-5xl -mx-4 mb-4">
                 <template slot-scope="{timer, format}">
                     <span v-if="timer.days > 0" class="inline-flex flex-col items-center justify-center p-3 md:p-6">
                         <span v-text="timer.days"></span>
@@ -25,6 +25,13 @@
                     </span>
                 </template>
             </countdown-timer>
+            <div class="inline-block text-left px-4 py-2 bg-blue-lightest text-blue-dark border border-blue rounded min-w-1/2">
+                {{-- @include('svg.information-outline', ['classes' => 'w-4']) --}}
+                <h4 class="text-sm uppercase font-bold my-1">Note</h4>
+                <p>
+                    For PUBG Mobile, please register <a href="https://pubg.ducs.in" class="font-bold underline">here</a>.
+                </p>
+            </div>
         </div>
         <login-register inline-template>
             <div class="w-auto lg:w-1/3 flex flex-col justify-center items-center lg:items-end">
