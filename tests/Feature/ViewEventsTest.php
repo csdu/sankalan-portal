@@ -31,7 +31,6 @@ class ViewEventsTest extends TestCase
             $this->assertArrayHasKey('isLive', $event);
             $this->assertArrayHasKey('hasEnded', $event);
             $this->assertArrayHasKey('teams', $event);
-            $this->assertArrayHasKey('quizzes', $event);
             $this->assertArrayHasKey('active_quiz', $event);
             $this->assertEquals($quiz->id, $event['active_quiz']['id']);
         });
