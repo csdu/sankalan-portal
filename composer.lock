@@ -97,7 +97,7 @@
                 }
             ],
             "description": "Common String Manipulations with regard to casing and singular/plural rules.",
-            "homepage": "http://www.doctrine-project.org",
+            "homepage": "https://www.doctrine-project.org",
             "keywords": [
                 "inflection",
                 "pluralize",
@@ -153,7 +153,7 @@
                 }
             ],
             "description": "Base library for a lexer that can be used in Top-Down, Recursive Descent Parsers.",
-            "homepage": "http://www.doctrine-project.org",
+            "homepage": "https://www.doctrine-project.org",
             "keywords": [
                 "lexer",
                 "parser"
@@ -301,11 +301,11 @@
                 {
                     "name": "Emanuil Rusev",
                     "email": "hello@erusev.com",
-                    "homepage": "http://erusev.com"
+                    "homepage": "https://erusev.com"
                 }
             ],
             "description": "Parser for Markdown.",
-            "homepage": "http://parsedown.org",
+            "homepage": "https://parsedown.org",
             "keywords": [
                 "markdown",
                 "parser"
@@ -419,7 +419,7 @@
                 }
             ],
             "description": "Guzzle is a PHP HTTP client library",
-            "homepage": "http://guzzlephp.org/",
+            "homepage": "https://guzzlephp.org/",
             "keywords": [
                 "client",
                 "curl",
@@ -631,7 +631,7 @@
                 {
                     "name": "Jakub Onderka",
                     "email": "acci@acci.cz",
-                    "homepage": "http://www.acci.cz/"
+                    "homepage": "https://www.acci.cz/"
                 }
             ],
             "description": "Highlight PHP code in terminal",
@@ -1222,11 +1222,11 @@
                 {
                     "name": "Jordi Boggiano",
                     "email": "j.boggiano@seld.be",
-                    "homepage": "http://seld.be"
+                    "homepage": "https://seld.be"
                 }
             ],
             "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
-            "homepage": "http://github.com/Seldaek/monolog",
+            "homepage": "https://github.com/Seldaek/monolog",
             "keywords": [
                 "log",
                 "logging",
@@ -1280,11 +1280,11 @@
                 {
                     "name": "Brian Nesbitt",
                     "email": "brian@nesbot.com",
-                    "homepage": "http://nesbot.com"
+                    "homepage": "https://nesbot.com"
                 }
             ],
             "description": "A simple API extension for DateTime.",
-            "homepage": "http://carbon.nesbot.com",
+            "homepage": "https://carbon.nesbot.com",
             "keywords": [
                 "date",
                 "datetime",
@@ -1333,7 +1333,7 @@
                 {
                     "name": "Tim Lytle",
                     "email": "tim@nexmo.com",
-                    "homepage": "http://twitter.com/tjlytle",
+                    "homepage": "https://twitter.com/tjlytle",
                     "role": "Developer"
                 }
             ],
@@ -1550,7 +1550,7 @@
                 }
             ],
             "description": "Guzzle 6 HTTP Adapter",
-            "homepage": "http://httplug.io",
+            "homepage": "https://httplug.io",
             "keywords": [
                 "Guzzle",
                 "http"
@@ -1606,7 +1606,7 @@
                 }
             ],
             "description": "HTTPlug, the HTTP client abstraction for PHP",
-            "homepage": "http://httplug.io",
+            "homepage": "https://httplug.io",
             "keywords": [
                 "client",
                 "http"
@@ -1657,7 +1657,7 @@
                 }
             ],
             "description": "Promise used for asynchronous HTTP requests",
-            "homepage": "http://httplug.io",
+            "homepage": "https://httplug.io",
             "keywords": [
                 "promise"
             ],
@@ -1698,7 +1698,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
+                    "homepage": "https://www.php-fig.org/"
                 }
             ],
             "description": "Common Container Interface (PHP FIG PSR-11)",
@@ -1747,7 +1747,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
+                    "homepage": "https://www.php-fig.org/"
                 }
             ],
             "description": "Common interface for HTTP messages",
@@ -1797,7 +1797,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
+                    "homepage": "https://www.php-fig.org/"
                 }
             ],
             "description": "Common interface for logging libraries",
@@ -1844,7 +1844,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
+                    "homepage": "https://www.php-fig.org/"
                 }
             ],
             "description": "Common interfaces for simple caching",
@@ -1918,11 +1918,11 @@
                 {
                     "name": "Justin Hileman",
                     "email": "justin@justinhileman.info",
-                    "homepage": "http://justinhileman.com"
+                    "homepage": "https://justinhileman.com"
                 }
             ],
             "description": "An interactive shell for modern PHP.",
-            "homepage": "http://psysh.org",
+            "homepage": "https://psysh.org",
             "keywords": [
                 "REPL",
                 "console",
@@ -3198,7 +3198,7 @@
                 {
                     "name": "Vance Lucas",
                     "email": "vance@vancelucas.com",
-                    "homepage": "http://www.vancelucas.com"
+                    "homepage": "https://www.vancelucas.com"
                 }
             ],
             "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
@@ -3672,7 +3672,7 @@
                 {
                     "name": "Marco Pivetta",
                     "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.com/"
+                    "homepage": "https://ocramius.github.com/"
                 }
             ],
             "description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
@@ -3946,12 +3946,12 @@
                 {
                     "name": "Pádraic Brady",
                     "email": "padraic.brady@gmail.com",
-                    "homepage": "http://blog.astrumfutura.com"
+                    "homepage": "https://blog.astrumfutura.com"
                 },
                 {
                     "name": "Dave Marshall",
                     "email": "dave.marshall@atstsolutions.co.uk",
-                    "homepage": "http://davedevelopment.co.uk"
+                    "homepage": "https://davedevelopment.co.uk"
                 }
             ],
             "description": "Mockery is a simple yet flexible PHP mock object framework",
@@ -4318,7 +4318,7 @@
                 }
             ],
             "description": "Common reflection classes used by phpdocumentor to reflect the code structure",
-            "homepage": "http://www.phpdoc.org",
+            "homepage": "https://www.phpdoc.org",
             "keywords": [
                 "FQSEN",
                 "phpDocumentor",
@@ -4470,7 +4470,7 @@
                 {
                     "name": "Konstantin Kudryashov",
                     "email": "ever.zet@gmail.com",
-                    "homepage": "http://everzet.com"
+                    "homepage": "https://everzet.com"
                 },
                 {
                     "name": "Marcello Duarte",
@@ -5032,7 +5032,7 @@
                 }
             ],
             "description": "Provides functionality to handle HHVM/PHP environments",
-            "homepage": "http://www.github.com/sebastianbergmann/environment",
+            "homepage": "https://www.github.com/sebastianbergmann/environment",
             "keywords": [
                 "Xdebug",
                 "environment",
@@ -5100,7 +5100,7 @@
                 }
             ],
             "description": "Provides the functionality to export PHP variables for visualization",
-            "homepage": "http://www.github.com/sebastianbergmann/exporter",
+            "homepage": "https://www.github.com/sebastianbergmann/exporter",
             "keywords": [
                 "export",
                 "exporter"
@@ -5152,7 +5152,7 @@
                 }
             ],
             "description": "Snapshotting of global state",
-            "homepage": "http://www.github.com/sebastianbergmann/global-state",
+            "homepage": "https://www.github.com/sebastianbergmann/global-state",
             "keywords": [
                 "global state"
             ],
@@ -5300,7 +5300,7 @@
                 }
             ],
             "description": "Provides functionality to recursively process PHP variables",
-            "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
+            "homepage": "https://www.github.com/sebastianbergmann/recursion-context",
             "time": "2017-03-03T06:23:57+00:00"
         },
         {
