@@ -25,13 +25,12 @@
                     </span>
                 </template>
             </countdown-timer>
-            <div class="inline-block text-left px-4 py-2 bg-blue-lightest text-blue-dark border border-blue rounded min-w-1/2">
-                {{-- @include('svg.information-outline', ['classes' => 'w-4']) --}}
+            {{-- <div class="inline-block text-left px-4 py-2 bg-blue-lightest text-blue-dark border border-blue rounded min-w-1/2">
                 <h4 class="text-sm uppercase font-bold my-1">Note</h4>
                 <p>
                     For PUBG Mobile, please register <a href="https://pubg.ducs.in" class="font-bold underline">here</a>.
                 </p>
-            </div>
+            </div> --}}
         </div>
         <login-register inline-template>
             <div class="w-auto lg:w-1/3 flex flex-col justify-center items-center lg:items-end">
