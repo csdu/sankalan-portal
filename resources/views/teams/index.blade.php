@@ -8,18 +8,24 @@
 
     <div class="card mb-16">
         <h3 class="card-header">Create a Team</h3>
-        <form action="{{ route('teams') }}" method="POST" class="card-content flex flex-col sm:flex-row">
-            @csrf
-            <div class="mb-4 sm:flex-1 sm:mr-3 sm:mb-0">
-                <input type="text" name="name" class="control" placeholder="Team Name" required>
-            </div>
-            <div class="mb-4 sm:flex-1 sm:mr-3 sm:mb-0">
-                <input type="email" name="member_email" class="control" placeholder="Partner's Email (optional)">
-            </div>
-            <div>
-                <button type="submit" class="btn is-blue">Create Team</button>
-            </div>
-        </form>
+        <div class="card-content">
+            <blockquote class="inline-block min-w-1/2 px-4 py-3 mb-6 bg-blue-lightest text-blue-dark border border-blue-dark rounded">
+                <h5 class="my-2 uppercase text-xs">Note</h5>
+                <p>Please note that, your partner must be a <b>registered</b> user, before you can create team with them.</p>
+            </blockquote>
+            <form action="{{ route('teams') }}" method="POST" class="flex flex-col sm:flex-row">
+                @csrf
+                <div class="mb-4 sm:flex-1 sm:mr-3 sm:mb-0">
+                    <input type="text" name="name" class="control" placeholder="Team Name" required>
+                </div>
+                <div class="mb-4 sm:flex-1 sm:mr-3 sm:mb-0">
+                    <input type="email" name="member_email" class="control" placeholder="Partner's Email (optional)">
+                </div>
+                <div>
+                    <button type="submit" class="btn is-blue">Create Team</button>
+                </div>
+            </form>
+        </div>
     </div>
     <h2 class="text-center mb-8">Your Teams</h2>
     @forelse($teams as $team)
