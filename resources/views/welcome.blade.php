@@ -25,12 +25,20 @@
                     </span>
                 </template>
             </countdown-timer>
-            {{-- <div class="inline-block text-left px-4 py-2 bg-blue-lightest text-blue-dark border border-blue rounded min-w-1/2">
+            <div class="inline-block text-left px-4 py-2 bg-blue-lightest text-blue-dark border border-blue rounded min-w-1/2">
                 <h4 class="text-sm uppercase font-bold my-1">Note</h4>
                 <p>
-                    For PUBG Mobile, please register <a href="https://pubg.ducs.in" class="font-bold underline">here</a>.
+                    For gaming events, registrations are being handled seperately, please register using links below.
                 </p>
-            </div> --}}
+                <ul class="mt-2">
+                    <li>
+                        <a href="https://pubg.ducs.in" class="font-bold underline">PUBG Mobile</a>
+                    </li>
+                    <li>
+                        <a href="https://bit.ly/ducs-ground-zero" class="font-bold underline">Ground Zero</a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <login-register inline-template>
             <div class="w-auto lg:w-1/3 flex flex-col justify-center items-center lg:items-end">
