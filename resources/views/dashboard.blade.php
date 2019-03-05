@@ -6,10 +6,10 @@
         <div class="card create-team">
             <h3 class="card-header text-xl">Create a Team</h3>
             <form action="{{ route('teams') }}" method="POST" class="card-content">
-                <blockquote class="inline-block min-w-1/2 px-4 py-3 mb-6 bg-blue-lightest text-blue-dark border border-blue-dark rounded">
+                <div class="inline-block min-w-1/2 px-4 py-3 mb-6 bg-blue-lightest text-blue-dark border border-blue-dark rounded">
                     <h5 class="my-2 uppercase text-xs">Note</h5>
                     <p>Please note that, your partner must be a <b>registered</b> user, before you can create team with them.</p>
-                </blockquote>
+                </div>
                 @csrf
                 <div class="mb-2">
                     <input type="text" name="name" class="control" placeholder="Team Name" required>
