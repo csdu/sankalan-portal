@@ -30,11 +30,11 @@
                 <p>
                     For gaming events, registrations are being handled seperately, please register using links below.
                 </p>
-                <ul class="mt-2">
-                    <li>
+                <ul class="my-2">
+                    <li class="my-1">
                         <a href="https://pubg.ducs.in" class="font-bold underline">PUBG Mobile</a>
                     </li>
-                    <li>
+                    <li class="my-1">
                         <a href="https://bit.ly/ducs-ground-zero" class="font-bold underline">Ground Zero</a>
                     </li>
                 </ul>
