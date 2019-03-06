@@ -54,9 +54,9 @@
                         <p>{!! $response->question->text !!}</p>
                     </div>
                     @if($response->question->code)
-                    <pre class="card p-4 font-mono my-4 leading-normal tracking-wide whitespace-pre-line">
-                        {{ str_replace('<br>', "\n", $response->question->code) }}
-                    </pre>
+                    <pre 
+                    class="card p-4 font-mono my-4 leading-normal tracking-wide whitespace-pre-wrap max-h-64 overflow-y-auto"
+                    >{{ str_replace('<br>', "\n", $response->question->code) }}</pre>
                     @endif
                     @if($response->question->illustration)
                     <div class="flex justify-center my-4">

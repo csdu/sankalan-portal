@@ -9,7 +9,7 @@
                 <h3>Instructions</h3>
             </div>
             <div class="card-content">
-                @empty($quiz->participations)
+                @if(count($quiz->instructions))
                 <ol class="text-base leading-normal">
                     @foreach ($quiz->instructions as $instruction)
                         <li class="py-1">
@@ -19,7 +19,7 @@
                 </ol>
                 @else
                     <p class="py-2 text-center text-grey-dark">No Instructions provided</p>
-                @endempty
+                @endif
             </div>
         </div>
 

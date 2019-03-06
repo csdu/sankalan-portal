@@ -9,7 +9,7 @@ use App\Quiz;
 use App\Question;
 use App\AnswerChoice;
 
-class EventsJsonImport
+class ImportQuizToEvent
 {
     use Dispatchable, Queueable;
 
@@ -24,11 +24,11 @@ class EventsJsonImport
      *
      * @return void
      */
-    public function __construct($file)
+    public function __construct($file, Event $event)
     {
         $this->file = $file;
-        $this->events = collect([]);
-        $this->quizzes = collect([]);
+        $this->event = $event;
+        $this->quiz = collect([]);
         $this->questions = collect([]);
         $this->choices = collect([]);
     }
@@ -41,8 +41,7 @@ class EventsJsonImport
     public function handle()
     {
         $this->readFromFile()
-            ->createEvents()
-            ->createQuizzes()
+            ->createQuiz()
             ->createQuestions()
             ->createChoices();
     }
@@ -50,42 +49,21 @@ class EventsJsonImport
     public function readFromFile()
     {
         $contents = file_get_contents($this->file);
-        $this->events = collect(json_decode($contents, true))->recursive();
-        return $this;
-    }
-    
-    public function createEvents() {
-        $this->events->transform(function($event) {
-            $quizzes = $event->pull('quizzes') ?? collect([]);
-
-            if(!is_string($event['description'])) {
-                $event['description'] = $event['description']->implode('\n');
-            }
-            
-            $event = Event::create($event->toArray());
-
-            $this->quizzes = $this->quizzes->concat(
-                $quizzes->map->prepend($event->id, 'event_id')
-            );
-            
-            return $event;
-        });
+        $this->quiz = collect(json_decode($contents, true))->recursive();
         return $this;
     }
 
-    public function createQuizzes() {
-        $this->quizzes->transform(function ($quiz) {
-            $questions = $quiz->pull('questions') ?? collect([]);
+    public function createQuiz() {
+        $questions = $this->quiz->pull('questions') ?? collect([]);
 
-            $quiz['time_limit'] = $quiz['time_limit'] * 60;
+        $this->quiz['time_limit'] = $this->quiz['time_limit'] * 60;
 
-            $quiz = Quiz::create($quiz->toArray());
+        $this->quiz = $this->event->quizzes()->create($this->quiz->toArray());
 
-            $this->questions = $this->questions->concat(
-                $questions->map->prepend($quiz->id, 'quiz_id')
-            );
-            return $quiz;
-        });
+        $this->questions = $this->questions->concat(
+            $questions->map->prepend($this->quiz->id, 'quiz_id')
+        );
+
         return $this;
     }
 

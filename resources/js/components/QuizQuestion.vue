@@ -5,7 +5,7 @@
             <p v-html="dataQuestion.text"></p>
         </div>
         <pre v-if="dataQuestion.code" 
-        class="card p-4 font-mono my-4 leading-normal tracking-wide whitespace-pre-line" v-text="escapedCode"></pre>
+        class="card p-4 font-mono my-4 leading-normal tracking-wide whitespace-pre-wrap max-h-64 overflow-y-auto" v-text="escapedCode"></pre>
         <div class="flex justify-center my-4" v-if="dataQuestion.illustration">
             <img :src="dataQuestion.illustration" class="max-w-full rounded shadow-lg">
         </div>

@@ -1,0 +1,88 @@
+[
+  {
+    "title": "Algoholics",
+    "slug": "algoholics",
+    "description": "Test your acumen, intelligence and problem solving capabilities with. <br> Enough with the lemons, let solutions and prizes cure your hangover this time.",
+    "rounds": 2,
+    "quizzes": []
+  },
+  {
+    "title": "Brain Spark",
+    "slug": "brainspark",
+    "description": "Let's see if you have one tenth the knowledge of what “Dashanan Ravana” had, because that is exactly what is needed here. Let your brain do the workout now.",
+    "rounds": 2,
+    "quizzes": [
+    ]
+  },
+  {
+    "title": "Code Auction",
+    "slug": "codeauction",
+    "description": "Rob the maximum score, Play smart and  think before you bid more. <br> Trust your instincts. Be the new AMBANI. <br> Leave your opponent wondering, Where is all the money?",
+    "rounds": 2,
+    "quizzes": [
+     
+    ]
+  },
+  {
+    "title": "Code-a-thon",
+    "slug": "codeathon",
+    "description": "Do you have what it takes to solve problems? <br> Do you have the power to think, create, and execute? <br> In short - Can you codeathon? <br> Let's test how dynamic your programming is. <br> How greedy your problem solving is. <br> How much you understand the language of computer.",
+    "rounds": 2,
+    "quizzes": [
+     
+    ]
+  },
+   {
+    "title": "Cypher-o-More",
+    "slug": "cypher-o-more",
+    "description": "If Julius Caesar could do it then, we can do it now! <br> It’s time for us to create the next Da Vinci Code and for you to decode it. <br> So wake up the SHERLOCK in you and gear up for the cryptography event of Sankalan’19.",
+    "rounds": 2,
+    "quizzes": [
+    ]
+  },
+  {
+    "title": "Mind Matters",
+    "slug": "mind-matters",
+    "description": "Now the time has come, to showcase all that you have. <br> Calm your senses, and bring out the best in you. <br> It’s time to use your intelligence, And be as rapid as you can, <br> To be the man of the match! ",
+    "rounds": 2,
+    "quizzes": [
+      
+    ]
+  },
+  {
+    "title": "Select * From Brain",
+    "slug": "select-star-from-brain",
+    "description": "Writing the right query which is fast and readable at the same time, is an art only few can master !! <br> This is THE opportunity to show off your db skills and collect prizes.",
+    "rounds": 2,
+    "quizzes": [
+     
+    ]
+  },
+  {
+    "title": "Spin-O-Web",
+    "slug": "spin-o-web",
+    "description": "Logic will get you from A to B. <br> Imagination will take you everywhere. <br> So, get ready to bring your rubies on the rail. <br> Dig your creativity to bring out the developer’s gems within you. <br> Boost your creativity to get Sankalan schatz.",
+    "rounds": 2,
+    "quizzes": [
+     
+    ]
+  },
+  {
+    "title": "Just a Minute ( JAM )",
+    "slug": "just-a-minute",
+    "description": "This is a fun event, where you will be given fun activities to be performed in one minute. ",
+    "rounds": 2,
+    "quizzes": [
+     
+    ]
+  },
+  {
+    "title": "Turn Coat",
+    "slug": "turn-coat",
+    "description": "This is a fun event, Where you debate with yourself. <br>First you start speaking towards the motion, then the bell rings at a random time, and you have to start speaking against the motion. <br> The bell will ring multiple times. You have to fluently switch between for and against the motion. ",
+    "rounds": 2,
+    "quizzes": [
+     
+    ]
+  }
+]
