@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Team;
 use Auth;
+use Validator;
 
 class TeamController extends Controller
 {
@@ -18,16 +19,21 @@ class TeamController extends Controller
 
     public function store()
     {
-        $data = request()->validate([
+        $user = null;
+
+        $validator = Validator::make(request()->all(), [
             'name' => ['required', 'string', 'min:3', 'max:190'],
             'member_email' => ['nullable', 'email', 'exists:users,email'],
-        ]);
+        ])->after(function ($validator) {
+            if (request('member_email') == auth()->user()->email) {
+                $validator->errors()->add('member_email', 'You dont need to team up with yourself!');
+            }
+        })->validate();
 
-        $user = Auth::user();
         $member = request()->has('member_email') ? User::whereEmail(request('member_email'))->first() : null;
 
-        if($this->canCreateTeam($user, $member)) {
-            $team = $user->createTeam($data['name'], $member);
+        if($this->canCreateTeam($user = auth()->user(), $member)) {
+            $team = $user->createTeam(request('name'), $member);
             flash('Your team was created! TeamId: '. $team->uid )->success();
         } else {
             flash('You already have this Team!')->warning();

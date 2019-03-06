@@ -67,6 +67,27 @@ class CreateTeamTest extends TestCase
         $this->assertNull($user->individualTeam);
     }
 
+    /** @test */
+    public function user_can_not_create_team_with_himself()
+    {
+        $this->withExceptionHandling();
+        $this->be($user = create(User::class));
+
+        $this->assertCount(0, Team::all());
+
+        $name = 'Team Name';
+        $response = $this->post(route('teams.store'), [
+            'name' => $name,
+            'member_email' => $user->email
+        ]);
+
+        
+        $this->assertCount(0, Team::all());
+        $this->assertNull($user->individualTeam);
+
+        $response->assertRedirect()->assertSessionHasErrors('member_email');
+    }
+
     /**
      * @test
      */
