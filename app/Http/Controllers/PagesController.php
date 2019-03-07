@@ -13,4 +13,8 @@ class PagesController extends Controller
             'timeLeft' => now()->diffInSeconds(Carbon::parse(config('app.sankalan_start_time')), false),
         ]);
     }
+
+    public function help() {
+        return view('help');
+    }
 }

@@ -10,9 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'PagesController@index')->name('homepage')->middleware('guest');
+Route::get('/','PagesController@index')->name('homepage')->middleware('guest');
 
 Auth::routes();
+Route::get('/help', 'PagesController@help')->name('help');
 Route::get('/events', 'EventController@index')->name('events.index');
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

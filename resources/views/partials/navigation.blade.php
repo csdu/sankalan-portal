@@ -19,6 +19,12 @@
             </ul>
     
             <ul class="nav-right list-reset inline-flex items-baseline justify-end ml-2">
+                <li class=" inline-flex text-sm uppercase tracking-wide text-black font-semibold leading-none mr-4">
+                    <a href="/help" class="inline-flex items-baseline" title="help">
+                        @include('svg.question', ['classes' => 'self-center text-blue-dark h-4 mr-2'])
+                        Help
+                    </a>
+                </li>
                 @auth
                     <li class="inline-flex items-center text-sm md:text-lg">
                         <div class="hidden sm:inline-flex">Hello, <span class="mx-1 font-semibold">{{ Auth::user()->first_name }}</span>!</div>
@@ -38,6 +44,7 @@
                         <a href="{{ route('homepage') }}#register" class="btn is-blue font-semibold">Register</a>
                     </li>
                 @endauth
+                
             </ul>
         </div>
     </div>

@@ -145,9 +145,8 @@
                                                     </span> @endif
                             </div>
 
-                            <div class="whitespace-no-wrap mb-3 flex items-center">
+                            <div class="whitespace-no-wrap mb-6 flex items-center">
                                 <input type="checkbox" name="remember" id="remember" {{ old( 'remember') ? 'checked' : '' }}>
-
                                 <label class="ml-1" for="remember">
                                                     {{ __('Remember Me') }}
                                                 </label>
@@ -155,11 +154,8 @@
 
                             <div class="flex justify-between items-baseline">
                                 <button type="submit" class="btn is-blue">
-                                                    {{ __('Login') }}
-                                                </button> @if (Route::has('password.request'))
-                                <a class="hover:underline sm:text-right" href="{{ route('password.request') }}">
-                                                        {{ __('Forgot Your Password?') }}
-                                                    </a> @endif
+                                    {{ __('Login') }}
+                                </button>
                             </div>
                         </form>
                     </div>

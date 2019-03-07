@@ -43,12 +43,6 @@
                     <button type="submit" class="btn is-blue">
                         {{ __('Login') }}
                     </button>
-
-                    @if (Route::has('password.request'))
-                        <a class="hover:underline sm:text-right" href="{{ route('password.request') }}">
-                            {{ __('Forgot Your Password?') }}
-                        </a>
-                    @endif
                 </div>
             </form>
         </div>
