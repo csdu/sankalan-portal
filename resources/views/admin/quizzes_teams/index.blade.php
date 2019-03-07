@@ -8,16 +8,22 @@
                 <h2 class="text-xl font-normal">Quiz Participations</h2>
                 <span class="ml-2 bg-blue text-white rounded-full p-1 text-xs">{{ $quizzes_teams->total() }}</span>
             </div>
-            <get-routes class="flex" 
-                select-classes="control is-sm max-w-64"
-                route-name="admin.quizzes.teams.index" 
-                value="{{ $quiz ? $quiz->slug : '' }}">
-                <option value="" selected>All</option>
-                @foreach ($quizzes as $eachQuiz)
-                    <option value="{{ $eachQuiz->slug}}">{{ ucwords($eachQuiz->title) }}</option>
-                @endforeach
-                <a slot="button" slot-scope="{link}" :href="link" class="btn is-blue is-sm ml-2 inline-flex items-center">Filter</a>
-            </get-routes>
+            <div class="flex-1 flex justify-end">
+                <form action="" method="GET" class="inline-flex mr-4">
+                <input type="number" name="top_scorers" class="text-sm p-1 rounded border text-grey-darker w-16 mr-2" value="{{ Request::query('top_scorers') }}">
+                    <button class="btn is-green is-sm font-normal text-xs">Top Scorers</button>
+                </form>
+                <get-routes class="inline-flex" 
+                    select-classes="control is-sm max-w-64"
+                    route-name="admin.quizzes.teams.index" 
+                    value="{{ $quiz ? $quiz->slug : '' }}">
+                    <option value="" selected>All</option>
+                    @foreach ($quizzes as $eachQuiz)
+                        <option value="{{ $eachQuiz->slug}}">{{ ucwords($eachQuiz->title) }}</option>
+                    @endforeach
+                    <a slot="button" slot-scope="{link}" :href="link" class="btn is-blue is-sm ml-2 inline-flex items-center">Filter</a>
+                </get-routes>
+            </div>
         </div>
     </div>
     <table class="w-full">

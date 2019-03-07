@@ -12,22 +12,32 @@ use App\QuizParticipation;
 
 class QuizParticipationController extends Controller
 {
-    public function index(Quiz $quiz = null)
+    public function index(Request $request, Quiz $quiz = null)
     {
         
         $query = QuizParticipation::withCount('responses');
         $quizzes = Quiz::select(['slug', 'title'])->get();
-        if($quiz) {
+
+        if ($quiz) {
             $query->whereHas('quiz', function($query) use ($quiz) {
                 $query->where('slug', $quiz->slug);
             });
         }
 
-        $quizzes_teams = $query->with(['team.members',
+        $query->with([
+            'team.members',
             'quiz' => function($query) {
                 $query->withCount('questions');
             }
-        ])->paginate(config('app.pagination.perPage'));
+        ]);
+        
+        if ($request->has('top_scorers')) {
+            $quizzes_teams = $query->orderBy('score', 'desc')
+                ->paginate($request->query('top_scorers'))
+                ->appends(['top_scorers' => $request->query('top_scorers')]);
+        } else {
+            $quizzes_teams = $query->paginate(config('app.pagination.perPage'));
+        }
 
         return view('admin.quizzes_teams.index')
             ->with(compact('quizzes_teams', 'quiz', 'quizzes'));

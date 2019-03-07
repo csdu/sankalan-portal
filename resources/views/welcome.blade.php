@@ -139,17 +139,19 @@
 
                             <div class="mb-4">
                                 <input type="password" placeholder="Password" class="control{{ $errors->has('password') ? ' border-red' : '' }}" name="password"
-                                    required> @if ($errors->has('password'))
-                                <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                                                        <strong>{{ $errors->first('password') }}</strong>
-                                                    </span> @endif
+                                    required> 
+                                @if ($errors->has('password'))
+                                    <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span> 
+                                @endif
                             </div>
 
                             <div class="whitespace-no-wrap mb-6 flex items-center">
                                 <input type="checkbox" name="remember" id="remember" {{ old( 'remember') ? 'checked' : '' }}>
                                 <label class="ml-1" for="remember">
-                                                    {{ __('Remember Me') }}
-                                                </label>
+                                    {{ __('Remember Me') }}
+                                </label>
                             </div>
 
                             <div class="flex justify-between items-baseline">
