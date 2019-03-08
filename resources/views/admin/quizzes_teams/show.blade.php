@@ -45,12 +45,12 @@
     @foreach($quizParticipation->responses as $response)
         <div class="card seperated mb-8">
             <h3 class="card-header">
-                Question #{{ $response->question->id }}
+                Question #{{ $response->question->qno }}
             </h3>
             <div class="card-content bg-blue-lightest flex items-start">
                 <div class="question mr-4 flex-1">
                     <div class="card px-3 pt-3 pb-6 relative overflow-hidden">
-                        <strong class="float-left mr-2">#{{ $response->question->id }}</strong>
+                        <strong class="float-left mr-2">Q.{{ $response->question->qno }}.</strong>
                         <p>{!! $response->question->text !!}</p>
                     </div>
                     @if($response->question->code)

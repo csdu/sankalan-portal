@@ -1,7 +1,7 @@
 <template>
     <div class="question outline-none">
         <div class="card px-3 pt-3 pb-6 relative overflow-hidden">
-            <strong class="float-left mr-2" v-text="`Q${index+1}.`"></strong>
+            <strong class="float-left mr-2" v-text="`Q${dataQuestion.qno}.`"></strong>
             <p v-html="dataQuestion.text"></p>
         </div>
         <pre v-if="dataQuestion.code" 
