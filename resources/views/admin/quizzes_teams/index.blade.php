@@ -19,7 +19,7 @@
                     value="{{ $quiz ? $quiz->slug : '' }}">
                     <option value="" selected>All</option>
                     @foreach ($quizzes as $eachQuiz)
-                        <option value="{{ $eachQuiz->slug}}">{{ ucwords($eachQuiz->title) }}</option>
+                        <option value="{{ $eachQuiz->slug}}">{{ ucwords($eachQuiz->event->title . ' - '. $eachQuiz->title) }}</option>
                     @endforeach
                     <a slot="button" slot-scope="{link}" :href="link" class="btn is-blue is-sm ml-2 inline-flex items-center">Filter</a>
                 </get-routes>
@@ -56,7 +56,7 @@
                             </div>
                         </td>
                         <td class="text-left px-4 py-2">
-                            <a href="#" v-text="quiz.title" class="capitalize link"></a>
+                            <a href="#" v-text="quiz.event.title + ' - ' + quiz.title" class="capitalize link"></a>
                             <span v-if="quiz.isActive" class="p-1 ml-1 rounded bg-green text-white font-normal text-xs uppercase leading-none">LIVE</span>
                         </td>
                         <td class="table_fit text-center px-4 py-2">

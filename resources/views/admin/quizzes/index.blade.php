@@ -30,7 +30,7 @@
                             <span v-else class="p-1 ml-1 rounded bg-grey font-thin text-xs uppercase leading-none">Offline</span>
                         </td>
                         <td class="text-left px-4 py-2">
-                            <a href="#" class="link" v-text="quiz.title"></a>
+                            <a href="#" class="link" v-text="quiz.event.title + ' - ' + quiz.title"></a>
                         </td>
                         <td class="table-fit text-left px-4 py-2">
                             <span v-text="quiz.event.title" class="capitalize"></span>

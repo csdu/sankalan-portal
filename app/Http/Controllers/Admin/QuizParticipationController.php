@@ -16,7 +16,7 @@ class QuizParticipationController extends Controller
     {
         
         $query = QuizParticipation::withCount('responses');
-        $quizzes = Quiz::select(['slug', 'title'])->get();
+        $quizzes = Quiz::with('event')->get();
 
         if ($quiz) {
             $query->whereHas('quiz', function($query) use ($quiz) {
