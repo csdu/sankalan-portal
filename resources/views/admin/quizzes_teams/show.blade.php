@@ -69,11 +69,11 @@
                             <li class="mb-3 w-full md:w-1/2 px-2">
                                 <label class="relative card flex items-center py-2 pr-3 pl-8 {{ $choice->isCorrect() && $response->isChosen($choice) ? 'bg-green text-white' : ($response->isChosen($choice) ? 'bg-red text-white' : '') }}">
                                     @if($choice->isCorrect())
-                                        <div class="absolute pin-l pin-y flex items-center ml-2">
+                                        <div class="absolute left-0 inset-y-0 flex items-center ml-2">
                                             @include('svg.checkmark', ['classes' => ($response->isChosen($choice) ? '': 'text-green ') . "fill-current h-4"])
                                         </div>
                                     @elseif($response->isChosen($choice) && !$choice->isCorrect())
-                                        <div class="absolute pin-l pin-y flex items-center ml-2">
+                                        <div class="absolute left-0 inset-y-0 flex items-center ml-2">
                                             @include('svg.close', ['classes' => "fill-current h-4"])
                                         </div>
                                     @endif
@@ -101,7 +101,7 @@
                             @foreach($response->question->correct_answer_keys as $answer_key)
                             <li class="mb-3 w-1/2 px-2">
                                 <div class="card py-2 pr-3 pl-8 flex border-0 {{ $answer_key == $response->response_keys ? 'bg-green text-white' : '' }}">
-                                    <div class="absolute pin-l pin-y flex items-center ml-2">
+                                    <div class="absolute left-0 inset-y-0 flex items-center ml-2">
                                         @include('svg.checkmark', ['classes' => "fill-current h-4"])
                                     </div>
                                     <p>{{ $answer_key }}</p>

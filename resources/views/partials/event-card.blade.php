@@ -1,7 +1,7 @@
 <div class="px-2 sm:w-1/2 mb-4" style="order: {{ $event->activeQuiz ? 0 : 1}};">
     <div class="relative card seperated h-full flex flex-col">
         @if($event->started_at != null)
-        <span class="absolute pin-r pin-t px-2 py-1 uppercase text-xs text-white bg-{{$event->ended_at ? 'red' : 'green'}}">
+        <span class="absolute top-0 right-0 px-2 py-1 uppercase text-xs text-white bg-{{$event->ended_at ? 'red' : 'green'}}">
             {{ $event->ended_at ? 'Ended' : 'Live' }}
         </span> 
         @endif
