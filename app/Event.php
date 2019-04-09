@@ -3,65 +3,126 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class Event extends Model
 {
-
+    /**
+     * The attributes that are NOT mass assignable.
+     *
+     * @var array
+     */
     protected $guarded = [];
 
+    /**
+     * The attributes that are of DateTime type, mutated to instance of Carbon.
+     *
+     * @var array
+     */
     protected $dates = ['started_at', 'ended_at'];
-
+    
+    /**
+     * The attributes that are appended for array.
+     *
+     * @var array
+     */
     protected $appends = ['isLive', 'hasEnded'];
 
+    /**
+     * Teams participating in the event.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function teams()
     {
         return $this->belongsToMany(Team::class, 'event_participations');
     }
 
+    /**
+     * Quiz currently active in the event
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function activeQuiz()
     {
         return $this->belongsTo(Quiz::class);
     }
 
+    /**
+     * The quizzes associated with this event.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function quizzes()
     {
         return $this->hasMany(Quiz::class);
     }
 
-    public function allowActiveQuiz(Team $team)
-    {
-        if(!$this->active_quiz_id) {
-            return false;
-        }
-
-        $this->activeQuiz->allowTeam($team);
-        return true;
-    }
-
+    /**
+     * All members particpating in the event.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
     public function allParticipantMembers()
     {
         return $this->loadMissing('teams.members')->teams->flatMap->members;
     }
 
-    public function isAnyParticipating($members)
+    /**
+     * Is any of the given members participating in the event?
+     *
+     * @param Illuminate\Database\Eloquent\Collection $members
+     * @return boolean
+     */
+    public function isAnyParticipating(Collection $members)
     {
-        return !!$this->allParticipantMembers()->pluck('id')->intersect($members->pluck('id'))->count();
-    }
+        $memberIds = $members->pluck('id');
+        $participantIds = $this->allParticipantMembers()->pluck('id');
+        
+        // or this way?
+        // return !!$participantIds->intersect($memberIds)->count();
 
-    public function participatingTeamByUser($user)
-    {
-        return $this->loadMissing('teams.members')->teams->first(function($team) use ($user){
-            return $team->members->pluck('id')->contains($user->id);
+        return $memberIds->some(function($memberId) use ($participantIds) {
+            return $participantIds->contains($memberId);
         });
     }
 
-    public function canBeWithdrawn($team)
+    /**
+     * Gives Team, through which the given user is participating.
+     *
+     * @param \App\User $user
+     * @return \App\Team|null
+     */
+    public function participatingTeamByUser(User $user)
     {
-        return count($this->quizzes) ? 
-            (! $this->quizzes->first()->isClosed  && !$this->quizzes->first()->hasTeamResponded($team)): 
-            ! $this->isLive;
+        return $this->loadMissing('teams.members')
+            ->teams->first(function($team) use ($user){
+                return $team->members->pluck('id')->contains($user->id);
+            });
+    }
+
+    /**
+     * Can given Team withdraw participation from this event?
+     *
+     * @param \App\Team $team
+     * @return boolean
+     */
+    public function canBeWithdrawn(Team $team)
+    {
+        if($this->quizzes->count()) {
+            //first quiz is not yet closed and team have not submit their response.
+            return ! $this->quizzes->first()->isClosed  && 
+                !$this->quizzes->first()->isCompletedBy($team);
+        }
+
+        return  ! $this->isLive;
     }
     
+    /**
+     * Set event live (When event actually begins).
+     *
+     * @return boolean
+     */
     public function setLive() {
         if($this->isLive) {
             return true;
@@ -70,29 +131,54 @@ class Event extends Model
         return $this->update(['started_at' => now()]);
     }
 
+    /**
+     * End this event (When the event gets over).
+     *
+     * @return boolean
+     */
     public function end()
     {
         if ($this->isLive) {
             return $this->update(['ended_at' => now()]);
         }
         
-        return true;
+        return false;
     }
 
+    /**
+     * Accessor to access isLive attribute.
+     *
+     * @return boolean
+     */
     public function getIsLiveAttribute() {
         return $this->hasStarted && ! $this->hasEnded;
     }
 
+    /**
+     * Has the event started?
+     *
+     * @return boolean
+     */
     public function getHasStartedAttribute()
     {
         return !!$this->started_at;
     }
     
+    /**
+     * Has the event ended?
+     *
+     * @return boolean
+     */
     public function getHasEndedAttribute()
     {
         return !!$this->ended_at;
     }
 
+    /**
+     * Route key name for url generation & model binding.
+     *
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'slug';

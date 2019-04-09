@@ -37,7 +37,7 @@ class QuizController extends Controller
 
     public function close(Quiz $quiz)
     {
-        if(!$quiz->setOffline()) {
+        if(!$quiz->setInactive()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong',

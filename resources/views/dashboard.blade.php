@@ -88,7 +88,7 @@
                                 @csrf @method('delete')
                                 <button class="btn is-red p-1 text-xs">Withdraw</button>
                             </form>
-                            @endif @if($event->isLive && $event->quizzes->count() && $event->activeQuiz) @if($event->activeQuiz->hasTeamResponded($event->team))
+                            @endif @if($event->isLive && $event->quizzes->count() && $event->activeQuiz) @if($event->activeQuiz->isCompletedBy($event->team))
                             <span class="btn p-1 text-xs cursor-not-allowed">Quiz Taken</span> @elseif($event->activeQuiz->isTeamAllowed($event->team))
                             <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">Take Quiz</a>                        @else
                             <span class="text-red">You are not allowed to take quiz, yet.</span> @endif @endif

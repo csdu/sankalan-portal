@@ -60,7 +60,7 @@ class TeamCanTakeQuiz {
 
     private function teamHasNotSubmittedResponse()
     {
-        if(!$this->quiz->hasTeamResponded($this->team)) {
+        if(!$this->quiz->isCompletedBy($this->team)) {
             return true;
         }
 

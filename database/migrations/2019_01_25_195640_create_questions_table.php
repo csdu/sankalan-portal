@@ -15,6 +15,7 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedSmallInteger('qno');
             $table->text('text', 1200);
             $table->text('code', 400)->nullable();
             $table->string('illustration')->nullable();

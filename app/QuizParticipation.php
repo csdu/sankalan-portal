@@ -4,34 +4,71 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * QuizParticipation model represents the entity that defines 
+ * relation between team and quiz. If a team has participation 
+ * in a quiz, they are allowed to take quiz.
+ */
 class QuizParticipation extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $guarded = [];
 
+    /**
+     * The attributes that are appended for array.
+     *
+     * @var array
+     */
     protected $appends = ['timeLeft'];
 
+    /**
+     * The attributes that have date type.
+     * i.e. they are mutated to instance of Carbon
+     *
+     * @var array
+     */
     protected $dates = ['started_at', 'finished_at'];
 
+
+    /**
+     * All Responses for this quiz participation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relation\BelongsTo
+     */
     public function responses()
     {
         return $this->hasMany(QuizResponse::class);
     }
 
+    /**
+     * Quiz associated with this quiz participation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relation\BelongsTo
+     */
     public function quiz()
     {
         return $this->belongsTo(Quiz::class);
     }
 
+    /**
+     * Team associated with this quiz participation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relation\BelongsTo
+     */
     public function team()
     {
         return $this->belongsTo(Team::class);
     }
 
-    public function getTimeLeftAttribute() {
-        $timeSpent = optional($this->started_at)->diffInSeconds(now()) ?? 0;
-        return $this->quiz->time_limit - $timeSpent;
-    }
-
+    /**
+     * Evaluate Score for this quiz participation.
+     *
+     * @return int|boolean
+     */
     public function evaluate() {
         $question_ids = $this->quiz->questions->pluck('id', 'id');
 
@@ -42,7 +79,24 @@ class QuizParticipation extends Model
         return $this->update(compact('score')) ? $score : false;
     }
 
-    public function recordResponses($responses) {
+    /**
+     * Save all the responses to database and return saved responses.
+     *
+     * @param mixed[] $responses
+     * @return App\QuizResponse[] 
+     */
+    public function recordResponses(array $responses) {
         return $this->responses()->createMany($responses);
+    }
+
+    /**
+     * Accessor for time left (seconds) in finishing the quiz.
+     *
+     * @return int
+     */
+    public function getTimeLeftAttribute()
+    {
+        $time_spent = optional($this->started_at)->diffInSeconds(now()) ?? 0;
+        return $this->quiz->time_limit - $time_spent;
     }
 }

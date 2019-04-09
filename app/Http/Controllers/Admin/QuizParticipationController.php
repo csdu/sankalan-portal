@@ -45,12 +45,14 @@ class QuizParticipationController extends Controller
     
     public function store(Event $event, Team $team)
     {
-        if(!$event->allowActiveQuiz($team)) {
+        if(!$event->active_quiz_id) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Event doesn\'t have any active quiz!',
             ], Response::HTTP_BAD_REQUEST);
         }
+
+        $event->activeQuiz->allowTeam($team);
 
         return [
             'status' => 'success',

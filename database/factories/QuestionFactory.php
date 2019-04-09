@@ -5,6 +5,7 @@ use App\Quiz;
 
 $factory->define(App\Question::class, function (Faker $faker) {
     return [
+        'qno' => $faker->numberBetween(1, 100),
         'text' => $faker->paragraph,
         'quiz_id' => function() {
             return factory(Quiz::class)->create()->id;

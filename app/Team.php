@@ -7,25 +7,47 @@ use App\Event;
 
 class Team extends Model
 {
+    /**
+     * The attributes that are NOT mass assignable.
+     *
+     * @var array
+     */
     protected $guarded = [];
 
+    /**
+     * The attributes that are appended for array.
+     *
+     * @var array
+     */
     protected $appends = ['uid'];
 
-    public function getUidAttribute() {
-        return env("ID_PREFIX", "SNKLN") . "-T" . str_pad("$this->id", 3, "0", STR_PAD_LEFT);
-    }
-
+    /**
+     * All members associated with this team.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function members() 
     {
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * All events in which team has participated.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function events()
     {
         return $this->belongsToMany(Event::class, 'event_participations');
     }
 
-    public function participate($event) {
+    /**
+     * Take part in the event.
+     *
+     * @param \App\Event $event
+     * @return bool true if participation successful, else false.
+     */
+    public function participate(Event $event) {
         if($event->isAnyParticipating($this->members)) {
             return false;
         }
@@ -33,19 +55,39 @@ class Team extends Model
         return true;
     }
 
-    public function withdrawParticipation($event)
+    /**
+     * Withdraw participation form the event.
+     *
+     * @param \App\Event $event
+     * @return bool
+     */
+    public function withdrawParticipation(Event $event)
     {
         $this->events()->detach($event->id);
         return true;
     }
 
-    public function endQuiz(Quiz $quiz, $responses)
+    /**
+     * End Quiz, submit all responses, update finish time.
+     *
+     * @param \App\Quiz $quiz
+     * @param mixed[] $responses
+     * @return App\QuizResponse
+     */
+    public function endQuiz(Quiz $quiz, array $responses)
     {
-        $responses = $quiz->recordResponses($this, $responses);
-        $quiz->participationByTeam($this)->update(['finished_at' => now()]);
+        $participation = $quiz->participationByTeam($this);
+        $responses = $participation->recordResponses($responses);
+        $participation->update(['finished_at' => now()]);
         return $responses;
     }
 
+    /**
+     * Start quiz, record start time.
+     *
+     * @param Quiz $quiz
+     * @return boolean
+     */
     public function beginQuiz(Quiz $quiz)
     {
         $participation = $quiz->participationByTeam($this);
@@ -55,4 +97,13 @@ class Team extends Model
         return false;
     }
 
+    /**
+     * UID accessor for fancy prefixed Ids - `SNKLN-T-{id}`
+     *
+     * @return string
+     */
+    public function getUidAttribute()
+    {
+        return env("ID_PREFIX", "SNKLN") . "-T" . str_pad("$this->id", 3, "0", STR_PAD_LEFT);
+    }
 }
