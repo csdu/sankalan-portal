@@ -28,7 +28,7 @@ class User extends Authenticatable
     /**
      * All teams belonging to the user.
      * 
-     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function teams() {
         return $this->belongsToMany(Team::class);
@@ -37,7 +37,7 @@ class User extends Authenticatable
     /**
      * Individual Team of which user is only member.
      * 
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function individualTeam() {
         return $this->belongsTo(Team::class);

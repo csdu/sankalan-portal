@@ -31,7 +31,7 @@ class Event extends Model
     /**
      * Teams participating in the event.
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function teams()
     {
@@ -41,7 +41,7 @@ class Event extends Model
     /**
      * Quiz currently active in the event
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function activeQuiz()
     {
@@ -51,7 +51,7 @@ class Event extends Model
     /**
      * The quizzes associated with this event.
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function quizzes()
     {
@@ -61,7 +61,7 @@ class Event extends Model
     /**
      * All members particpating in the event.
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function allParticipantMembers()
     {
@@ -71,7 +71,7 @@ class Event extends Model
     /**
      * Is any of the given members participating in the event?
      *
-     * @param Illuminate\Database\Eloquent\Collection $members
+     * @param \Illuminate\Database\Eloquent\Collection $members
      * @return boolean
      */
     public function isAnyParticipating(Collection $members)

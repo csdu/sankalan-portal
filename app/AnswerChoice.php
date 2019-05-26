@@ -16,7 +16,7 @@ class AnswerChoice extends Model
     /**
      * Question to which this choice belongs.
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function question()
     {

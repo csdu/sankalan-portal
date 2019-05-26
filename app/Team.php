@@ -24,7 +24,7 @@ class Team extends Model
     /**
      * All members associated with this team.
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function members() 
     {
@@ -34,7 +34,7 @@ class Team extends Model
     /**
      * All events in which team has participated.
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function events()
     {
@@ -72,7 +72,7 @@ class Team extends Model
      *
      * @param \App\Quiz $quiz
      * @param mixed[] $responses
-     * @return App\QuizResponse
+     * @return \App\QuizResponse
      */
     public function endQuiz(Quiz $quiz, array $responses)
     {

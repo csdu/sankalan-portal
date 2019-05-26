@@ -17,7 +17,7 @@ class QuizResponse extends Model
     /**
      * Question associated with this response.
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function question() {
         return $this->belongsTo(Question::class);

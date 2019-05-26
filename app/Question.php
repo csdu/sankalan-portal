@@ -75,7 +75,7 @@ class Question extends Model
      * special characters and spaces.
      *
      * @param string $keys
-     * @return Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection
      */
     public function getCorrectAnswerKeysAttribute($keys)
     {

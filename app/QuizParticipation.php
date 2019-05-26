@@ -83,7 +83,7 @@ class QuizParticipation extends Model
      * Save all the responses to database and return saved responses.
      *
      * @param mixed[] $responses
-     * @return App\QuizResponse[] 
+     * @return \App\QuizResponse[] 
      */
     public function recordResponses(array $responses) {
         return $this->responses()->createMany($responses);

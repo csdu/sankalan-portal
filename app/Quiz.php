@@ -31,7 +31,7 @@ class Quiz extends Model
     /**
      * Event to which the quiz belongs.
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function event() {
         return $this->belongsTo(Event::class);
@@ -40,7 +40,7 @@ class Quiz extends Model
     /**
      * All questions in the quiz.
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function questions() {
         return $this->hasMany(Question::class);
@@ -49,7 +49,7 @@ class Quiz extends Model
     /**
      * All teams participated (allowed by admin) for this quiz.
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function teams() {
         return $this->belongsToMany(Team::class, 'quiz_participations');
@@ -58,7 +58,7 @@ class Quiz extends Model
     /**
      * All quiz participations in this quiz.
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function participations() {
         return $this->hasMany(QuizParticipation::class, 'quiz_id');
@@ -124,7 +124,7 @@ class Quiz extends Model
      * The quiz participation by the given team.
      *
      * @param Team $team
-     * @return App\QuizParticipation|null
+     * @return \App\QuizParticipation|null
      */
     public function participationByTeam(Team $team) {
         return $this->participations()->where('team_id', $team->id)->first();
