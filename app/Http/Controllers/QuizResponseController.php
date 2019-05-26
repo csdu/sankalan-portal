@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Checks\TeamCanSubmitQuizResponse;
-use Illuminate\Http\Request;
 use App\Quiz;
 use Auth;
 use Illuminate\Support\Facades\Session;
@@ -21,7 +20,7 @@ class QuizResponseController extends Controller
 
         $team = $quiz->event->participatingTeamByUser(Auth::user());
 
-        if (!TeamCanSubmitQuizResponse::check($team, $quiz)) {
+        if ( ! TeamCanSubmitQuizResponse::check($team, $quiz)) {
             return $this->getJsonOrRedirect(Response::HTTP_FORBIDDEN);
         }
 
@@ -40,7 +39,7 @@ class QuizResponseController extends Controller
 
     private function getJsonOrRedirect($status = 202)
     {
-        if (!request()->expectsJson()) {
+        if ( ! request()->expectsJson()) {
             return redirect()->back();
         }
 

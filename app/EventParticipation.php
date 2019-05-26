@@ -40,7 +40,7 @@ class EventParticipation extends Model
      */
     public function getIsActiveQuizAllowedAttribute()
     {
-        if (!$this->event->activeQuiz) {
+        if ( ! $this->event->activeQuiz) {
             return null;
         }
 

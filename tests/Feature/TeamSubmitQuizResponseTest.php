@@ -2,16 +2,16 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\User;
-use App\Event;
-use App\Quiz;
-use App\Question;
 use App\AnswerChoice;
+use App\Event;
+use App\Question;
+use App\Quiz;
+use App\User;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\TestCase;
 
 class TeamSubmitQuizResponseTest extends TestCase
 {

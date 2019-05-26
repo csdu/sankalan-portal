@@ -41,7 +41,7 @@ class AnswerChoice extends Model
      */
     public function getIllustrationAttribute($illustration)
     {
-        if (!$illustration) {
+        if ( ! $illustration) {
             return $illustration;
         }
 

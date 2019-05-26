@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
@@ -111,11 +111,11 @@ class Event extends Model
     {
         if ($this->quizzes->count()) {
             //first quiz is not yet closed and team have not submit their response.
-            return !$this->quizzes->first()->isClosed &&
-                !$this->quizzes->first()->isCompletedBy($team);
+            return ! $this->quizzes->first()->isClosed &&
+                ! $this->quizzes->first()->isCompletedBy($team);
         }
 
-        return !$this->isLive;
+        return ! $this->isLive;
     }
 
     /**
@@ -153,7 +153,7 @@ class Event extends Model
      */
     public function getIsLiveAttribute()
     {
-        return $this->hasStarted && !$this->hasEnded;
+        return $this->hasStarted && ! $this->hasEnded;
     }
 
     /**
@@ -163,7 +163,7 @@ class Event extends Model
      */
     public function getHasStartedAttribute()
     {
-        return !!$this->started_at;
+        return ! ! $this->started_at;
     }
 
     /**
@@ -173,7 +173,7 @@ class Event extends Model
      */
     public function getHasEndedAttribute()
     {
-        return !!$this->ended_at;
+        return ! ! $this->ended_at;
     }
 
     /**

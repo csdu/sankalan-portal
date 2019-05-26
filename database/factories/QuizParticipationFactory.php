@@ -1,8 +1,8 @@
 <?php
 
-use Faker\Generator as Faker;
-use App\Team;
 use App\Quiz;
+use App\Team;
+use Faker\Generator as Faker;
 
 $factory->define(App\QuizParticipation::class, function (Faker $faker) {
     return [

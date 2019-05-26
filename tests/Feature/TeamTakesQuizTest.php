@@ -2,15 +2,15 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\User;
-use App\Quiz;
-use App\Event;
-use Illuminate\Support\Facades\Session;
-use App\Question;
-use Carbon\Carbon;
 use App\AnswerChoice;
+use App\Event;
+use App\Question;
+use App\Quiz;
+use App\User;
+use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Session;
+use Tests\TestCase;
 
 class TeamTakesQuizTest extends TestCase
 {

@@ -37,7 +37,7 @@ class TeamCanSubmitQuizResponse
 
     public function checkUserIsNotSubmittingAgain()
     {
-        if (!$this->quiz->participationByTeam($this->team)->finished_at) {
+        if ( ! $this->quiz->participationByTeam($this->team)->finished_at) {
             return true;
         }
 

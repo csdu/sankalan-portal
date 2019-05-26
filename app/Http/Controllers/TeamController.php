@@ -30,7 +30,7 @@ class TeamController extends Controller
 
         $member = request()->has('member_email') ? User::whereEmail(request('member_email'))->first() : null;
 
-        if (!$this->canCreateTeam($user, $member)) {
+        if ( ! $this->canCreateTeam($user, $member)) {
             flash('You already have this Team!')->warning();
             return redirect()->back();
         }
@@ -44,12 +44,12 @@ class TeamController extends Controller
 
     protected function canCreateTeam($user, $member = null)
     {
-        if (!$member) {
-            return !$user->individualTeam()->exists();
+        if ( ! $member) {
+            return ! $user->individualTeam()->exists();
         }
 
         // Does user already have any team containing the same member?
-        return !$user->teams()
+        return ! $user->teams()
             ->whereHas('members', function ($query) use ($member) {
                 return $query->where('team_user.user_id', $member->id);
             })->exists();

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Event;
-use Auth;
 use App\Team;
+use Auth;
 use Illuminate\Validation\Rule;
 
 class EventParticipationController extends Controller
@@ -26,11 +25,10 @@ class EventParticipationController extends Controller
 
         $teamId = request('team_id');
 
-        $team = $teamId ? Team::findOrFail($teamId) : (
-            $user->individualTeam ?? $user->createTeam($user->name)
-        );
+        $team = $teamId ? Team::findOrFail($teamId)
+            : ($user->individualTeam ?? $user->createTeam($user->name));
 
-        if (!$team->participate($event)) {
+        if ( ! $team->participate($event)) {
             flash('We do not allow same person to participate in same event twice, not even as a different team')->error();
             return redirect()->back();
         }
@@ -43,7 +41,7 @@ class EventParticipationController extends Controller
     {
         $team = $event->participatingTeamByUser(Auth::user());
 
-        if (!$team) {
+        if ( ! $team) {
             flash('You are not participating in this event!')->error();
             return redirect()->back();
         }

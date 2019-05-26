@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Admin;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Event;
 use App\Quiz;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class QuizGoesLiveTest extends TestCase
 {

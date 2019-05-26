@@ -12,7 +12,7 @@ class QuizController extends Controller
     {
         $team = $quiz->event->participatingTeamByUser(Auth::user());
 
-        if (!TeamCanTakeQuiz::check($team, $quiz)) {
+        if ( ! TeamCanTakeQuiz::check($team, $quiz)) {
             return redirect()->route('dashboard');
         }
 

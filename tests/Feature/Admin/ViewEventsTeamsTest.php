@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Admin;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\User;
-use App\Team;
 use App\Event;
+use App\Team;
+use App\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Tests\TestCase;
 
 class ViewEventsTeamsTest extends TestCase
 {

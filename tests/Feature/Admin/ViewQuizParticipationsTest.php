@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Admin;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Quiz;
 use App\Team;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Tests\TestCase;
 
 class ViewQuizParticipationsTest extends TestCase
 {

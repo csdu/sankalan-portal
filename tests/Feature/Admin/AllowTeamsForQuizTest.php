@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Admin;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\User;
 use App\Event;
 use App\Quiz;
+use App\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\TestCase;
 
 class AllowTeamsForQuizTest extends TestCase
 {

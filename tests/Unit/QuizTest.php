@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Event;
-use App\Quiz;
 use App\Question;
+use App\Quiz;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
+use Tests\TestCase;
 
 class QuizTest extends TestCase
 {

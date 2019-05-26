@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
+use Tests\TestCase;
 
 class UserLoginTest extends TestCase
 {

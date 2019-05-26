@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Admin;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Quiz;
 use App\Question;
+use App\Quiz;
 use App\QuizParticipation;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ViewAllQuizzesTest extends TestCase
 {

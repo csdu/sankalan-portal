@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Admin;
 
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\TestCase;
 
 class DashboardTest extends TestCase
 {

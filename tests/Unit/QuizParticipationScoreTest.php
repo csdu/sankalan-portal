@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\QuizParticipation;
-use App\Question;
 use App\AnswerChoice;
+use App\Question;
 use App\Quiz;
+use App\QuizParticipation;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class QuizParticipationEvaluateScoreTest extends TestCase
 {

@@ -113,7 +113,7 @@ class Quiz extends Model
     {
         $participation = $this->participationByTeam($team);
 
-        if (!$participation) {
+        if ( ! $participation) {
             return false;
         }
 
@@ -197,7 +197,7 @@ class Quiz extends Model
 
         return $this->id === $this->event->active_quiz_id
             && $this->opened_at
-            && !$this->closed_at;
+            && ! $this->closed_at;
     }
 
     /**
@@ -207,7 +207,7 @@ class Quiz extends Model
      */
     public function getIsClosedAttribute()
     {
-        return !! $this->closed_at;
+        return ! ! $this->closed_at;
     }
 
     /**

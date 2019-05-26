@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Jobs\EventsJsonImport;
 use App\Event;
+use App\Jobs\EventsJsonImport;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class EventsJsonImportTest extends TestCase
 {

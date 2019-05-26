@@ -2,12 +2,12 @@
 
 namespace App\Jobs;
 
+use App\AnswerChoice;
+use App\Event;
+use App\Question;
+use App\Quiz;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Event;
-use App\Quiz;
-use App\Question;
-use App\AnswerChoice;
 
 class EventsJsonImport
 {
@@ -59,7 +59,7 @@ class EventsJsonImport
         $this->events->transform(function ($event) {
             $quizzes = $event->pull('quizzes') ?? collect([]);
 
-            if (!is_string($event['description'])) {
+            if ( ! is_string($event['description'])) {
                 $event['description'] = $event['description']->implode('\n');
             }
 
@@ -96,15 +96,15 @@ class EventsJsonImport
     {
         $this->questions->transform(function ($question) {
             $choices = $question->pull('answer_choices') ?? collect([]);
-            if (!is_string($question['text'])) {
+            if ( ! is_string($question['text'])) {
                 $question['text'] = $question['text']->implode(' ');
             }
 
-            if ($question->has('code') && !is_string($question['code'])) {
+            if ($question->has('code') && ! is_string($question['code'])) {
                 $question['code'] = $question['code']->implode('<br>');
             }
 
-            if ($question->has('correct_answer_keys') && !is_string($question['correct_answer_keys'])) {
+            if ($question->has('correct_answer_keys') && ! is_string($question['correct_answer_keys'])) {
                 $question['correct_answer_keys'] = $question['correct_answer_keys']->implode(':');
             }
 
@@ -120,11 +120,11 @@ class EventsJsonImport
     public function createChoices()
     {
         $this->choices->map(function ($choice) {
-            if ($choice->has('code') && !is_string($choice['code'])) {
+            if ($choice->has('code') && ! is_string($choice['code'])) {
                 $choice['code'] = $choice['code']->implode('<br>');
             }
 
-            if ($choice->has('text') && !is_string($choice['text'])) {
+            if ($choice->has('text') && ! is_string($choice['text'])) {
                 $choice['text'] = $choice['text']->implode(' ');
             }
 
