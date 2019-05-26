@@ -14,17 +14,17 @@ class QuizResponseController extends Controller
     public function store(Quiz $quiz)
     {
         $data = request()->validate([
-            'responses' => ['sometimes','array', "max:{$quiz->questions()->count()}"],
+            'responses' => ['sometimes', 'array', "max:{$quiz->questions()->count()}"],
             'responses.*.response_keys' => ['required', 'string'],
             'responses.*.question_id' => ['required', 'integer', 'exists:questions,id'],
         ]);
 
         $team = $quiz->event->participatingTeamByUser(Auth::user());
-        
-        if(!TeamCanSubmitQuizResponse::check($team, $quiz)) {
+
+        if (!TeamCanSubmitQuizResponse::check($team, $quiz)) {
             return $this->getJsonOrRedirect(Response::HTTP_FORBIDDEN);
         }
-        
+
         $team->endQuiz($quiz, request('responses') ?? []);
 
         if ($quiz->isTimeLimitExceeded($team)) {
@@ -38,10 +38,11 @@ class QuizResponseController extends Controller
         return $this->getJsonOrRedirect($status);
     }
 
-    private function getJsonOrRedirect($status = 202) {
-        if(! request()->expectsJson()) {
+    private function getJsonOrRedirect($status = 202)
+    {
+        if (!request()->expectsJson()) {
             return redirect()->back();
-        } 
+        }
 
         return response()->json([
             'message' => Session::pull('flash_notification')->toArray()[0],

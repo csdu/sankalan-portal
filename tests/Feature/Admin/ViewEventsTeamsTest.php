@@ -3,10 +3,8 @@
 namespace Tests\Feature\Admin;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
-use Illuminate\Support\Collection;
 use App\Team;
 use App\Event;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -21,8 +19,8 @@ class ViewEventsTeamsTest extends TestCase
         $events = create(Event::class, 5);
         $teams = create(Team::class, 20);
 
-        $teams->each(function($team) use ($events){
-            $events->random(2)->each(function($event) use($team) {
+        $teams->each(function ($team) use ($events) {
+            $events->random(2)->each(function ($event) use ($team) {
                 $team->participate($event);
             });
         });
@@ -42,7 +40,7 @@ class ViewEventsTeamsTest extends TestCase
         $this->assertInstanceOf(LengthAwarePaginator::class, $results);
         $this->assertCount(config('app.pagination.perPage'), $results->toArray()['data']);
         $this->assertEquals(40, $results->toArray()['total']);
-        collect($results->toArray()['data'])->each(function($result) {
+        collect($results->toArray()['data'])->each(function ($result) {
             $this->assertArrayHasKey('event', $result);
             $this->assertArrayHasKey('team', $result);
             $this->assertArrayHasKey('members', $result['team']);
@@ -69,10 +67,10 @@ class ViewEventsTeamsTest extends TestCase
         $viewEvents = $response->viewData('events');
 
         $this->assertCount(3, $viewEvents);
-        
+
         $this->assertInstanceOf(LengthAwarePaginator::class, $results);
         $this->assertEquals(2, $results->total());
-        collect($results->toArray()['data'])->each(function($result) use ($events){
+        collect($results->toArray()['data'])->each(function ($result) use ($events) {
             $this->assertEquals($events[0]->id, $result['event_id']);
         });
     }

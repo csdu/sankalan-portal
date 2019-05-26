@@ -16,8 +16,8 @@ class MustBeAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(!$request->user()->isAdmin()) {
-            throw new AuthorizationException("Not Authorized. Only Admins are allowed");
+        if (!$request->user()->isAdmin()) {
+            throw new AuthorizationException('Not Authorized. Only Admins are allowed');
         }
 
         return $next($request);

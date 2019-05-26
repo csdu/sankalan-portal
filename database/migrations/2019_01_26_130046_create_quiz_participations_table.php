@@ -34,7 +34,7 @@ class CreateQuizParticipationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('quiz_participations', function(Blueprint $table){
+        Schema::table('quiz_participations', function (Blueprint $table) {
             $table->dropForeign(['team_id']);
             $table->dropForeign(['quiz_id']);
         });

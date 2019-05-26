@@ -3,9 +3,7 @@
 namespace Tests\Feature\Admin;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\User;
 use App\Event;
 use App\Quiz;
 use Carbon\Carbon;

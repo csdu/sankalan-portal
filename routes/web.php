@@ -10,12 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/','PagesController@index')->name('homepage')->middleware('guest');
+Route::get('/', 'PagesController@index')->name('homepage')->middleware('guest');
 
 Auth::routes();
 Route::get('/help', 'PagesController@help')->name('help');
 Route::get('/events', 'EventController@index')->name('events.index');
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/teams', 'TeamController@index')->name('teams');
     Route::post('/teams', 'TeamController@store')->name('teams.store');
@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/quizzes/{quiz}/take', 'QuizController@show')->name('quizzes.take');
 });
 
-Route::group(['prefix' => 'manage', 'middleware' => ['auth','admin'], 'namespace' => 'Admin'], function() {
+Route::group(['prefix' => 'manage', 'middleware' => ['auth', 'admin'], 'namespace' => 'Admin'], function () {
     Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
     Route::get('events_teams/{event?}', 'EventTeamController@index')->name('admin.events.teams.index');
     Route::get('teams', 'TeamController@index')->name('admin.teams.index');

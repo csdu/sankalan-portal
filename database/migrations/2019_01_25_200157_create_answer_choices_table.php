@@ -34,7 +34,7 @@ class CreateAnswerChoicesTable extends Migration
      */
     public function down()
     {
-        Schema::table('answer_choices', function(Blueprint $table) {
+        Schema::table('answer_choices', function (Blueprint $table) {
             $table->dropForeign(['question_id']);
         });
 

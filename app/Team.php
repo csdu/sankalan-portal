@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Event;
 
 class Team extends Model
 {
@@ -26,7 +25,7 @@ class Team extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function members() 
+    public function members()
     {
         return $this->belongsToMany(User::class);
     }
@@ -47,8 +46,9 @@ class Team extends Model
      * @param \App\Event $event
      * @return bool true if participation successful, else false.
      */
-    public function participate(Event $event) {
-        if($event->isAnyParticipating($this->members)) {
+    public function participate(Event $event)
+    {
+        if ($event->isAnyParticipating($this->members)) {
             return false;
         }
         $this->events()->syncWithoutDetaching($event->id);
@@ -91,7 +91,7 @@ class Team extends Model
     public function beginQuiz(Quiz $quiz)
     {
         $participation = $quiz->participationByTeam($this);
-        if(!$participation->started_at) {
+        if (!$participation->started_at) {
             return $participation->update(['started_at' => now()]);
         }
         return false;
@@ -104,6 +104,6 @@ class Team extends Model
      */
     public function getUidAttribute()
     {
-        return env("ID_PREFIX", "SNKLN") . "-T" . str_pad("$this->id", 3, "0", STR_PAD_LEFT);
+        return env('ID_PREFIX', 'SNKLN') . '-T' . str_pad("$this->id", 3, '0', STR_PAD_LEFT);
     }
 }

@@ -12,13 +12,13 @@ class QuizController extends Controller
     {
         $team = $quiz->event->participatingTeamByUser(Auth::user());
 
-        if(!TeamCanTakeQuiz::check($team, $quiz)) {
+        if (!TeamCanTakeQuiz::check($team, $quiz)) {
             return redirect()->route('dashboard');
         }
 
         $quiz->load([
-            'questions.choices', 
-            'participations' => function($query) use ($team) {
+            'questions.choices',
+            'participations' => function ($query) use ($team) {
                 $query->where('quiz_participations.team_id', $team->id);
             },
         ]);
@@ -28,9 +28,10 @@ class QuizController extends Controller
         return view('quizzes.show', compact('quiz'));
     }
 
-    public function instructions(Quiz $quiz) {
+    public function instructions(Quiz $quiz)
+    {
         $quiz->load(['event']);
-        
+
         return view('quizzes.instructions', compact('quiz'));
     }
 }

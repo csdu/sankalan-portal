@@ -5,7 +5,6 @@ namespace App\Jobs;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Event;
-use App\Quiz;
 use App\Question;
 use App\AnswerChoice;
 
@@ -53,7 +52,8 @@ class ImportQuizToEvent
         return $this;
     }
 
-    public function createQuiz() {
+    public function createQuiz()
+    {
         $questions = $this->quiz->pull('questions') ?? collect([]);
 
         $this->quiz['time_limit'] = $this->quiz['time_limit'] * 60;
@@ -71,7 +71,7 @@ class ImportQuizToEvent
     {
         $this->questions->transform(function ($question) {
             $choices = $question->pull('answer_choices') ?? collect([]);
-            if(!is_string($question['text'])) {
+            if (!is_string($question['text'])) {
                 $question['text'] = $question['text']->implode(' ');
             }
 
@@ -91,7 +91,7 @@ class ImportQuizToEvent
         });
         return $this;
     }
-    
+
     public function createChoices()
     {
         $this->choices->map(function ($choice) {
@@ -99,7 +99,7 @@ class ImportQuizToEvent
                 $choice['code'] = $choice['code']->implode('<br>');
             }
 
-            if($choice->has('text') && !is_string($choice['text'])) {
+            if ($choice->has('text') && !is_string($choice['text'])) {
                 $choice['text'] = $choice['text']->implode(' ');
             }
 

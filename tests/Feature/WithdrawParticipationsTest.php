@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Event;
 use App\User;
@@ -16,7 +15,7 @@ class WithdrawParticipationsTest extends TestCase
     public function user_can_withdraw_individual_participation_from_an_event()
     {
         $user = create(User::class);
-        $events = create(Event::class,4);
+        $events = create(Event::class, 4);
         $team = $user->createTeam('My Team');
         $team->participate($events[0]);
 
@@ -30,7 +29,7 @@ class WithdrawParticipationsTest extends TestCase
         $this->assertCount(0, $events[0]->teams()->get());
 
         $this->assertEquals(
-            'success', 
+            'success',
             \Session::get('flash_notification')->first()->level
         );
     }
@@ -38,8 +37,8 @@ class WithdrawParticipationsTest extends TestCase
     /** @test */
     public function user_can_withdraw_group_participation_from_an_event()
     {
-        $users = create(User::class,2);
-        $events = create(Event::class,4);
+        $users = create(User::class, 2);
+        $events = create(Event::class, 4);
         $team = $users[0]->createTeam('My Team', $users[1]);
         $team->participate($events[0]);
         $team->participate($events[1]);

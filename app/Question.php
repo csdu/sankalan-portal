@@ -27,7 +27,7 @@ class Question extends Model
      */
     protected $casts = [
         'positive_score' => 'integer',
-        'negative_score' => 'integer'
+        'negative_score' => 'integer',
     ];
 
     /**
@@ -46,12 +46,13 @@ class Question extends Model
      * @param array|string $value
      * @return void
      */
-    public function setCorrectAnswerKeysAttribute($value) {
-        if(is_array($value)) {
+    public function setCorrectAnswerKeysAttribute($value)
+    {
+        if (is_array($value)) {
             $value = implode(':', $value);
         }
 
-        $this->attributes['correct_answer_keys']  = $value ?? '';
+        $this->attributes['correct_answer_keys'] = $value ?? '';
     }
 
     /**
@@ -62,7 +63,7 @@ class Question extends Model
      */
     public function getIllustrationAttribute($illustration)
     {
-        if(!$illustration) {
+        if (!$illustration) {
             return $illustration;
         }
 
@@ -82,11 +83,11 @@ class Question extends Model
         return collect(explode(':', $keys))->map(function ($answer_key) {
             return strtolower(trim(
                 preg_replace(
-                    '~[^a-zA-Z0-9]+~', 
+                    '~[^a-zA-Z0-9]+~',
                     '',
-                    preg_replace('~( |_|\-)+~' , ' ', $answer_key)
+                    preg_replace('~( |_|\-)+~', ' ', $answer_key)
                 )
             ));
         });
-    } 
+    }
 }

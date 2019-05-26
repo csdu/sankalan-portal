@@ -5,8 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * QuizParticipation model represents the entity that defines 
- * relation between team and quiz. If a team has participation 
+ * QuizParticipation model represents the entity that defines
+ * relation between team and quiz. If a team has participation
  * in a quiz, they are allowed to take quiz.
  */
 class QuizParticipation extends Model
@@ -32,7 +32,6 @@ class QuizParticipation extends Model
      * @var array
      */
     protected $dates = ['started_at', 'finished_at'];
-
 
     /**
      * All Responses for this quiz participation.
@@ -69,13 +68,14 @@ class QuizParticipation extends Model
      *
      * @return int|boolean
      */
-    public function evaluate() {
+    public function evaluate()
+    {
         $question_ids = $this->quiz->questions->pluck('id', 'id');
 
         $score = $this->responses->filter(function ($response) use ($question_ids) {
             return $question_ids->has($response->question_id);
         })->sum->score;
-        
+
         return $this->update(compact('score')) ? $score : false;
     }
 
@@ -83,9 +83,10 @@ class QuizParticipation extends Model
      * Save all the responses to database and return saved responses.
      *
      * @param mixed[] $responses
-     * @return \App\QuizResponse[] 
+     * @return \App\QuizResponse[]
      */
-    public function recordResponses(array $responses) {
+    public function recordResponses(array $responses)
+    {
         return $this->responses()->createMany($responses);
     }
 

@@ -4,8 +4,7 @@ use Faker\Generator as Faker;
 use App\Question;
 
 $factory->define(App\AnswerChoice::class, function (Faker $faker, $attributes) {
-
-    if(array_key_exists('question_id', $attributes)) {
+    if (array_key_exists('question_id', $attributes)) {
         $question_id = $attributes['question_id'];
     } else {
         $question_id = factory(Question::class)->create()->id;

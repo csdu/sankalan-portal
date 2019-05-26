@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use App\Quiz;
@@ -12,18 +11,17 @@ use Illuminate\Support\Facades\Session;
 use App\Question;
 use Carbon\Carbon;
 use App\AnswerChoice;
-use App\QuizParticipation;
 
 class TeamTakesQuizTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     /** @test */
     public function non_participating_teams_are_redirected_to_dashboard_with_appropriate_error_message()
     {
         $users = create(User::class, 2);
         $team = $users[0]->createTeam('Team', $users[1]);
-        $events = create(Event::class,2);
+        $events = create(Event::class, 2);
         $team->participate($events[0]);
         $quiz = create(Quiz::class, 1, ['event_id' => $events[1]->id]);
         $quiz->setActive();
@@ -51,7 +49,7 @@ class TeamTakesQuizTest extends TestCase
         $response = $this->post(route('quizzes.take', $quiz));
 
         $response->assertRedirect()->assertSessionHas('flash_notification');
-        
+
         $this->assertEquals('danger', Session::get('flash_notification')->first()->level);
     }
 
@@ -83,7 +81,7 @@ class TeamTakesQuizTest extends TestCase
         $team->participate($event);
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
         create(Question::class, 10, ['quiz_id' => $quiz->id])
-            ->each(function($question) {
+            ->each(function ($question) {
                 create(AnswerChoice::class, 4, ['question_id' => $question->id]);
             });
 
@@ -95,19 +93,19 @@ class TeamTakesQuizTest extends TestCase
         $response = $this->post(route('quizzes.take', $quiz));
 
         $response->assertSuccessful()->assertViewIs('quizzes.show');
-            
+
         $viewQuiz = $response->viewData('quiz');
-        
+
         $this->assertInstanceOf(Quiz::class, $viewQuiz);
 
         $this->assertArrayHasKey('participations', $viewQuiz->toArray());
         $this->assertCount(1, $viewQuiz->participations);
         $this->assertNull($viewQuiz->participations->first()->started_at);
-        tap($viewQuiz->participations->first()->fresh(), function($participation) {
+        tap($viewQuiz->participations->first()->fresh(), function ($participation) {
             $this->assertInstanceOf(Carbon::class, $participation->started_at);
             $this->assertEqualsWithDelta(0, $participation->started_at->diffInSeconds(now()), 1);
         });
-        
+
         $this->assertArrayHasKey('questions', $viewQuiz->toArray());
         $this->assertCount(10, $viewQuiz->questions);
         $this->assertArrayHasKey('choices', $viewQuiz->questions->first()->toArray());
@@ -128,12 +126,11 @@ class TeamTakesQuizTest extends TestCase
 
         $startTime = now();
         $team->beginQuiz($quiz);
-        
 
         $this->withoutExceptionHandling()->be($users[0]);
 
         Carbon::setTestNow(now()->addMinutes(10));
-        
+
         $response = $this->post(route('quizzes.take', $quiz));
 
         $response->assertSuccessful()->assertViewIs('quizzes.show');
@@ -143,9 +140,9 @@ class TeamTakesQuizTest extends TestCase
         $this->assertInstanceOf(Quiz::class, $viewQuiz);
 
         $this->assertArrayHasKey('timeLeft', $viewQuiz->participations->toArray()[0]);
-        tap($viewQuiz->participations->first()->fresh(), function($participation) use ($viewQuiz, $startTime){
+        tap($viewQuiz->participations->first()->fresh(), function ($participation) use ($viewQuiz, $startTime) {
             $this->assertEquals($startTime->getTimestamp(), $participation->started_at->getTimestamp());
-            $this->assertEquals($viewQuiz->time_limit-(10*60), $participation->timeLeft);
+            $this->assertEquals($viewQuiz->time_limit - (10 * 60), $participation->timeLeft);
         });
     }
 
@@ -177,7 +174,7 @@ class TeamTakesQuizTest extends TestCase
         })->toArray();
 
         // End Quiz 5 minutes before
-        Carbon::setTestNow(now()->addSeconds($quiz->timeLeft - 5*60));
+        Carbon::setTestNow(now()->addSeconds($quiz->timeLeft - 5 * 60));
 
         $team->endQuiz($quiz, $responses);
 

@@ -3,13 +3,10 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Question;
 use App\AnswerChoice;
-use App\Team;
 use App\Quiz;
-use App\QuizResponse;
 use App\QuizParticipation;
 
 class SingleResponseScoreTest extends TestCase
@@ -29,7 +26,7 @@ class SingleResponseScoreTest extends TestCase
         $choices = create(AnswerChoice::class, 4, ['question_id' => $question->id]);
         $question->update(['correct_answer_keys' => $choices->random()->key]);
         $question = $question->fresh();
-        
+
         $correctResponse = $quiz->participations[0]->responses()->create([
             'question_id' => $question->id,
             'response_keys' => $question->correct_answer_keys->implode(':'),
@@ -41,7 +38,6 @@ class SingleResponseScoreTest extends TestCase
         ]);
 
         $this->assertEquals($question->positive_score, $correctResponse->score);
-
     }
 
     /** @test */
@@ -50,15 +46,15 @@ class SingleResponseScoreTest extends TestCase
         $quiz = create(Quiz::class);
         $quizParticipations = create(QuizParticipation::class, 2, ['quiz_id' => $quiz->id]);
         $question = create(Question::class, 1, [
-            'quiz_id' => $quiz->id, 
-            'positive_score' => 4, 
+            'quiz_id' => $quiz->id,
+            'positive_score' => 4,
             'negative_score' => 1,
             'correct_answer_keys' => [
-                'correct answer', 
-                'answer correct', 
-                '   is correct', 
-                'correct   '
-            ] 
+                'correct answer',
+                'answer correct',
+                '   is correct',
+                'correct   ',
+            ],
         ]);
 
         $correctResponse = $quiz->participations[0]->responses()->create([
@@ -78,7 +74,6 @@ class SingleResponseScoreTest extends TestCase
             'response_keys' => 'coRrEcT   ',
         ]);
         $this->assertEquals($question->positive_score, $correctResponse->score);
-
 
         $inCorrectResponse = $quiz->participations[0]->responses()->create([
             'question_id' => $question->id,

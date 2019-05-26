@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Event;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,35 +17,33 @@ class EventController extends Controller
 
     public function goLive(Event $event)
     {
-        if(!$event->setLive()) {
+        if (!$event->setLive()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong'
+                'message' => 'Something went wrong',
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
             'status' => 'success',
             'message' => 'Event is live now!',
-            'event' => $event
+            'event' => $event,
         ]);
-
     }
-    
+
     public function end(Event $event)
     {
         if (!$event->end()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong'
+                'message' => 'Something went wrong',
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
             'status' => 'success',
             'message' => 'Event has ended!',
-            'event' => $event
+            'event' => $event,
         ]);
-
     }
 }

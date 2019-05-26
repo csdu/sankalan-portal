@@ -30,7 +30,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     /**
      * Where to redirect users after login.
      *
@@ -38,7 +38,7 @@ class LoginController extends Controller
      */
     protected function redirectTo()
     {
-        if(Auth::user()->isAdmin()) {
+        if (Auth::user()->isAdmin()) {
             return route('admin.dashboard');
         }
 

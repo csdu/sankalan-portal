@@ -3,7 +3,6 @@
 namespace Tests\Feature\Admin;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use App\Event;
@@ -13,13 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 class AllowTeamsForQuizTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     /** @test */
     public function admin_allows_participating_teams_for_active_quiz()
     {
         $users = create(User::class, 2);
         $team = $users[0]->createTeam('some team', $users[1]);
-        $events = create(Event::class, 2)->each(function($event) {
+        $events = create(Event::class, 2)->each(function ($event) {
             create(Quiz::class, 1, ['event_id' => $event->id])->setActive();
         });
 
@@ -31,14 +30,13 @@ class AllowTeamsForQuizTest extends TestCase
             route('admin.events.teams.allow-active-quiz', [$events->first(), $team])
         )->assertSuccessful()->json();
 
-        tap($events->first()->fresh()->activeQuiz, function($activeQuiz) {
+        tap($events->first()->fresh()->activeQuiz, function ($activeQuiz) {
             $this->assertCount(1, $activeQuiz->teams()->get());
         });
 
         $this->assertArrayHasKey('status', $response);
         $this->assertArrayHasKey('message', $response);
         $this->assertEquals('success', $response['status']);
-
     }
 
     /** @test */

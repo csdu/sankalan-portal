@@ -1,11 +1,9 @@
-<?php 
+<?php
 
 namespace App\Checks;
 
-use Auth;
-
-class TeamCanSubmitQuizResponse {
-
+class TeamCanSubmitQuizResponse
+{
     protected $quiz;
     protected $team;
 
@@ -14,23 +12,25 @@ class TeamCanSubmitQuizResponse {
         $this->quiz = $quiz;
         $this->team = $team;
     }
-    
-    public static function check($team, $quiz) {
+
+    public static function check($team, $quiz)
+    {
         return (new static($team, $quiz))->perform();
     }
 
-    public function perform() {
-        return TeamCanTakeQuiz::check($this->team, $this->quiz) && 
+    public function perform()
+    {
+        return TeamCanTakeQuiz::check($this->team, $this->quiz) &&
         $this->checkUserHasStartedQuiz() &&
         $this->checkUserIsNotSubmittingAgain();
     }
 
     public function checkUserHasStartedQuiz()
     {
-        if($this->quiz->participationByTeam($this->team)->started_at) {
+        if ($this->quiz->participationByTeam($this->team)->started_at) {
             return true;
         }
-        
+
         flash('You tried something fishy, you are disqualified!')->error();
         return false;
     }

@@ -3,19 +3,16 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\QuizParticipation;
 use App\Quiz;
 use App\Question;
 use App\AnswerChoice;
 
-
 class EvaluateQuizTest extends TestCase
 {
-
     use RefreshDatabase;
-    
+
     /** @test */
     public function all_quiz_participating_teams_are_evaluated_at_once()
     {
@@ -24,7 +21,7 @@ class EvaluateQuizTest extends TestCase
         $questions = create(Question::class, 5, [
             'quiz_id' => $quiz->id,
             'positive_score' => 4,
-            'negative_score' => 1
+            'negative_score' => 1,
         ]);
 
         $questions->each(function ($question) {
@@ -45,7 +42,7 @@ class EvaluateQuizTest extends TestCase
         $this->assertArrayHasKey('message', $json);
         $this->assertArrayHasKey('scores', $json);
 
-        $participations->map->fresh()->each(function($participation) {
+        $participations->map->fresh()->each(function ($participation) {
             $this->assertNotNull($participation->score);
             $this->assertEquals(20, $participation->score);
         });
@@ -56,7 +53,7 @@ class EvaluateQuizTest extends TestCase
         return $questions->map(function ($question) {
             return [
                 'question_id' => $question->id,
-                'response_keys' => $question->correct_answer_keys->random()
+                'response_keys' => $question->correct_answer_keys->random(),
             ];
         })->toArray();
     }

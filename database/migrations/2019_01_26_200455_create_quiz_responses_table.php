@@ -32,7 +32,7 @@ class CreateQuizResponsesTable extends Migration
      */
     public function down()
     {
-        Schema::table('quiz_responses', function(Blueprint $table) {
+        Schema::table('quiz_responses', function (Blueprint $table) {
             $table->dropForeign(['question_id']);
             $table->dropForeign(['quiz_participation_id']);
         });

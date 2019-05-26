@@ -20,7 +20,7 @@ class Event extends Model
      * @var array
      */
     protected $dates = ['started_at', 'ended_at'];
-    
+
     /**
      * The attributes that are appended for array.
      *
@@ -78,11 +78,11 @@ class Event extends Model
     {
         $memberIds = $members->pluck('id');
         $participantIds = $this->allParticipantMembers()->pluck('id');
-        
+
         // or this way?
         // return !!$participantIds->intersect($memberIds)->count();
 
-        return $memberIds->some(function($memberId) use ($participantIds) {
+        return $memberIds->some(function ($memberId) use ($participantIds) {
             return $participantIds->contains($memberId);
         });
     }
@@ -96,7 +96,7 @@ class Event extends Model
     public function participatingTeamByUser(User $user)
     {
         return $this->loadMissing('teams.members')
-            ->teams->first(function($team) use ($user){
+            ->teams->first(function ($team) use ($user) {
                 return $team->members->pluck('id')->contains($user->id);
             });
     }
@@ -109,22 +109,23 @@ class Event extends Model
      */
     public function canBeWithdrawn(Team $team)
     {
-        if($this->quizzes->count()) {
+        if ($this->quizzes->count()) {
             //first quiz is not yet closed and team have not submit their response.
-            return ! $this->quizzes->first()->isClosed  && 
+            return !$this->quizzes->first()->isClosed &&
                 !$this->quizzes->first()->isCompletedBy($team);
         }
 
-        return  ! $this->isLive;
+        return  !$this->isLive;
     }
-    
+
     /**
      * Set event live (When event actually begins).
      *
      * @return boolean
      */
-    public function setLive() {
-        if($this->isLive) {
+    public function setLive()
+    {
+        if ($this->isLive) {
             return true;
         }
 
@@ -141,7 +142,7 @@ class Event extends Model
         if ($this->isLive) {
             return $this->update(['ended_at' => now()]);
         }
-        
+
         return false;
     }
 
@@ -150,8 +151,9 @@ class Event extends Model
      *
      * @return boolean
      */
-    public function getIsLiveAttribute() {
-        return $this->hasStarted && ! $this->hasEnded;
+    public function getIsLiveAttribute()
+    {
+        return $this->hasStarted && !$this->hasEnded;
     }
 
     /**
@@ -163,7 +165,7 @@ class Event extends Model
     {
         return !!$this->started_at;
     }
-    
+
     /**
      * Has the event ended?
      *

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Event;
-
 class DashboardController extends Controller
 {
     /**
@@ -16,7 +14,7 @@ class DashboardController extends Controller
         $teams = auth()->user()->teams()->with(['events', 'members'])->get();
 
         $events = $teams->flatMap(function ($team) {
-            return $team->events->map(function($event) use ($team){
+            return $team->events->map(function ($event) use ($team) {
                 $event->team = $team;
                 return $event;
             });

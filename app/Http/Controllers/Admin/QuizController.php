@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Quiz;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,45 +16,45 @@ class QuizController extends Controller
 
         return view('admin.quizzes.index', compact('quizzes'));
     }
-    
+
     public function goLive(Quiz $quiz)
     {
-        if(!$quiz->setActive()) {
+        if (!$quiz->setActive()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong',
-                'quiz' => $quiz
+                'quiz' => $quiz,
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return [
             'status' => 'success',
             'message' => 'Quiz is now Live!',
-            'quiz' => $quiz
+            'quiz' => $quiz,
         ];
     }
 
     public function close(Quiz $quiz)
     {
-        if(!$quiz->setInactive()) {
+        if (!$quiz->setInactive()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong',
-                'quiz' => $quiz
+                'quiz' => $quiz,
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return [
             'status' => 'success',
             'message' => 'Quiz is now Closed!',
-            'quiz' => $quiz
+            'quiz' => $quiz,
         ];
     }
 
     public function evaluate(Quiz $quiz)
     {
         $scores = $quiz->participations->map->evaluate();
-        
+
         return [
             'status' => 'success',
             'message' => 'All quiz responses have been evaluated',

@@ -33,7 +33,8 @@ class Quiz extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function event() {
+    public function event()
+    {
         return $this->belongsTo(Event::class);
     }
 
@@ -42,7 +43,8 @@ class Quiz extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function questions() {
+    public function questions()
+    {
         return $this->hasMany(Question::class);
     }
 
@@ -51,7 +53,8 @@ class Quiz extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function teams() {
+    public function teams()
+    {
         return $this->belongsToMany(Team::class, 'quiz_participations');
     }
 
@@ -60,7 +63,8 @@ class Quiz extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function participations() {
+    public function participations()
+    {
         return $this->hasMany(QuizParticipation::class, 'quiz_id');
     }
 
@@ -69,10 +73,11 @@ class Quiz extends Model
      *
      * @return boolean
      */
-    public function setActive() {
+    public function setActive()
+    {
         return $this->event->update([
             'started_at' => $this->event->started_at ?? now(),
-            'active_quiz_id' => $this->id
+            'active_quiz_id' => $this->id,
         ]) && $this->update(['opened_at' => now()]);
     }
 
@@ -81,8 +86,9 @@ class Quiz extends Model
      *
      * @return boolean
      */
-    public function setInactive() {
-        return $this->event->update(['active_quiz_id' => null]) 
+    public function setInactive()
+    {
+        return $this->event->update(['active_quiz_id' => null])
             && $this->update(['closed_at' => now()]);
     }
 
@@ -92,7 +98,8 @@ class Quiz extends Model
      * @param Team $team
      * @return boolean
      */
-    public function isTeamAllowed(Team $team) {
+    public function isTeamAllowed(Team $team)
+    {
         return $this->teams->pluck('id')->contains($team->id);
     }
 
@@ -102,12 +109,13 @@ class Quiz extends Model
      * @param \App\Team $team
      * @return boolean
      */
-    public function isTimeLimitExceeded(Team $team) {
-        if(! $participation = $this->participationByTeam($team)) {
+    public function isTimeLimitExceeded(Team $team)
+    {
+        if (!$participation = $this->participationByTeam($team)) {
             return false;
         }
         $timeTaken = optional($participation->started_at)->diffInSeconds(now());
-        return $timeTaken > ($this->time_limit + 1*60); // Add 1 Minute Extra
+        return $timeTaken > ($this->time_limit + 1 * 60); // Add 1 Minute Extra
     }
 
     /**
@@ -116,7 +124,8 @@ class Quiz extends Model
      * @param Team $team
      * @return void
      */
-    public function allowTeam(Team $team) {
+    public function allowTeam(Team $team)
+    {
         return $this->teams()->attach($team);
     }
 
@@ -126,7 +135,8 @@ class Quiz extends Model
      * @param Team $team
      * @return \App\QuizParticipation|null
      */
-    public function participationByTeam(Team $team) {
+    public function participationByTeam(Team $team)
+    {
         return $this->participations()->where('team_id', $team->id)->first();
     }
 
@@ -136,7 +146,8 @@ class Quiz extends Model
      * @param Team $team
      * @return boolean
      */
-    public function isCompletedBy(Team $team) {
+    public function isCompletedBy(Team $team)
+    {
         return optional($this->participationByTeam($team))->finished_at != null;
     }
 

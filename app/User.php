@@ -24,22 +24,24 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
+
     /**
      * All teams belonging to the user.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function teams() {
+    public function teams()
+    {
         return $this->belongsToMany(Team::class);
     }
 
     /**
      * Individual Team of which user is only member.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function individualTeam() {
+    public function individualTeam()
+    {
         return $this->belongsTo(Team::class);
     }
 
@@ -80,12 +82,12 @@ class User extends Authenticatable
 
     /**
      * UID accessor method to add UID PREFIX `SNKLN-U-{id}`.
-     * 
+     *
      * @return string UID
      */
     public function getUidAttribute()
     {
-        return env("ID_PREFIX", "SNKLN") . "-U" . str_pad("$this->id", 3, "0", STR_PAD_LEFT);
+        return env('ID_PREFIX', 'SNKLN') . '-U' . str_pad("$this->id", 3, '0', STR_PAD_LEFT);
     }
 
     /**
@@ -98,7 +100,7 @@ class User extends Authenticatable
 
     /**
      * MD5 Hash email accessor to access email hash.
-     * 
+     *
      * @return string MD5 Hashed Email
      */
     public function getEmailHashAttribute()

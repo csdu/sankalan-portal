@@ -3,11 +3,8 @@
 namespace Tests\Feature\Admin;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Event;
 use App\Quiz;
-use App\QuizParticipation;
 use App\Team;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -21,8 +18,8 @@ class ViewQuizParticipationsTest extends TestCase
         $quizzes = create(Quiz::class, 4);
         $teams = create(Team::class, 12);
 
-        $teams->random(8)->each(function($team) use ($quizzes) {
-            $quizzes->each(function($quiz) use ($team) {
+        $teams->random(8)->each(function ($team) use ($quizzes) {
+            $quizzes->each(function ($quiz) use ($team) {
                 $team->participate($quiz->event);
                 $quiz->setActive();
                 $quiz->allowTeam($team);
@@ -45,7 +42,7 @@ class ViewQuizParticipationsTest extends TestCase
         $this->assertEquals(32, $viewParticipations->total());
         $this->assertNull($quiz);
 
-        tap($viewParticipations->first(), function($firstParticipation) {
+        tap($viewParticipations->first(), function ($firstParticipation) {
             $this->assertArrayHasKey('quiz', $firstParticipation->toArray());
             $this->assertArrayHasKey('team', $firstParticipation->toArray());
             $this->assertArrayHasKey('members', $firstParticipation->toArray()['team']);
@@ -61,7 +58,7 @@ class ViewQuizParticipationsTest extends TestCase
         $teams = create(Team::class, 4);
 
         $quizzes->each(function ($quiz, $index) use ($teams) {
-            $teams->random($index+1)->each(function ($team) use ($quiz) {
+            $teams->random($index + 1)->each(function ($team) use ($quiz) {
                 $team->participate($quiz->event);
                 $quiz->setActive();
                 $quiz->allowTeam($team);
@@ -81,6 +78,5 @@ class ViewQuizParticipationsTest extends TestCase
         $this->assertCount(4, $quizzes);
         $this->assertCount(3, $viewParticipations);
         $this->assertNotNull($quiz);
-
     }
 }

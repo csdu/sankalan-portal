@@ -10,17 +10,17 @@ class EventParticipation extends Model
      * The attributes that are appended for array.
      *
      * @var array
-     */   
+     */
     protected $appends = ['isActiveQuizAllowed'];
-    
+
     /**
      * Team associated with event participation.
      *
      * @return void
      */
-    public function team() 
+    public function team()
     {
-        return $this->belongsTo(Team::class);    
+        return $this->belongsTo(Team::class);
     }
 
     /**
@@ -40,7 +40,7 @@ class EventParticipation extends Model
      */
     public function getIsActiveQuizAllowedAttribute()
     {
-        if(!$this->event->activeQuiz) {
+        if (!$this->event->activeQuiz) {
             return null;
         }
 

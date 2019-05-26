@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenFinalClasses;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
@@ -14,7 +12,6 @@ use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Preset
@@ -56,8 +53,8 @@ return [
         DeclareStrictTypesSniff::class,
         DisallowMixedTypeHintSniff::class,
         ForbiddenDefineFunctions::class,
-        ForbiddenNormalClasses::class,
-        ForbiddenTraits::class,
+        // ForbiddenNormalClasses::class,
+        // ForbiddenTraits::class,
         TypeHintDeclarationSniff::class,
     ],
 
@@ -66,5 +63,4 @@ return [
             'title' => 'The usage of private methods is not idiomatic in Laravel.',
         ],
     ],
-
 ];

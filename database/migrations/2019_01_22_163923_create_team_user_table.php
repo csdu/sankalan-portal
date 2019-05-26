@@ -31,7 +31,7 @@ class CreateTeamUserTable extends Migration
      */
     public function down()
     {
-        Schema::table('team_user',function(Blueprint $table) {
+        Schema::table('team_user', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
             $table->dropForeign(['team_id']);
         });

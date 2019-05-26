@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Team;
 use App\User;
@@ -34,7 +33,6 @@ class CreateTeamTest extends TestCase
 
         $this->assertInstanceOf(Team::class, $user->fresh()->individualTeam);
         $this->assertEquals(1, $user->fresh()->individualTeam->id);
-
     }
 
     /**
@@ -51,15 +49,15 @@ class CreateTeamTest extends TestCase
         $name = 'Team Name';
         $this->post(route('teams.store'), [
             'name' => $name,
-            'member_email' => $anotherUser->email
+            'member_email' => $anotherUser->email,
         ]);
 
         $this->assertCount(1, $teams = Team::all());
-        tap($teams->first(), function($team) use ($name, $user, $anotherUser) {
+        tap($teams->first(), function ($team) use ($name, $user, $anotherUser) {
             $this->assertEquals(1, $team->id);
             $this->assertCount(2, $team->members);
             $this->assertArraySubset(
-                [$user->id, $anotherUser->id], 
+                [$user->id, $anotherUser->id],
                 $team->members->pluck('id')
             );
             $this->assertEquals($name, $team->name);
@@ -78,10 +76,9 @@ class CreateTeamTest extends TestCase
         $name = 'Team Name';
         $response = $this->post(route('teams.store'), [
             'name' => $name,
-            'member_email' => $user->email
+            'member_email' => $user->email,
         ]);
 
-        
         $this->assertCount(0, Team::all());
         $this->assertNull($user->individualTeam);
 
@@ -102,7 +99,7 @@ class CreateTeamTest extends TestCase
 
         $response = $this->post(route('teams.store'), [
             'name' => 'Team Name',
-            'member_email' => [$anotherUser->email, $otherUser->email]
+            'member_email' => [$anotherUser->email, $otherUser->email],
         ]);
 
         $response->assertRedirect()->assertSessionHasErrors('member_email');
@@ -131,7 +128,7 @@ class CreateTeamTest extends TestCase
 
         // Individual Team is Created!
         $this->assertCount(1, $teams = Team::all());
-        $this->assertInstanceOf(Team::class ,$user->individualTeam);
+        $this->assertInstanceOf(Team::class, $user->individualTeam);
     }
 
     /**
@@ -156,7 +153,7 @@ class CreateTeamTest extends TestCase
             'name' => 'Team Name',
             'member_email' => '',
         ]);
-        
+
         $response->assertRedirect();
 
         // Another Individual Team is not Created!

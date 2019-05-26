@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Event;
 use App\Quiz;
@@ -19,8 +18,8 @@ class QuizTest extends TestCase
     {
         $event = create(Event::class);
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
-        
-        tap($quiz->event, function($relatedEvent) use ($event) {
+
+        tap($quiz->event, function ($relatedEvent) use ($event) {
             $this->assertInstanceOf(Event::class, $relatedEvent);
             $this->assertEquals($event->id, $relatedEvent->id);
         });

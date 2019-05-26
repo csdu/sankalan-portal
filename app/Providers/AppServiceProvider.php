@@ -21,12 +21,12 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Paginator::defaultView('partials.pagination');
 
-        View::composer(['events.*', 'teams.*', 'dashboard'], function($view) {
+        View::composer(['events.*', 'teams.*', 'dashboard'], function ($view) {
             return $view->with([
-                'signedInUser' => optional(auth()->user())->load('teams')
+                'signedInUser' => optional(auth()->user())->load('teams'),
             ]);
         });
-        
+
         Collection::macro('recursive', function () {
             return $this->map(function ($value) {
                 if (is_array($value) || is_object($value)) {
@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if( $this->app->isLocal()) {
+        if ($this->app->isLocal()) {
             $this->app->register(TelescopeServiceProvider::class);
         }
     }

@@ -3,9 +3,7 @@
 namespace Tests\Feature\Admin;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\User;
 use Symfony\Component\HttpFoundation\Response;
 
 class DashboardTest extends TestCase
@@ -28,6 +26,6 @@ class DashboardTest extends TestCase
         $this->withExceptionHandling()->signIn();
 
         $this->get(route('admin.dashboard'))
-            ->assertStatus(Response::HTTP_FORBIDDEN); 
+            ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 }

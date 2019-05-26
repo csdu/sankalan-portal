@@ -2,7 +2,7 @@
 
 function create(string $model, int $count = 1, array $overrides = [])
 {
-    if($count > 1) {
+    if ($count > 1) {
         return factory($model, $count)->create($overrides);
     }
     return factory($model)->create($overrides);

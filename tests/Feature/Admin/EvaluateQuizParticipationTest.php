@@ -3,9 +3,7 @@
 namespace Tests\Feature\Admin;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\User;
 use App\Quiz;
 use App\QuizParticipation;
 use App\Question;
@@ -14,7 +12,7 @@ use App\AnswerChoice;
 class EvaluateQuizParticipationTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     /** @test */
     public function evaluator_sums_up_each_questions_response_in_the_quiz_team_participation()
     {
@@ -23,7 +21,7 @@ class EvaluateQuizParticipationTest extends TestCase
         $questions = create(Question::class, 5, [
             'quiz_id' => $quiz->id,
             'positive_score' => 4,
-            'negative_score' => 1
+            'negative_score' => 1,
         ]);
 
         $questions->each(function ($question) {
@@ -43,7 +41,7 @@ class EvaluateQuizParticipationTest extends TestCase
                 'response_keys' => $question->choices->map->key->diff($question->correct_answer_keys)->first(),
             ];
         });
-        
+
         $participation = create(QuizParticipation::class, 1, ['quiz_id' => $quiz->id]);
         $participation->recordResponses($twoCorrectResponses->union($threeInCorrectResponses)->toArray());
 
@@ -56,7 +54,7 @@ class EvaluateQuizParticipationTest extends TestCase
         $this->assertArrayHasKey('status', $json);
         $this->assertArrayHasKey('message', $json);
         $this->assertArrayHasKey('score', $json);
-        
+
         $this->assertEquals((3 * (-1)) + (2 * 4), $json['score']);
         $this->assertEquals((3 * (-1)) + (2 * 4), $participation->fresh()->score);
     }

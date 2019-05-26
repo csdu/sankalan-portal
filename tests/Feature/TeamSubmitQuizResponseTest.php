@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use App\Event;
@@ -94,8 +93,8 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         Carbon::setTestNow(now()->addMinutes(5)); //after 5 min try submitting other response
 
-        $json = $this->postJson( route('quizzes.response.store', $quiz), [
-            'responses' => $responses
+        $json = $this->postJson(route('quizzes.response.store', $quiz), [
+            'responses' => $responses,
         ])->assertStatus(Response::HTTP_FORBIDDEN)
         ->json();
 
@@ -133,10 +132,10 @@ class TeamSubmitQuizResponseTest extends TestCase
         })->toArray();
 
         //fast forward time to exceed time limit by 5 mins.
-        Carbon::setTestNow(now()->addMinutes($quiz->time_limit + 5*60));
+        Carbon::setTestNow(now()->addMinutes($quiz->time_limit + 5 * 60));
 
         $json = $this->postJson(route('quizzes.response.store', $quiz), [
-            'responses' => $responses
+            'responses' => $responses,
         ])->assertStatus(Response::HTTP_REQUEST_TIMEOUT)
         ->json();
 
@@ -168,7 +167,6 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         $this->assertArrayHasKey('message', $json);
         $this->assertEquals('danger', $json['message']['level']);
-
     }
 
     /** @test */
@@ -192,7 +190,6 @@ class TeamSubmitQuizResponseTest extends TestCase
         $this->assertArrayHasKey('message', $json);
         $this->assertEquals('danger', $json['message']['level']);
     }
-
 
     /** @test */
     public function user_cannot_submit_response_if_their_team_is_not_allowed_for_quiz()

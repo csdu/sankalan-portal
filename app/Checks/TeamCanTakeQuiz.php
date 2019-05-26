@@ -1,14 +1,9 @@
-<?php 
+<?php
 
 namespace App\Checks;
 
-use Auth;
-use App\Exceptions\TeamNotAllowedForQuizException;
-use App\Exceptions\TeamNotParticipatingInEventException;
-use App\Exceptions\QuizNotActiveException;
-
-class TeamCanTakeQuiz {
-
+class TeamCanTakeQuiz
+{
     protected $quiz;
     protected $team;
 
@@ -17,20 +12,23 @@ class TeamCanTakeQuiz {
         $this->quiz = $quiz;
         $this->team = $team;
     }
-    
-    public static function check($team, $quiz) {
+
+    public static function check($team, $quiz)
+    {
         return (new static($team, $quiz))->perform();
     }
 
-    public function perform() {
-        return $this->isTeamParticipating() && 
-            $this->isQuizActive() && 
+    public function perform()
+    {
+        return $this->isTeamParticipating() &&
+            $this->isQuizActive() &&
             $this->isTeamAllowedForQuiz() &&
             $this->teamHasNotSubmittedResponse();
     }
 
-    private function isTeamParticipating() {
-        if($this->team) {
+    private function isTeamParticipating()
+    {
+        if ($this->team) {
             return true;
         }
 
@@ -60,7 +58,7 @@ class TeamCanTakeQuiz {
 
     private function teamHasNotSubmittedResponse()
     {
-        if(!$this->quiz->isCompletedBy($this->team)) {
+        if (!$this->quiz->isCompletedBy($this->team)) {
             return true;
         }
 

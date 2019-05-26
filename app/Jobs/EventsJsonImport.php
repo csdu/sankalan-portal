@@ -53,27 +53,29 @@ class EventsJsonImport
         $this->events = collect(json_decode($contents, true))->recursive();
         return $this;
     }
-    
-    public function createEvents() {
-        $this->events->transform(function($event) {
+
+    public function createEvents()
+    {
+        $this->events->transform(function ($event) {
             $quizzes = $event->pull('quizzes') ?? collect([]);
 
-            if(!is_string($event['description'])) {
+            if (!is_string($event['description'])) {
                 $event['description'] = $event['description']->implode('\n');
             }
-            
+
             $event = Event::create($event->toArray());
 
             $this->quizzes = $this->quizzes->concat(
                 $quizzes->map->prepend($event->id, 'event_id')
             );
-            
+
             return $event;
         });
         return $this;
     }
 
-    public function createQuizzes() {
+    public function createQuizzes()
+    {
         $this->quizzes->transform(function ($quiz) {
             $questions = $quiz->pull('questions') ?? collect([]);
 
@@ -94,7 +96,7 @@ class EventsJsonImport
     {
         $this->questions->transform(function ($question) {
             $choices = $question->pull('answer_choices') ?? collect([]);
-            if(!is_string($question['text'])) {
+            if (!is_string($question['text'])) {
                 $question['text'] = $question['text']->implode(' ');
             }
 
@@ -114,7 +116,7 @@ class EventsJsonImport
         });
         return $this;
     }
-    
+
     public function createChoices()
     {
         $this->choices->map(function ($choice) {
@@ -122,7 +124,7 @@ class EventsJsonImport
                 $choice['code'] = $choice['code']->implode('<br>');
             }
 
-            if($choice->has('text') && !is_string($choice['text'])) {
+            if ($choice->has('text') && !is_string($choice['text'])) {
                 $choice['text'] = $choice['text']->implode(' ');
             }
 

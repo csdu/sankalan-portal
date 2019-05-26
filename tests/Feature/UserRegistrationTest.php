@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +17,8 @@ class UserRegistrationTest extends TestCase
         $user = make(User::class);
         $this->withExceptionHandling();
 
-        $response = $this->post(route('register'), 
+        $response = $this->post(
+            route('register'),
             $user->toArray() + [
                 'password' => 'secret',
                 'password_confirmation' => 'secret',
