@@ -25,7 +25,7 @@ class QuizResponseController extends Controller
             return $this->getJsonOrRedirect(Response::HTTP_FORBIDDEN);
         }
 
-        $team->endQuiz($quiz, request('responses') ?? []);
+        $team->endQuiz($quiz, $data['responses'] ?? []);
 
         if ($quiz->isTimeLimitExceeded($team)) {
             flash('Your time limit exceeded, you are disqualified!')->error();

@@ -26,7 +26,7 @@ class AnswerChoice extends Model
     /**
      * Is it correct choice?
      *
-     * @return boolean
+     * @return bool
      */
     public function isCorrect()
     {

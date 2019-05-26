@@ -24,18 +24,18 @@ class EventParticipationController extends Controller
 
         $user = Auth::user();
 
-        if ($teamId = request('team_id')) {
-            $team = Team::find($teamId);
-        } else {
-            $team = $user->individualTeam ?? $user->createTeam($user->name);
-        }
+        $teamId = request('team_id');
 
-        if ($team->participate($event)) {
-            flash("We have registered your team '{$team->uid}' for '{$event->title}' event!")->success();
-        } else {
+        $team = $teamId ? Team::findOrFail($teamId) : (
+            $user->individualTeam ?? $user->createTeam($user->name)
+        );
+
+        if (!$team->participate($event)) {
             flash('We do not allow same person to participate in same event twice, not even as a different team')->error();
+            return redirect()->back();
         }
 
+        flash("We have registered your team '{$team->uid}' for '{$event->title}' event!")->success();
         return redirect()->back();
     }
 

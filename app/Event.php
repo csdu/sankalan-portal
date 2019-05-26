@@ -72,7 +72,7 @@ class Event extends Model
      * Is any of the given members participating in the event?
      *
      * @param \Illuminate\Database\Eloquent\Collection $members
-     * @return boolean
+     * @return bool
      */
     public function isAnyParticipating(Collection $members)
     {
@@ -105,7 +105,7 @@ class Event extends Model
      * Can given Team withdraw participation from this event?
      *
      * @param \App\Team $team
-     * @return boolean
+     * @return bool
      */
     public function canBeWithdrawn(Team $team)
     {
@@ -115,13 +115,13 @@ class Event extends Model
                 !$this->quizzes->first()->isCompletedBy($team);
         }
 
-        return  !$this->isLive;
+        return !$this->isLive;
     }
 
     /**
      * Set event live (When event actually begins).
      *
-     * @return boolean
+     * @return bool
      */
     public function setLive()
     {
@@ -135,7 +135,7 @@ class Event extends Model
     /**
      * End this event (When the event gets over).
      *
-     * @return boolean
+     * @return bool
      */
     public function end()
     {
@@ -149,7 +149,7 @@ class Event extends Model
     /**
      * Accessor to access isLive attribute.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsLiveAttribute()
     {
@@ -159,7 +159,7 @@ class Event extends Model
     /**
      * Has the event started?
      *
-     * @return boolean
+     * @return bool
      */
     public function getHasStartedAttribute()
     {
@@ -169,7 +169,7 @@ class Event extends Model
     /**
      * Has the event ended?
      *
-     * @return boolean
+     * @return bool
      */
     public function getHasEndedAttribute()
     {

@@ -56,7 +56,7 @@ class ImportQuizToEvent
     {
         $questions = $this->quiz->pull('questions') ?? collect([]);
 
-        $this->quiz['time_limit'] = $this->quiz['time_limit'] * 60;
+        $this->quiz['time_limit'] *= 60;
 
         $this->quiz = $this->event->quizzes()->create($this->quiz->toArray());
 

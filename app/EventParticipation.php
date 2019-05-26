@@ -36,7 +36,7 @@ class EventParticipation extends Model
     /**
      * Is active quiz allowed?
      *
-     * @return boolean|null
+     * @return bool|null
      */
     public function getIsActiveQuizAllowedAttribute()
     {

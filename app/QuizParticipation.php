@@ -66,7 +66,7 @@ class QuizParticipation extends Model
     /**
      * Evaluate Score for this quiz participation.
      *
-     * @return int|boolean
+     * @return int|bool
      */
     public function evaluate()
     {
@@ -82,7 +82,7 @@ class QuizParticipation extends Model
     /**
      * Save all the responses to database and return saved responses.
      *
-     * @param mixed[] $responses
+     * @param array $responses
      * @return \App\QuizResponse[]
      */
     public function recordResponses(array $responses)

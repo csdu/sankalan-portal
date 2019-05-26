@@ -71,7 +71,7 @@ class Quiz extends Model
     /**
      * Update quiz status to active.
      *
-     * @return boolean
+     * @return bool
      */
     public function setActive()
     {
@@ -84,7 +84,7 @@ class Quiz extends Model
     /**
      * update quiz status to inactive.
      *
-     * @return boolean
+     * @return bool
      */
     public function setInactive()
     {
@@ -96,7 +96,7 @@ class Quiz extends Model
      * Is the given team allowed for this quiz?
      *
      * @param Team $team
-     * @return boolean
+     * @return bool
      */
     public function isTeamAllowed(Team $team)
     {
@@ -107,13 +107,16 @@ class Quiz extends Model
      * Has the given team exceeded the time limit?
      *
      * @param \App\Team $team
-     * @return boolean
+     * @return bool
      */
     public function isTimeLimitExceeded(Team $team)
     {
-        if (!$participation = $this->participationByTeam($team)) {
+        $participation = $this->participationByTeam($team);
+
+        if (!$participation) {
             return false;
         }
+
         $timeTaken = optional($participation->started_at)->diffInSeconds(now());
         return $timeTaken > ($this->time_limit + 1 * 60); // Add 1 Minute Extra
     }
@@ -144,11 +147,11 @@ class Quiz extends Model
      * Is the quiz completed by the team?
      *
      * @param Team $team
-     * @return boolean
+     * @return bool
      */
     public function isCompletedBy(Team $team)
     {
-        return optional($this->participationByTeam($team))->finished_at != null;
+        return optional($this->participationByTeam($team))->finished_at !== null;
     }
 
     /**
@@ -184,7 +187,7 @@ class Quiz extends Model
     /**
      * Is Quiz Active?
      *
-     * @return boolean|null
+     * @return bool|null
      */
     public function getIsActiveAttribute()
     {
@@ -192,7 +195,7 @@ class Quiz extends Model
             return null;
         }
 
-        return $this->id == $this->event->active_quiz_id
+        return $this->id === $this->event->active_quiz_id
             && $this->opened_at
             && !$this->closed_at;
     }
@@ -200,11 +203,11 @@ class Quiz extends Model
     /**
      * Is the quiz closed for participation?
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsClosedAttribute()
     {
-        return !!$this->closed_at;
+        return !! $this->closed_at;
     }
 
     /**

@@ -12,7 +12,7 @@ use App\QuizParticipation;
 
 class QuizParticipationController extends Controller
 {
-    public function index(Request $request, Quiz $quiz = null)
+    public function index(Request $request, ?Quiz $quiz = null)
     {
         $query = QuizParticipation::withCount('responses');
         $quizzes = Quiz::with('event')->get();

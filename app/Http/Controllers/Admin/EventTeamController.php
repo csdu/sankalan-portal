@@ -8,7 +8,7 @@ use App\EventParticipation;
 
 class EventTeamController extends Controller
 {
-    public function index(Event $event = null)
+    public function index(?Event $event = null)
     {
         $events = Event::select(['slug', 'title'])->get();
 

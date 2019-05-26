@@ -79,7 +79,7 @@ class EventsJsonImport
         $this->quizzes->transform(function ($quiz) {
             $questions = $quiz->pull('questions') ?? collect([]);
 
-            $quiz['time_limit'] = $quiz['time_limit'] * 60;
+            $quiz['time_limit'] *= 60;
             $quiz['instructions'] = collect($quiz['instructions']);
 
             $quiz = Quiz::create($quiz->toArray());

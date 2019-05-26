@@ -9,7 +9,10 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
+use ObjectCalisthenics\Sniffs\NamingConventions\NoSetterSniff;
+use SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff;
 
 return [
     /*
@@ -47,15 +50,18 @@ return [
             ForbiddenFinalClasses::class,
         ],
     ],
-
+    
     'remove' => [
         AlphabeticallySortedUsesSniff::class,
         DeclareStrictTypesSniff::class,
         DisallowMixedTypeHintSniff::class,
+        DisallowArrayTypeHintSyntaxSniff::class,
         ForbiddenDefineFunctions::class,
-        // ForbiddenNormalClasses::class,
-        // ForbiddenTraits::class,
+        ForbiddenNormalClasses::class,
+        ForbiddenTraits::class,
         TypeHintDeclarationSniff::class,
+        NoSetterSniff::class,
+        StaticClosureSniff::class,
     ],
 
     'config' => [

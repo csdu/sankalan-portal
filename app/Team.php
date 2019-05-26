@@ -71,7 +71,7 @@ class Team extends Model
      * End Quiz, submit all responses, update finish time.
      *
      * @param \App\Quiz $quiz
-     * @param mixed[] $responses
+     * @param array $responses
      * @return \App\QuizResponse
      */
     public function endQuiz(Quiz $quiz, array $responses)
@@ -86,7 +86,7 @@ class Team extends Model
      * Start quiz, record start time.
      *
      * @param Quiz $quiz
-     * @return boolean
+     * @return bool
      */
     public function beginQuiz(Quiz $quiz)
     {

@@ -48,7 +48,7 @@ class User extends Authenticatable
     /**
      * Is user an Admin?
      *
-     * @return boolean
+     * @return bool
      */
     public function isAdmin()
     {
@@ -65,7 +65,9 @@ class User extends Authenticatable
     public function createTeam($name, $member = null)
     {
         // Create a team for user
-        $team = $this->teams()->create(compact('name'));
+        $team = $this->teams()->create([
+            'name' => $name,
+        ]);
 
         if ($member) {
             // attach a memeber if given

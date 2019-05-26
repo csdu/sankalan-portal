@@ -27,11 +27,11 @@ class QuizResponse extends Model
      * Is it given choice chosen?
      *
      * @param AnswerChoice $choice
-     * @return boolean
+     * @return bool
      */
     public function isChosen(AnswerChoice $choice)
     {
-        return $this->response_keys == $choice->key;
+        return $this->response_keys === $choice->key;
     }
 
     /**

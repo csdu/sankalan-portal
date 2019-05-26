@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
-use App\Team;
 use Auth;
 use Validator;
 
@@ -19,25 +17,27 @@ class TeamController extends Controller
 
     public function store()
     {
-        $user = null;
+        $user = auth()->user();
 
-        $validator = Validator::make(request()->all(), [
+        Validator::make(request()->all(), [
             'name' => ['required', 'string', 'min:3', 'max:190'],
             'member_email' => ['nullable', 'email', 'exists:users,email'],
-        ])->after(function ($validator) {
-            if (request('member_email') == auth()->user()->email) {
-                $validator->errors()->add('member_email', 'You dont need to team up with yourself!');
+        ])->after(function ($validator) use ($user) {
+            if (request('member_email') === $user->email) {
+                $validator->errors()->add('member_email', 'You cannot team up with yourself!');
             }
         })->validate();
 
         $member = request()->has('member_email') ? User::whereEmail(request('member_email'))->first() : null;
 
-        if ($this->canCreateTeam($user = auth()->user(), $member)) {
-            $team = $user->createTeam(request('name'), $member);
-            flash('Your team was created! TeamId: ' . $team->uid)->success();
-        } else {
+        if (!$this->canCreateTeam($user, $member)) {
             flash('You already have this Team!')->warning();
+            return redirect()->back();
         }
+
+        tap($user->createTeam(request('name'), $member), function ($team) {
+            flash('Your team was created! TeamId: ' . $team->uid)->success();
+        });
 
         return redirect()->back();
     }
