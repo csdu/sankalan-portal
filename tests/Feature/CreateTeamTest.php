@@ -83,6 +83,7 @@ class CreateTeamTest extends TestCase
         $this->assertNull($user->individualTeam);
 
         $response->assertRedirect()->assertSessionHasErrors('member_email');
+        $this->assertContains('cannot teamup with yourself', \Session::get('errors')->first());
     }
 
     /**
