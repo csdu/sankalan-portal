@@ -26,13 +26,12 @@ class TeamTakesQuizTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $events[1]->id]);
         $quiz->setActive();
 
-        $this->withoutExceptionHandling()->be($users[0]);
+        $this->be($users[0]);
 
         $response = $this->post(route('quizzes.take', $quiz));
 
-        $response->assertRedirect()->assertSessionHas('flash_notification');
-        $this->assertEquals('danger', Session::get('flash_notification')->first()->level);
-        $this->assertContains('not participating', Session::get('flash_notification')->first()->message);
+        $response->assertRedirect()->assertSessionHasErrors('team');
+        $this->assertContains('must participate in event', Session::get('errors')->first());
     }
 
     /** @test */
@@ -44,13 +43,13 @@ class TeamTakesQuizTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
         $team->participate($event);
 
-        $this->withoutExceptionHandling()->be($users[0]);
+        $this->be($users[0]);
 
         $response = $this->post(route('quizzes.take', $quiz));
 
-        $response->assertRedirect()->assertSessionHas('flash_notification');
+        $response->assertRedirect()->assertSessionHasErrors('quiz');
 
-        $this->assertEquals('danger', Session::get('flash_notification')->first()->level);
+        $this->assertContains('not active', Session::get('errors')->first());
     }
 
     /** @test */
@@ -63,13 +62,12 @@ class TeamTakesQuizTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
         $quiz->setActive();
 
-        $this->withoutExceptionHandling()->be($users[0]);
+        $this->be($users[0]);
 
         $response = $this->post(route('quizzes.take', $quiz));
 
-        $response->assertRedirect()->assertSessionHas('flash_notification');
-        $this->assertEquals('danger', Session::get('flash_notification')->first()->level);
-        $this->assertContains('not allowed', Session::get('flash_notification')->first()->message);
+        $response->assertRedirect()->assertSessionHasErrors('team');
+        $this->assertContains('not yet allowed', Session::get('errors')->first());
     }
 
     /** @test */
@@ -157,7 +155,7 @@ class TeamTakesQuizTest extends TestCase
             create(AnswerChoice::class, 4, ['question_id' => $question->id]);
         });
 
-        $this->withoutExceptionHandling()->be($user);
+        $this->be($user);
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
@@ -180,8 +178,8 @@ class TeamTakesQuizTest extends TestCase
 
         $this->post(route('quizzes.take', $quiz))
             ->assertRedirect()
-            ->assertSessionHas('flash_notification');
+            ->assertSessionHasErrors('team');
 
-        $this->assertEquals('warning', Session::get('flash_notification')->first()->level);
+        $this->assertContains('already taken', Session::get('errors')->first());
     }
 }

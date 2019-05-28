@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Checks\TeamCanTakeQuiz;
 use App\Quiz;
-use Auth;
+use App\Http\Requests\TakeQuizRequest;
 
 class QuizController extends Controller
 {
-    public function show(Quiz $quiz)
+    public function show(TakeQuizRequest $request, Quiz $quiz)
     {
-        $team = $quiz->event->participatingTeamByUser(Auth::user());
+        $team = $request->validated()['team'];
 
-        if ( ! TeamCanTakeQuiz::check($team, $quiz)) {
-            return redirect()->route('dashboard');
-        }
-
-        $quiz->load([
+        $quiz->loadMissing([
             'questions.choices',
             'participations' => function ($query) use ($team) {
                 $query->where('quiz_participations.team_id', $team->id);
