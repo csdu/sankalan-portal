@@ -195,7 +195,7 @@ class Quiz extends Model
             return null;
         }
 
-        return $this->id === $this->event->active_quiz_id
+        return $this->id == $this->event->active_quiz_id
             && $this->opened_at
             && ! $this->closed_at;
     }

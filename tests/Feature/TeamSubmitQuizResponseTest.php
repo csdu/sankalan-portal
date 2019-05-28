@@ -44,7 +44,8 @@ class TeamSubmitQuizResponseTest extends TestCase
             ];
         })->toArray();
 
-        Carbon::setTestNow(now()->addSeconds($quiz->timeLimit - 60)); //Submit 60secs before timeout.
+        Carbon::setTestNow(now()->addSeconds($quiz->timeLimit - 60));
+        // Fast Forward time, 60secs before timeout.
 
         $json = $this->postJson(
             route('quizzes.response.store', $quiz),
