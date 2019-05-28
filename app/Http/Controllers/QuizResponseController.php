@@ -7,27 +7,20 @@ use App\Quiz;
 use Auth;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\SubmitQuizRequest;
 
 class QuizResponseController extends Controller
 {
-    public function store(Quiz $quiz)
+    public function store(SubmitQuizRequest $request, Quiz $quiz)
     {
-        $data = request()->validate([
-            'responses' => ['sometimes', 'array', "max:{$quiz->questions()->count()}"],
-            'responses.*.response_keys' => ['required', 'string'],
-            'responses.*.question_id' => ['required', 'integer', 'exists:questions,id'],
-        ]);
+        $data = $request->validated();
 
         $team = $quiz->event->participatingTeamByUser(Auth::user());
-
-        if ( ! TeamCanSubmitQuizResponse::check($team, $quiz)) {
-            return $this->getJsonOrRedirect(Response::HTTP_FORBIDDEN);
-        }
 
         $team->endQuiz($quiz, $data['responses'] ?? []);
 
         if ($quiz->isTimeLimitExceeded($team)) {
-            flash('Your time limit exceeded, you are disqualified!')->error();
+            flash('Your time limit exceeded!')->error();
             $status = Response::HTTP_REQUEST_TIMEOUT;
         } else {
             flash('Your response has been recorded! All The Best!')->success();

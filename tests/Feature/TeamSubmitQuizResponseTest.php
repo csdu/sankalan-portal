@@ -28,7 +28,7 @@ class TeamSubmitQuizResponseTest extends TestCase
             create(AnswerChoice::class, 4, ['question_id' => $question->id]);
         });
 
-        $this->withoutExceptionHandling()->be($user);
+        $this->be($user);
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
@@ -62,7 +62,7 @@ class TeamSubmitQuizResponseTest extends TestCase
     }
 
     /** @test */
-    public function if_user_sumbits_another_response_warning_message_is_shown()
+    public function if_user_sumbits_another_response_error_is_shown()
     {
         $user = create(User::class);
         $event = create(Event::class);
@@ -72,7 +72,7 @@ class TeamSubmitQuizResponseTest extends TestCase
             create(AnswerChoice::class, 4, ['question_id' => $question->id]);
         });
 
-        $this->withoutExceptionHandling()->be($user);
+        $this->be($user);
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
@@ -96,10 +96,13 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         $json = $this->postJson(route('quizzes.response.store', $quiz), [
             'responses' => $responses,
-        ])->assertStatus(Response::HTTP_FORBIDDEN)
+        ])->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
         ->json();
 
-        $this->assertEquals('warning', $json['message']['level']);
+        $this->assertArrayHasKey('errors', $json);
+        $this->assertArrayHasKey('team', $json['errors']);
+        $this->assertContains('already taken', $json['errors']['team'][0]);
+        
         $quizParticipation = $quiz->participationByTeam($team);
         $this->assertEquals(5, $quizParticipation->finished_at->diffInMinutes(now()), 'Time Difference does not match');
         $this->assertCount(10, $quizParticipation->responses);
@@ -116,7 +119,7 @@ class TeamSubmitQuizResponseTest extends TestCase
             create(AnswerChoice::class, 4, ['question_id' => $question->id]);
         });
 
-        $this->withoutExceptionHandling()->be($user);
+        $this->be($user);
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
@@ -141,7 +144,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         ->json();
 
         $this->assertEquals('danger', $json['message']['level']);
-        $this->assertContains('disqualified', $json['message']['message']);
+        $this->assertContains('time limit exceed', $json['message']['message']);
 
         $quizParticipation = $quiz->participationByTeam($team);
         $this->assertEquals(0, $quizParticipation->finished_at->diffInMinutes(now()), 'Time Difference does not match');
@@ -155,7 +158,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         $event = create(Event::class);
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
 
-        $this->withoutExceptionHandling()->be($user);
+        $this->be($user);
 
         $team = $user->createTeam($user->name);
         $quiz->setActive();
@@ -163,11 +166,12 @@ class TeamSubmitQuizResponseTest extends TestCase
         // $quiz->allowTeam($team); //They're not allowed to take Quiz
 
         $json = $this->postJson(route('quizzes.response.store', $quiz))
-            ->assertStatus(Response::HTTP_FORBIDDEN)
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->json();
 
-        $this->assertArrayHasKey('message', $json);
-        $this->assertEquals('danger', $json['message']['level']);
+        $this->assertArrayHasKey('errors', $json);
+        $this->assertArrayHasKey('team', $json['errors']);
+        $this->assertContains('must participate', $json['errors']['team'][0]);
     }
 
     /** @test */
@@ -177,7 +181,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         $event = create(Event::class);
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
 
-        $this->withoutExceptionHandling()->be($user);
+        $this->be($user);
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
@@ -185,11 +189,13 @@ class TeamSubmitQuizResponseTest extends TestCase
         // $quiz->allowTeam($team); // They're not allowed to take Quiz
 
         $json = $this->postJson(route('quizzes.response.store', $quiz))
-            ->assertStatus(Response::HTTP_FORBIDDEN)
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->json();
 
-        $this->assertArrayHasKey('message', $json);
-        $this->assertEquals('danger', $json['message']['level']);
+        $this->assertArrayHasKey('errors', $json);
+        $this->assertArrayHasKey('quiz', $json['errors']);
+        $this->assertContains('not active', $json['errors']['quiz'][0]);
+        
     }
 
     /** @test */
@@ -199,7 +205,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         $event = create(Event::class);
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
 
-        $this->withoutExceptionHandling()->be($user);
+        $this->be($user);
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
@@ -207,11 +213,12 @@ class TeamSubmitQuizResponseTest extends TestCase
         // $quiz->allowTeam($team); // They're not allowed to take Quiz
 
         $json = $this->postJson(route('quizzes.response.store', $quiz))
-            ->assertStatus(Response::HTTP_FORBIDDEN)
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->json();
 
-        $this->assertArrayHasKey('message', $json);
-        $this->assertEquals('danger', $json['message']['level']);
+        $this->assertArrayHasKey('errors', $json);
+        $this->assertArrayHasKey('team', $json['errors']);
+        $this->assertContains('not yet allowed', $json['errors']['team'][0]);
     }
 
     /** @test */
@@ -221,7 +228,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         $event = create(Event::class);
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
 
-        $this->withoutExceptionHandling()->be($user);
+        $this->be($user);
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
@@ -231,10 +238,12 @@ class TeamSubmitQuizResponseTest extends TestCase
         // $quiz->begin($team); //They've not yet started taking quiz, They're trying something fishhy.
 
         $json = $this->postJson(route('quizzes.response.store', $quiz))
-            ->assertStatus(Response::HTTP_FORBIDDEN)
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->json();
 
-        $this->assertArrayHasKey('message', $json);
-        $this->assertEquals('danger', $json['message']['level']);
+        $this->assertArrayHasKey('errors', $json);
+        $this->assertArrayHasKey('team', $json['errors']);
+        $this->assertContains('unfair means', $json['errors']['team'][0]);
+        
     }
 }
