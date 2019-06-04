@@ -1,4 +1,4 @@
-# Sankalan Portal
+# Sankalan Portal [![Build Status](https://travis-ci.com/csdu/sankalan-portal.svg?branch=master)](https://travis-ci.com/csdu/sankalan-portal)
 Sankalan is the annual tech fest organised by students of Department of Computer Science, University of Delhi. This is student managed portal, built with [Laravel](https://laravel.com), [Vue.js](https://vuejs.org) & [TailwindCSS](https://tailwindcs.com).
 
 ## Local Development
@@ -6,11 +6,17 @@ This is project is built with Laravel & Vue.js. Before you can start local devel
 
 You can also setup a Local Development Environment using [Laravel Homestead](https://laravel.com/docs/5.7/homestead). Here is one-time setup guide to get you started:
 
-- [Installing Prerequisites](#installing-prerequisites)
-- [Clone Project](#clone-project)
-- [Install project dependencies](#install-project-dependencies)
-- [Configure Application](#application-configuration)
-- [Start Local Development Server](#start-local-development-server)
+- [Sankalan Portal ![Build Status](https://travis-ci.com/csdu/sankalan-portal)](#sankalan-portal-build-statushttpstravis-cicomcsdusankalan-portal)
+  - [Local Development](#local-development)
+    - [Installing Prerequisites](#installing-prerequisites)
+        - [Using `apt` package manager (Debian/Ubuntu)](#using-apt-package-manager-debianubuntu)
+        - [Using `pacman` package manager (ArchLinux, Manjaro, Antergos)](#using-pacman-package-manager-archlinux-manjaro-antergos)
+        - [Make sure you have pdo extension enabled in `php.ini`](#make-sure-you-have-pdo-extension-enabled-in-phpini)
+    - [Clone Project](#clone-project)
+    - [Install project dependencies](#install-project-dependencies)
+    - [Application Configuration](#application-configuration)
+    - [Start Local Development Server](#start-local-development-server)
+  - [Contribution](#contribution)
 
 ### Installing Prerequisites
 You can find the server prequisites listed in [laravel docs](https://laravel.com/docs/5.7/installation#server-requirements), Additionally, you would require to install [composer](https://getcomposer.org/) & [nodejs](https://nodejs.org/en/) to pull in all the project dependencies. For Linux, you can follow the instructions below to get all the prerequisites under the hood.
