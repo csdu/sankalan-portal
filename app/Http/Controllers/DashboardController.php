@@ -16,6 +16,7 @@ class DashboardController extends Controller
         $events = $teams->flatMap(function ($team) {
             return $team->events->map(function ($event) use ($team) {
                 $event->team = $team;
+
                 return $event;
             });
         });

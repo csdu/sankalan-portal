@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
-use App\AnswerChoice;
 use App\Event;
 use App\Question;
+use App\AnswerChoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
 
@@ -49,6 +49,7 @@ class ImportQuizToEvent
     {
         $contents = file_get_contents($this->file);
         $this->quiz = collect(json_decode($contents, true))->recursive();
+
         return $this;
     }
 
@@ -71,7 +72,7 @@ class ImportQuizToEvent
     {
         $this->questions->transform(function ($question) {
             $choices = $question->pull('answer_choices') ?? collect([]);
-            if ( ! is_string($question['text'])) {
+            if (! is_string($question['text'])) {
                 $question['text'] = $question['text']->implode(' ');
             }
 
@@ -87,8 +88,10 @@ class ImportQuizToEvent
             $this->choices = $this->choices->concat(
                 $choices->map->prepend($question->id, 'question_id')
             );
+
             return $question;
         });
+
         return $this;
     }
 
@@ -105,6 +108,7 @@ class ImportQuizToEvent
 
             return AnswerChoice::create($choice->toArray());
         });
+
         return $this;
     }
 }

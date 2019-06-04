@@ -17,7 +17,7 @@ class EventController extends Controller
 
     public function goLive(Event $event)
     {
-        if ( ! $event->setLive()) {
+        if (! $event->setLive()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong',
@@ -33,7 +33,7 @@ class EventController extends Controller
 
     public function end(Event $event)
     {
-        if ( ! $event->end()) {
+        if (! $event->end()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong',

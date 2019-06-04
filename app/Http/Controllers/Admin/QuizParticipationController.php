@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Event;
-use App\Http\Controllers\Controller;
 use App\Quiz;
-use App\QuizParticipation;
 use App\Team;
+use App\Event;
+use App\QuizParticipation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuizParticipationController extends Controller
@@ -44,7 +44,7 @@ class QuizParticipationController extends Controller
 
     public function store(Event $event, Team $team)
     {
-        if ( ! $event->active_quiz_id) {
+        if (! $event->active_quiz_id) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Event doesn\'t have any active quiz!',

@@ -52,6 +52,7 @@ class Team extends Model
             return false;
         }
         $this->events()->syncWithoutDetaching($event->id);
+
         return true;
     }
 
@@ -64,6 +65,7 @@ class Team extends Model
     public function withdrawParticipation(Event $event)
     {
         $this->events()->detach($event->id);
+
         return true;
     }
 
@@ -79,6 +81,7 @@ class Team extends Model
         $participation = $quiz->participationByTeam($this);
         $responses = $participation->recordResponses($responses);
         $participation->update(['finished_at' => now()]);
+
         return $responses;
     }
 
@@ -91,19 +94,20 @@ class Team extends Model
     public function beginQuiz(Quiz $quiz)
     {
         $participation = $quiz->participationByTeam($this);
-        if ( ! $participation->started_at) {
+        if (! $participation->started_at) {
             return $participation->update(['started_at' => now()]);
         }
+
         return false;
     }
 
     /**
-     * UID accessor for fancy prefixed Ids - `SNKLN-T-{id}`
+     * UID accessor for fancy prefixed Ids - `SNKLN-T-{id}`.
      *
      * @return string
      */
     public function getUidAttribute()
     {
-        return env('ID_PREFIX', 'SNKLN') . '-T' . str_pad("$this->id", 3, '0', STR_PAD_LEFT);
+        return env('ID_PREFIX', 'SNKLN').'-T'.str_pad("$this->id", 3, '0', STR_PAD_LEFT);
     }
 }

@@ -47,6 +47,6 @@ Route::post(
 )->name('admin.quizzes.teams.evaluate');
 
 Route::get(
-    'quiz_participations/{quizParticipation}', 
+    'quiz_participations/{quizParticipation}',
     'QuizParticipationController@show'
 )->name('admin.quiz-participations.show');

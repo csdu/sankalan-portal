@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class Event extends Model
 {
@@ -39,7 +39,7 @@ class Event extends Model
     }
 
     /**
-     * Quiz currently active in the event
+     * Quiz currently active in the event.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -163,7 +163,7 @@ class Event extends Model
      */
     public function getHasStartedAttribute()
     {
-        return ! ! $this->started_at;
+        return (bool) $this->started_at;
     }
 
     /**
@@ -173,7 +173,7 @@ class Event extends Model
      */
     public function getHasEndedAttribute()
     {
-        return ! ! $this->ended_at;
+        return (bool) $this->ended_at;
     }
 
     /**

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Checks\TeamCanSubmitQuizResponse;
-use App\Quiz;
 use Auth;
+use App\Quiz;
 use Illuminate\Support\Facades\Session;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\SubmitQuizRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class QuizResponseController extends Controller
 {
@@ -32,7 +31,7 @@ class QuizResponseController extends Controller
 
     private function getJsonOrRedirect($status = 202)
     {
-        if ( ! request()->expectsJson()) {
+        if (! request()->expectsJson()) {
             return redirect()->back();
         }
 

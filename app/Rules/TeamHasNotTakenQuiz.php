@@ -6,8 +6,8 @@ use Illuminate\Contracts\Validation\Rule;
 
 class TeamHasNotTakenQuiz implements Rule
 {
-    /** 
-     * @var \App\Quiz 
+    /**
+     * @var \App\Quiz
      */
     protected $quiz;
 
@@ -31,7 +31,8 @@ class TeamHasNotTakenQuiz implements Rule
     public function passes($attribute, $team)
     {
         $participation = $this->quiz->participationByTeam($team);
-        return $participation && !$participation->finished_at;
+
+        return $participation && ! $participation->finished_at;
     }
 
     /**

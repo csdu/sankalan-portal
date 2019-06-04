@@ -27,7 +27,7 @@ class QuizParticipation extends Model
 
     /**
      * The attributes that have date type.
-     * i.e. they are mutated to instance of Carbon
+     * i.e. they are mutated to instance of Carbon.
      *
      * @var array
      */
@@ -98,6 +98,7 @@ class QuizParticipation extends Model
     public function getTimeLeftAttribute()
     {
         $time_spent = optional($this->started_at)->diffInSeconds(now()) ?? 0;
+
         return $this->quiz->time_limit - $time_spent;
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\QuizMustBeActive;
-use App\Rules\TeamMustBeAllowedForQuiz;
 use App\Rules\TeamHasNotTakenQuiz;
 use App\Rules\TeamMustHaveStartedQuiz;
+use App\Rules\TeamMustBeAllowedForQuiz;
+use Illuminate\Foundation\Http\FormRequest;
 
 class SubmitQuizRequest extends FormRequest
 {
@@ -37,7 +37,7 @@ class SubmitQuizRequest extends FormRequest
                 new TeamMustBeAllowedForQuiz($this->quiz),
                 new TeamHasNotTakenQuiz($this->quiz),
                 new TeamMustHaveStartedQuiz($this->quiz),
-            ]
+            ],
         ];
     }
 
@@ -51,7 +51,7 @@ class SubmitQuizRequest extends FormRequest
     protected function validationData()
     {
         $team = $this->quiz->event->participatingTeamByUser(auth()->user());
-        
+
         return array_merge($this->all(), [
             'quiz' => $this->quiz,
             'team' => $team,

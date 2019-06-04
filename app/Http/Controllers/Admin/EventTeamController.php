@@ -21,6 +21,7 @@ class EventTeamController extends Controller
         }
 
         $events_teams = $query->with(['event', 'team.members'])->paginate(config('app.pagination.perPage'));
+
         return view('admin.events_teams.index', compact('events_teams', 'events', 'event'));
     }
 }

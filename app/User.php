@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -52,7 +52,7 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {
-        return ! ! $this->is_admin;
+        return (bool) $this->is_admin;
     }
 
     /**
@@ -72,6 +72,7 @@ class User extends Authenticatable
         if ($member) {
             // attach a memeber if given
             $team->members()->attach($member);
+
             return $team;
         }
 
@@ -89,7 +90,7 @@ class User extends Authenticatable
      */
     public function getUidAttribute()
     {
-        return env('ID_PREFIX', 'SNKLN') . '-U' . str_pad("$this->id", 3, '0', STR_PAD_LEFT);
+        return env('ID_PREFIX', 'SNKLN').'-U'.str_pad("$this->id", 3, '0', STR_PAD_LEFT);
     }
 
     /**
