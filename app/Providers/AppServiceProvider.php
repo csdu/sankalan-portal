@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Telescope\TelescopeServiceProvider;
 
@@ -32,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
                 if (is_array($value) || is_object($value)) {
                     return collect($value)->recursive();
                 }
+
                 return $value;
             });
         });

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 Route::get('/dashboard', 'DashboardController@index')
@@ -11,12 +11,12 @@ Route::post('/teams', 'TeamController@store')
     ->name('teams.store');
 
 Route::post(
-    '/events/{event}/participate', 
+    '/events/{event}/participate',
     'EventParticipationController@store'
 )->name('events.participate');
 
 Route::delete(
-    '/events/{event}/participate', 
+    '/events/{event}/participate',
     'EventParticipationController@destroy'
 )->name('events.withdraw-part');
 

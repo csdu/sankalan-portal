@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Quiz;
+use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuizController extends Controller
@@ -19,7 +19,7 @@ class QuizController extends Controller
 
     public function goLive(Quiz $quiz)
     {
-        if ( ! $quiz->setActive()) {
+        if (! $quiz->setActive()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong',
@@ -36,7 +36,7 @@ class QuizController extends Controller
 
     public function close(Quiz $quiz)
     {
-        if ( ! $quiz->setInactive()) {
+        if (! $quiz->setInactive()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong',

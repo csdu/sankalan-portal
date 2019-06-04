@@ -2,10 +2,10 @@
 
 namespace App\Jobs;
 
-use App\AnswerChoice;
+use App\Quiz;
 use App\Event;
 use App\Question;
-use App\Quiz;
+use App\AnswerChoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
 
@@ -51,6 +51,7 @@ class EventsJsonImport
     {
         $contents = file_get_contents($this->file);
         $this->events = collect(json_decode($contents, true))->recursive();
+
         return $this;
     }
 
@@ -59,7 +60,7 @@ class EventsJsonImport
         $this->events->transform(function ($event) {
             $quizzes = $event->pull('quizzes') ?? collect([]);
 
-            if ( ! is_string($event['description'])) {
+            if (! is_string($event['description'])) {
                 $event['description'] = $event['description']->implode('\n');
             }
 
@@ -71,6 +72,7 @@ class EventsJsonImport
 
             return $event;
         });
+
         return $this;
     }
 
@@ -87,8 +89,10 @@ class EventsJsonImport
             $this->questions = $this->questions->concat(
                 $questions->map->prepend($quiz->id, 'quiz_id')
             );
+
             return $quiz;
         });
+
         return $this;
     }
 
@@ -96,7 +100,7 @@ class EventsJsonImport
     {
         $this->questions->transform(function ($question) {
             $choices = $question->pull('answer_choices') ?? collect([]);
-            if ( ! is_string($question['text'])) {
+            if (! is_string($question['text'])) {
                 $question['text'] = $question['text']->implode(' ');
             }
 
@@ -112,8 +116,10 @@ class EventsJsonImport
             $this->choices = $this->choices->concat(
                 $choices->map->prepend($question->id, 'question_id')
             );
+
             return $question;
         });
+
         return $this;
     }
 
@@ -130,6 +136,7 @@ class EventsJsonImport
 
             return AnswerChoice::create($choice->toArray());
         });
+
         return $this;
     }
 }

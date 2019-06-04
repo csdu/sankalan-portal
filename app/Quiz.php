@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class Quiz extends Model
 {
@@ -113,11 +113,12 @@ class Quiz extends Model
     {
         $participation = $this->participationByTeam($team);
 
-        if ( ! $participation) {
+        if (! $participation) {
             return false;
         }
 
         $timeTaken = optional($participation->started_at)->diffInSeconds(now());
+
         return $timeTaken > ($this->time_limit + 1 * 60); // Add 1 Minute Extra
     }
 
@@ -181,6 +182,7 @@ class Quiz extends Model
         if ($instructions) {
             return explode("\n", $instructions);
         }
+
         return [];
     }
 
@@ -192,7 +194,7 @@ class Quiz extends Model
     public function getIsActiveAttribute()
     {
         if ($this->event_id === null) {
-            return null;
+            return;
         }
 
         return $this->id == $this->event->active_quiz_id
@@ -207,7 +209,7 @@ class Quiz extends Model
      */
     public function getIsClosedAttribute()
     {
-        return ! ! $this->closed_at;
+        return (bool) $this->closed_at;
     }
 
     /**

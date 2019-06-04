@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\QuizMustBeActive;
 use App\Rules\TeamHasNotTakenQuiz;
 use App\Rules\TeamMustBeAllowedForQuiz;
+use Illuminate\Foundation\Http\FormRequest;
 
 class TakeQuizRequest extends FormRequest
 {
@@ -28,7 +28,7 @@ class TakeQuizRequest extends FormRequest
     {
         return [
             'quiz' => [ new QuizMustBeActive() ],
-            'team' => [ 
+            'team' => [
                 'required',
                 new TeamMustBeAllowedForQuiz($this->quiz),
                 new TeamHasNotTakenQuiz($this->quiz),
@@ -39,17 +39,17 @@ class TakeQuizRequest extends FormRequest
     public function messages()
     {
         return [
-            'team.required' => 'You must participate in event before taking quiz.'
+            'team.required' => 'You must participate in event before taking quiz.',
         ];
     }
 
     protected function validationData()
     {
         $team = $this->quiz->event->participatingTeamByUser(auth()->user());
-        
+
         return [
             'team' => $team,
-            'quiz' => $this->quiz
+            'quiz' => $this->quiz,
         ];
     }
 }

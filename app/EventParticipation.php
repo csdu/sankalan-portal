@@ -40,8 +40,8 @@ class EventParticipation extends Model
      */
     public function getIsActiveQuizAllowedAttribute()
     {
-        if ( ! $this->event->activeQuiz) {
-            return null;
+        if (! $this->event->activeQuiz) {
+            return;
         }
 
         return $this->event->activeQuiz->participations()->where('team_id', $this->team->id)->exists();

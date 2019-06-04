@@ -9,6 +9,7 @@ $factory->define(App\AnswerChoice::class, function (Faker $faker, $attributes) {
     } else {
         $question_id = factory(Question::class)->create()->id;
     }
+
     return [
         'key' => str_before($faker->unique()->bothify("???##-$question_id"), '-'),
         'text' => $faker->sentence,

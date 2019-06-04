@@ -10,7 +10,7 @@ class TeamMustHaveStartedQuiz implements Rule
      * @var \App\Quiz
      */
     protected $quiz;
-    
+
     /**
      * Create a new rule instance.
      *
@@ -31,6 +31,7 @@ class TeamMustHaveStartedQuiz implements Rule
     public function passes($attribute, $team)
     {
         $participation = $this->quiz->participations()->where('team_id', $team->id)->first();
+
         return $participation && $participation->started_at;
     }
 

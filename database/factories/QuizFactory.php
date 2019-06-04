@@ -5,6 +5,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Quiz::class, function (Faker $faker) {
     $title = $faker->unique()->sentence;
+
     return [
         'title' => $title,
         'slug' => str_slug($title),

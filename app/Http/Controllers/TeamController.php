@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Auth;
-use Validator;
+use App\User;
 use App\Http\Requests\CreateTeamRequest;
 
 class TeamController extends Controller
@@ -13,6 +12,7 @@ class TeamController extends Controller
     {
         $teams = Auth::user()->teams()->with('members')->get();
         $users = User::where('id', '<>', Auth::id())->get();
+
         return view('teams.index', compact('teams', 'users'));
     }
 
@@ -23,20 +23,21 @@ class TeamController extends Controller
 
         $member = User::whereEmail($data['member_email'] ?? null)->first();
 
-        if ( ! $this->canCreateTeam($user, $member)) {
+        if (! $this->canCreateTeam($user, $member)) {
             flash('You already have this Team!')->warning();
+
             return redirect()->back();
         }
 
         $team = $user->createTeam(request('name'), $member);
-        flash('Your team was created! TeamId: ' . $team->uid)->success();
+        flash('Your team was created! TeamId: '.$team->uid)->success();
 
         return redirect()->back();
     }
 
     protected function canCreateTeam($user, $member = null)
     {
-        if ( ! $member) {
+        if (! $member) {
             return ! $user->individualTeam()->exists();
         }
 

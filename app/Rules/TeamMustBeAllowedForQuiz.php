@@ -10,7 +10,7 @@ class TeamMustBeAllowedForQuiz implements Rule
      * @var \App\Quiz
      */
     protected $quiz;
-    
+
     /**
      * Create a new rule instance.
      *

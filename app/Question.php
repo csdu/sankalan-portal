@@ -31,7 +31,7 @@ class Question extends Model
     ];
 
     /**
-     * all choices available for this question.s
+     * all choices available for this question.s.
      *
      * @return void
      */
@@ -56,14 +56,14 @@ class Question extends Model
     }
 
     /**
-     * Accessor for illustraton's absolute path
+     * Accessor for illustraton's absolute path.
      *
      * @param string $illustration
      * @return string
      */
     public function getIllustrationAttribute($illustration)
     {
-        if ( ! $illustration) {
+        if (! $illustration) {
             return $illustration;
         }
 
