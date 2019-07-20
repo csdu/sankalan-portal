@@ -1,5 +1,7 @@
 <?php
 
+$dbConfig = parse_url(env('DATABASE_URL'));
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -36,6 +38,15 @@ return [
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+        ],
+
+        'cleardb' => [
+            'driver' => 'mysql',
+            'host' => $dbConfig['host'],
+            'username' => $dbConfig['user'],
+            'password' => $dbConfig['pass'],
+            'database' => ltrim($dbConfig['path'], '/'),
+            'port' => env('DB_PORT', '3306'),
         ],
 
         'mysql' => [
