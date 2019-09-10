@@ -54,6 +54,7 @@
             transform: translate(25%, 25%); 
         }
     </style>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body class="font-sans bg-grey-lighter text-black">
     <div id="app" class="min-h-screen flex flex-col">
@@ -64,6 +65,5 @@
         @include('partials.footer')
         @include('flash::message')
     </div>
-    <script src="{{ mix('js/app.js') }}" defer></script>
 </body>
 </html>

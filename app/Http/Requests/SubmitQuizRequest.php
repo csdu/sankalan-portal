@@ -48,7 +48,7 @@ class SubmitQuizRequest extends FormRequest
         ];
     }
 
-    protected function validationData()
+    public function validationData()
     {
         $team = $this->quiz->event->participatingTeamByUser(auth()->user());
 
