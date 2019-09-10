@@ -42,10 +42,10 @@ return [
 
         'cleardb' => [
             'driver' => 'mysql',
-            'host' => $dbConfig['host'],
-            'username' => $dbConfig['user'],
-            'password' => $dbConfig['pass'],
-            'database' => ltrim($dbConfig['path'], '/'),
+            'host' => env('DB_HOST', $dbConfig['host'] ?? 'localhost'),
+            'username' => env('DB_USERNAME', $dbConfig['user'] ?? 'root'),
+            'password' => env('DB_USERNAME', $dbConfig['pass'] ?? ''),
+            'database' => env('DB_DATABASE', ltrim($dbConfig['path'], '/')),
             'port' => env('DB_PORT', '3306'),
         ],
 
