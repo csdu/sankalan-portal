@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Admin;
 
-use App\QuizParticipation;
-use App\QuizResponse;
+use App\Models\QuizParticipation;
+use App\Models\QuizResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,13 +16,13 @@ class ViewQuizParticipationDetailsTest extends TestCase
     {
         $this->signInAdmin();
 
-        $users = create('App\User', 2);
+        $users = create('App\Models\User', 2);
         $team = $users[0]->createTeam('Team', $users[1]);
-        $quizParticipation = create('App\QuizParticipation');
+        $quizParticipation = create('App\Models\QuizParticipation');
         $team->participate($quizParticipation->quiz->event);
-        $questions = create('App\Question', 10, ['quiz_id' => $quizParticipation->quiz->id]);
+        $questions = create('App\Models\Question', 10, ['quiz_id' => $quizParticipation->quiz->id]);
         $questions->each(function ($question) use ($quizParticipation) {
-            create('App\AnswerChoice', 4, ['question_id' => $question->id]);
+            create('App\Models\AnswerChoice', 4, ['question_id' => $question->id]);
             QuizResponse::create([
                 'quiz_participation_id' => $quizParticipation->id,
                 'response_keys' => $question->choices->random()->key,

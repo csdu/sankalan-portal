@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Admin;
 
-use App\AnswerChoice;
-use App\Question;
-use App\Quiz;
-use App\QuizParticipation;
+use App\Models\AnswerChoice;
+use App\Models\Question;
+use App\Models\Quiz;
+use App\Models\QuizParticipation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

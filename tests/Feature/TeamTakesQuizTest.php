@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\AnswerChoice;
-use App\Event;
-use App\Question;
-use App\Quiz;
-use App\User;
+use App\Models\AnswerChoice;
+use App\Models\Event;
+use App\Models\Question;
+use App\Models\Quiz;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Session;

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Event;
+use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

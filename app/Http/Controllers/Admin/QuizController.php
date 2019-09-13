@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Quiz;
+use App\Models\Quiz;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
 

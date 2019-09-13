@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Event::class, function (Faker $faker) {
+$factory->define(App\Models\Event::class, function (Faker $faker) {
     $title = $faker->unique()->words(3, true);
 
     return [

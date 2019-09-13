@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Quiz;
+use App\Models\Quiz;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

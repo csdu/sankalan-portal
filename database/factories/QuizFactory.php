@@ -1,9 +1,9 @@
 <?php
 
-use App\Event;
+use App\Models\Event;
 use Faker\Generator as Faker;
 
-$factory->define(App\Quiz::class, function (Faker $faker) {
+$factory->define(App\Models\Quiz::class, function (Faker $faker) {
     $title = $faker->unique()->sentence;
 
     return [

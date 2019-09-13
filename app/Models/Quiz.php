@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -106,7 +106,7 @@ class Quiz extends Model
     /**
      * Has the given team exceeded the time limit?
      *
-     * @param \App\Team $team
+     * @param \App\Models\Team $team
      * @return bool
      */
     public function isTimeLimitExceeded(Team $team)
@@ -137,7 +137,7 @@ class Quiz extends Model
      * The quiz participation by the given team.
      *
      * @param Team $team
-     * @return \App\QuizParticipation|null
+     * @return \App\Models\QuizParticipation|null
      */
     public function participationByTeam(Team $team)
     {

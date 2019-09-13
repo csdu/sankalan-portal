@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -59,8 +59,8 @@ class User extends Authenticatable
      * Create and return team for user with the given name and member.
      *
      * @param string $name Team's name.
-     * @param \App\User|null $member (optional) Other member of team.
-     * @return \App\Team Created Team
+     * @param \App\Models\User|null $member (optional) Other member of team.
+     * @return \App\Models\Team Created Team
      */
     public function createTeam($name, $member = null)
     {

@@ -1,9 +1,9 @@
 <?php
 
-use App\Question;
+use App\Models\Question;
 use Faker\Generator as Faker;
 
-$factory->define(App\AnswerChoice::class, function (Faker $faker, $attributes) {
+$factory->define(App\Models\AnswerChoice::class, function (Faker $faker, $attributes) {
     if (array_key_exists('question_id', $attributes)) {
         $question_id = $attributes['question_id'];
     } else {

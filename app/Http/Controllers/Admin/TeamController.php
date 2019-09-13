@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Team;
+use App\Models\Team;
 use App\Http\Controllers\Controller;
 
 class TeamController extends Controller

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Event;
+use App\Models\Event;
 use App\Jobs\EventsJsonImport;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

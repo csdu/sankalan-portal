@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Quiz;
-use App\Team;
-use App\Event;
-use App\QuizParticipation;
+use App\Models\Quiz;
+use App\Models\Team;
+use App\Models\Event;
+use App\Models\QuizParticipation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Quiz;
-use App\Team;
+use App\Models\Quiz;
+use App\Models\Team;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\TestCase;

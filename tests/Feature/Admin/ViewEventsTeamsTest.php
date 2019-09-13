@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Event;
-use App\Team;
-use App\User;
+use App\Models\Event;
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\TestCase;
