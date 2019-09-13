@@ -101,7 +101,7 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         $this->assertArrayHasKey('errors', $json);
         $this->assertArrayHasKey('team', $json['errors']);
-        $this->assertContains('already taken', $json['errors']['team'][0]);
+        $this->assertStringContainsString('already taken', $json['errors']['team'][0]);
         
         $quizParticipation = $quiz->participationByTeam($team);
         $this->assertEquals(5, $quizParticipation->finished_at->diffInMinutes(now()), 'Time Difference does not match');
@@ -144,7 +144,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         ->json();
 
         $this->assertEquals('danger', $json['message']['level']);
-        $this->assertContains('time limit exceed', $json['message']['message']);
+        $this->assertStringContainsString('time limit exceed', $json['message']['message']);
 
         $quizParticipation = $quiz->participationByTeam($team);
         $this->assertEquals(0, $quizParticipation->finished_at->diffInMinutes(now()), 'Time Difference does not match');
@@ -171,7 +171,7 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         $this->assertArrayHasKey('errors', $json);
         $this->assertArrayHasKey('team', $json['errors']);
-        $this->assertContains('must participate', $json['errors']['team'][0]);
+        $this->assertStringContainsString('must participate', $json['errors']['team'][0]);
     }
 
     /** @test */
@@ -194,7 +194,7 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         $this->assertArrayHasKey('errors', $json);
         $this->assertArrayHasKey('quiz', $json['errors']);
-        $this->assertContains('not active', $json['errors']['quiz'][0]);
+        $this->assertStringContainsString('not active', $json['errors']['quiz'][0]);
         
     }
 
@@ -218,7 +218,7 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         $this->assertArrayHasKey('errors', $json);
         $this->assertArrayHasKey('team', $json['errors']);
-        $this->assertContains('not yet allowed', $json['errors']['team'][0]);
+        $this->assertStringContainsString('not yet allowed', $json['errors']['team'][0]);
     }
 
     /** @test */
@@ -243,7 +243,7 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         $this->assertArrayHasKey('errors', $json);
         $this->assertArrayHasKey('team', $json['errors']);
-        $this->assertContains('unfair means', $json['errors']['team'][0]);
+        $this->assertStringContainsString('unfair means', $json['errors']['team'][0]);
         
     }
 }
