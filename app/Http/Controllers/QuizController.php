@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Quiz;
+use App\Models\Quiz;
 use App\Http\Requests\TakeQuizRequest;
 
 class QuizController extends Controller

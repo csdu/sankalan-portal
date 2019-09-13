@@ -1,9 +1,9 @@
 <?php
 
-use App\Quiz;
+use App\Models\Quiz;
 use Faker\Generator as Faker;
 
-$factory->define(App\Question::class, function (Faker $faker) {
+$factory->define(App\Models\Question::class, function (Faker $faker) {
     return [
         'qno' => $faker->numberBetween(1, 100),
         'text' => $faker->paragraph,
@@ -15,7 +15,7 @@ $factory->define(App\Question::class, function (Faker $faker) {
     ];
 });
 
-$factory->state(App\Question::class, 'multiple', function (Faker $faker) {
+$factory->state(App\Models\Question::class, 'multiple', function (Faker $faker) {
     return [
         'is_multiple' => true,
     ];

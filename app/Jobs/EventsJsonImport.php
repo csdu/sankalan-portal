@@ -2,10 +2,10 @@
 
 namespace App\Jobs;
 
-use App\Quiz;
-use App\Event;
-use App\Question;
-use App\AnswerChoice;
+use App\Models\Quiz;
+use App\Models\Event;
+use App\Models\Question;
+use App\Models\AnswerChoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
 

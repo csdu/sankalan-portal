@@ -10,7 +10,7 @@ class QuizMustBeActive implements Rule
      * Determine if the validation rule passes.
      *
      * @param  string  $attribute
-     * @param  \App\Quiz  $value
+     * @param  \App\Models\Quiz  $value
      * @return bool
      */
     public function passes($attribute, $quiz)

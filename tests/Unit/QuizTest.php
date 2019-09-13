@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Event;
-use App\Question;
-use App\Quiz;
+use App\Models\Event;
+use App\Models\Question;
+use App\Models\Quiz;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Tests\TestCase;

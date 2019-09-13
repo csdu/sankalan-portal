@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Event;
-use App\EventParticipation;
+use App\Models\Event;
+use App\Models\EventParticipation;
 use App\Http\Controllers\Controller;
 
 class EventTeamController extends Controller

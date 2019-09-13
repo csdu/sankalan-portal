@@ -1,10 +1,10 @@
 <?php
 
-use App\Quiz;
-use App\Team;
+use App\Models\Quiz;
+use App\Models\Team;
 use Faker\Generator as Faker;
 
-$factory->define(App\QuizParticipation::class, function (Faker $faker) {
+$factory->define(App\Models\QuizParticipation::class, function (Faker $faker) {
     return [
         'team_id' => function () {
             return factory(Team::class)->create()->id;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,7 +43,7 @@ class Team extends Model
     /**
      * Take part in the event.
      *
-     * @param \App\Event $event
+     * @param \App\Models\Event $event
      * @return bool true if participation successful, else false.
      */
     public function participate(Event $event)
@@ -59,7 +59,7 @@ class Team extends Model
     /**
      * Withdraw participation form the event.
      *
-     * @param \App\Event $event
+     * @param \App\Models\Event $event
      * @return bool
      */
     public function withdrawParticipation(Event $event)
@@ -72,9 +72,9 @@ class Team extends Model
     /**
      * End Quiz, submit all responses, update finish time.
      *
-     * @param \App\Quiz $quiz
+     * @param \App\Models\Quiz $quiz
      * @param array $responses
-     * @return \App\QuizResponse
+     * @return \App\Models\QuizResponse
      */
     public function endQuiz(Quiz $quiz, array $responses)
     {

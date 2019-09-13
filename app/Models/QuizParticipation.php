@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -83,7 +83,7 @@ class QuizParticipation extends Model
      * Save all the responses to database and return saved responses.
      *
      * @param array $responses
-     * @return \App\QuizResponse[]
+     * @return \App\Models\QuizResponse[]
      */
     public function recordResponses(array $responses)
     {

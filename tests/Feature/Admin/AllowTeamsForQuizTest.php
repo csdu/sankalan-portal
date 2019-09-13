@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Event;
-use App\Quiz;
-use App\User;
+use App\Models\Event;
+use App\Models\Quiz;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;

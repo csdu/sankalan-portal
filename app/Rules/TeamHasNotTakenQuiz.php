@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Rule;
 class TeamHasNotTakenQuiz implements Rule
 {
     /**
-     * @var \App\Quiz
+     * @var \App\Models\Quiz
      */
     protected $quiz;
 
@@ -25,7 +25,7 @@ class TeamHasNotTakenQuiz implements Rule
      * Determine if the validation rule passes.
      *
      * @param  string  $attribute
-     * @param  \App\Team  $team
+     * @param  \App\Models\Team  $team
      * @return bool
      */
     public function passes($attribute, $team)

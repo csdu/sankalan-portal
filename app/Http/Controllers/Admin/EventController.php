@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Event;
+use App\Models\Event;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
 

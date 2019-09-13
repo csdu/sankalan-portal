@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use App\Quiz;
+use App\Models\Quiz;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\SubmitQuizRequest;
 use Symfony\Component\HttpFoundation\Response;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
@@ -90,8 +90,8 @@ class Event extends Model
     /**
      * Gives Team, through which the given user is participating.
      *
-     * @param \App\User $user
-     * @return \App\Team|null
+     * @param \App\Models\User $user
+     * @return \App\Models\Team|null
      */
     public function participatingTeamByUser(User $user)
     {
@@ -104,7 +104,7 @@ class Event extends Model
     /**
      * Can given Team withdraw participation from this event?
      *
-     * @param \App\Team $team
+     * @param \App\Models\Team $team
      * @return bool
      */
     public function canBeWithdrawn(Team $team)

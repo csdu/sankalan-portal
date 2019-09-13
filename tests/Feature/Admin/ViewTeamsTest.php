@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Team;
+use App\Models\Team;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\TestCase;

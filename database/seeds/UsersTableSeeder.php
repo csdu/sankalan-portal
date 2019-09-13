@@ -11,12 +11,12 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\User')->create([
+        factory('App\Models\User')->create([
             'first_name' => 'Default',
             'last_name' => 'User',
             'email' => 'sankalan@ducs.in',
         ]);
 
-        factory('App\User', 7)->create();
+        factory('App\Models\User', 7)->create();
     }
 }
