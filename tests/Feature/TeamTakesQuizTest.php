@@ -31,7 +31,7 @@ class TeamTakesQuizTest extends TestCase
         $response = $this->post(route('quizzes.take', $quiz));
 
         $response->assertRedirect()->assertSessionHasErrors('team');
-        $this->assertContains('must participate in event', Session::get('errors')->first());
+        $this->assertStringContainsString('must participate in event', Session::get('errors')->first());
     }
 
     /** @test */
@@ -49,7 +49,7 @@ class TeamTakesQuizTest extends TestCase
 
         $response->assertRedirect()->assertSessionHasErrors('quiz');
 
-        $this->assertContains('not active', Session::get('errors')->first());
+        $this->assertStringContainsString('not active', Session::get('errors')->first());
     }
 
     /** @test */
@@ -67,7 +67,7 @@ class TeamTakesQuizTest extends TestCase
         $response = $this->post(route('quizzes.take', $quiz));
 
         $response->assertRedirect()->assertSessionHasErrors('team');
-        $this->assertContains('not yet allowed', Session::get('errors')->first());
+        $this->assertStringContainsString('not yet allowed', Session::get('errors')->first());
     }
 
     /** @test */
@@ -180,6 +180,6 @@ class TeamTakesQuizTest extends TestCase
             ->assertRedirect()
             ->assertSessionHasErrors('team');
 
-        $this->assertContains('already taken', Session::get('errors')->first());
+        $this->assertStringContainsString('already taken', Session::get('errors')->first());
     }
 }
