@@ -8,6 +8,7 @@ use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,7 +73,7 @@ class TeamSubmitQuizResponseTest extends TestCase
             create(AnswerChoice::class, 4, ['question_id' => $question->id]);
         });
 
-        $this->be($user);
+        $this->be($user)->withoutExceptionHandling();
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
@@ -81,27 +82,25 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         $team->beginQuiz($quiz);
 
+        
         $responses = $questions->map(function ($question) {
             return [
                 'question_id' => $question->id,
                 'response_keys' => $question->choices->random()->key,
             ];
         })->toArray();
-
+        
         Carbon::setTestNow(now()->addMinutes(20)); //fast forward time 20Mins.
-
+        
         $team->endQuiz($quiz, $responses);
-
+        
         Carbon::setTestNow(now()->addMinutes(5)); //after 5 min try submitting other response
-
+        
+        $this->expectException(AuthorizationException::class);
+        
         $json = $this->postJson(route('quizzes.response.store', $quiz), [
             'responses' => $responses,
-        ])->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-        ->json();
-
-        $this->assertArrayHasKey('errors', $json);
-        $this->assertArrayHasKey('team', $json['errors']);
-        $this->assertStringContainsString('already taken', $json['errors']['team'][0]);
+        ]);
         
         $quizParticipation = $quiz->participationByTeam($team);
         $this->assertEquals(5, $quizParticipation->finished_at->diffInMinutes(now()), 'Time Difference does not match');
@@ -158,20 +157,16 @@ class TeamSubmitQuizResponseTest extends TestCase
         $event = create(Event::class);
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
 
-        $this->be($user);
+        $this->be($user)->withoutExceptionHandling();
 
         $team = $user->createTeam($user->name);
         $quiz->setActive();
         // $team->participate($event); //They're not participating
         // $quiz->allowTeam($team); //They're not allowed to take Quiz
 
-        $json = $this->postJson(route('quizzes.response.store', $quiz))
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->json();
+        $this->expectException(AuthorizationException::class);
 
-        $this->assertArrayHasKey('errors', $json);
-        $this->assertArrayHasKey('team', $json['errors']);
-        $this->assertStringContainsString('must participate', $json['errors']['team'][0]);
+        $json = $this->postJson(route('quizzes.response.store', $quiz));
     }
 
     /** @test */
@@ -181,21 +176,16 @@ class TeamSubmitQuizResponseTest extends TestCase
         $event = create(Event::class);
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
 
-        $this->be($user);
+        $this->be($user)->withoutExceptionHandling();
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
         // $quiz->setActive(); // Quiz is not active
         // $quiz->allowTeam($team); // They're not allowed to take Quiz
 
-        $json = $this->postJson(route('quizzes.response.store', $quiz))
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->json();
+        $this->expectException(AuthorizationException::class);
 
-        $this->assertArrayHasKey('errors', $json);
-        $this->assertArrayHasKey('quiz', $json['errors']);
-        $this->assertStringContainsString('not active', $json['errors']['quiz'][0]);
-        
+        $json = $this->postJson(route('quizzes.response.store', $quiz));
     }
 
     /** @test */
@@ -205,20 +195,16 @@ class TeamSubmitQuizResponseTest extends TestCase
         $event = create(Event::class);
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
 
-        $this->be($user);
+        $this->be($user)->withoutExceptionHandling();
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
         $quiz->setActive();
         // $quiz->allowTeam($team); // They're not allowed to take Quiz
 
-        $json = $this->postJson(route('quizzes.response.store', $quiz))
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->json();
+        $this->expectException(AuthorizationException::class);
 
-        $this->assertArrayHasKey('errors', $json);
-        $this->assertArrayHasKey('team', $json['errors']);
-        $this->assertStringContainsString('not yet allowed', $json['errors']['team'][0]);
+        $json = $this->postJson(route('quizzes.response.store', $quiz));
     }
 
     /** @test */
@@ -228,7 +214,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         $event = create(Event::class);
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
 
-        $this->be($user);
+        $this->be($user)->withoutExceptionHandling();
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
@@ -237,13 +223,9 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         // $quiz->begin($team); //They've not yet started taking quiz, They're trying something fishhy.
 
-        $json = $this->postJson(route('quizzes.response.store', $quiz))
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->json();
+        $this->expectException(AuthorizationException::class);
 
-        $this->assertArrayHasKey('errors', $json);
-        $this->assertArrayHasKey('team', $json['errors']);
-        $this->assertStringContainsString('unfair means', $json['errors']['team'][0]);
+        $json = $this->postJson(route('quizzes.response.store', $quiz));
         
     }
 }

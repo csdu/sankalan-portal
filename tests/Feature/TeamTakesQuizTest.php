@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class TeamTakesQuizTest extends TestCase
 {
@@ -26,12 +27,11 @@ class TeamTakesQuizTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $events[1]->id]);
         $quiz->setActive();
 
-        $this->be($users[0]);
-
+        $this->be($users[0])->withoutExceptionHandling();
+        $this->expectException(AuthorizationException::class);
+        
         $response = $this->post(route('quizzes.take', $quiz));
-
-        $response->assertRedirect()->assertSessionHasErrors('team');
-        $this->assertStringContainsString('must participate in event', Session::get('errors')->first());
+        
     }
 
     /** @test */
@@ -43,13 +43,10 @@ class TeamTakesQuizTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
         $team->participate($event);
 
-        $this->be($users[0]);
+        $this->be($users[0])->withoutExceptionHandling();
+        $this->expectException(AuthorizationException::class);
 
         $response = $this->post(route('quizzes.take', $quiz));
-
-        $response->assertRedirect()->assertSessionHasErrors('quiz');
-
-        $this->assertStringContainsString('not active', Session::get('errors')->first());
     }
 
     /** @test */
@@ -62,12 +59,11 @@ class TeamTakesQuizTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
         $quiz->setActive();
 
-        $this->be($users[0]);
+        $this->be($users[0])->withoutExceptionHandling();
+
+        $this->expectException(AuthorizationException::class);
 
         $response = $this->post(route('quizzes.take', $quiz));
-
-        $response->assertRedirect()->assertSessionHasErrors('team');
-        $this->assertStringContainsString('not yet allowed', Session::get('errors')->first());
     }
 
     /** @test */
@@ -155,7 +151,7 @@ class TeamTakesQuizTest extends TestCase
             create(AnswerChoice::class, 4, ['question_id' => $question->id]);
         });
 
-        $this->be($user);
+        $this->be($user)->withoutExceptionHandling();
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
@@ -175,6 +171,8 @@ class TeamTakesQuizTest extends TestCase
         Carbon::setTestNow(now()->addSeconds($quiz->timeLeft - 5 * 60));
 
         $team->endQuiz($quiz, $responses);
+
+        $this->expectException(AuthorizationException::class);
 
         $this->post(route('quizzes.take', $quiz))
             ->assertRedirect()

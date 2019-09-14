@@ -12,7 +12,13 @@ class QuizResponseController extends Controller
 {
     public function store(SubmitQuizRequest $request, Quiz $quiz)
     {
-        $data = $request->validated();
+        $this->authorize('create_response', $quiz);
+
+        $data = $request->validate([
+            'responses' => ['sometimes', 'array', "max:{$quiz->questions()->count()}"],
+            'responses.*.response_keys' => ['required', 'string'],
+            'responses.*.question_id' => ['required', 'integer', 'exists:questions,id'],
+        ]);
 
         $team = $quiz->event->participatingTeamByUser(Auth::user());
 
