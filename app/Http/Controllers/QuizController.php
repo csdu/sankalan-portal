@@ -3,18 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quiz;
-use App\Http\Requests\TakeQuizRequest;
+use App\Models\Team;
+use Illuminate\Http\Request;
 
 class QuizController extends Controller
 {
-    public function show(TakeQuizRequest $request, Quiz $quiz)
+    public function show(Request $request, Quiz $quiz)
     {
-        $team = $request->validated()['team'];
+        $this->authorize('view', $quiz);
+        
+        $teamId = auth()->user()->teams->pluck('id')->intersect($quiz->event->teams->pluck('id'))->first();
 
+        $team = Team::find($teamId);
+        
         $quiz->loadMissing([
             'questions.choices',
-            'participations' => function ($query) use ($team) {
-                $query->where('quiz_participations.team_id', $team->id);
+            'participations' => function ($query) use ($teamId) {
+                $query->where('quiz_participations.team_id', $teamId);
             },
         ]);
 
