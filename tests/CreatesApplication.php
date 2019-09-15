@@ -22,6 +22,7 @@ trait CreatesApplication
 
         TestResponse::macro('viewData', function ($key) {
             $this->assertViewHas($key);
+
             return $this->original->getData()[$key];
         });
 
