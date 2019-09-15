@@ -42,6 +42,7 @@ export default {
     },
     methods: {
         submit(evt) {
+            this.isLoading = true;
             evt.preventDefault();
 
             const options = this.method.toLowerCase() === 'get' ? 
@@ -49,7 +50,10 @@ export default {
                 this.data;
 
             axios[this.method.toLowerCase()](this.action, options)
-                .then(response => this.$emit('success', response))
+                .then(response => {
+                    this.$emit('success', response);
+                    this.isLoading = false;
+                })
                 .catch(({response}) => this.$emit('failure', response));
         }
     }

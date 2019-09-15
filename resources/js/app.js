@@ -38,6 +38,7 @@ Vue.mixin({
         route: route,
         flash: flash,
         reload: () => window.location.reload(),
+        redirectHandler: ({ request }) => window.location.replace(request.responseURL),
     }
 });
 
