@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SubmitQuizRequest;
 use App\Models\Quiz;
 use Auth;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Request;
 
 class QuizResponseController extends Controller
 {
-    public function store(SubmitQuizRequest $request, Quiz $quiz)
+    public function store(Request $request, Quiz $quiz)
     {
         $this->authorize('create_response', $quiz);
 
