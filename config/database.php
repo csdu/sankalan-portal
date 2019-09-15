@@ -1,7 +1,5 @@
 <?php
 
-$dbConfig = parse_url(env('DATABASE_URL'));
-
 return [
     /*
     |--------------------------------------------------------------------------
@@ -40,17 +38,9 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
-        'cleardb' => [
-            'driver' => 'mysql',
-            'host' => env('DB_HOST', $dbConfig['host'] ?? 'localhost'),
-            'username' => env('DB_USERNAME', $dbConfig['user'] ?? 'root'),
-            'password' => env('DB_USERNAME', $dbConfig['pass'] ?? ''),
-            'database' => env('DB_DATABASE', ltrim($dbConfig['path'], '/')),
-            'port' => env('DB_PORT', '3306'),
-        ],
-
         'mysql' => [
             'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'forge'),
@@ -67,6 +57,7 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'forge'),
@@ -81,6 +72,7 @@ return [
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '1433'),
             'database' => env('DB_DATABASE', 'forge'),
