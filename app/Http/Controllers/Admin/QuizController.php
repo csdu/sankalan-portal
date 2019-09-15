@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Quiz;
 use App\Http\Controllers\Controller;
+use App\Models\Quiz;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuizController extends Controller

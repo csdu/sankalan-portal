@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use App\Models\Team;
 use App\Models\Event;
+use App\Models\Team;
+use Auth;
 use Illuminate\Validation\Rule;
 
 class EventParticipationController extends Controller

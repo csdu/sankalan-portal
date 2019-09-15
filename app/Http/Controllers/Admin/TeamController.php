@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Team;
 use App\Http\Controllers\Controller;
+use App\Models\Team;
 
 class TeamController extends Controller
 {

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Quiz;
-use App\Models\Team;
-use App\Models\Event;
-use App\Models\QuizParticipation;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Event;
+use App\Models\Quiz;
+use App\Models\QuizParticipation;
+use App\Models\Team;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuizParticipationController extends Controller

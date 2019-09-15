@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use App\Models\Quiz;
-use Illuminate\Support\Facades\Session;
 use App\Http\Requests\SubmitQuizRequest;
+use App\Models\Quiz;
+use Auth;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuizResponseController extends Controller

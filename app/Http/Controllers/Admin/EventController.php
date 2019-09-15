@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Event;
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller

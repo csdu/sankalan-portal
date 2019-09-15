@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use App\Models\User;
 use App\Http\Requests\CreateTeamRequest;
+use App\Models\User;
+use Auth;
 
 class TeamController extends Controller
 {

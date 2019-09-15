@@ -8,10 +8,10 @@ use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
-use Illuminate\Auth\Access\AuthorizationException;
 
 class TeamTakesQuizTest extends TestCase
 {
@@ -29,9 +29,8 @@ class TeamTakesQuizTest extends TestCase
 
         $this->be($users[0])->withoutExceptionHandling();
         $this->expectException(AuthorizationException::class);
-        
+
         $response = $this->post(route('quizzes.take', $quiz));
-        
     }
 
     /** @test */

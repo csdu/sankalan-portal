@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Quiz;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class QuizPolicy
@@ -19,42 +19,42 @@ class QuizPolicy
      */
     public function view(User $user, Quiz $quiz)
     {
-        if(!$quiz->isActive) {
+        if (! $quiz->isActive) {
             return false;
         }
 
         $team = $quiz->event->participatingTeamByUser($user);
 
-        if(!$team) {
+        if (! $team) {
             return false;
         }
-        
+
         $participation = $quiz->participations()->where('team_id', $team->id)->first();
 
-        if(!$participation) {
+        if (! $participation) {
             return false;
         }
 
-        if($participation->finished_at) {
+        if ($participation->finished_at) {
             return false;
         }
 
         return true;
     }
 
-    public function create_response(User $user, Quiz $quiz) {
-        if(!$this->view($user, $quiz)) {
+    public function create_response(User $user, Quiz $quiz)
+    {
+        if (! $this->view($user, $quiz)) {
             return false;
         }
-        
+
         $team = $quiz->event->participatingTeamByUser($user);
         $participation = $quiz->participations()->where('team_id', $team->id)->first();
-        
-        if(!$participation->started_at) {
+
+        if (! $participation->started_at) {
             return false;
         }
 
         return true;
-    } 
-
+    }
 }

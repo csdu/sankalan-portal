@@ -11,11 +11,11 @@ class QuizController extends Controller
     public function show(Request $request, Quiz $quiz)
     {
         $this->authorize('view', $quiz);
-        
+
         $teamId = auth()->user()->teams->pluck('id')->intersect($quiz->event->teams->pluck('id'))->first();
 
         $team = Team::find($teamId);
-        
+
         $quiz->loadMissing([
             'questions.choices',
             'participations' => function ($query) use ($teamId) {

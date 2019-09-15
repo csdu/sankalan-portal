@@ -82,26 +82,25 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         $team->beginQuiz($quiz);
 
-        
         $responses = $questions->map(function ($question) {
             return [
                 'question_id' => $question->id,
                 'response_keys' => $question->choices->random()->key,
             ];
         })->toArray();
-        
+
         Carbon::setTestNow(now()->addMinutes(20)); //fast forward time 20Mins.
-        
+
         $team->endQuiz($quiz, $responses);
-        
+
         Carbon::setTestNow(now()->addMinutes(5)); //after 5 min try submitting other response
-        
+
         $this->expectException(AuthorizationException::class);
-        
+
         $json = $this->postJson(route('quizzes.response.store', $quiz), [
             'responses' => $responses,
         ]);
-        
+
         $quizParticipation = $quiz->participationByTeam($team);
         $this->assertEquals(5, $quizParticipation->finished_at->diffInMinutes(now()), 'Time Difference does not match');
         $this->assertCount(10, $quizParticipation->responses);
@@ -226,6 +225,5 @@ class TeamSubmitQuizResponseTest extends TestCase
         $this->expectException(AuthorizationException::class);
 
         $json = $this->postJson(route('quizzes.response.store', $quiz));
-        
     }
 }
