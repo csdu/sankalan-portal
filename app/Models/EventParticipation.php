@@ -33,6 +33,24 @@ class EventParticipation extends Model
         return $this->belongsTo(Event::class);
     }
 
+    public function activeQuizParticipation()
+    {
+        return $this->belongsTo(QuizParticipation::class);
+    }
+
+    public function scopeWithActiveQuizParticipation($query)
+    {
+        return $query->join('events', 'event_participations.event_id', '=', 'events.id')
+            ->join('teams', 'event_participations.team_id', '=', 'teams.id')
+            ->addSelect([
+                'active_quiz_participation_id' => QuizParticipation::select('id')->whereColumn(
+                    'quiz_participations.quiz_id',
+                    'events.active_quiz_id'
+                )->whereColumn('quiz_participations.team_id', 'teams.id')
+                ->limit(1),
+            ])->with('activeQuizParticipation');
+    }
+
     /**
      * Is active quiz allowed?
      *

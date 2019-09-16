@@ -102,23 +102,6 @@ class Event extends Model
     }
 
     /**
-     * Can given Team withdraw participation from this event?
-     *
-     * @param \App\Models\Team $team
-     * @return bool
-     */
-    public function canBeWithdrawn(Team $team)
-    {
-        if ($this->quizzes->count()) {
-            //first quiz is not yet closed and team have not submit their response.
-            return ! $this->quizzes->first()->isClosed &&
-                ! $this->quizzes->first()->isCompletedBy($team);
-        }
-
-        return ! $this->isLive;
-    }
-
-    /**
      * Set event live (When event actually begins).
      *
      * @return bool

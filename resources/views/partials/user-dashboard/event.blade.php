@@ -9,31 +9,31 @@
         </h3>
         <p class="mb-1">
             <b class="mr-1">Team:</b>
-            <span class="underline">{{ ucwords(strtolower($event->team->name)) }}</span>
+            <span class="underline">{{ ucwords(strtolower($team->name)) }}</span>
         </p>
         @if($event->activeQuiz)
             <p class="text-grey-darker my-1">
                 <b>{{ $event->activeQuiz->title }}</b> is live.
             </p>
-        @elseif($event->isLive && $event->quizzes->count())
+        @elseif($event->isLive && $event->quizzes_count)
             <p class="text-grey-darker font-semibold my-1">
                 Quiz will start soon
             </p>
         @endif
         <div class="mt-auto flex-items-center">
-            @if($event->canBeWithdrawn($event->team))
+            @if(!$event->isLive)
             <form action="{{ route('events.withdraw-part', $event) }}" method="POST" class="inline-block mr-2">
                 @csrf @method('delete')
                 <button class="btn is-red p-1 text-xs">Withdraw</button>
             </form>
             @endif 
-            @if($event->isLive && $event->quizzes->count() && $event->activeQuiz)
-                @if($event->activeQuiz->isCompletedBy($event->team))
-                    <span class="btn p-1 text-xs cursor-not-allowed">Quiz Taken</span>
-                @elseif($event->activeQuiz->isTeamAllowed($event->team))
-                    <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">Take Quiz</a>
-                @else
+            @if($event->isLive && $event->quizzes_count && $event->activeQuiz)
+                @if(!$quizParticipation)
                     <span class="text-red">You are not allowed to take quiz, yet.</span> 
+                @elseif($quizParticipation->finished_at)
+                    <span class="btn p-1 text-xs cursor-not-allowed">Quiz Taken</span>
+                @else
+                    <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">Take Quiz</a>
                 @endif 
             @endif
         </div>

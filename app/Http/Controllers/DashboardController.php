@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EventParticipation;
+use App\Models\Quiz;
+use App\Models\QuizParticipation;
+use App\Models\Team;
+
 class DashboardController extends Controller
 {
     /**
@@ -11,16 +16,16 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $teams = auth()->user()->teams()->with(['events', 'members'])->get();
+        $teams = Team::whereHas('members', function($query){
+            $query->where('users.id', auth()->id());
+        })->with(['members'])->get();
 
-        $events = $teams->flatMap(function ($team) {
-            return $team->events->map(function ($event) use ($team) {
-                $event->team = $team;
+        $event_participations = EventParticipation::with(['team', 'event.activeQuiz'])
+            ->addSelect(['quizzes_count' => Quiz::selectRaw('COUNT(*)')->whereColumn('event_id', 'event_participations.event_id')])
+            ->withActiveQuizParticipation()
+            ->whereIn('team_id', $teams->map->id)
+            ->get();
 
-                return $event;
-            });
-        });
-
-        return view('dashboard', compact('teams', 'events'));
+        return view('dashboard', compact('teams', 'event_participations'));
     }
 }

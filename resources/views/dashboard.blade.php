@@ -52,8 +52,12 @@
                 </h2>
             </div>
             <ul class="list-reset flex flex-col">
-                @forelse($events as $event)
-                    @include('partials.user-dashboard.event', compact('event'))
+                @forelse($event_participations as $event_participation)
+                    @include('partials.user-dashboard.event', [
+                        'event' => $event_participation->event,
+                        'team' => $event_participation->team,
+                        'quizParticipation' => $event_participation->activeQuizParticipation,
+                    ])
                 @empty
                 <li class="px-6 py-4">
                     <p class="text-grey-dark text-center">

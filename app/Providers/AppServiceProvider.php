@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer(['events.*', 'teams.*', 'dashboard'], function ($view) {
             return $view->with([
-                'signedInUser' => optional(auth()->user())->load('teams'),
+                'signedInUser' => auth()->user(),
             ]);
         });
 
