@@ -42,7 +42,7 @@
                             @endif
                         </form>
                         
-                    @elseif($event->canBeWithdrawn($participatingTeam))
+                    @elseif(!$event->isLive)
                         <div class="flex-1 flex items-center">
                             <p class="flex-1">Participating as <strong class="text-xs">{{ $participatingTeam->name }} - {{ $participatingTeam->uid }}</strong>!</p>
                             <form action="{{ route('events.withdraw-part', $event) }}" method="POST">
