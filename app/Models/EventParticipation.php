@@ -62,6 +62,7 @@ class EventParticipation extends Model
             return;
         }
 
-        return $this->event->activeQuiz->participations()->where('team_id', $this->team->id)->exists();
+        // return $this->event->activeQuiz->participations()->where('team_id', $this->team->id)->exists();
+        return $this->event->activeQuiz->participations()->with('team');
     }
 }
