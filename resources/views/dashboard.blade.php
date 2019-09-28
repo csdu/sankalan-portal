@@ -54,7 +54,7 @@
             <ul class="list-reset flex flex-col">
                 @forelse($event_participations as $event_participation)
                     @include('partials.user-dashboard.event', [
-                        'quizzes_count' => $quizzes_count,
+                        'quizzes_count' => $event_participation->quizzes_count,
                         'event' => $event_participation->event,
                         'team' => $event_participation->team,
                         'quizParticipation' => $event_participation->activeQuizParticipation,
