@@ -15,7 +15,7 @@
             <p class="text-grey-darker my-1">
                 <b>{{ $event->activeQuiz->title }}</b> is live.
             </p>
-        @elseif($event->isLive && $event->quizzes_count)
+        @elseif($event->isLive && $quizzes_count)
             <p class="text-grey-darker font-semibold my-1">
                 Quiz will start soon
             </p>
@@ -27,7 +27,7 @@
                 <button class="btn is-red p-1 text-xs">Withdraw</button>
             </form>
             @endif 
-            @if($event->isLive && $event->quizzes_count && $event->activeQuiz)
+            @if($event->isLive && $quizzes_count && $event->activeQuiz)
                 @if(!$quizParticipation)
                     <span class="text-red">You are not allowed to take quiz, yet.</span> 
                 @elseif($quizParticipation->finished_at)
