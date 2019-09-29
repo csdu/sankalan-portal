@@ -34,4 +34,19 @@ class QuizController extends Controller
 
         return view('quizzes.instructions', compact('quiz'));
     }
+
+    public function getVerify(Quiz $quiz)
+    {
+        return view('quizzes.verify')->withQuiz($quiz);
+    }
+
+    public function postVerify(Request $request, Quiz $quiz)
+    {
+        if($request->quiz_verify_token == "12345") {
+            $request->session()->put('quiz_token', $request->quiz_verify_token);
+            return redirect(route('quizzes.show', $quiz));
+        }
+
+        return redirect()->back();
+    }
 }
