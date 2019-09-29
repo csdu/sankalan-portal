@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class VerifyQuiz
+class VerifyQuizToken
 {
     /**
      * Handle an incoming request.
@@ -15,8 +15,8 @@ class VerifyQuiz
      */
     public function handle($request, Closure $next)
     {   
-        if ($request->session()->has('quiz_token')) {
-            if ($request->session()->get('quiz_token') == '12345') {
+        if (session()->has('quiz_token')) {
+            if (session()->get('quiz_token') == '12345') {
                 return $next($request);
             } 
         }

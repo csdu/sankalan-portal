@@ -19,19 +19,19 @@ Route::delete(
     'EventParticipationController@destroy'
 )->name('events.withdraw-part');
 
-Route::middleware('verify_quiz')->group(function() {
+Route::middleware('quiz_token_verified')->group(function() {
     Route::get('/quizzes/{quiz}', 'QuizController@instructions')
     ->name('quizzes.show');
 
     Route::post('/quizzes/{quiz}', 'QuizResponseController@store')
     ->name('quizzes.response.store');
-
+    
     Route::post('/quizzes/{quiz}/take', 'QuizController@show')
     ->name('quizzes.take');
 });
 
-Route::get('/quizzes/{quiz}/verify', 'QuizController@getVerify')
+Route::get('/quizzes/{quiz}/verify', 'QuizVerificationController@showVerificationForm')
     ->name('quizzes.verify');
 
-Route::post('/quizzes/{quiz}/verify', 'QuizController@postVerify')
+Route::post('/quizzes/{quiz}/verify', 'QuizVerificationController@verify')
 ->name('quizzes.verify');

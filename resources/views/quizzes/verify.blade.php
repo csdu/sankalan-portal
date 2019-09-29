@@ -14,10 +14,10 @@
                 <form action="{{ route('quizzes.verify', $quiz) }}" method="post">
                     @csrf
                     <div class="mb-3">
-                        <input type="text" placeholder="Enter Token..." class="control{{ $errors->has('quiz_verify_token') ? ' border-red' : '' }}" name="quiz_verify_token" value="{{ old('quiz_verify_token') }}" required autofocus>
-                        @if ($errors->has('quiz_verify_token'))
+                        <input type="text" placeholder="Enter Token..." class="control{{ $errors->has('verification_token') ? ' border-red' : '' }}" name="verification_token" value="{{ old('verification_token') }}" required autofocus>
+                        @if ($errors->has('verification_token'))
                             <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                                <strong>{{ $errors->first('quiz_verify_token') }}</strong>
+                                <strong>{{ $errors->first('verification_token') }}</strong>
                             </span>
                         @endif
                     </div>
