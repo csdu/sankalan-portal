@@ -9,7 +9,7 @@ class QuizVerificationController extends Controller
 {
     public function showVerificationForm(Quiz $quiz)
     {
-        return view('quizzes.verify')->withQuiz($quiz);
+        return view('quizzes.verify', compact('quiz'));
     }
 
     public function verify(Request $request, Quiz $quiz)
