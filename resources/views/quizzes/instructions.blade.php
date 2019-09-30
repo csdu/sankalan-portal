@@ -72,7 +72,13 @@
 
         <form class="" action="{{ route('quizzes.take', $quiz) }}" method="POST">
             @csrf
-            <button class="btn is-green">Go For Quiz</button>
+            <button class="btn is-green">
+                @if ($quiz->started_at)
+                    Continue Quiz
+                @else
+                    Go For Quiz                    
+                @endif
+            </button>
         </form>
     </div>
 @endsection

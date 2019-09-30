@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Quiz;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuizController extends Controller
@@ -26,6 +27,10 @@ class QuizController extends Controller
                 'quiz' => $quiz,
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
+        $token = strtoupper(Str::random(7));
+
+        $quiz->update(['token' => $token]);
 
         return [
             'status' => 'success',

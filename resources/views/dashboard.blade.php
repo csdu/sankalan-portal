@@ -2,7 +2,6 @@
 @section('content')
 <div class="container mx-auto px-3 flex-1">
     <div class="dashboard-grid mt-4 mb-12">
-        
         <div class="card create-team">
             <h3 class="card-header text-xl">Create a Team</h3>
             <form action="{{ route('teams') }}" method="POST" class="card-content">

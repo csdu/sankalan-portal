@@ -10,10 +10,8 @@ class QuizController extends Controller
 {
     public function show(Request $request, Quiz $quiz)
     {
-        $this->authorize('view', $quiz);
-
         $teamId = auth()->user()->teams->pluck('id')->intersect($quiz->event->teams->pluck('id'))->first();
-
+        
         $team = Team::find($teamId);
 
         $quiz->loadMissing([
@@ -22,7 +20,7 @@ class QuizController extends Controller
                 $query->where('quiz_participations.team_id', $teamId);
             },
         ]);
-
+ 
         $team->beginQuiz($quiz);
 
         return view('quizzes.show', compact('quiz'));

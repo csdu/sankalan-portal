@@ -16,7 +16,7 @@ class VerifyQuizToken
     public function handle($request, Closure $next)
     {   
         if (session()->has('quiz_token')) {
-            if (session()->get('quiz_token') == '12345') {
+            if (session()->get('quiz_token') == $request->quiz->token) {
                 return $next($request);
             } 
         }

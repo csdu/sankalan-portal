@@ -28,13 +28,7 @@
             </form>
             @endif 
             @if($event->isLive && $quizzes_count && $event->activeQuiz)
-                @if(!$quizParticipation)
-                    <span class="text-red">You are not allowed to take quiz, yet.</span> 
-                @elseif($quizParticipation->finished_at)
-                    <span class="btn p-1 text-xs cursor-not-allowed">Quiz Taken</span>
-                @else
-                    <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">Take Quiz</a>
-                @endif 
+                <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">Take Quiz</a>
             @endif
         </div>
     </div>

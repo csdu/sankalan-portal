@@ -16,6 +16,7 @@
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Event</th>
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Time (mins)</th>
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Participations</th>
+                <th class="text-xs text-center uppercase font-light text-left px-4 py-2">Token</th>
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Questions</th>
                 <th class="text-xs uppercase font-light text-left pr-6 py-2">Actions</th>
             </tr>
@@ -43,6 +44,10 @@
                             class="link text-xs" 
                             v-text="`Teams (${quiz.participations_count})`"></a>
                             <span v-else class="text-red text-xs">No Teams</span>
+                        </td>
+                        <td class="table_fit text-center px-4 py-2">
+                            <span v-if="quiz.token" v-text="quiz.token"></span>
+                            <span v-else class="text-red text-xs">No Token</span>
                         </td>
                         <td class="table_fit text-center px-4 py-2">
                             <span class="px-2 py-1 rounded-full bg-grey text-xs" v-text="quiz.questions_count"></span>
