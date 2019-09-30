@@ -15,10 +15,10 @@ class QuizVerificationController extends Controller
     public function verify(Request $request, Quiz $quiz)
     {
         if($request->verification_token == $quiz->token) {
-            $request->session()->put('quiz_token', $request->verification_token);
+            session()->put('quiz_token', $request->verification_token);
             return redirect(route('quizzes.show', $quiz));
         }
 
-        return redirect()->back();
+        return redirect(route('quizzes.verify', $quiz));
     }
 }
