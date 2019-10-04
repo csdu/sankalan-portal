@@ -71,7 +71,7 @@ or you can simply download ZIP and extract it.
 
 ### Install project dependencies
 
-Change into poject directory and install php dependencies using `composer`:
+Change into project directory and install php dependencies using `composer`:
 
 ```bash
 composer install
