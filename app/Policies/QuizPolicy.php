@@ -51,7 +51,7 @@ class QuizPolicy
         $team = $quiz->event->participatingTeamByUser($user);
         $participation = $quiz->participations()->where('team_id', $team->id)->first();
 
-        if (! $participation->started_at) {
+        if (! $participation->started_at || $participation->finished_at) {
             return false;
         }
 

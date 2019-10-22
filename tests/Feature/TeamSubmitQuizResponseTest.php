@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -23,7 +24,7 @@ class TeamSubmitQuizResponseTest extends TestCase
     {
         $user = create(User::class);
         $event = create(Event::class);
-        $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
+        $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => $token = 'valid_token']);
         $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
         $questions->each(function ($question) {
             create(AnswerChoice::class, 4, ['question_id' => $question->id]);
@@ -34,7 +35,6 @@ class TeamSubmitQuizResponseTest extends TestCase
         $team = $user->createTeam($user->name);
         $team->participate($event);
         $quiz->setActive();
-        $quiz->allowTeam($team);
 
         $team->beginQuiz($quiz);
 
@@ -48,7 +48,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         Carbon::setTestNow(now()->addSeconds($quiz->timeLimit - 60));
         // Fast Forward time, 60secs before timeout.
 
-        $json = $this->postJson(
+        $json = $this->withSession(['quiz_token' => $token])->postJson(
             route('quizzes.response.store', $quiz),
             ['responses' => $responses]
         )->assertSuccessful()->json();
@@ -67,19 +67,18 @@ class TeamSubmitQuizResponseTest extends TestCase
     {
         $user = create(User::class);
         $event = create(Event::class);
-        $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
+        $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => $token = 'valid_token']);
         $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
         $questions->each(function ($question) {
             create(AnswerChoice::class, 4, ['question_id' => $question->id]);
         });
 
-        $this->be($user)->withoutExceptionHandling();
+        $this->be($user);
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
         $quiz->setActive();
-        $quiz->allowTeam($team);
-
+        $quiz->verify($token);
         $team->beginQuiz($quiz);
 
         $responses = $questions->map(function ($question) {
@@ -93,17 +92,15 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         $team->endQuiz($quiz, $responses);
 
-        Carbon::setTestNow(now()->addMinutes(5)); //after 5 min try submitting other response
-
-        $this->expectException(AuthorizationException::class);
+        Carbon::setTestNow(now()->addMinutes(5)); // after 5 min try submitting other response
 
         $json = $this->postJson(route('quizzes.response.store', $quiz), [
-            'responses' => $responses,
-        ]);
+                'responses' => $responses,
+            ])->assertStatus(401)
+            ->json();
 
-        $quizParticipation = $quiz->participationByTeam($team);
-        $this->assertEquals(5, $quizParticipation->finished_at->diffInMinutes(now()), 'Time Difference does not match');
-        $this->assertCount(10, $quizParticipation->responses);
+        $this->assertArrayHasKey('message', $json);
+        $this->assertStringContainsString('already taken', $json['message']);
     }
 
     /** @test */
@@ -111,7 +108,9 @@ class TeamSubmitQuizResponseTest extends TestCase
     {
         $user = create(User::class);
         $event = create(Event::class);
-        $quiz = create(Quiz::class, 1, ['event_id' => $event->id])->fresh();
+
+        $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => $token = 'valid_token']);
+
         $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
         $questions->each(function ($question) {
             create(AnswerChoice::class, 4, ['question_id' => $question->id]);
@@ -122,8 +121,8 @@ class TeamSubmitQuizResponseTest extends TestCase
         $team = $user->createTeam($user->name);
         $team->participate($event);
         $quiz->setActive();
-        $quiz->allowTeam($team);
 
+        $quiz->verify($token);
         $team->beginQuiz($quiz);
 
         $responses = $questions->map(function ($question) {
@@ -136,10 +135,11 @@ class TeamSubmitQuizResponseTest extends TestCase
         //fast forward time to exceed time limit by 5 mins.
         Carbon::setTestNow(now()->addMinutes($quiz->time_limit + 5 * 60));
 
-        $json = $this->postJson(route('quizzes.response.store', $quiz), [
-            'responses' => $responses,
-        ])->assertStatus(Response::HTTP_REQUEST_TIMEOUT)
-        ->json();
+        $json = $this->withoutExceptionHandling()
+            ->postJson(route('quizzes.response.store', $quiz), [
+                'responses' => $responses,
+            ])->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->json();
 
         $this->assertEquals('danger', $json['message']['level']);
         $this->assertStringContainsString('time limit exceed', $json['message']['message']);
@@ -150,80 +150,27 @@ class TeamSubmitQuizResponseTest extends TestCase
     }
 
     /** @test */
-    public function user_cannot_submit_response_if_his_team_is_not_participating_in_the_event()
+    public function user_cannot_submit_response_if_they_have_not_verified_quiz_token()
     {
         $user = create(User::class);
         $event = create(Event::class);
-        $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
+        $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => 'valid_token']);
 
-        $this->be($user)->withoutExceptionHandling();
-
-        $team = $user->createTeam($user->name);
-        $quiz->setActive();
-        // $team->participate($event); //They're not participating
-        // $quiz->allowTeam($team); //They're not allowed to take Quiz
-
-        $this->expectException(AuthorizationException::class);
-
-        $json = $this->postJson(route('quizzes.response.store', $quiz));
-    }
-
-    /** @test */
-    public function user_cannot_submit_response_if_quiz_is_not_active()
-    {
-        $user = create(User::class);
-        $event = create(Event::class);
-        $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
-
-        $this->be($user)->withoutExceptionHandling();
-
-        $team = $user->createTeam($user->name);
-        $team->participate($event);
-        // $quiz->setActive(); // Quiz is not active
-        // $quiz->allowTeam($team); // They're not allowed to take Quiz
-
-        $this->expectException(AuthorizationException::class);
-
-        $json = $this->postJson(route('quizzes.response.store', $quiz));
-    }
-
-    /** @test */
-    public function user_cannot_submit_response_if_their_team_is_not_allowed_for_quiz()
-    {
-        $user = create(User::class);
-        $event = create(Event::class);
-        $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
-
-        $this->be($user)->withoutExceptionHandling();
+        $this->be($user);
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
         $quiz->setActive();
-        // $quiz->allowTeam($team); // They're not allowed to take Quiz
+        // $quiz->verify('valid_token'); // They've not verified quiz token.
 
-        $this->expectException(AuthorizationException::class);
+        $json = $this->postJson(route('quizzes.response.store', $quiz))
+            ->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->json();
 
-        $json = $this->postJson(route('quizzes.response.store', $quiz));
-    }
+        $this->assertArrayHasKey('message', $json);
+        $this->assertStringContainsString('not verified quiz token', $json['message']);
 
-    /** @test */
-    public function user_cannot_submit_response_if_they_have_not_yet_started()
-    {
-        $user = create(User::class);
-        $event = create(Event::class);
-        $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
-
-        $this->be($user)->withoutExceptionHandling();
-
-        $team = $user->createTeam($user->name);
-        $team->participate($event);
-        $quiz->setActive();
-        $quiz->allowTeam($team); // They're not allowed to take Quiz
-
-        // $quiz->begin($team); //They've not yet started taking quiz, They're trying something fishhy.
-
-        $this->expectException(AuthorizationException::class);
-
-        $json = $this->postJson(route('quizzes.response.store', $quiz));
+        $this->assertArrayHasKey('verification_url', $json);
+        $this->assertEquals(route('quizzes.verify', $quiz), $json['verification_url']);
     }
 }

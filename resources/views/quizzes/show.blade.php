@@ -17,7 +17,7 @@
             redirect-to="{{ route('dashboard') }}"
             action="{{ route('quizzes.response.store', $quiz) }}"
             :data-questions="{{ $quiz->questions }}" 
-            :time-limit="{{ $quiz->participations->first()->timeLeft }}">
+            :time-limit="{{ $participation->timeLeft }}">
         </quiz-area>
     </div>    
 @endsection

@@ -14,16 +14,11 @@ class QuizController extends Controller
         
         $team = Team::find($teamId);
 
-        $quiz->loadMissing([
-            'questions.choices',
-            'participations' => function ($query) use ($teamId) {
-                $query->where('quiz_participations.team_id', $teamId);
-            },
-        ]);
- 
-        $team->beginQuiz($quiz);
+        $quiz->loadMissing('questions.choices');
+        
+        $participation = $team->beginQuiz($quiz);
 
-        return view('quizzes.show', compact('quiz'));
+        return view('quizzes.show', compact('quiz', 'participation'));
     }
 
     public function instructions(Quiz $quiz)

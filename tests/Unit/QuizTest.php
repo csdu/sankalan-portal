@@ -7,6 +7,7 @@ use App\Models\Question;
 use App\Models\Quiz;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
+use Session;
 use Tests\TestCase;
 
 class QuizTest extends TestCase
@@ -49,5 +50,18 @@ class QuizTest extends TestCase
 
         $quiz->update(['time_limit' => 2700]);
         $this->assertEquals(2700, $quiz->fresh()->time_limit);
+    }
+
+    /** @test */
+    public function quiz_verifies_token()
+    {
+        $quiz = create(Quiz::class, 1, ['token' => $token = 'valid_token']);
+
+        $this->assertFalse($quiz->verify('invalid_token'));
+        $this->assertFalse(Session::has('quiz_token'));
+
+        $this->assertTrue($quiz->verify($token));
+        $this->assertTrue(Session::has('quiz_token'));
+        $this->assertEquals($token, Session::get('quiz_token'));
     }
 }

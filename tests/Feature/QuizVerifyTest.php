@@ -21,7 +21,7 @@ class QuizVerifyTest extends TestCase
      * @return void
      * 
      */
-    public function test_user_should_redirect_to_quiz_verify_if_quiz_is_not_verified()
+    public function test_user_should_redirect_to_quiz_verify_page_if_quiz_is_not_verified()
     {
         $user = create(User::class);
         $event = create(Event::class);
@@ -31,12 +31,12 @@ class QuizVerifyTest extends TestCase
             create(AnswerChoice::class, 4, ['question_id' => $question->id]);
         });
 
-        $this->be($user)->withoutExceptionHandling();
+        $this->be($user);
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
         $quiz->setActive();
-     
+    
         $response = $this->get(route('quizzes.show', $quiz));
         $response->assertRedirect(route('quizzes.verify', $quiz));
     }
@@ -102,7 +102,7 @@ class QuizVerifyTest extends TestCase
         $team = $user->createTeam($user->name);
         $team->participate($event);
         $quiz->setActive();
-     
+    
         $response = $this->withSession(['quiz_token' => '1234567'])->get(route('quizzes.show', $quiz));
         $response->assertStatus(200);
     }

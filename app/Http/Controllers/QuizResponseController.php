@@ -12,8 +12,6 @@ class QuizResponseController extends Controller
 {
     public function store(Request $request, Quiz $quiz)
     {
-        $this->authorize('create_response', $quiz);
-
         $data = $request->validate([
             'responses' => ['sometimes', 'array', "max:{$quiz->questions()->count()}"],
             'responses.*.response_keys' => ['required', 'string'],
@@ -26,13 +24,11 @@ class QuizResponseController extends Controller
 
         if ($quiz->isTimeLimitExceeded($team)) {
             flash('Your time limit exceeded!')->error();
-            $status = Response::HTTP_REQUEST_TIMEOUT;
-        } else {
-            flash('Your response has been recorded! All The Best!')->success();
-            $status = Response::HTTP_ACCEPTED;
+            return $this->getJsonOrRedirect(Response::HTTP_UNAUTHORIZED);
         }
-
-        return $this->getJsonOrRedirect($status);
+        
+        flash('Your response has been recorded! All The Best!')->success();
+        return $this->getJsonOrRedirect(Response::HTTP_ACCEPTED);
     }
 
     private function getJsonOrRedirect($status = 202)

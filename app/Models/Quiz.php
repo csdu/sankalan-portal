@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
 
 class Quiz extends Model
 {
@@ -79,6 +80,17 @@ class Quiz extends Model
             'started_at' => $this->event->started_at ?? now(),
             'active_quiz_id' => $this->id,
         ]) && $this->update(['opened_at' => now()]);
+    }
+
+    public function verify(string $token) 
+    {
+        if ($token != $this->token) {
+            return false;
+        }
+        
+        Session::put('quiz_token', $token);
+
+        return true;
     }
 
     /**
