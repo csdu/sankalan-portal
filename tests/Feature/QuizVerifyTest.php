@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\AnswerChoice;
+use App\Models\QuestionOption;
 use App\Models\Event;
 use App\Models\Question;
 use App\Models\Quiz;
@@ -28,7 +28,7 @@ class QuizVerifyTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
         $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
         $questions->each(function ($question) {
-            create(AnswerChoice::class, 4, ['question_id' => $question->id]);
+            create(QuestionOption::class, 4, ['question_id' => $question->id]);
         });
 
         $this->be($user);
@@ -48,7 +48,7 @@ class QuizVerifyTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => '1234567']);
         $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
         $questions->each(function ($question) {
-            create(AnswerChoice::class, 4, ['question_id' => $question->id]);
+            create(QuestionOption::class, 4, ['question_id' => $question->id]);
         });
 
         $this->be($user)->withoutExceptionHandling();
@@ -71,7 +71,7 @@ class QuizVerifyTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => '1234567']);
         $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
         $questions->each(function ($question) {
-            create(AnswerChoice::class, 4, ['question_id' => $question->id]);
+            create(QuestionOption::class, 4, ['question_id' => $question->id]);
         });
 
         $this->be($user)->withoutExceptionHandling();
@@ -94,7 +94,7 @@ class QuizVerifyTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => '1234567']);
         $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
         $questions->each(function ($question) {
-            create(AnswerChoice::class, 4, ['question_id' => $question->id]);
+            create(QuestionOption::class, 4, ['question_id' => $question->id]);
         });
 
         $this->be($user)->withoutExceptionHandling();

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAnswerChoicesTable extends Migration
+class CreateQuestionResponsesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,15 @@ class CreateAnswerChoicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('answer_choices', function (Blueprint $table) {
+        Schema::create('question_responses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('key')->index();
-            $table->string('text');
-            $table->string('illustration')->nullable();
-            $table->string('code')->nullable();
             $table->unsignedInteger('question_id')->index();
-            $table->unique(['key', 'question_id']);
+            $table->string('response_keys')->nullable();
+            $table->unsignedInteger('quiz_response_id')->index();
             $table->timestamps();
 
             $table->foreign('question_id')->references('id')->on('questions');
+            $table->foreign('quiz_response_id')->references('id')->on('quiz_responses');
         });
     }
 
@@ -34,10 +32,11 @@ class CreateAnswerChoicesTable extends Migration
      */
     public function down()
     {
-        Schema::table('answer_choices', function (Blueprint $table) {
+        Schema::table('question_responses', function (Blueprint $table) {
             $table->dropForeign(['question_id']);
+            $table->dropForeign(['quiz_participation_id']);
         });
 
-        Schema::dropIfExists('answer_choices');
+        Schema::dropIfExists('question_responses');
     }
 }

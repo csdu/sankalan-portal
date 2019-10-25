@@ -24,7 +24,7 @@
             "text": "Simplest for of question. All textual options. Only one correct. text can be max 1200 characters.",
             "positive_score": 3,
             "negative_score": 1,
-            "answer_choices": [
+            "question_options": [
               {
                 "key": "choice-a",
                 "text": "Option A. This text can be max 255 characters."
@@ -58,7 +58,7 @@
             ],
             "positive_score": 3,
             "negative_score": 1,
-            "answer_choices": [
+            "question_options": [
               {
                 "key": "choice-a",
                 "text": "Output",
@@ -108,7 +108,7 @@
               "is_multiple": true,
               "positive_score": 4,
               "negative_score": 1,
-              "answer_choices": [
+              "question_options": [
                   {
                       "key": "choice-a",
                       "text": "Illustration caption",

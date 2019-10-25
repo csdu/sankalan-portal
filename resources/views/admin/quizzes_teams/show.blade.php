@@ -9,7 +9,7 @@
         <dl class="flex py-2 bg-blue-lightest px-4">
             <dt class="w-64 font-bold">Team Members</dt>
             <dd class="flex-1 -mx-1">
-                @foreach($quizParticipation->team->members as $member)
+                @foreach($QuizResponse->team->members as $member)
                     <span class="mx-1 p-1 bg-blue text-white rounded text-xs font-bold">{{ title_case($member->name) }}</span>
                 @endforeach
             </dd>
@@ -17,32 +17,32 @@
         <dl class="flex py-2 bg-blue-lightest px-4">
             <dt class="w-64 font-bold">Event</dt>
             <dd class="flex-1">
-                {{ $quizParticipation->quiz->event->title }}
+                {{ $QuizResponse->quiz->event->title }}
             </dd>
         </dl>
         <dl class="flex py-2 bg-blue-lightest px-4">
             <dt class="w-64 font-bold">Quiz</dt>
             <dd class="flex-1">
-                {{ $quizParticipation->quiz->title }}
+                {{ $QuizResponse->quiz->title }}
             </dd>
         </dl>
         <dl class="flex py-2 bg-blue-lightest px-4">
             <dt class="w-64 font-bold">Responses</dt>
             <dd class="flex-1">
-                {{ $quizParticipation->responses->count() }}
+                {{ $QuizResponse->responses->count() }}
             </dd>
         </dl>
         <dl class="flex py-2 bg-blue-lightest px-4">
             <dt class="w-64 font-bold">Total Score</dt>
             <dd class="flex-1">
-                <b>{{ $quizParticipation->score }}</b> out of {{ $quizParticipation->quiz->questions->sum('positive_score') }}
+                <b>{{ $QuizResponse->score }}</b> out of {{ $QuizResponse->quiz->questions->sum('positive_score') }}
             </dd>
         </dl>
     </div>
 </div>
 <section class="mb-8">
     <h2 class="mb-6">Responses</h2>
-    @foreach($quizParticipation->responses as $response)
+    @foreach($QuizResponse->responses as $response)
         <div class="card seperated mb-8">
             <h3 class="card-header">
                 Question #{{ $response->question->qno }}

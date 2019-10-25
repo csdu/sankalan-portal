@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\Models\AnswerChoice;
+use App\Models\QuestionOption;
 use App\Models\Question;
 use App\Models\Quiz;
-use App\Models\QuizParticipation;
+use App\Models\QuizResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -25,11 +25,11 @@ class EvaluateQuizTest extends TestCase
         ]);
 
         $questions->each(function ($question) {
-            $choices = create(AnswerChoice::class, 4, ['question_id' => $question->id]);
+            $choices = create(QuestionOption::class, 4, ['question_id' => $question->id]);
             $question->update(['correct_answer_keys' => $choices->random()->key]);
         });
 
-        $participations = create(QuizParticipation::class, 4, ['quiz_id' => $quiz->id]);
+        $participations = create(QuizResponse::class, 4, ['quiz_id' => $quiz->id]);
         $participations->each->recordResponses($this->generateResponses($quiz->questions));
 
         $json = $this->withoutExceptionHandling()

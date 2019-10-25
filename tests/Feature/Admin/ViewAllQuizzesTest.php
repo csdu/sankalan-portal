@@ -4,7 +4,7 @@ namespace Tests\Feature\Admin;
 
 use App\Models\Question;
 use App\Models\Quiz;
-use App\Models\QuizParticipation;
+use App\Models\QuizResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -17,7 +17,7 @@ class ViewAllQuizzesTest extends TestCase
     {
         $quizzes = create(Quiz::class, 10);
         $quizzes->each(function ($quiz) {
-            create(QuizParticipation::class, 5, ['quiz_id' => $quiz->id]);
+            create(QuizResponse::class, 5, ['quiz_id' => $quiz->id]);
             create(Question::class, 10, ['quiz_id' => $quiz->id]);
         });
 

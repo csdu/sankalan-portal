@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AnswerChoice extends Model
+class QuestionOption extends Model
 {
     /**
      * The attributes that are NOT mass assignable.

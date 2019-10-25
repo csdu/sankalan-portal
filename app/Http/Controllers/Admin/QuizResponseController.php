@@ -5,16 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Quiz;
-use App\Models\QuizParticipation;
+use App\Models\QuizResponse;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class QuizParticipationController extends Controller
+class QuizResponseController extends Controller
 {
     public function index(Request $request, ?Quiz $quiz = null)
     {
-        $query = QuizParticipation::withCount('responses');
+        $query = QuizResponse::withCount('responses');
         $quizzes = Quiz::with('event')->get();
 
         if ($quiz) {
@@ -59,16 +59,16 @@ class QuizParticipationController extends Controller
         ];
     }
 
-    public function show(QuizParticipation $quizParticipation)
+    public function show(QuizResponse $QuizResponse)
     {
-        $quizParticipation->load(['team.members', 'responses.question.choices']);
+        $QuizResponse->load(['team.members', 'responses.question.choices']);
 
-        return view('admin.quizzes_teams.show', compact('quizParticipation'));
+        return view('admin.quizzes_teams.show', compact('QuizResponse'));
     }
 
-    public function evaluate(QuizParticipation $quizParticipation)
+    public function evaluate(QuizResponse $QuizResponse)
     {
-        $score = $quizParticipation->evaluate();
+        $score = $QuizResponse->evaluate();
 
         return [
             'status' => 'success',

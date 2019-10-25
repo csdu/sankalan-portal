@@ -23,7 +23,7 @@ Route::middleware('quiz_token_verified')->group(function() {
     Route::get('/quizzes/{quiz}', 'QuizController@instructions')
     ->name('quizzes.show');
 
-    Route::post('/quizzes/{quiz}', 'QuizResponseController@store')
+    Route::post('/quizzes/{quiz}', 'QuestionResponseController@store')
     ->name('quizzes.response.store');
     
     Route::get('/quizzes/{quiz}/take', 'QuizController@show')
