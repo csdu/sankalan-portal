@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <form class="" action="{{ route('quizzes.take', $quiz) }}" method="POST">
+        <form class="" action="{{ route('quizzes.take', $quiz) }}" method="GET">
             @csrf
             <button class="btn is-green">
                 @if ($quiz->started_at)
