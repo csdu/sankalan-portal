@@ -59,16 +59,16 @@ class QuizResponseController extends Controller
         ];
     }
 
-    public function show(QuizResponse $QuizResponse)
+    public function show(QuizResponse $quizResponse)
     {
-        $QuizResponse->load(['team.members', 'responses.question.choices']);
+        $quizResponse->load(['team.members', 'responses.question.choices']);
 
-        return view('admin.quizzes_teams.show', compact('QuizResponse'));
+        return view('admin.quizzes_teams.show', compact('quizResponse'));
     }
 
-    public function evaluate(QuizResponse $QuizResponse)
+    public function evaluate(QuizResponse $quizResponse)
     {
-        $score = $QuizResponse->evaluate();
+        $score = $quizResponse->evaluate();
 
         return [
             'status' => 'success',

@@ -18,22 +18,22 @@ class ViewQuizResponseDetailsTest extends TestCase
 
         $users = create('App\Models\User', 2);
         $team = $users[0]->createTeam('Team', $users[1]);
-        $QuizResponse = create('App\Models\QuizResponse');
-        $team->participate($QuizResponse->quiz->event);
-        $questions = create('App\Models\Question', 10, ['quiz_id' => $QuizResponse->quiz->id]);
-        $questions->each(function ($question) use ($QuizResponse) {
+        $quizResponse = create('App\Models\QuizResponse');
+        $team->participate($quizResponse->quiz->event);
+        $questions = create('App\Models\Question', 10, ['quiz_id' => $quizResponse->quiz->id]);
+        $questions->each(function ($question) use ($quizResponse) {
             create('App\Models\QuestionOption', 4, ['question_id' => $question->id]);
             QuestionResponse::create([
-                'quiz_response_id' => $QuizResponse->id,
+                'quiz_response_id' => $quizResponse->id,
                 'response_keys' => $question->choices->random()->key,
                 'question_id' => $question->id,
             ]);
         });
 
         $participation = $this->withoutExceptionHandling()
-            ->get(route('admin.quiz-participations.show', $QuizResponse))
+            ->get(route('admin.quiz-participations.show', $quizResponse))
             ->assertSuccessful()
-            ->viewData('QuizResponse');
+            ->viewData('quizResponse');
 
         $this->assertInstanceOf(QuizResponse::class, $participation);
 

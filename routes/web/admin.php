@@ -42,11 +42,11 @@ Route::get('quizzes_teams/{quiz?}', 'QuizResponseController@index')
     ->name('admin.quizzes.teams.index');
 
 Route::post(
-    'quizzes_teams/{QuizResponse}/evaluate',
+    'quizzes_teams/{quiz_response}/evaluate',
     'QuizResponseController@evaluate'
 )->name('admin.quizzes.teams.evaluate');
 
 Route::get(
-    'quiz_responses/{QuizResponse}',
+    'quiz_responses/{quiz_response}',
     'QuizResponseController@show'
 )->name('admin.quiz-participations.show');

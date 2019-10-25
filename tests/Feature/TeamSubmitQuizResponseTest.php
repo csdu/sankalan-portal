@@ -56,10 +56,10 @@ class TeamSubmitQuestionResponseTest extends TestCase
         $this->assertArrayHasKey('message', $json);
         $this->assertEquals('success', $json['message']['level']);
 
-        $QuizResponse = $quiz->participationByTeam($team);
-        $this->assertInstanceOf(Carbon::class, $QuizResponse->finished_at);
-        $this->assertInstanceOf(Collection::class, $QuizResponse->responses);
-        $this->assertCount(10, $QuizResponse->responses);
+        $quizResponse = $quiz->participationByTeam($team);
+        $this->assertInstanceOf(Carbon::class, $quizResponse->finished_at);
+        $this->assertInstanceOf(Collection::class, $quizResponse->responses);
+        $this->assertCount(10, $quizResponse->responses);
     }
 
     /** @test */
@@ -144,9 +144,9 @@ class TeamSubmitQuestionResponseTest extends TestCase
         $this->assertEquals('danger', $json['message']['level']);
         $this->assertStringContainsString('time limit exceed', $json['message']['message']);
 
-        $QuizResponse = $quiz->participationByTeam($team);
-        $this->assertEquals(0, $QuizResponse->finished_at->diffInMinutes(now()), 'Time Difference does not match');
-        $this->assertCount(10, $QuizResponse->responses);
+        $quizResponse = $quiz->participationByTeam($team);
+        $this->assertEquals(0, $quizResponse->finished_at->diffInMinutes(now()), 'Time Difference does not match');
+        $this->assertCount(10, $quizResponse->responses);
     }
 
     /** @test */

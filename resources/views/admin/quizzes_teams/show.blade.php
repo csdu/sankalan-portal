@@ -9,7 +9,7 @@
         <dl class="flex py-2 bg-blue-lightest px-4">
             <dt class="w-64 font-bold">Team Members</dt>
             <dd class="flex-1 -mx-1">
-                @foreach($QuizResponse->team->members as $member)
+                @foreach($quizResponse->team->members as $member)
                     <span class="mx-1 p-1 bg-blue text-white rounded text-xs font-bold">{{ title_case($member->name) }}</span>
                 @endforeach
             </dd>
@@ -17,32 +17,32 @@
         <dl class="flex py-2 bg-blue-lightest px-4">
             <dt class="w-64 font-bold">Event</dt>
             <dd class="flex-1">
-                {{ $QuizResponse->quiz->event->title }}
+                {{ $quizResponse->quiz->event->title }}
             </dd>
         </dl>
         <dl class="flex py-2 bg-blue-lightest px-4">
             <dt class="w-64 font-bold">Quiz</dt>
             <dd class="flex-1">
-                {{ $QuizResponse->quiz->title }}
+                {{ $quizResponse->quiz->title }}
             </dd>
         </dl>
         <dl class="flex py-2 bg-blue-lightest px-4">
             <dt class="w-64 font-bold">Responses</dt>
             <dd class="flex-1">
-                {{ $QuizResponse->responses->count() }}
+                {{ $quizResponse->responses->count() }}
             </dd>
         </dl>
         <dl class="flex py-2 bg-blue-lightest px-4">
             <dt class="w-64 font-bold">Total Score</dt>
             <dd class="flex-1">
-                <b>{{ $QuizResponse->score }}</b> out of {{ $QuizResponse->quiz->questions->sum('positive_score') }}
+                <b>{{ $quizResponse->score }}</b> out of {{ $quizResponse->quiz->questions->sum('positive_score') }}
             </dd>
         </dl>
     </div>
 </div>
 <section class="mb-8">
     <h2 class="mb-6">Responses</h2>
-    @foreach($QuizResponse->responses as $response)
+    @foreach($quizResponse->responses as $response)
         <div class="card seperated mb-8">
             <h3 class="card-header">
                 Question #{{ $response->question->qno }}

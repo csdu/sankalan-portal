@@ -17,7 +17,7 @@ class SingleResponseScoreTest extends TestCase
     public function multi_choice_questions_are_marked_according_to_questions_scheme()
     {
         $quiz = create(Quiz::class);
-        $QuizResponses = create(QuizResponse::class, 2, ['quiz_id' => $quiz->id]);
+        $quizResponses = create(QuizResponse::class, 2, ['quiz_id' => $quiz->id]);
         $question = create(Question::class, 1, [
             'quiz_id' => $quiz->id,
             'positive_score' => 4,
@@ -44,7 +44,7 @@ class SingleResponseScoreTest extends TestCase
     public function word_phrase_questions_are_marked_correctly_according_to_questions_scheme()
     {
         $quiz = create(Quiz::class);
-        $QuizResponses = create(QuizResponse::class, 2, ['quiz_id' => $quiz->id]);
+        $quizResponses = create(QuizResponse::class, 2, ['quiz_id' => $quiz->id]);
         $question = create(Question::class, 1, [
             'quiz_id' => $quiz->id,
             'positive_score' => 4,
