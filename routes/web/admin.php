@@ -23,7 +23,7 @@ Route::post('events/{event}/end', 'EventController@end')
 
 Route::post(
     'events/{event}/teams/{team}/paticipate-active-quiz',
-    'QuizParticipationController@store'
+    'QuizResponseController@store'
 )->name('admin.events.teams.allow-active-quiz');
 
 Route::get('quizzes', 'QuizController@index')
@@ -38,15 +38,15 @@ Route::post('quizzes/{quiz}/close', 'QuizController@close')
 Route::post('quizzes/{quiz}/evaluate', 'QuizController@evaluate')
     ->name('admin.quizzes.evaluate');
 
-Route::get('quizzes_teams/{quiz?}', 'QuizParticipationController@index')
+Route::get('quizzes_teams/{quiz?}', 'QuizResponseController@index')
     ->name('admin.quizzes.teams.index');
 
 Route::post(
-    'quizzes_teams/{quizParticipation}/evaluate',
-    'QuizParticipationController@evaluate'
+    'quizzes_teams/{quiz_response}/evaluate',
+    'QuizResponseController@evaluate'
 )->name('admin.quizzes.teams.evaluate');
 
 Route::get(
-    'quiz_participations/{quizParticipation}',
-    'QuizParticipationController@show'
+    'quiz_responses/{quiz_response}',
+    'QuizResponseController@show'
 )->name('admin.quiz-participations.show');

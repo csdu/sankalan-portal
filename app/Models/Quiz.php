@@ -56,7 +56,7 @@ class Quiz extends Model
      */
     public function teams()
     {
-        return $this->belongsToMany(Team::class, 'quiz_participations');
+        return $this->belongsToMany(Team::class, 'quiz_responses');
     }
 
     /**
@@ -66,7 +66,7 @@ class Quiz extends Model
      */
     public function participations()
     {
-        return $this->hasMany(QuizParticipation::class, 'quiz_id');
+        return $this->hasMany(QuizResponse::class, 'quiz_id');
     }
 
     /**
@@ -149,7 +149,7 @@ class Quiz extends Model
      * The quiz participation by the given team.
      *
      * @param Team $team
-     * @return \App\Models\QuizParticipation|null
+     * @return \App\Models\QuizResponse|null
      */
     public function participationByTeam(Team $team)
     {

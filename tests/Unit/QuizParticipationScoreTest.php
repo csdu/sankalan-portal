@@ -2,14 +2,14 @@
 
 namespace Tests\Unit;
 
-use App\Models\AnswerChoice;
+use App\Models\QuestionOption;
 use App\Models\Question;
 use App\Models\Quiz;
-use App\Models\QuizParticipation;
+use App\Models\QuizResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class QuizParticipationScoreTest extends TestCase
+class QuizResponseScoreTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -25,7 +25,7 @@ class QuizParticipationScoreTest extends TestCase
         ]);
 
         $questions->each(function ($question) {
-            $choices = create(AnswerChoice::class, 4, ['question_id' => $question->id]);
+            $choices = create(QuestionOption::class, 4, ['question_id' => $question->id]);
             $question->update(['correct_answer_keys' => $choices->random()->key]);
         });
 
@@ -42,7 +42,7 @@ class QuizParticipationScoreTest extends TestCase
             ];
         });
 
-        $participation = create(QuizParticipation::class, 1, ['quiz_id' => $quiz->id]);
+        $participation = create(QuizResponse::class, 1, ['quiz_id' => $quiz->id]);
         $participation->recordResponses($twoCorrectResponses->union($threeInCorrectResponses)->toArray());
 
         $this->assertEquals((3 * (-1)) + (2 * 4), $participation->evaluate());

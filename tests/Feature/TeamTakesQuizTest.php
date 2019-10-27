@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Models\AnswerChoice;
+use App\Models\QuestionOption;
 use App\Models\Event;
 use App\Models\Question;
 use App\Models\Quiz;
-use App\Models\QuizParticipation;
+use App\Models\QuizResponse;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -112,7 +112,7 @@ class TeamTakesQuizTest extends TestCase
             ->assertViewIs('quizzes.show')
             ->viewData('participation');
 
-        $this->assertInstanceOf(QuizParticipation::class, $viewParticipation);
+        $this->assertInstanceOf(QuizResponse::class, $viewParticipation);
 
         $this->assertArrayHasKey('timeLeft', $viewParticipation->toArray());
         $this->assertEquals($startTime->getTimestamp(), $viewParticipation->started_at->getTimestamp());
@@ -128,7 +128,7 @@ class TeamTakesQuizTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id]);
         $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
         $questions->each(function ($question) {
-            create(AnswerChoice::class, 4, ['question_id' => $question->id]);
+            create(QuestionOption::class, 4, ['question_id' => $question->id]);
         });
 
         $this->be($user);

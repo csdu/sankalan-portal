@@ -56,7 +56,7 @@
                         'quizzes_count' => $event_participation->quizzes_count,
                         'event' => $event_participation->event,
                         'team' => $event_participation->team,
-                        'quizParticipation' => $event_participation->activeQuizParticipation,
+                        'quizResponse' => $event_participation->activeQuizResponse,
                     ])
                 @empty
                 <li class="px-6 py-4">

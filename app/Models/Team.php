@@ -74,7 +74,7 @@ class Team extends Model
      *
      * @param \App\Models\Quiz $quiz
      * @param array $responses
-     * @return \App\Models\QuizResponse
+     * @return \App\Models\QuestionResponse
      */
     public function endQuiz(Quiz $quiz, array $responses)
     {

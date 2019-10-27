@@ -24,7 +24,6 @@ class WithdrawParticipationsTest extends TestCase
         $this->delete(route('events.withdraw-part', $events[0]))
             ->assertRedirect()
             ->assertSessionHas('flash_notification');
-
         $this->assertCount(0, $team->events()->get());
         $this->assertCount(0, $events[0]->teams()->get());
 

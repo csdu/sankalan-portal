@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EventParticipation;
 use App\Models\Quiz;
-use App\Models\QuizParticipation;
+use App\Models\QuizResponse;
 use App\Models\Team;
 
 class DashboardController extends Controller
@@ -22,7 +22,7 @@ class DashboardController extends Controller
 
         $event_participations = EventParticipation::with(['team', 'event.activeQuiz'])
             ->addSelect(['quizzes_count' => Quiz::selectRaw('COUNT(*)')->whereColumn('event_id', 'event_participations.event_id')])
-            ->withActiveQuizParticipation()
+            ->withActiveQuizResponse()
             ->whereIn('team_id', $teams->map->id)
             ->get();
 

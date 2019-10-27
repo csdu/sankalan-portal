@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\AnswerChoice;
+use App\Models\QuestionOption;
 use App\Models\Event;
 use App\Models\Question;
 use App\Models\Quiz;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class TeamSubmitQuizResponseTest extends TestCase
+class TeamSubmitQuestionResponseTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -27,7 +27,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => $token = 'valid_token']);
         $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
         $questions->each(function ($question) {
-            create(AnswerChoice::class, 4, ['question_id' => $question->id]);
+            create(QuestionOption::class, 4, ['question_id' => $question->id]);
         });
 
         $this->be($user);
@@ -56,10 +56,10 @@ class TeamSubmitQuizResponseTest extends TestCase
         $this->assertArrayHasKey('message', $json);
         $this->assertEquals('success', $json['message']['level']);
 
-        $quizParticipation = $quiz->participationByTeam($team);
-        $this->assertInstanceOf(Carbon::class, $quizParticipation->finished_at);
-        $this->assertInstanceOf(Collection::class, $quizParticipation->responses);
-        $this->assertCount(10, $quizParticipation->responses);
+        $quizResponse = $quiz->participationByTeam($team);
+        $this->assertInstanceOf(Carbon::class, $quizResponse->finished_at);
+        $this->assertInstanceOf(Collection::class, $quizResponse->responses);
+        $this->assertCount(10, $quizResponse->responses);
     }
 
     /** @test */
@@ -70,7 +70,7 @@ class TeamSubmitQuizResponseTest extends TestCase
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => $token = 'valid_token']);
         $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
         $questions->each(function ($question) {
-            create(AnswerChoice::class, 4, ['question_id' => $question->id]);
+            create(QuestionOption::class, 4, ['question_id' => $question->id]);
         });
 
         $this->be($user);
@@ -113,7 +113,7 @@ class TeamSubmitQuizResponseTest extends TestCase
 
         $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
         $questions->each(function ($question) {
-            create(AnswerChoice::class, 4, ['question_id' => $question->id]);
+            create(QuestionOption::class, 4, ['question_id' => $question->id]);
         });
 
         $this->be($user);
@@ -144,9 +144,9 @@ class TeamSubmitQuizResponseTest extends TestCase
         $this->assertEquals('danger', $json['message']['level']);
         $this->assertStringContainsString('time limit exceed', $json['message']['message']);
 
-        $quizParticipation = $quiz->participationByTeam($team);
-        $this->assertEquals(0, $quizParticipation->finished_at->diffInMinutes(now()), 'Time Difference does not match');
-        $this->assertCount(10, $quizParticipation->responses);
+        $quizResponse = $quiz->participationByTeam($team);
+        $this->assertEquals(0, $quizResponse->finished_at->diffInMinutes(now()), 'Time Difference does not match');
+        $this->assertCount(10, $quizResponse->responses);
     }
 
     /** @test */

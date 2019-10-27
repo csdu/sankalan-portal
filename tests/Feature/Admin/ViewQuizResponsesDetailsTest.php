@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Models\QuizParticipation;
 use App\Models\QuizResponse;
+use App\Models\QuestionResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ViewQuizParticipationDetailsTest extends TestCase
+class ViewQuizResponseDetailsTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -18,24 +18,24 @@ class ViewQuizParticipationDetailsTest extends TestCase
 
         $users = create('App\Models\User', 2);
         $team = $users[0]->createTeam('Team', $users[1]);
-        $quizParticipation = create('App\Models\QuizParticipation');
-        $team->participate($quizParticipation->quiz->event);
-        $questions = create('App\Models\Question', 10, ['quiz_id' => $quizParticipation->quiz->id]);
-        $questions->each(function ($question) use ($quizParticipation) {
-            create('App\Models\AnswerChoice', 4, ['question_id' => $question->id]);
-            QuizResponse::create([
-                'quiz_participation_id' => $quizParticipation->id,
+        $quizResponse = create('App\Models\QuizResponse');
+        $team->participate($quizResponse->quiz->event);
+        $questions = create('App\Models\Question', 10, ['quiz_id' => $quizResponse->quiz->id]);
+        $questions->each(function ($question) use ($quizResponse) {
+            create('App\Models\QuestionOption', 4, ['question_id' => $question->id]);
+            QuestionResponse::create([
+                'quiz_response_id' => $quizResponse->id,
                 'response_keys' => $question->choices->random()->key,
                 'question_id' => $question->id,
             ]);
         });
 
         $participation = $this->withoutExceptionHandling()
-            ->get(route('admin.quiz-participations.show', $quizParticipation))
+            ->get(route('admin.quiz-participations.show', $quizResponse))
             ->assertSuccessful()
-            ->viewData('quizParticipation');
+            ->viewData('quizResponse');
 
-        $this->assertInstanceOf(QuizParticipation::class, $participation);
+        $this->assertInstanceOf(QuizResponse::class, $participation);
 
         tap($participation->toArray(), function ($participation) {
             $this->assertArrayHasKey('team', $participation);

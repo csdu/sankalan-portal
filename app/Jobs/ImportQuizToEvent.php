@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Models\AnswerChoice;
+use App\Models\QuestionOption;
 use App\Models\Event;
 use App\Models\Question;
 use Illuminate\Bus\Queueable;
@@ -71,7 +71,7 @@ class ImportQuizToEvent
     public function createQuestions()
     {
         $this->questions->transform(function ($question) {
-            $choices = $question->pull('answer_choices') ?? collect([]);
+            $choices = $question->pull('question_options') ?? collect([]);
             if (! is_string($question['text'])) {
                 $question['text'] = $question['text']->implode(' ');
             }
@@ -106,7 +106,7 @@ class ImportQuizToEvent
                 $choice['text'] = $choice['text']->implode(' ');
             }
 
-            return AnswerChoice::create($choice->toArray());
+            return QuestionOption::create($choice->toArray());
         });
 
         return $this;

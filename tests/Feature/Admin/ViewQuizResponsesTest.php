@@ -8,12 +8,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\TestCase;
 
-class ViewQuizParticipationsTest extends TestCase
+class ViewQuizResponsesTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function admin_can_view_all_quiz_participations()
+    public function admin_can_view_all_quiz_responses()
     {
         $quizzes = create(Quiz::class, 4);
         $teams = create(Team::class, 12);
@@ -52,7 +52,7 @@ class ViewQuizParticipationsTest extends TestCase
     }
 
     /** @test */
-    public function admin_can_view_specific_quiz_participations()
+    public function admin_can_view_specific_quiz_responses()
     {
         $quizzes = create(Quiz::class, 4);
         $teams = create(Team::class, 4);

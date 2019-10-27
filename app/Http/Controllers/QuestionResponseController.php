@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
-class QuizResponseController extends Controller
+class QuestionResponseController extends Controller
 {
     public function store(Request $request, Quiz $quiz)
     {

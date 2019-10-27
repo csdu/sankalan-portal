@@ -33,22 +33,22 @@ class EventParticipation extends Model
         return $this->belongsTo(Event::class);
     }
 
-    public function activeQuizParticipation()
+    public function activeQuizResponse()
     {
-        return $this->belongsTo(QuizParticipation::class);
+        return $this->belongsTo(QuizResponse::class);
     }
 
-    public function scopeWithActiveQuizParticipation($query)
+    public function scopeWithActiveQuizResponse($query)
     {
         return $query->join('events', 'event_participations.event_id', '=', 'events.id')
             ->join('teams', 'event_participations.team_id', '=', 'teams.id')
             ->addSelect([
-                'active_quiz_participation_id' => QuizParticipation::select('id')->whereColumn(
-                    'quiz_participations.quiz_id',
+                'active_quiz_participation_id' => QuizResponse::select('id')->whereColumn(
+                    'quiz_responses.quiz_id',
                     'events.active_quiz_id'
-                )->whereColumn('quiz_participations.team_id', 'teams.id')
+                )->whereColumn('quiz_responses.team_id', 'teams.id')
                 ->limit(1),
-            ])->with('activeQuizParticipation');
+            ])->with('activeQuizResponse');
     }
 
     /**
