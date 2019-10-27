@@ -72,9 +72,11 @@ class QuizResponse extends Model
     {
         $question_ids = $this->quiz->questions->pluck('id', 'id');
 
-        $score = $this->responses->filter(function ($response) use ($question_ids) {
-            return $question_ids->has($response->question_id);
-        })->sum->score;
+        $score = $this->responses->sum(function ($response) use ($question_ids) {
+            return $question_ids->has($response->question_id)
+                ? $response->score
+                : 0;
+        });
 
         return $this->update(compact('score')) ? $score : false;
     }

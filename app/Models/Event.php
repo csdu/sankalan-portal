@@ -59,16 +59,6 @@ class Event extends Model
     }
 
     /**
-     * All members particpating in the event.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function allParticipantMembers()
-    {
-        return $this->loadMissing('teams.members')->teams->flatMap->members;
-    }
-
-    /**
      * Is any of the given members participating in the event?
      *
      * @param \Illuminate\Database\Eloquent\Collection $members
@@ -77,14 +67,9 @@ class Event extends Model
     public function isAnyParticipating(Collection $members)
     {
         $memberIds = $members->pluck('id');
-        $participantIds = $this->allParticipantMembers()->pluck('id');
+        $participantIds = $this->loadMissing('teams.members')->teams->flatMap->members->pluck('id');
 
-        // or this way?
-        // return !!$participantIds->intersect($memberIds)->count();
-
-        return $memberIds->some(function ($memberId) use ($participantIds) {
-            return $participantIds->contains($memberId);
-        });
+        return ! $participantIds->intersect($memberIds)->isEmpty();
     }
 
     /**
