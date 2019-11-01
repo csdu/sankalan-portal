@@ -11,9 +11,9 @@ class EventAndQuizSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\Models\Event', 8)->create()
+        factory('App\Models\Event', 5)->create()
         ->each(function ($event) {
-            factory('App\Models\Quiz', $event->rounds - 1)
+            factory('App\Models\Quiz', $event->rounds)
             ->create(['event_id' => $event->id])
             ->each(function ($quiz) {
                 factory('App\Models\Question', $quiz->questions_limit)->create(['quiz_id' => $quiz->id])
