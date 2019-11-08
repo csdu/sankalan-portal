@@ -2186,7 +2186,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.currentQuestionIndex == index;
     },
     hasQuestionResponse: function hasQuestionResponse(index) {
-      return this.responses[index] && this.responses[index].response_key;
+      return this.responses[index] && this.responses[index].key;
     },
     isQuestionAnswered: function isQuestionAnswered(index) {
       return !this.isCurrentQuestion(index) && this.questions[index].visited && this.hasQuestionResponse(index);
