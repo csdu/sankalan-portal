@@ -159,7 +159,7 @@ import QuizQuestion from './QuizQuestion.vue';
                 return this.currentQuestionIndex == index;
             },
             hasQuestionResponse(index) {
-                return this.responses[index] && this.responses[index].response_key;
+                return this.responses[index] && this.responses[index].key;
             },
             isQuestionAnswered(index) {
                 return !this.isCurrentQuestion(index) &&
