@@ -76,13 +76,10 @@ class Team extends Model
      * @param array $responses
      * @return \App\Models\QuestionResponse
      */
-    public function endQuiz(Quiz $quiz, array $responses)
+    public function endQuiz(Quiz $quiz)
     {
         $participation = $quiz->participationByTeam($this);
-        $responses = $participation->recordResponses($responses);
-        $participation->update(['finished_at' => now()]);
-
-        return $responses;
+        return $participation->update(['finished_at' => now()]);
     }
 
     /**

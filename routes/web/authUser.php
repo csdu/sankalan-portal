@@ -19,13 +19,16 @@ Route::delete(
     'EventParticipationController@destroy'
 )->name('events.withdraw-part');
 
-Route::middleware('quiz_token_verified')->group(function() {
+Route::middleware('quiz_token_verified')->group(function () {
     Route::get('/quizzes/{quiz}', 'QuizController@instructions')
     ->name('quizzes.show');
 
     Route::post('/quizzes/{quiz}', 'QuestionResponseController@store')
     ->name('quizzes.response.store');
-    
+
+    Route::post('/quizzes/{quiz}/saveQuestionResponse', 'QuestionResponseController@saveQuestionResponse')
+    ->name('quizzes.response.save');
+
     Route::get('/quizzes/{quiz}/take', 'QuizController@show')
     ->name('quizzes.take');
 });
