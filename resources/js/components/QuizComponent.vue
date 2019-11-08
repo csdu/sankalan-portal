@@ -4,13 +4,42 @@
             <quiz-question 
                 class="flex flex-col"
                 :data-question="currentQuestion" 
-                :index="currentQuestionIndex" 
-                v-model="responses[currentQuestionIndex]">
+                :index="currentQuestionIndex"
+                :value="currentResponse"
+                @input="saveResponse">
             </quiz-question>
             <div class="navigate flex">
-                <button v-if="!isFirstQuestion" class="mr-2 btn" @click="previousQuestion()">Previous</button>
-                <button v-if="!isLastQuestion" class="btn is-green" @click="nextQuestion()">Next</button>
-                <button v-else class="btn is-green" @click="submit()">Submit</button>
+                <button :disabled=loading v-if="!isFirstQuestion" class="mr-2 btn" :class="{'cursor-wait' : loading}" @click="previousQuestion()">Previous</button>
+                <button :disabled=loading v-if="!isLastQuestion" class="mr-2 btn is-blue" :class="{'cursor-wait' : loading}" @click="nextQuestion()">Next</button>
+                <span v-if="loading" class="inline-flex items-center ml-auto">
+                    <svg viewBox="0 0 110 110" class="text-blue w-8 mr-2">
+                        <circle id="loader-circle" cx="55" cy="55" r="50" stroke-dasharray="314.16" stroke="currentColor" fill="none" stroke-width="10"></circle>	
+                        <animate 
+                            xlink:href="#loader-circle"
+                            attributeName="stroke-dashoffset"
+                            attributeType="XML"
+                            from="314.16"
+                            to="314.16" 
+                            dur="2s"
+                            begin="0s"
+                            keyTimes="0; 0.25; 0.5; 0.75; 1;"
+                            values="314.16; 0; -314.16; 0; 314.16;"
+                            repeatCount="indefinite"/>
+                        <animateTransform 
+                            xlink:href="#loader-circle"
+                            attributeName="transform" 
+                            attributeType="XML"
+                            type="rotate"
+                            from="0 55 55"
+                            to="360 55 55" 
+                            dur="3s"
+                            repeatCount="indefinite"
+                            />
+                    </svg>	
+                    <span class="text-gray-600">saving response...</span>
+                </span>
+                <!-- <button v-else class="btn is-green" @click="submit()">End Quiz</button> -->
+                <!-- <button :disabled=loading class="btn is-green mx-2" :class="{'cursor-wait' : loading}" @click="saveResponse()">Save</button> -->
             </div>
         </div>
         <div class="navigation flex flex-col md:w-64 px-3 overflow-auto py-4">
@@ -28,19 +57,14 @@
                 }"></button>
                 </li>
             </ul>
-            <div class="navigate flex justify-end my-8">
-                <button v-if="!isFirstQuestion" class="btn" @click="previousQuestion()">Previous</button>
-                <button v-if="!isLastQuestion" class="ml-4 btn is-green" @click="nextQuestion()">Next</button>
-                <button v-else class="ml-4 btn is-green" @click="submit()">Submit</button>
-            </div>
             <div class="flex justify-center">
                 <countdown-timer :duration="timeLimit" :hurry="300"
                 class="inline-flex justify-center items-baseline my-8 text-lg font-bold font-mono" 
                 :class="{'animation-vibrate text-red': hurry}"
                 @timeup="endQuiz" @hurryup="hurry=true"></countdown-timer>
             </div>
-            <div class="mt-auto mb-8 text-center">
-                <button class="btn is-green" @click.prevent="submit">Submit</button>
+            <div class="mb-auto text-center">
+                <button class="btn is-red" @click.prevent="submit">End Quiz</button>
             </div>
         </div>
     </div>
@@ -92,6 +116,7 @@ import QuizQuestion from './QuizQuestion.vue';
         props: {
             action: {required: true},
             redirectTo: {required: true},
+            saveAction: {required: true},
             dataQuestions: {default: []},
             timeLimit: {default: 30},
         },
@@ -111,7 +136,8 @@ import QuizQuestion from './QuizQuestion.vue';
                 hurry: false,
                 currentQuestionIndex: 0,
                 responses: [],
-                questions: []
+                questions: [],
+                loading: false,
             }
         },
         computed: {
@@ -132,27 +158,34 @@ import QuizQuestion from './QuizQuestion.vue';
             isCurrentQuestion(index) {
                 return this.currentQuestionIndex == index;
             },
+            hasQuestionResponse(index) {
+                return this.responses[index] && this.responses[index].response_key;
+            },
             isQuestionAnswered(index) {
                 return !this.isCurrentQuestion(index) &&
                     this.questions[index].visited &&
-                    this.responses[index];
+                    this.hasQuestionResponse(index);
             },
             isQuestionSkipped(index) {
                 return !this.isCurrentQuestion(index) &&
                     this.questions[index].visited &&
-                    !this.responses[index];
+                    !this.hasQuestionResponse(index);
             },
-            setCurrentQuestion(index) {
+            setCurrentQuestion(index) {                
+                // this.currentResponse = this.currentResponse;
+
                 if (index >= 0 && index < this.questions.length ) {
                     this.questions[this.currentQuestionIndex].visited = true
                     this.currentQuestionIndex = index
                 }
             },
-            nextQuestion() {
+            nextQuestion() {                
                 this.setCurrentQuestion(this.currentQuestionIndex + 1);
+                // this.currentResponse = '';
             },
             previousQuestion() {
                 this.setCurrentQuestion(this.currentQuestionIndex - 1);
+                // this.currentResponse = '';
             },
             submit() {
                 if(confirm('You still have time left. Are you sure you want to submit your Response?')) {
@@ -161,21 +194,9 @@ import QuizQuestion from './QuizQuestion.vue';
             },
             endQuiz() {
                 this.isLive = false;
-                this.sendResponses();
-            },
-            sendResponses() {
-                    const responses = this.getResponses();
-                    axios.post(this.action, {responses})
-                        .catch(this.onFailure)
-                        .then(this.onSuccess);
-            },
-            getResponses() {
-                return this.responses.map((answers, index) => {
-                    return {
-                        question_id: this.dataQuestions[index].id, 
-                        response_keys: answers
-                    };
-                }).filter(response => !!response.response_keys);
+                axios.post(this.action)
+                    .catch(this.onFailure)
+                    .then(this.onSuccess);
             },
             onSuccess({data}) {
                 this.submission = {
@@ -194,14 +215,34 @@ import QuizQuestion from './QuizQuestion.vue';
                     success: response.data.message.level != 'danger',
                     text: response.data.message.message,
                 }
+            },
+            saveResponse(response) {
+                if (response == null) {
+                    return flash('Answer can not be null!', 'danger');                    
+                }
+
+                this.loading = true;
+
+                axios.post(this.saveAction, {
+                    question_id: this.currentQuestion.id,
+                    response_key: response.key,
+                }).catch(error => {
+                    flash('Error occurred in saving response!', 'danger');
+                }).then(({data}) => {
+                    this.responses.splice(this.currentQuestionIndex, 1, response);
+
+                    flash(data.message, 'info');
+                }).finally(() => {
+                    this.loading = false;
+                });   
             }
         },
         created() {
-            this.responses = new Array(this.dataQuestions.length).fill("");
+            this.responses = new Array(this.dataQuestions.length).fill(null);
             this.questions = this.dataQuestions.map(question => {
                 question.visited = false;
                 return question;
-            })
+            });
         },
         mounted() {
             window.addEventListener('keydown', ({code}) => {

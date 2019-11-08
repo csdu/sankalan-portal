@@ -28,7 +28,13 @@
             </form>
             @endif 
             @if($event->isLive && $quizzes_count && $event->activeQuiz)
-                <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">Take Quiz</a>
+                <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">
+                    @if (!!$event->activeQuiz->participationByTeam($team) && !$event->activeQuiz->participationByTeam($team)->finished_at)
+                        Resume Quiz
+                    @else
+                        Take Quiz                        
+                    @endif
+                </a>
             @endif
         </div>
     </div>

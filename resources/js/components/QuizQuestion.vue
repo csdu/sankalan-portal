@@ -9,13 +9,13 @@
         <div class="flex justify-center my-4" v-if="dataQuestion.illustration">
             <img :src="dataQuestion.illustration" class="max-w-full rounded shadow-lg">
         </div>
-        <ul class="choices-list list-reset my-8 flex flex-wrap -mx-2" v-if="choicesCount">
+        <ul class="choices-list list-reset my-8 flex flex-wrap -mx-2" v-if="choicesCount    ">
             <li v-for="(choice, choiceIndex) in dataQuestion.choices" 
                 :key="choice.id" 
                 class="mb-3 w-full md:w-1/2 px-2">
                 <label :for="`choice-${choice.key}`"
                     class="relative flex items-center btn hover:bg-grey-light border shadow cursor-pointer pl-6 h-full"
-                    @mouseover="highlightResponse(choiceIndex)"
+                    @mouseover="highlightOption(choiceIndex)"
                     :class="{
                         'bg-white': !isHighlighted(choiceIndex) && !isSelected(choiceIndex),
                         'bg-green-dark': isHighlighted(choiceIndex) && isSelected(choiceIndex),
@@ -32,7 +32,7 @@
                         type="radio" 
                         class="hidden"
                         :name="`question-${choice.question_id}`" 
-                        @input="toggleResponse(choiceIndex)"
+                        @input="toggleOption(choiceIndex)"
                         :value="choice.key">
                     <div>
                     <img v-if="choice.illustration" :src="choice.illustration" :alt="choice.text" class="rounded my-2 max-w-full">
@@ -45,11 +45,11 @@
         <!-- Input Answer -->
         <div class="card my-4 p-4" v-else>
             <div class="flex" v-if="editing">
-                <input ref="input" type="text" class="flex-1 mr-1 control" v-model="answer" autofocus @keydown.enter.prevent.stop="saveResponse">
+                <input ref="input" type="text" class="flex-1 mr-1 control" v-model="answer.key" autofocus @keydown.stop @keydown.enter.prevent.stop="saveResponse">
                 <button @click="saveResponse" class="btn btn-green is-sm">Save</button>
             </div>
             <div class="flex" v-else>
-                <p class="flex-1 mr-1" :class="{'text-grey': !answer}" v-text="answer || 'No answer'"></p>
+                <p class="flex-1 mr-1" :class="{'text-grey': !answer}" v-text="answer.key"></p>
                 <button @click="editResponse" class="btn is-blue is-sm">Edit</button>
             </div>
         </div>
@@ -64,15 +64,15 @@ export default {
     },
     data() {
         return {
-            highlightedResponseIndex: 0,
+            highlightedOptionIndex: 0,
             editing: false,
-            answer: null,
+            answer: this.value || {key: ''},
             keyEvents: {
-                'ArrowDown': () => this.highlightNextResponse(),
-                'ArrowUp': () => this.highlightPreviousResponse(),
-                'Space': () => this.toggleResponse(this.highlightedResponseIndex),
-                'Delete': () => this.clearResponse(),
-                'Backspace': () => this.clearResponse(),
+                'ArrowDown': () => this.highlightNextOption(),
+                'ArrowUp': () => this.highlightPreviousOption(),
+                'Space': () => this.toggleOption(this.highlightedOptionIndex),
+                'Delete': () => this.clearOption(),
+                'Backspace': () => this.clearOption(),
             }
         }
     },
@@ -88,33 +88,35 @@ export default {
         }
     },
     methods: {
-        highlightResponse(index) {
-            this.highlightedResponseIndex = index;
+        highlightOption(index) {
+            this.highlightedOptionIndex = index;
         },
-        highlightNextResponse() {
-            this.highlightedResponseIndex = (this.highlightedResponseIndex + 1) % this.choicesCount
+        highlightNextOption() {
+            this.highlightedOptionIndex = (this.highlightedOptionIndex + 1) % this.choicesCount
         },
-        highlightPreviousResponse() {
-            this.highlightedResponseIndex = this.highlightedResponseIndex <= 0 ? 
+        highlightPreviousOption() {
+            this.highlightedOptionIndex = this.highlightedOptionIndex <= 0 ? 
                 (this.choicesCount - 1) 
-                : (this.highlightedResponseIndex - 1)
+                : (this.highlightedOptionIndex - 1)
         },
-        toggleResponse(index) {
+        toggleOption(index) {
             if(this.isSelected(index)) {
-               this.$emit('input', ''); 
+                this.answer = {key: ''}
+                this.$emit('input', this.answer); 
             } else {
-                this.$emit('input', this.dataQuestion.choices[index].key);
+                this.answer = this.dataQuestion.choices[index]
+                this.$emit('input', this.answer);
             }
         },
         isSelected(index) {
             const choice = this.dataQuestion.choices[index];
-            return choice && this.value == choice.key;
+            return choice && this.value && this.value.key == choice.key;
         },
         isHighlighted(index) {
-            return this.highlightedResponseIndex == index;
+            return this.highlightedOptionIndex == index;
         },
         clearResponse() {
-            this.$emit('input', '');
+            this.$emit('input', {key: ''});
         },
         editResponse() {
             this.editing = true;
@@ -127,7 +129,7 @@ export default {
     },
     watch:{
         value() {
-            this.answer = this.value || '';
+            this.answer = this.value || {key: ''};
         }
     },
     mounted() {

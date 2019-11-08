@@ -9,6 +9,7 @@
 @endpush
 @section('body')
     <div class="flex flex-col min-h-screen px-12">
+        @include('flash::message')
         <div class="my-4">
             <h2 class="text-center capitalize mb-2">{{ $quiz->event->title }}</h2>
             <h5 class="text-xs text-blue uppercase text-center">{{ $quiz->title }}</h5>
@@ -16,6 +17,7 @@
         <quiz-area 
             redirect-to="{{ route('dashboard') }}"
             action="{{ route('quizzes.response.store', $quiz) }}"
+            save-action="{{ route('quizzes.response.save', $quiz) }}"
             :data-questions="{{ $quiz->questions }}" 
             :time-limit="{{ $participation->timeLeft }}">
         </quiz-area>
