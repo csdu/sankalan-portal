@@ -2,16 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Models\QuestionOption;
 use App\Models\Event;
 use App\Models\Question;
+use App\Models\QuestionOption;
 use App\Models\Quiz;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -38,28 +36,43 @@ class TeamSubmitQuestionResponseTest extends TestCase
 
         $team->beginQuiz($quiz);
 
-        $responses = $questions->map(function ($question) {
-            return [
+        $quizResponse = $quiz->participationByTeam($team);
+
+        foreach ($questions as $question) {
+            $question_response = $question->choices->random()->key;
+
+            $json = $this->withSession(['quiz_token' => $token])->postJson(
+                route('quizzes.response.save', $quiz),
+                [
+                    'question_id' => $question->id,
+                    'response_key' => $question_response,
+                ]
+            )->assertSuccessful()->json();
+
+            $this->assertArrayHasKey('message', $json);
+
+            $this->assertDatabaseHas('question_responses', [
                 'question_id' => $question->id,
-                'response_keys' => $question->choices->random()->key,
-            ];
-        })->toArray();
+                'response_keys' => $question_response,
+                'quiz_response_id' => $quizResponse->id,
+            ]);
+        }
 
         Carbon::setTestNow(now()->addSeconds($quiz->timeLimit - 60));
-        // Fast Forward time, 60secs before timeout.
 
+        // Fast Forward time, 60secs before timeout.
         $json = $this->withSession(['quiz_token' => $token])->postJson(
             route('quizzes.response.store', $quiz),
-            ['responses' => $responses]
+            []
         )->assertSuccessful()->json();
 
         $this->assertArrayHasKey('message', $json);
         $this->assertEquals('success', $json['message']['level']);
 
-        $quizResponse = $quiz->participationByTeam($team);
+        $quizResponse = $quizResponse->fresh();
+
         $this->assertInstanceOf(Carbon::class, $quizResponse->finished_at);
         $this->assertInstanceOf(Collection::class, $quizResponse->responses);
-        $this->assertCount(10, $quizResponse->responses);
     }
 
     /** @test */
@@ -95,8 +108,8 @@ class TeamSubmitQuestionResponseTest extends TestCase
         Carbon::setTestNow(now()->addMinutes(5)); // after 5 min try submitting other response
 
         $json = $this->postJson(route('quizzes.response.store', $quiz), [
-                'responses' => $responses,
-            ])->assertStatus(401)
+            'responses' => $responses,
+        ])->assertStatus(401)
             ->json();
 
         $this->assertArrayHasKey('message', $json);
@@ -125,26 +138,43 @@ class TeamSubmitQuestionResponseTest extends TestCase
         $quiz->verify($token);
         $team->beginQuiz($quiz);
 
-        $responses = $questions->map(function ($question) {
-            return [
+        $quizResponse = $quiz->participationByTeam($team);
+
+        foreach ($questions as $question) {
+            $question_response = $question->choices->random()->key;
+
+            $json = $this->withSession(['quiz_token' => $token])->postJson(
+                route('quizzes.response.save', $quiz),
+                [
+                    'question_id' => $question->id,
+                    'response_key' => $question_response,
+                ]
+            )->assertSuccessful()->json();
+
+            $this->assertArrayHasKey('message', $json);
+
+            $this->assertDatabaseHas('question_responses', [
                 'question_id' => $question->id,
-                'response_keys' => $question->choices->random()->key,
-            ];
-        })->toArray();
+                'response_keys' => $question_response,
+                'quiz_response_id' => $quizResponse->id,
+            ]);
+        }
 
         //fast forward time to exceed time limit by 5 mins.
         Carbon::setTestNow(now()->addMinutes($quiz->time_limit + 5 * 60));
 
         $json = $this->withoutExceptionHandling()
-            ->postJson(route('quizzes.response.store', $quiz), [
-                'responses' => $responses,
-            ])->assertStatus(Response::HTTP_UNAUTHORIZED)
+            ->postJson(
+                route('quizzes.response.store', $quiz),
+                []
+            )->assertStatus(Response::HTTP_UNAUTHORIZED)
             ->json();
 
         $this->assertEquals('danger', $json['message']['level']);
         $this->assertStringContainsString('time limit exceed', $json['message']['message']);
 
-        $quizResponse = $quiz->participationByTeam($team);
+        $quizResponse = $quizResponse->fresh();
+
         $this->assertEquals(0, $quizResponse->finished_at->diffInMinutes(now()), 'Time Difference does not match');
         $this->assertCount(10, $quizResponse->responses);
     }
