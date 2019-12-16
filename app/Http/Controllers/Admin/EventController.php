@@ -67,4 +67,19 @@ class EventController extends Controller
 
         return redirect()->route('admin.events.index');
     }
+
+    public function delete(Event $event)
+    {
+        // can only delete event which hasnt been started yet
+        if ($event->started_at) {
+            flash("You can only delete event which has'nt started yet", 'danger');
+
+            return redirect()->back();
+        } else {
+            $event->delete();
+            flash('Event deleted', 'success');
+        }
+
+        return redirect()->route('admin.events.index');
+    }
 }
