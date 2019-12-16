@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
@@ -45,5 +46,25 @@ class EventController extends Controller
             'message' => 'Event has ended!',
             'event' => $event,
         ]);
+    }
+
+    public function add(Request $request)
+    {
+        request()->validate([
+            'title' => 'required',
+            'description' => 'required|max:800',
+            'rounds' => 'required|min:1',
+        ]);
+
+        Event::create([
+            'title' => $request->title,
+            'slug' => str_slug($request->title),
+            'description' => $request->description,
+            'rounds' => $request->rounds,
+        ]);
+
+        flash('Event created!')->success();
+
+        return redirect()->route('admin.events.index');
     }
 }
