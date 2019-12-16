@@ -55,3 +55,6 @@ Route::get(
 
 Route::post('events', 'EventController@add')
     ->name('admin.events.add');
+
+Route::delete('events/{event}/delete', 'EventController@delete')
+    ->name('admin.events.delete');
