@@ -8,7 +8,8 @@ import FlashMessages from "./components/Flash.vue";
 import AjaxButton from "./components/AjaxButton.vue";
 import GetRoutes from "./components/GetRoutes.vue";
 import LoginRegister from "./components/LoginRegister";
-
+import Modal from './components/Modal.vue';
+import AddEventModal from "./components/AddEventModal.vue";
 
 Vue.component("quiz-area", QuizArea);
 Vue.component("v-flash", FlashMessages);
@@ -16,6 +17,8 @@ Vue.component("ajax-button", AjaxButton);
 Vue.component("get-routes", GetRoutes);
 Vue.component("login-register", LoginRegister);
 Vue.component("countdown-timer", CountdownTimer);
+Vue.component("modal", Modal);
+Vue.component("add-event-modal", AddEventModal);
 
 const files = require.context('./pages/', true, /\.(vue|js)$/i);
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
