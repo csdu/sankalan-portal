@@ -56,7 +56,7 @@ Route::get(
 Route::get('events/create', 'EventController@create')
     ->name('admin.events.create');
 
-Route::post('events', 'EventController@save')
+Route::post('events', 'EventController@store')
     ->name('admin.events.store');
 
 Route::get('events/{event}/edit', 'EventController@edit')
