@@ -48,7 +48,23 @@ class EventController extends Controller
         ]);
     }
 
-    public function add(Request $request)
+    public function delete(Event $event)
+    {
+        // can only delete event which hasnt been started yet
+        abort_if($event->started_at, 403, "You can only delete event which has'nt started yet");
+
+        $event->delete();
+        flash('Event deleted', 'success');
+
+        return redirect()->route('admin.events.index');
+    }
+
+    public function create()
+    {
+        return view('admin.events.create');
+    }
+
+    public function store(Request $request)
     {
         request()->validate([
             'title' => 'required',
@@ -68,13 +84,27 @@ class EventController extends Controller
         return redirect()->route('admin.events.index');
     }
 
-    public function delete(Event $event)
+    public function edit(Event $event)
     {
-        // can only delete event which hasnt been started yet
-        abort_if($event->started_at, 403, "You can only delete event which has'nt started yet");
+        return view('admin.events.edit', compact('event'));
+    }
 
-        $event->delete();
-        flash('Event deleted', 'success');
+    public function update(Request $request, Event $event)
+    {
+        request()->validate([
+            'title' => 'required',
+            'description' => 'required|max:800',
+            'rounds' => 'required|min:1',
+        ]);
+
+        $event->update([
+            'title' => $request->title,
+            'slug' => str_slug($request->title),
+            'description' => $request->description,
+            'rounds' => $request->rounds,
+        ]);
+
+        flash('Event updated!')->success();
 
         return redirect()->route('admin.events.index');
     }
