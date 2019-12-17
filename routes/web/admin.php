@@ -53,8 +53,17 @@ Route::get(
     'QuizResponseController@show'
 )->name('admin.quiz-participations.show');
 
-Route::post('events', 'EventController@add')
-    ->name('admin.events.add');
+Route::get('events/create', 'EventController@create')
+    ->name('admin.events.create');
+
+Route::post('events', 'EventController@save')
+    ->name('admin.events.store');
+
+Route::get('events/{event}/edit', 'EventController@edit')
+    ->name('admin.events.edit');
+
+Route::patch('events/{event}', 'EventController@update')
+    ->name('admin.events.update');
 
 Route::delete('events/{event}/delete', 'EventController@delete')
     ->name('admin.events.delete');
