@@ -2,13 +2,20 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Models\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class EventCreateTest extends TestCase
 {
     use RefreshDatabase;
+
+    /** @test */
+    public function admin_sees_create_form()
+    {
+        $this->withoutExceptionHandling()->signInAdmin();
+        $res = $this->get(route('admin.events.create'));
+        $res->assertStatus(200);
+    }
 
     /** @test */
     public function admin_can_create_an_event()
@@ -22,8 +29,7 @@ class EventCreateTest extends TestCase
             'rounds' => 2,
         ];
 
-        Event::create($data);
-
+        $this->post(route('admin.events.store'), $data);
         $this->assertDatabaseHas('Events', $data);
     }
 }
