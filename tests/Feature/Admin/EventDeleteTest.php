@@ -17,7 +17,7 @@ class EventDeleteTest extends TestCase
         $this->withoutExceptionHandling()->signInAdmin();
 
         $this->delete(route('admin.events.delete', $event));
-        $this->assertDeleted('events', $event->toArray());
+        $this->assertDeleted($event);
     }
 
     /** @test */
@@ -30,5 +30,6 @@ class EventDeleteTest extends TestCase
 
         $response = $this->delete(route('admin.events.delete', $event));
         $response->assertStatus(403);
+        $this->assertDatabaseHas('events', ['id' => $event->id]);
     }
 }
