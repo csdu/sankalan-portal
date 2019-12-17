@@ -8,31 +8,7 @@
                 <h2 class="text-xl font-normal">Events</h2>
                 <span class="ml-2 bg-blue text-white rounded-full p-1 text-xs">{{ $events->count() }}</span>
             </div>
-            
-            <add-event-modal inline-template>
-                <div>
-                <button @click="open" href="{{ route('admin.events.add') }}" class="btn is-sm is-blue" slot="">Add new</button>
-                <modal v-if="show" @close="close" title="Add Event">
-                    <form action="{{ route('admin.events.add') }}" method="POST">
-                        @csrf
-                        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-                            Title
-                        </label>
-                        <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border rounded py-2 px-4 mb-3" name="title" type="text" placeholder="Sankalan" required>
-                        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-                            Description
-                        </label>
-                        <textarea class="appearance-none block w-full bg-grey-lighter text-grey-darker border rounded py-2 px-4 mb-3" name="description" type="text" required>
-                        </textarea>
-                        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-                            Rounds
-                        </label>
-                        <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border rounded py-2 px-4 mb-3" name="rounds" min="1" type="number" value="1">
-                        <button class="btn is-blue btn-block" type="submit">Add</button>
-                    </form>
-                </modal>
-                </div>
-            </add-event-modal>
+            <a href="{{ route('admin.events.create') }}" class="btn is-sm is-blue">Add new</a>
         </div>
     </div>
     <table class="w-full border-collapse">
@@ -76,11 +52,12 @@
                         :action="route('admin.events.end', event.slug)" method="POST" class="btn is-sm is-red">End</ajax-button>
                         <ajax-button v-else-if="!event.hasEnded" @success="onComplete" @failure="onComplete"
                         :action="route('admin.events.go-live', event.slug)" method="POST" class="btn is-sm is-green">Begin</ajax-button>
-                        <form v-if="!event.isLive" class="inline-block" action="{{ route('admin.events.delete', $event) }}" method="POST">
+                        <form v-if="!event.isLive" class="inline-block" action="{!! route('admin.events.delete', $event) !!}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn is-sm is-red">Delete</button>
                         </form>
+                        <a v-if="!event.isLive" class="btn is-sm is-yellow" href="{{ route('admin.events.edit', $event) }}">Edit</a>
                     </td>
                 </template>
             </tr>
