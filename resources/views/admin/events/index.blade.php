@@ -3,9 +3,12 @@
 @section('content')
 <div class="card seperated">
     <div class="card-header">
-        <div class="flex">
-            <h2 class="text-xl font-normal">Events</h2>
-            <span class="ml-2 bg-blue text-white rounded-full p-1 text-xs">{{ $events->count() }}</span>
+        <div class="flex justify-between">
+            <div class="flex">
+                <h2 class="text-xl font-normal">Events</h2>
+                <span class="ml-2 bg-blue text-white rounded-full p-1 text-xs">{{ $events->count() }}</span>
+            </div>
+            <a href="{{ route('admin.events.create') }}" class="btn is-sm is-blue">Add new</a>
         </div>
     </div>
     <table class="w-full border-collapse">
@@ -16,7 +19,7 @@
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Rounds</th>
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Participations</th>
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Quizzes</th>
-                <th class="text-xs uppercase font-light text-right pr-6 py-2">Actions</th>
+                <th class="text-xs uppercase font-light text-center pr-6 py-2">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -49,6 +52,12 @@
                         :action="route('admin.events.end', event.slug)" method="POST" class="btn is-sm is-red">End</ajax-button>
                         <ajax-button v-else-if="!event.hasEnded" @success="onComplete" @failure="onComplete"
                         :action="route('admin.events.go-live', event.slug)" method="POST" class="btn is-sm is-green">Begin</ajax-button>
+                        <form v-if="!event.isLive" class="inline-block" action="{!! route('admin.events.delete', $event) !!}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn is-sm is-red">Delete</button>
+                        </form>
+                        <a v-if="!event.isLive" class="btn is-sm is-yellow" href="{{ route('admin.events.edit', $event) }}">Edit</a>
                     </td>
                 </template>
             </tr>

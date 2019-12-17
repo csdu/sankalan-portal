@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
@@ -45,5 +46,66 @@ class EventController extends Controller
             'message' => 'Event has ended!',
             'event' => $event,
         ]);
+    }
+
+    public function delete(Event $event)
+    {
+        // can only delete event which hasnt been started yet
+        abort_if($event->started_at, 403, "You can only delete event which has'nt started yet");
+
+        $event->delete();
+        flash('Event deleted', 'success');
+
+        return redirect()->route('admin.events.index');
+    }
+
+    public function create()
+    {
+        return view('admin.events.create');
+    }
+
+    public function store(Request $request)
+    {
+        request()->validate([
+            'title' => 'required',
+            'description' => 'required|max:800',
+            'rounds' => 'required|min:1',
+        ]);
+
+        Event::create([
+            'title' => $request->title,
+            'slug' => str_slug($request->title),
+            'description' => $request->description,
+            'rounds' => $request->rounds,
+        ]);
+
+        flash('Event created!')->success();
+
+        return redirect()->route('admin.events.index');
+    }
+
+    public function edit(Event $event)
+    {
+        return view('admin.events.edit', compact('event'));
+    }
+
+    public function update(Request $request, Event $event)
+    {
+        request()->validate([
+            'title' => 'required',
+            'description' => 'required|max:800',
+            'rounds' => 'required|min:1',
+        ]);
+
+        $event->update([
+            'title' => $request->title,
+            'slug' => str_slug($request->title),
+            'description' => $request->description,
+            'rounds' => $request->rounds,
+        ]);
+
+        flash('Event updated!')->success();
+
+        return redirect()->route('admin.events.index');
     }
 }
