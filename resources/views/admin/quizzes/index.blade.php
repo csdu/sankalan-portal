@@ -3,9 +3,12 @@
 @section('content')
 <div class="card seperated">
     <div class="card-header">
-        <div class="flex">
-            <h2 class="text-xl font-normal">Quizzes</h2>
-            <span class="ml-2 bg-blue text-white rounded-full p-1 text-xs">{{ $quizzes->count() }}</span>
+        <div class="flex justify-between">
+            <div class="flex">
+                <h2 class="text-xl font-normal">Quizzes</h2>
+                <span class="ml-2 bg-blue text-white rounded-full p-1 text-xs">{{ $quizzes->count() }}</span>
+            </div>
+            <a href="{{ route('admin.quizzes.create') }}" class="btn is-sm is-blue">Add new</a>
         </div>
     </div>
     <table class="w-full">
@@ -18,7 +21,7 @@
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Participations</th>
                 <th class="text-xs text-center uppercase font-light text-left px-4 py-2">Token</th>
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Questions</th>
-                <th class="text-xs uppercase font-light text-left pr-6 py-2">Actions</th>
+                <th class="text-xs uppercase font-light text-center pr-6 py-2">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -73,6 +76,13 @@
                                 class="btn is-blue is-sm font-normal">
                                 Evaluate
                             </button>
+                            <br>
+                            <form v-if="!quiz.isActive" class="inline-block" action="{!! route('admin.quizzes.delete', $quiz) !!}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn is-sm is-red">Delete</button>
+                            </form>
+                            <a v-if="!quiz.isActive" class="btn is-sm is-yellow" href="{{ route('admin.quizzes.edit', $quiz) }}">Edit</a>
                         </td>
                     </template>
                 </tr>
