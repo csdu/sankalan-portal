@@ -67,3 +67,18 @@ Route::patch('events/{event}', 'EventController@update')
 
 Route::delete('events/{event}/delete', 'EventController@delete')
     ->name('admin.events.delete');
+
+Route::get('quizzes/create', 'QuizController@create')
+    ->name('admin.quizzes.create');
+
+Route::post('quizzes', 'QuizController@store')
+    ->name('admin.quizzes.store');
+
+Route::get('quizzes/{quiz}/edit', 'QuizController@edit')
+    ->name('admin.quizzes.edit');
+
+Route::patch('quizzes/{quiz}', 'QuizController@update')
+    ->name('admin.quizzes.update');
+
+Route::delete('quizzes/{quiz}/delete', 'QuizController@delete')
+    ->name('admin.quizzes.delete');
