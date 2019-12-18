@@ -134,7 +134,7 @@ class QuizController extends Controller
     public function delete(Quiz $quiz)
     {
         // can only delete quiz which is not active
-        abort_if($quiz->opened_at, 403, "You can only delete quiz which is'nt active");
+        abort_if($quiz->isActive, 403, "You can only delete quiz which is'nt active");
 
         $quiz->delete();
         flash('Quiz deleted', 'success');
