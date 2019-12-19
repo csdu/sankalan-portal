@@ -82,12 +82,12 @@ class Quiz extends Model
         ]) && $this->update(['opened_at' => now()]);
     }
 
-    public function verify(string $token) 
+    public function verify(string $token)
     {
         if ($token != $this->token) {
             return false;
         }
-        
+
         Session::put('quiz_token', $token);
 
         return true;
@@ -180,6 +180,8 @@ class Quiz extends Model
         }
         if (is_array($instructions)) {
             $this->attributes['instructions'] = implode("\n", $instructions);
+        } else {
+            $this->attributes['instructions'] = $instructions;
         }
     }
 
