@@ -77,7 +77,7 @@
                                 Evaluate
                             </button>
                             <br>
-                            <form v-if="!quiz.isActive" class="inline-block" action="{!! route('admin.quizzes.delete', $quiz) !!}" method="POST">
+                            <form v-if="!quiz.isActive" class="inline-block" action="{{ route('admin.quizzes.delete', $quiz) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn is-sm is-red">Delete</button>
