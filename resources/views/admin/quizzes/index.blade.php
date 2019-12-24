@@ -8,7 +8,7 @@
                 <h2 class="text-xl font-normal">Quizzes</h2>
                 <span class="ml-2 bg-blue text-white rounded-full p-1 text-xs">{{ $quizzes->count() }}</span>
             </div>
-            <a href="{{ route('admin.quizzes.create') }}" class="btn is-sm is-blue">Add new</a>
+            <a href="{{ route('admin.quizzes.create') }}" class="btn is-sm is-blue">Add new quiz</a>
         </div>
     </div>
     <table class="w-full">
@@ -34,9 +34,9 @@
                             <span v-else class="p-1 ml-1 rounded bg-grey font-thin text-xs uppercase leading-none">Offline</span>
                         </td>
                         <td class="text-left px-4 py-2">
-                            <a href="#" class="link" v-text="quiz.event.title + ' - ' + quiz.title"></a>
+                            <a href="{{ route('admin.quizzes.show', $quiz) }}" class="link" v-text="quiz.event.title + ' - ' + quiz.title"></a>
                         </td>
-                        <td class="table-fit text-left px-4 py-2">
+                        <td class="text-left px-4 py-2">
                             <span v-text="quiz.event.title" class="capitalize"></span>
                             <span v-if="quiz.event.isLive" class="p-1 ml-1 rounded bg-green text-white font-normal text-xs uppercase leading-none">LIVE</span>
                         </td>
@@ -55,7 +55,7 @@
                         <td class="table_fit text-center px-4 py-2">
                             <span class="px-2 py-1 rounded-full bg-grey text-xs" v-text="quiz.questions_count"></span>
                         </td>
-                        <td class="table-fit text-right pr-6 py-2">
+                        <td class="table-fit text-left pr-6 py-2">
                             <ajax-button v-if="quiz.isActive" 
                                 class="btn is-red is-sm font-normal"
                                 :action="route('admin.quizzes.close', quiz.slug)" method="post"
@@ -76,13 +76,14 @@
                                 class="btn is-blue is-sm font-normal">
                                 Evaluate
                             </button>
-                            <br>
-                            <form v-if="!quiz.isActive" class="inline-block" action="{{ route('admin.quizzes.delete', $quiz) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn is-sm is-red">Delete</button>
-                            </form>
-                            <a v-if="!quiz.isActive" class="btn is-sm is-yellow" href="{{ route('admin.quizzes.edit', $quiz) }}">Edit</a>
+                            <div class="pt-2">
+                                <form v-if="!quiz.isActive" class="inline-block" action="{{ route('admin.quizzes.delete', $quiz) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn is-sm is-red">Delete</button>
+                                </form>
+                                <a v-if="!quiz.isActive" class="btn is-sm is-yellow" href="{{ route('admin.quizzes.edit', $quiz) }}">Edit</a>
+                            </div>
                         </td>
                     </template>
                 </tr>
