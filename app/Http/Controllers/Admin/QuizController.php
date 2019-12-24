@@ -141,4 +141,9 @@ class QuizController extends Controller
 
         return redirect()->route('admin.quizzes.index');
     }
+
+    public function show(Quiz $quiz)
+    {
+        return view('admin.quizzes.show', compact('quiz'));
+    }
 }

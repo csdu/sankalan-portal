@@ -26,7 +26,7 @@ class CreateQuestionsTable extends Migration
             $table->string('correct_answer_keys')->nullable();
             $table->timestamps();
 
-            $table->foreign('quiz_id')->references('id')->on('quizzes');
+            $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

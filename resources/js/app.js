@@ -9,6 +9,8 @@ import AjaxButton from "./components/AjaxButton.vue";
 import GetRoutes from "./components/GetRoutes.vue";
 import LoginRegister from "./components/LoginRegister";
 import Modal from './components/Modal.vue';
+import MarkdownEditor from "./components/MarkdownEditor.vue";
+import QuestionType from "./components/QuestionType.vue";
 
 Vue.component("quiz-area", QuizArea);
 Vue.component("v-flash", FlashMessages);
@@ -17,6 +19,8 @@ Vue.component("get-routes", GetRoutes);
 Vue.component("login-register", LoginRegister);
 Vue.component("countdown-timer", CountdownTimer);
 Vue.component("modal", Modal);
+Vue.component("markdown-editor", MarkdownEditor);
+Vue.component("question-type", QuestionType);
 
 const files = require.context('./pages/', true, /\.(vue|js)$/i);
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
