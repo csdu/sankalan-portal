@@ -82,3 +82,18 @@ Route::patch('quizzes/{quiz}', 'QuizController@update')
 
 Route::delete('quizzes/{quiz}/delete', 'QuizController@delete')
     ->name('admin.quizzes.delete');
+
+Route::get('quizzes/{quiz}/show', 'QuizController@show')
+    ->name('admin.quizzes.show');
+
+Route::get('quizzes/{quiz}/questions/create', 'QuestionController@create')
+    ->name('admin.quizzes.questions.create');
+
+Route::post('quizzes/{quiz}/questions', 'QuestionController@store')
+    ->name('admin.quizzes.questions.store');
+
+Route::get('quizzes/{quiz}/questions/{question}/show', 'QuestionController@show')
+    ->name('admin.quizzes.questions.show');
+
+Route::delete('quizzes/{quiz}/questions/{question}/delete', 'QuestionController@delete')
+    ->name('admin.quizzes.questions.delete');
