@@ -76,4 +76,21 @@ class QuizResponseController extends Controller
             'score' => $score,
         ];
     }
+
+    public function showExtraTimeForm(QuizResponse $quizResponse)
+    {
+        return view('admin.quizzes_teams.extra-time')->withQuizTeam($quizResponse);
+    }
+
+    public function storeExtraTime(Request $request, QuizResponse $quizResponse)
+    {
+        $quizResponse->update([
+            'started_at' => $quizResponse->started_at->add($request->time, 'minutes'),
+            'finished_at' => null,
+        ]);
+
+        flash('Time updated!')->success();
+
+        return redirect()->route('admin.quizzes.teams.index');
+    }
 }

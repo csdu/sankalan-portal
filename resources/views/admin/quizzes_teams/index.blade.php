@@ -37,7 +37,7 @@
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Started</th>
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Finished</th>
                 <th class="text-xs uppercase font-light text-center px-4 py-2">Score</th>
-                <th class="text-xs uppercase font-light text-right pr-6 py-2">Action</th>
+                <th class="text-xs uppercase font-light text-center pr-6 py-2">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -75,17 +75,22 @@
                             <span v-if="score != null" class="p-1 bg-green text-white text-xs font-semibold rounded-full" v-text="score"></span>
                             <span v-else class="p-1 bg-grey text-xs rounded">Not Evaluated</span>
                         </td>
-                        <td class="table_fit text-right pl-4 pr-6 py-2">
-                            <div class="inline-flex">
-                                <ajax-button v-if="finish_time" class="btn is-green is-sm mr-2 whitespace-no-wrap"
-                                :action="route('admin.quizzes.teams.evaluate', participationId)"
-                                method="POST"
-                                title="Evaluate"
-                                @success="onComplete"
-                                >
-                                    Evaluate
-                                </ajax-button>
-                                <span v-else class="p-1 bg-grey text-xs rounded mr-2">Not Completed</span>
+                        <td class="table_fit text-center pl-4 pr-6 py-2">
+                            <div class="inline-flex items-center justify-center">
+                                <div class="flex items-center justify-center">
+                                    <ajax-button v-if="finish_time" class="btn is-green is-sm mr-2 whitespace-no-wrap"
+                                    :action="route('admin.quizzes.teams.evaluate', participationId)"
+                                    method="POST"
+                                    title="Evaluate"
+                                    @success="onComplete"
+                                    >
+                                        Evaluate
+                                    </ajax-button>
+                                    <span v-else class="p-1 bg-grey text-xs rounded mr-2">Not Completed</span>
+                                    <a href="{{route('admin.quizzes.teams.extra-time', $quiz_team)}}" class="btn is-blue is-sm mr-2">
+                                        Give Extra Time
+                                    </a>
+                                </div>
                                 <a :href="route('admin.quiz-participations.show', participationId)"
                                 title="View Details">
                                     @include('svg.view-show', ['classes' => 'text-grey hover:text-blue fill-current h-6'])
