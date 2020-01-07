@@ -34,7 +34,7 @@
                     <span class="px-2 py-1 bg-grey rounded-full text-xs">{{ $team->events_count }}</span>
                 </td>
                 <td class="table-fit text-right pr-6 py-2">
-                    <button class="btn is-sm is-red">End</button>
+                    <button onsubmit="return confirm('Are you about it.')" class="btn is-sm is-red">End</button>
                     <button class="btn is-sm is-green">Begin</button>
                 </td>
             </tr>

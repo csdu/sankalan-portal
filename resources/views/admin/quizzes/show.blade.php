@@ -63,7 +63,7 @@
                     </td>
                     <td class="text-center pr-6 py-2">
                         @unless ($quiz->isactive || $quiz->isClosed)
-                            <form class="inline-block" action="{{ route('admin.quizzes.questions.delete', [$quiz, $question]) }}" method="POST">
+                            <form onsubmit="return confirm('Are you about deleting it.')" class="inline-block" action="{{ route('admin.quizzes.questions.delete', [$quiz, $question]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn is-sm is-red">Delete</button>

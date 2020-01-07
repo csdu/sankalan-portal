@@ -52,7 +52,7 @@
                         :action="route('admin.events.end', event.slug)" method="POST" class="btn is-sm is-red">End</ajax-button>
                         <ajax-button v-else-if="!event.hasEnded" @success="onComplete" @failure="onComplete"
                         :action="route('admin.events.go-live', event.slug)" method="POST" class="btn is-sm is-green">Begin</ajax-button>
-                        <form v-if="!event.isLive" class="inline-block" action="{!! route('admin.events.delete', $event) !!}" method="POST">
+                        <form onsubmit="return confirm('Are you about deleting it.')" v-if="!event.isLive" class="inline-block" action="{!! route('admin.events.delete', $event) !!}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn is-sm is-red">Delete</button>

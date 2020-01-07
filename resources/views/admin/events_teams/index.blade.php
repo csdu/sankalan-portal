@@ -60,7 +60,7 @@
                                 @success="onComplete"
                                 @failure="onComplete"
                                 class="btn is-green is-sm font-normal">Allow Quiz</ajax-button>
-                                <button class="btn is-red is-sm font-normal">Disqualify</button>
+                                <button onsubmit="return confirm('Are you sure about it.')" class="btn is-red is-sm font-normal">Disqualify</button>
                             </td>
                         </template>
                     </tr>
