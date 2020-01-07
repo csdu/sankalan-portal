@@ -97,3 +97,13 @@ Route::get('quizzes/{quiz}/questions/{question}/show', 'QuestionController@show'
 
 Route::delete('quizzes/{quiz}/questions/{question}/delete', 'QuestionController@delete')
     ->name('admin.quizzes.questions.delete');
+
+Route::get(
+    'quizzes_teams/{quiz_response}/extra-time',
+    'QuizResponseController@showExtraTimeForm'
+)->name('admin.quizzes.teams.extra-time');
+
+Route::post(
+    'quizzes_teams/{quiz_response}/extra-time',
+    'QuizResponseController@storeExtraTime'
+)->name('admin.quizzes.teams.extra-time');
