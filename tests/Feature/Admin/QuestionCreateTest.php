@@ -25,16 +25,20 @@ class QuestionCreateTest extends TestCase
     public function admin_can_create_a_question()
     {
         $quiz = create(Quiz::class);
-
-        $this->withoutExceptionHandling()->signInAdmin();
+        $this->signInAdmin();
 
         $data = [
             'qno' => 1,
             'positive_score' => 4,
             'negative_score' => 1,
-            'text' => 'test question',
+            'text' => '# test question',
+            'compiledHTML' => '<h1>test question</h1>',
+            'type' => 'mcq',
             'correct_answer_keys' => 'nokey',
         ];
+
+        $res = $this->post(route('admin.quizzes.questions.store', $quiz), $data);
+        $res->assertCreated();
 
         // options
         $question = create(Question::class);
@@ -43,10 +47,8 @@ class QuestionCreateTest extends TestCase
             'key' => str_random(3),
             'text' => str_random(),
         ];
+
         $question->choices()->create($option);
         $this->assertDatabaseHas('question_options', $option);
-
-        $this->post(route('admin.quizzes.questions.store', $quiz), $data);
-        $this->assertDatabaseHas('questions', $data);
     }
 }

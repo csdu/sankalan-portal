@@ -90,4 +90,14 @@ class Question extends Model
             ));
         });
     }
+
+    public function attachments()
+    {
+        return $this->hasMany(QuestionAttachment::class);
+    }
+
+    public function quiz()
+    {
+        return $this->belongsTo(Quiz::class);
+    }
 }

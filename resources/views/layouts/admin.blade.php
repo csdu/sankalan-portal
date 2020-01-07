@@ -13,6 +13,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
+    @stack('stylesheets')
+
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @routes
@@ -94,5 +96,6 @@
         </footer>
     </div>
     <script src="{{ mix('js/app.js') }}" defer></script>
+    @stack('scripts')
 </body>
 </html>
