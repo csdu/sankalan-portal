@@ -1,5 +1,10 @@
 @extends('layouts.admin')
 @section('title', 'Admin Dashboard')
+@push('stylesheets')
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css"/>
+@endpush
 @section('content')
 <div class="card seperated">
     <div class="card-header">
@@ -16,7 +21,7 @@
         </div>
     </div>
     <div class="card-content">
-        <form action="{{ route('admin.quizzes.questions.store', $quiz) }}" method="POST">
+        <form action="{{ route('admin.quizzes.questions.store', $quiz) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="flex -mx-2">
@@ -43,9 +48,11 @@
             </div>
 
             <label class="control">Question</label>
+            <markdown-editor name="text" value="{{ old('text') }}"></markdown-editor>
+            
             <label class="control">File</label>
             <input type="file" class="control" name="illustrations[]" multiple>
-
+            
             <question-type></question-type>
 
             <button class="btn is-blue mt-4" type="submit">Create</button>
@@ -54,3 +61,6 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
+@endpush

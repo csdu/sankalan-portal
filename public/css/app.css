@@ -603,10 +603,6 @@ video {
   height: auto;
 }
 
-.katex .sqrt .sqrt-line, .katex .sqrt .sqrt-line::after, .katex .sqrt .sqrt-line::before {
-  border-color: black;
-}
-
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }

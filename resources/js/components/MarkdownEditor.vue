@@ -6,20 +6,22 @@
 		</div>
 		<div class="control">
 			<div
-				v-if="preview"
-				class="markdown-body control border rounded py-2 px-3 h-64 overflow-y-scroll"
+				v-show="preview"
+				class="markdown-body control border rounded py-2 my-2 px-4 h-64 overflow-y-scroll"
 				v-html="compiledHTML"
 			></div>
 			<textarea
-				name="text"
+				@keydown.tab.prevent="tabber($event)"
+				:name="name"
 				rows="10"
-				v-else
+				v-show="!preview"
 				v-model="markdown"
-				@input="$emit('input', markdown)"
+				@input="convertToHtml()"
 				class="control"
 				style="resize: none;"
 				placeholder="Use Markdown"
 			></textarea>
+			<input type="hidden" name="compiledHTML" v-model="compiledHTML" />
 		</div>
 	</div>
 </template>
@@ -28,7 +30,8 @@ import md from "markdown-it";
 import mk from "markdown-it-katex";
 export default {
 	props: {
-		value: { default: "" }
+		value: { default: "" },
+		name: { default: "text" }
 	},
 	data() {
 		return {
@@ -40,7 +43,22 @@ export default {
 	},
 	methods: {
 		convertToHtml() {
+			document.querySelectorAll("pre code").forEach(block => {
+				hljs.highlightBlock(block);
+			});
+
 			this.compiledHTML = this.parser.render(this.markdown);
+		},
+		tabber(event) {
+			let text = event.target.value,
+				originalSelectionStart = event.target.selectionStart,
+				textStart = text.slice(0, originalSelectionStart),
+				textEnd = text.slice(originalSelectionStart);
+
+			event.target.value = `${textStart}\t${textEnd}`;
+			event.target.value = event.target.value; // required to make the cursor stay in place.
+			event.target.selectionEnd = event.target.selectionStart =
+				originalSelectionStart + 1;
 		}
 	},
 	created() {

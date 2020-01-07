@@ -2032,12 +2032,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     value: {
-      "default": "# hello"
+      "default": ""
+    },
+    name: {
+      "default": "text"
     }
   },
   data: function data() {
@@ -2050,7 +2055,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     convertToHtml: function convertToHtml() {
+      document.querySelectorAll("pre code").forEach(function (block) {
+        hljs.highlightBlock(block);
+      });
       this.compiledHTML = this.parser.render(this.markdown);
+    },
+    tabber: function tabber(event) {
+      var text = event.target.value,
+          originalSelectionStart = event.target.selectionStart,
+          textStart = text.slice(0, originalSelectionStart),
+          textEnd = text.slice(originalSelectionStart);
+      event.target.value = "".concat(textStart, "\t").concat(textEnd);
+      event.target.value = event.target.value; // required to make the cursor stay in place.
+
+      event.target.selectionEnd = event.target.selectionStart = originalSelectionStart + 1;
     }
   },
   created: function created() {
@@ -2108,7 +2126,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _MarkdownEditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MarkdownEditor */ "./resources/js/components/MarkdownEditor.vue");
 //
 //
 //
@@ -2159,12 +2176,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    isMcq: {
+      "default": true
+    },
+    counter: {
+      "default": 2
+    }
+  },
   data: function data() {
     return {
-      mcq: true,
-      count: 4
+      mcq: this.isMcq,
+      count: this.counter
     };
   },
   methods: {
@@ -2303,6 +2336,68 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2323,6 +2418,9 @@ __webpack_require__.r(__webpack_exports__);
     dataQuestions: {
       "default": []
     },
+    dataQuestionsAttachments: {
+      "default": []
+    },
     timeLimit: {
       "default": 30
     }
@@ -2335,16 +2433,16 @@ __webpack_require__.r(__webpack_exports__);
       submission: {
         done: false,
         success: false,
-        text: 'Please wait! While we record your response.'
+        text: "Please wait! While we record your response."
       },
       keyEvents: {
-        "ArrowRight": function ArrowRight() {
+        ArrowRight: function ArrowRight() {
           return _this.nextQuestion();
         },
-        "ArrowLeft": function ArrowLeft() {
+        ArrowLeft: function ArrowLeft() {
           return _this.previousQuestion();
         },
-        "Enter": function Enter() {
+        Enter: function Enter() {
           return _this.submit();
         }
       },
@@ -2358,6 +2456,13 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     currentQuestion: function currentQuestion() {
       return this.questions[this.currentQuestionIndex];
+    },
+    currentQuestionAttachments: function currentQuestionAttachments() {
+      var _this2 = this;
+
+      return this.dataQuestionsAttachments.filter(function (questionAttachment) {
+        return questionAttachment.question_id === _this2.currentQuestion.id;
+      });
     },
     currentResponse: function currentResponse() {
       return this.responses[this.currentQuestionIndex];
@@ -2396,7 +2501,7 @@ __webpack_require__.r(__webpack_exports__);
       this.setCurrentQuestion(this.currentQuestionIndex - 1); // this.currentResponse = '';
     },
     submit: function submit() {
-      if (confirm('You still have time left. Are you sure you want to submit your Response?')) {
+      if (confirm("You still have time left. Are you sure you want to submit your Response?")) {
         this.endQuiz();
       }
     },
@@ -2408,7 +2513,7 @@ __webpack_require__.r(__webpack_exports__);
       var data = _ref.data;
       this.submission = {
         done: true,
-        success: data.message.level == 'success',
+        success: data.message.level == "success",
         text: data.message.message
       };
       setTimeout(this.redirect, 3 * 1000);
@@ -2420,15 +2525,15 @@ __webpack_require__.r(__webpack_exports__);
       var response = _ref2.response;
       this.submission = {
         done: true,
-        success: response.data.message.level != 'danger',
+        success: response.data.message.level != "danger",
         text: response.data.message.message
       };
     },
     saveResponse: function saveResponse(response) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (response == null) {
-        return flash('Answer can not be null!', 'danger');
+        return flash("Answer can not be null!", "danger");
       }
 
       this.loading = true;
@@ -2436,15 +2541,15 @@ __webpack_require__.r(__webpack_exports__);
         question_id: this.currentQuestion.id,
         response_key: response.key
       })["catch"](function (error) {
-        flash('Error occurred in saving response!', 'danger');
+        flash("Error occurred in saving response!", "danger");
       }).then(function (_ref3) {
         var data = _ref3.data;
 
-        _this2.responses.splice(_this2.currentQuestionIndex, 1, response);
+        _this3.responses.splice(_this3.currentQuestionIndex, 1, response);
 
-        flash(data.message, 'info');
+        flash(data.message, "info");
       })["finally"](function () {
-        _this2.loading = false;
+        _this3.loading = false;
       });
     }
   },
@@ -2456,13 +2561,13 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this4 = this;
 
-    window.addEventListener('keydown', function (_ref4) {
+    window.addEventListener("keydown", function (_ref4) {
       var code = _ref4.code;
 
-      if (_this3.keyEvents.hasOwnProperty(code)) {
-        _this3.keyEvents[code]();
+      if (_this4.keyEvents.hasOwnProperty(code)) {
+        _this4.keyEvents[code]();
 
         return false;
       }
@@ -2538,9 +2643,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     dataQuestion: {
+      required: true
+    },
+    dataQuestionAttachments: {
       required: true
     },
     index: {
@@ -2557,22 +2692,22 @@ __webpack_require__.r(__webpack_exports__);
       highlightedOptionIndex: 0,
       editing: false,
       answer: this.value || {
-        key: ''
+        key: ""
       },
       keyEvents: {
-        'ArrowDown': function ArrowDown() {
+        ArrowDown: function ArrowDown() {
           return _this.highlightNextOption();
         },
-        'ArrowUp': function ArrowUp() {
+        ArrowUp: function ArrowUp() {
           return _this.highlightPreviousOption();
         },
-        'Space': function Space() {
+        Space: function Space() {
           return _this.toggleOption(_this.highlightedOptionIndex);
         },
-        'Delete': function Delete() {
+        Delete: function Delete() {
           return _this.clearOption();
         },
-        'Backspace': function Backspace() {
+        Backspace: function Backspace() {
           return _this.clearOption();
         }
       }
@@ -2584,7 +2719,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     escapedCode: function escapedCode() {
       if (this.dataQuestion.code) {
-        return this.dataQuestion.code.replace(/\n/g, '\\n').replace(/<br>/g, "\n");
+        return this.dataQuestion.code.replace(/\n/g, "\\n").replace(/<br>/g, "\n");
       }
 
       return null;
@@ -2603,12 +2738,12 @@ __webpack_require__.r(__webpack_exports__);
     toggleOption: function toggleOption(index) {
       if (this.isSelected(index)) {
         this.answer = {
-          key: ''
+          key: ""
         };
-        this.$emit('input', this.answer);
+        this.$emit("input", this.answer);
       } else {
         this.answer = this.dataQuestion.choices[index];
-        this.$emit('input', this.answer);
+        this.$emit("input", this.answer);
       }
     },
     isSelected: function isSelected(index) {
@@ -2619,8 +2754,8 @@ __webpack_require__.r(__webpack_exports__);
       return this.highlightedOptionIndex == index;
     },
     clearResponse: function clearResponse() {
-      this.$emit('input', {
-        key: ''
+      this.$emit("input", {
+        key: ""
       });
     },
     editResponse: function editResponse() {
@@ -2633,13 +2768,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     saveResponse: function saveResponse() {
       this.editing = false;
-      this.$emit('input', this.answer);
+      this.$emit("input", this.answer);
     }
   },
   watch: {
     value: function value() {
       this.answer = this.value || {
-        key: ''
+        key: ""
       };
     }
   },
@@ -2647,7 +2782,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this3 = this;
 
     if (this.dataQuestion.choices.length > 0) {
-      window.addEventListener('keydown', function (_ref) {
+      window.addEventListener("keydown", function (_ref) {
         var code = _ref.code;
 
         if (_this3.keyEvents.hasOwnProperty(code)) {
@@ -2657,6 +2792,18 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     }
+  },
+  created: function created() {
+    document.addEventListener("DOMContentLoaded", function (event) {
+      document.querySelectorAll("pre code").forEach(function (block) {
+        hljs.highlightBlock(block);
+      });
+    });
+  },
+  updated: function updated() {
+    document.querySelectorAll("pre code").forEach(function (block) {
+      hljs.highlightBlock(block);
+    });
   }
 });
 
@@ -21815,39 +21962,84 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "control" }, [
-      _vm.preview
-        ? _c("div", {
-            staticClass:
-              "markdown-body control border rounded py-2 px-3 h-64 overflow-y-scroll",
-            domProps: { innerHTML: _vm._s(_vm.compiledHTML) }
-          })
-        : _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.markdown,
-                expression: "markdown"
-              }
-            ],
-            staticClass: "control",
-            staticStyle: { resize: "none" },
-            attrs: { name: "text", rows: "10", placeholder: "Use Markdown" },
-            domProps: { value: _vm.markdown },
-            on: {
-              input: [
-                function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.markdown = $event.target.value
-                },
-                function($event) {
-                  return _vm.$emit("input", _vm.markdown)
-                }
-              ]
+      _c("div", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.preview,
+            expression: "preview"
+          }
+        ],
+        staticClass:
+          "markdown-body control border rounded py-2 my-2 px-4 h-64 overflow-y-scroll",
+        domProps: { innerHTML: _vm._s(_vm.compiledHTML) }
+      }),
+      _vm._v(" "),
+      _c("textarea", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.preview,
+            expression: "!preview"
+          },
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.markdown,
+            expression: "markdown"
+          }
+        ],
+        staticClass: "control",
+        staticStyle: { resize: "none" },
+        attrs: { name: _vm.name, rows: "10", placeholder: "Use Markdown" },
+        domProps: { value: _vm.markdown },
+        on: {
+          keydown: function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "tab", 9, $event.key, "Tab")
+            ) {
+              return null
             }
-          })
+            $event.preventDefault()
+            return _vm.tabber($event)
+          },
+          input: [
+            function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.markdown = $event.target.value
+            },
+            function($event) {
+              return _vm.convertToHtml()
+            }
+          ]
+        }
+      }),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.compiledHTML,
+            expression: "compiledHTML"
+          }
+        ],
+        attrs: { type: "hidden", name: "compiledHTML" },
+        domProps: { value: _vm.compiledHTML },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.compiledHTML = $event.target.value
+          }
+        }
+      })
     ])
   ])
 }
@@ -21941,7 +22133,7 @@ var render = function() {
       _c("div", { staticClass: "px-2" }, [
         _vm._v("\n\t\t\tMCQ\n\t\t\t"),
         _c("input", {
-          attrs: { type: "radio", name: "type", checked: "" },
+          attrs: { type: "radio", value: "mcq", name: "type", checked: "" },
           on: {
             click: function($event) {
               return _vm.toggleMcq(true)
@@ -21953,7 +22145,7 @@ var render = function() {
       _c("div", { staticClass: "px-2" }, [
         _vm._v("\n\t\t\tInput\n\t\t\t"),
         _c("input", {
-          attrs: { type: "radio", name: "type" },
+          attrs: { type: "radio", value: "input", name: "type" },
           on: {
             click: function($event) {
               return _vm.toggleMcq(false)
@@ -21967,51 +22159,76 @@ var render = function() {
       ? _c("div", [
           _c("label", { staticClass: "control" }, [_vm._v("Options")]),
           _vm._v(" "),
-          _c("div", { staticClass: "flex" }, [
-            _c(
-              "div",
-              { staticClass: "w-full" },
+          _c(
+            "div",
+            [
               _vm._l(_vm.count, function(i) {
-                return _c("input", {
-                  key: i,
-                  staticClass: "control",
-                  attrs: {
-                    name: "options[]",
-                    placeholder: "Enter option " + i,
-                    type: "text",
-                    required: ""
-                  }
-                })
+                return _c(
+                  "div",
+                  { key: i, staticClass: "w-full flex items-center" },
+                  [
+                    _c("input", {
+                      staticClass: "control mr-4",
+                      attrs: {
+                        name: "options[" + (i - 1) + "]",
+                        placeholder: "Enter option " + i,
+                        type: "text",
+                        required: ""
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "inline-flex items-center",
+                        attrs: { for: "option-" + (i - 1) }
+                      },
+                      [
+                        _c("input", {
+                          staticClass: "mr-1",
+                          attrs: {
+                            type: "radio",
+                            name: "correct_answer_keys",
+                            id: "option-" + (i - 1),
+                            required: ""
+                          },
+                          domProps: { value: i - 1 }
+                        }),
+                        _vm._v("\n\t\t\t\t\tCorrect\n\t\t\t\t")
+                      ]
+                    )
+                  ]
+                )
               }),
-              0
-            ),
-            _vm._v(" "),
-            _c("div", [
-              _c(
-                "button",
-                {
-                  staticClass: "btn is-blue text-white mb-2 ml-2",
-                  attrs: { type: "button" },
-                  on: { click: _vm.addOption }
-                },
-                [_vm._v("+")]
-              )
-            ]),
-            _vm._v(" "),
-            _vm.count > 1
-              ? _c("div", [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn is-red text-white mb-2 ml-2",
-                      attrs: { type: "button" },
-                      on: { click: _vm.removeOption }
-                    },
-                    [_vm._v("-")]
-                  )
-                ])
-              : _vm._e()
-          ])
+              _vm._v(" "),
+              _c("div", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn is-blue text-white mb-2 ml-2",
+                    attrs: { type: "button" },
+                    on: { click: _vm.addOption }
+                  },
+                  [_vm._v("+")]
+                ),
+                _vm._v(" "),
+                _vm.count > 1
+                  ? _c("div", { staticClass: "inline-flex" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn is-red text-white mb-2 ml-2",
+                          attrs: { type: "button" },
+                          on: { click: _vm.removeOption }
+                        },
+                        [_vm._v("-")]
+                      )
+                    ])
+                  : _vm._e()
+              ])
+            ],
+            2
+          )
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -22069,6 +22286,7 @@ var render = function() {
               staticClass: "flex flex-col",
               attrs: {
                 "data-question": _vm.currentQuestion,
+                "data-question-attachments": _vm.currentQuestionAttachments,
                 index: _vm.currentQuestionIndex,
                 value: _vm.currentResponse
               },
@@ -22371,7 +22589,7 @@ var render = function() {
           _vm.submission.success
             ? _c("p", { staticClass: "text-center my-6" }, [
                 _vm._v(
-                  "\n        You will be redirected to dashboard in 3 seconds.\n        Click "
+                  "\n\t\t\tYou will be redirected to dashboard in 3 seconds.\n\t\t\tClick\n\t\t\t"
                 ),
                 _c(
                   "button",
@@ -22381,7 +22599,7 @@ var render = function() {
                   },
                   [_vm._v("here")]
                 ),
-                _vm._v(" to redirect manually.\n    ")
+                _vm._v(" to redirect manually.\n\t\t")
               ])
             : _vm._e()
         ]
@@ -22409,210 +22627,232 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "question outline-none" }, [
-    _c("div", { staticClass: "card px-3 pt-3 pb-6 relative overflow-hidden" }, [
-      _c("strong", {
-        staticClass: "float-left mr-2",
-        domProps: { textContent: _vm._s("Q" + _vm.dataQuestion.qno + ".") }
+  return _c(
+    "div",
+    { staticClass: "question outline-none" },
+    [
+      _c(
+        "div",
+        { staticClass: "card px-3 pt-3 pb-6 relative overflow-hidden flex" },
+        [
+          _c("strong", {
+            staticClass: "float-left mr-2",
+            domProps: { textContent: _vm._s("Q" + _vm.dataQuestion.qno + ".") }
+          }),
+          _vm._v(" "),
+          _c("article", {
+            staticClass: "markdown-body w-full",
+            domProps: { innerHTML: _vm._s(_vm.dataQuestion.text) }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _vm.dataQuestion.code
+        ? _c("pre", {
+            staticClass:
+              "card p-4 font-mono my-4 leading-normal tracking-wide whitespace-pre-wrap max-h-64 overflow-y-auto",
+            domProps: { textContent: _vm._s(_vm.escapedCode) }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.dataQuestionAttachments, function(questionAttachment) {
+        return _c(
+          "div",
+          {
+            key: questionAttachment.id,
+            staticClass: "flex justify-center my-4"
+          },
+          [
+            _c("img", {
+              staticClass: "max-w-full rounded shadow-lg",
+              attrs: { src: "/question_attachments/" + questionAttachment.id }
+            })
+          ]
+        )
       }),
       _vm._v(" "),
-      _c("p", { domProps: { innerHTML: _vm._s(_vm.dataQuestion.text) } })
-    ]),
-    _vm._v(" "),
-    _vm.dataQuestion.code
-      ? _c("pre", {
-          staticClass:
-            "card p-4 font-mono my-4 leading-normal tracking-wide whitespace-pre-wrap max-h-64 overflow-y-auto",
-          domProps: { textContent: _vm._s(_vm.escapedCode) }
-        })
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.dataQuestion.illustration
-      ? _c("div", { staticClass: "flex justify-center my-4" }, [
-          _c("img", {
-            staticClass: "max-w-full rounded shadow-lg",
-            attrs: { src: _vm.dataQuestion.illustration }
-          })
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.choicesCount
-      ? _c(
-          "ul",
-          { staticClass: "choices-list list-reset my-8 flex flex-wrap -mx-2" },
-          _vm._l(_vm.dataQuestion.choices, function(choice, choiceIndex) {
-            return _c(
-              "li",
-              { key: choice.id, staticClass: "mb-3 w-full md:w-1/2 px-2" },
-              [
-                _c(
-                  "label",
-                  {
-                    staticClass:
-                      "relative flex items-center btn hover:bg-grey-light border shadow cursor-pointer pl-6 h-full",
-                    class: {
-                      "bg-white":
-                        !_vm.isHighlighted(choiceIndex) &&
-                        !_vm.isSelected(choiceIndex),
-                      "bg-green-dark":
-                        _vm.isHighlighted(choiceIndex) &&
-                        _vm.isSelected(choiceIndex),
-                      "bg-green":
-                        !_vm.isHighlighted(choiceIndex) &&
-                        _vm.isSelected(choiceIndex),
-                      "bg-grey-light border border-grey-darker": _vm.isHighlighted(
-                        choiceIndex
-                      ),
-                      "text-white hover:bg-green-dark border-green-dark": _vm.isSelected(
-                        choiceIndex
-                      )
-                    },
-                    attrs: { for: "choice-" + choice.key },
-                    on: {
-                      mouseover: function($event) {
-                        return _vm.highlightOption(choiceIndex)
-                      }
-                    }
-                  },
-                  [
-                    _vm.isHighlighted(choiceIndex)
-                      ? _c(
-                          "div",
-                          {
-                            staticClass:
-                              "absolute ml-3 pin-l pin-y flex items-center"
-                          },
-                          [
-                            _c("span", {
-                              staticClass: "inline-block w-2 h-2 rounded-full",
-                              class: _vm.isSelected(choiceIndex)
-                                ? "bg-white"
-                                : "bg-green"
-                            })
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "hidden",
-                      attrs: {
-                        id: "choice-" + choice.key,
-                        type: "radio",
-                        name: "question-" + choice.question_id
-                      },
-                      domProps: { value: choice.key },
-                      on: {
-                        input: function($event) {
-                          return _vm.toggleOption(choiceIndex)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("div", [
-                      choice.illustration
-                        ? _c("img", {
-                            staticClass: "rounded my-2 max-w-full",
-                            attrs: {
-                              src: choice.illustration,
-                              alt: choice.text
-                            }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      choice.code
-                        ? _c("pre", {
-                            staticClass: "my-2",
-                            domProps: { innerHTML: _vm._s(choice.code) }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("p", {
-                        staticClass: "ml-1",
-                        domProps: { innerHTML: _vm._s(choice.text) }
-                      })
-                    ])
-                  ]
-                )
-              ]
-            )
-          }),
-          0
-        )
-      : _c("div", { staticClass: "card my-4 p-4" }, [
-          _vm.editing
-            ? _c("div", { staticClass: "flex" }, [
-                _c("input", {
-                  directives: [
+      _vm.choicesCount
+        ? _c(
+            "ul",
+            {
+              staticClass: "choices-list list-reset my-8 flex flex-wrap -mx-2"
+            },
+            _vm._l(_vm.dataQuestion.choices, function(choice, choiceIndex) {
+              return _c(
+                "li",
+                { key: choice.id, staticClass: "mb-3 w-full md:w-1/2 px-2" },
+                [
+                  _c(
+                    "label",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.answer.key,
-                      expression: "answer.key"
-                    }
-                  ],
-                  ref: "input",
-                  staticClass: "flex-1 mr-1 control",
-                  attrs: { type: "text", autofocus: "" },
-                  domProps: { value: _vm.answer.key },
-                  on: {
-                    keydown: [
-                      function($event) {
-                        $event.stopPropagation()
+                      staticClass:
+                        "relative flex items-center btn hover:bg-grey-light border shadow cursor-pointer pl-6 h-full",
+                      class: {
+                        "bg-white":
+                          !_vm.isHighlighted(choiceIndex) &&
+                          !_vm.isSelected(choiceIndex),
+                        "bg-green-dark":
+                          _vm.isHighlighted(choiceIndex) &&
+                          _vm.isSelected(choiceIndex),
+                        "bg-green":
+                          !_vm.isHighlighted(choiceIndex) &&
+                          _vm.isSelected(choiceIndex),
+                        "bg-grey-light border border-grey-darker": _vm.isHighlighted(
+                          choiceIndex
+                        ),
+                        "text-white hover:bg-green-dark border-green-dark": _vm.isSelected(
+                          choiceIndex
+                        )
                       },
-                      function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
+                      attrs: { for: "choice-" + choice.key },
+                      on: {
+                        mouseover: function($event) {
+                          return _vm.highlightOption(choiceIndex)
                         }
-                        $event.preventDefault()
-                        $event.stopPropagation()
-                        return _vm.saveResponse($event)
+                      }
+                    },
+                    [
+                      _vm.isHighlighted(choiceIndex)
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "absolute ml-3 pin-l pin-y flex items-center"
+                            },
+                            [
+                              _c("span", {
+                                staticClass:
+                                  "inline-block w-2 h-2 rounded-full",
+                                class: _vm.isSelected(choiceIndex)
+                                  ? "bg-white"
+                                  : "bg-green"
+                              })
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "hidden",
+                        attrs: {
+                          id: "choice-" + choice.key,
+                          type: "radio",
+                          name: "question-" + choice.question_id
+                        },
+                        domProps: { value: choice.key },
+                        on: {
+                          input: function($event) {
+                            return _vm.toggleOption(choiceIndex)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("div", [
+                        choice.illustration
+                          ? _c("img", {
+                              staticClass: "rounded my-2 max-w-full",
+                              attrs: {
+                                src: choice.illustration,
+                                alt: choice.text
+                              }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        choice.code
+                          ? _c("pre", {
+                              staticClass: "my-2",
+                              domProps: { innerHTML: _vm._s(choice.code) }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("p", {
+                          staticClass: "ml-1",
+                          domProps: { innerHTML: _vm._s(choice.text) }
+                        })
+                      ])
+                    ]
+                  )
+                ]
+              )
+            }),
+            0
+          )
+        : _c("div", { staticClass: "card my-4 p-4" }, [
+            _vm.editing
+              ? _c("div", { staticClass: "flex" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.answer.key,
+                        expression: "answer.key"
                       }
                     ],
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                    ref: "input",
+                    staticClass: "flex-1 mr-1 control",
+                    attrs: { type: "text", autofocus: "" },
+                    domProps: { value: _vm.answer.key },
+                    on: {
+                      keydown: [
+                        function($event) {
+                          $event.stopPropagation()
+                        },
+                        function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          $event.preventDefault()
+                          $event.stopPropagation()
+                          return _vm.saveResponse($event)
+                        }
+                      ],
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.answer, "key", $event.target.value)
                       }
-                      _vm.$set(_vm.answer, "key", $event.target.value)
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-green is-sm",
-                    on: { click: _vm.saveResponse }
-                  },
-                  [_vm._v("Save")]
-                )
-              ])
-            : _c("div", { staticClass: "flex" }, [
-                _c("p", {
-                  staticClass: "flex-1 mr-1",
-                  class: { "text-grey": !_vm.answer },
-                  domProps: { textContent: _vm._s(_vm.answer.key) }
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn is-blue is-sm",
-                    on: { click: _vm.editResponse }
-                  },
-                  [_vm._v("Edit")]
-                )
-              ])
-        ])
-  ])
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-green is-sm",
+                      on: { click: _vm.saveResponse }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ])
+              : _c("div", { staticClass: "flex" }, [
+                  _c("p", {
+                    staticClass: "flex-1 mr-1",
+                    class: { "text-grey": !_vm.answer },
+                    domProps: { textContent: _vm._s(_vm.answer.key) }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn is-blue is-sm",
+                      on: { click: _vm.editResponse }
+                    },
+                    [_vm._v("Edit")]
+                  )
+                ])
+          ])
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

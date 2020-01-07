@@ -4,33 +4,42 @@
 		<div class="flex mb-2">
 			<div class="px-2">
 				MCQ
-				<input class type="radio" @click="toggleMcq(true)" name="type" checked />
+				<input class type="radio" @click="toggleMcq(true)" value="mcq" name="type" checked />
 			</div>
 			<div class="px-2">
 				Input
-				<input class type="radio" @click="toggleMcq(false)" name="type" />
+				<input class type="radio" @click="toggleMcq(false)" value="input" name="type" />
 			</div>
 		</div>
 
 		<div v-if="mcq">
 			<label class="control">Options</label>
-			<div class="flex">
-				<div class="w-full">
+			<div>
+				<div class="w-full flex items-center" v-for="i in count" :key="i">
 					<input
-						v-for="i in count"
-						:key="i"
-						class="control"
-						name="options[]"
+						class="control mr-4"
+						:name="`options[${i-1}]`"
 						:placeholder="'Enter option ' + i"
 						type="text"
 						required
 					/>
+					<label :for="`option-${i-1}`" class="inline-flex items-center">
+						<input
+							type="radio"
+							name="correct_answer_keys"
+							:id="`option-${i-1}`"
+							:value="i-1"
+							class="mr-1"
+							required
+						/>
+						Correct
+					</label>
 				</div>
 				<div>
 					<button type="button" @click="addOption" class="btn is-blue text-white mb-2 ml-2">+</button>
-				</div>
-				<div v-if="count > 1">
-					<button type="button" @click="removeOption" class="btn is-red text-white mb-2 ml-2">-</button>
+					<div v-if="count > 1" class="inline-flex">
+						<button type="button" @click="removeOption" class="btn is-red text-white mb-2 ml-2">-</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -49,12 +58,15 @@
 </template>
 
 <script>
-import MarkdownEditor from "./MarkdownEditor";
 export default {
+	props: {
+		isMcq: { default: true },
+		counter: { default: 2 }
+	},
 	data() {
 		return {
-			mcq: true,
-			count: 4
+			mcq: this.isMcq,
+			count: this.counter
 		};
 	},
 	methods: {
