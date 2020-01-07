@@ -38,3 +38,5 @@ Route::get('/quizzes/{quiz}/verify', 'QuizVerificationController@showVerificatio
 
 Route::post('/quizzes/{quiz}/verify', 'QuizVerificationController@verify')
 ->name('quizzes.verify');
+
+Route::get('/question_attachments/{attachment}', 'QuestionAttachmentsController@show');

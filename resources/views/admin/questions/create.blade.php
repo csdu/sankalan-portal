@@ -43,7 +43,8 @@
             </div>
 
             <label class="control">Question</label>
-		    <markdown-editor></markdown-editor>
+            <label class="control">File</label>
+            <input type="file" class="control" name="illustrations[]" multiple>
 
             <question-type></question-type>
 

@@ -17,6 +17,7 @@ class QuestionController extends Controller
     public function show(Quiz $quiz, Question $question)
     {
         $quizTitle = $quiz->title;
+
         return view('admin.questions.show', compact('question', 'quizTitle'));
     }
 
@@ -24,11 +25,15 @@ class QuestionController extends Controller
     {
         abort_if($quiz->isactive, 403);
 
-        request()->validate([
+        $request->validate([
             'qno' => 'required|numeric|gt:0',
             'positive_score' => 'required|numeric|gte:1',
             'negative_score' => 'required|numeric|gte:0',
-            'correct_answer_keys' => 'sometimes|string',
+            'text' => 'required',
+            'compiledHTML' => 'required',
+            'type' => 'required|in:mcq,input',
+            'illustrations[]' => 'sometimes|image',
+            'correct_answer_keys' => 'required|string',
             'options' => 'sometimes|array',
         ]);
 
@@ -36,22 +41,26 @@ class QuestionController extends Controller
             'qno' => $request->qno,
             'positive_score' => $request->positive_score,
             'negative_score' => $request->negative_score,
-            'text' => $request->text,
-            'correct_answer_keys' => $request->correct_answer_keys ?? null,
+            'text' => $request->compiledHTML,
+            'correct_answer_keys' => $request->correct_answer_keys,
         ]);
 
-        if ($request->options) {
-            foreach ($request->options as $option) {
-                $question->choices->create([
-                    'key' => strval($question->id).str_random(3),
-                    'text' => $option,
-                ]);
-            }
+        foreach ($request->illustrations ?? [] as $illustration) {
+            $question->attachments()->create([
+                'path' => $illustration->store('illustrations'),
+            ]);
+        }
+
+        foreach ($request->options ?? [] as $option) {
+            $question->choices()->create([
+                'key' => strval($question->id).str_random(3),
+                'text' => $option,
+            ]);
         }
 
         flash("Question created for {$quiz->title}!")->success();
 
-        return redirect()->route('admin.quizzes.questions.create', $quiz);
+        return redirect()->route('admin.quizzes.questions.create', $quiz, '201');
     }
 
     public function delete(Quiz $quiz, Question $question)
