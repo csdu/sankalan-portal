@@ -5,6 +5,8 @@ namespace Tests\Feature\Admin;
 use App\Models\Question;
 use App\Models\Quiz;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class QuestionCreateTest extends TestCase
@@ -24,31 +26,41 @@ class QuestionCreateTest extends TestCase
     /** @test */
     public function admin_can_create_a_question()
     {
-        $quiz = create(Quiz::class);
+        Storage::fake();
+
         $this->signInAdmin();
+        $quiz = create(Quiz::class);
 
-        $data = [
-            'qno' => 1,
-            'positive_score' => 4,
-            'negative_score' => 1,
-            'text' => '# test question',
-            'compiledHTML' => '<h1>test question</h1>',
-            'type' => 'mcq',
-            'correct_answer_keys' => 'nokey',
-        ];
+        $this->withoutExceptionHandling()
+            ->post('/manage/quizzes/'.$quiz->slug.'/questions', $params = [
+                'qno' => 1,
+                'positive_score' => 4,
+                'negative_score' => 1,
+                'text' => 'question is written as **markdown**',
+                'compiledHTML' => '<p>question is written as <b>markdown</b></p>',
+                'type' => 'mcq',
+                'illustrations' => [UploadedFile::fake()->image('illustration.jpg')],
+                'options' => $options = [
+                    'options 1',
+                    'options 2',
+                    'options 3',
+                    'options 4',
+                ],
+                'correct_answer_keys' => $correct_answer_index = 2, // 'option 3' index
+            ])->assertRedirect()
+            ->assertSessionHasNoErrors();
 
-        $res = $this->post(route('admin.quizzes.questions.store', $quiz), $data);
-        $res->assertCreated();
+        $this->assertCount(1, $questions = Question::all());
+        $this->assertEquals($params['qno'], $questions->first()->qno);
+        $this->assertEquals($params['positive_score'], $questions->first()->positive_score);
+        $this->assertEquals($params['negative_score'], $questions->first()->negative_score);
+        $this->assertEquals($params['compiledHTML'], $questions->first()->text);
+        $this->assertCount(count($options), $choices = $questions->first()->choices);
 
-        // options
-        $question = create(Question::class);
+        $expectedCorrectKey = $questions->first()->choices()
+            ->whereText($options[$correct_answer_index])
+            ->first()->key;
 
-        $option = [
-            'key' => str_random(3),
-            'text' => str_random(),
-        ];
-
-        $question->choices()->create($option);
-        $this->assertDatabaseHas('question_options', $option);
+        $this->assertEquals($expectedCorrectKey, $questions->first()->correct_answer_keys->first());
     }
 }

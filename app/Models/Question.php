@@ -67,7 +67,7 @@ class Question extends Model
             return $illustration;
         }
 
-        return asset("/images$illustration");
+        return asset("/images{$illustration}");
     }
 
     /**
