@@ -16,7 +16,7 @@
                     @endif
                 </div>
             </div>
-            
+
             <div>
                 <span class="text-sm font-normal">
                     Total Questions
@@ -47,12 +47,7 @@
                     </td>
                     <td class="text-left px-4 py-2">
                         <a href="{{ route('admin.quizzes.questions.show', [$quiz, $question]) }}" class="link">
-                            @if (strlen($question->text) > 200 )
-                                {{ substr($question->text, 0, 200)."..." }}
-                                <small>(see more)</small>
-                            @else
-                                {{ substr($question->text, 0, 200) }}
-                            @endif
+                            {{ str_limit(strip_tags($question->text), 100, '...') }}
                         </a>
                     </td>
                     <td class="text-center px-4 py-2">

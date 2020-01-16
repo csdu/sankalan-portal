@@ -19,8 +19,9 @@
         </div>
     </div>
     <div class="px-6 py-4">
-        {{ $question->text }}
+        {!! $question->text !!}
     </div>
+    @if($question->choices->count() > 0)
     <table class="w-full">
         <thead>
             <tr class="bg-grey-light">
@@ -29,8 +30,8 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($question->choices as $i => $option)
-                @if ($question->correct_answer_keys[0] == ($i + 1))
+            @foreach ($question->choices as $option)
+                @if ($question->correct_answer_keys->first() == $option->key)
                     <tr class="border-t bg-green text-white hover:bg-green-dark">
                 @else
                     <tr class="border-t hover:bg-grey-lighter">
@@ -45,6 +46,14 @@
             @endforeach
         </tbody>
     </table>
+    @else
+    <p class="px-6 flex flex-wrap py-2">
+        <span class="mr-4">Correct Phrases:</span>
+        @foreach($question->correct_answer_keys as $key)
+            <span class="px-2 mx-1 rounded bg-green-dark text-white font-bold">{{ $key }}</span>
+        @endforeach
+    </p>
+    @endif
     <div class="card-footer">
         <p class="text-center text-grey-dark">That's all folks!</p>
     </div>

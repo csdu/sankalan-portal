@@ -46,7 +46,7 @@ class QuestionCreateTest extends TestCase
                     'options 3',
                     'options 4',
                 ],
-                'correct_answer_keys' => $correct_answer_index = 2, // 'option 3' index
+                'correct_answer_index' => $correct_answer_index = 2, // 'option 3' index
             ])->assertRedirect()
             ->assertSessionHasNoErrors();
 

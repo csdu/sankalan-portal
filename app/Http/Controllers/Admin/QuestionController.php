@@ -37,7 +37,8 @@ class QuestionController extends Controller
             'illustrations.*' => 'required|file|image',
             'options' => 'required_if:type,mcq|array',
             'options.*' => 'required',
-            'correct_answer_keys' => ['required','numeric', 'gte:0', 'lte:'.count($request->options)],
+            'correct_answer_keys' => 'required_if:type,input|string',
+            'correct_answer_index' => 'required_if:type,mcq|numeric|gte:0|lt:'.count($request->options ?? [])
         ]);
 
         $question = $quiz->questions()->create([
@@ -45,6 +46,7 @@ class QuestionController extends Controller
             'positive_score' => $request->positive_score,
             'negative_score' => $request->negative_score,
             'text' => $request->compiledHTML,
+            'correct_answer_keys' => $request->correct_answer_keys
         ]);
 
         foreach ($request->illustrations ?? [] as $illustration) {
@@ -62,7 +64,13 @@ class QuestionController extends Controller
             }, $request->options ?? [])
         );
 
-        $question->update(['correct_answer_keys' => $options[$request->correct_answer_keys]->key]);
+
+        if($request->type == 'mcq') {
+            $question->update([
+                'correct_answer_keys' => $options[$request->correct_answer_index]->key
+            ]);
+        }
+
 
         flash("Question created for {$quiz->title}!")->success();
 

@@ -26,7 +26,7 @@
 					<label :for="`option-${i-1}`" class="inline-flex items-center">
 						<input
 							type="radio"
-							name="correct_answer_keys"
+							name="correct_answer_index"
 							:id="`option-${i-1}`"
 							:value="i-1"
 							class="mr-1"
@@ -45,12 +45,12 @@
 		</div>
 
 		<div v-if="!mcq">
-			<label class="control">Correct answer keys</label>
+			<label class="control">Correct answer keys (seperate multiple with a colon ':')</label>
 			<input
 				class="control"
 				type="text"
 				name="correct_answer_keys"
-				placeholder="if multiple, seperate it with |"
+				placeholder="if multiple, seperate it with :"
 				required
 			/>
 		</div>
