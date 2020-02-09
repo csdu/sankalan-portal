@@ -226,5 +226,5 @@ return [
         'perPage' => 100,
     ],
 
-    'sankalan_start_time' => '9 March 2019, 9:00 AM',
+    'sankalan_start_time' => \Carbon\Carbon::parse('15 February 2020, 9:00 AM'),
 ];

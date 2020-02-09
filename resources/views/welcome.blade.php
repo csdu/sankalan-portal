@@ -1,9 +1,9 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 @section('content')
 <div class="flex flex-col justify-center flex-1 ">
     <div class="container mx-auto px-4 flex flex-col items-center lg:flex-row flex-1">
         <div class="my-6 lg flex flex-col justify-center items-start flex-1 text-center lg:text-left">
-            <h1 class="mb-1 text-4xl">Sankalan <span class="text-2xl text-blue">2019</span></h1>
+            <h1 class="mb-1 text-4xl">Sankalan <span class="text-2xl text-blue">{{ config('app.sankalan_start_time')->format('Y') }}</span></h1>
             <h3 class="mb-6">Compiling Innovations ...</h3>
             <countdown-timer :duration="{{ $timeLeft }}" class="flex text-3xl sm:text-5xl -mx-4 mb-4">
                 <template slot-scope="{timer, format}">
@@ -28,16 +28,10 @@
             <div class="inline-block text-left px-4 py-2 bg-blue-lightest text-blue-dark border border-blue rounded min-w-1/2">
                 <h4 class="text-sm uppercase font-bold my-1">Note</h4>
                 <p>
-                    For gaming events, registrations are being handled seperately, please register using links below.
+                    For gaming events and <b>hackDUCS</b>, registrations are being handled seperately, <br>
+                    registration link will be updated on our
+                    <a href="https://www.facebook.com/DUCS.Sankalan" class="font-bold underline">Facebook Page</a>.
                 </p>
-                <ul class="my-2">
-                    <li class="my-1">
-                        <a href="https://pubg.ducs.in" class="font-bold underline">PUBG Mobile</a>
-                    </li>
-                    <li class="my-1">
-                        <a href="https://bit.ly/ducs-ground-zero" class="font-bold underline">Ground Zero</a>
-                    </li>
-                </ul>
             </div>
         </div>
         <login-register inline-template>
@@ -54,22 +48,22 @@
                             <div class="flex mb-3">
                                 <div class="flex-1 mr-2">
                                     <input type="text" placeholder="First Name" class="control{{ $errors->has('first_name') ? ' border-red' : '' }}" name="first_name"
-                                        value="{{ old('first_name') }}" required autofocus>                                    
+                                        value="{{ old('first_name') }}" required autofocus>
                                     @if ($errors->has('first_name'))
                                     <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
                                         <strong>{{ $errors->first('first_name') }}</strong>
-                                    </span> 
+                                    </span>
                                     @endif
                                 </div>
                                 <div class="flex-1">
-                                    <input type="text" placeholder="Last Name" 
-                                        class="control{{ $errors->has('last_name') ? ' border-red' : '' }}" 
+                                    <input type="text" placeholder="Last Name"
+                                        class="control{{ $errors->has('last_name') ? ' border-red' : '' }}"
                                         name="last_name"
-                                        value="{{ old('last_name') }}" required autofocus>                                    
+                                        value="{{ old('last_name') }}" required autofocus>
                                     @if ($errors->has('last_name'))
                                         <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
                                             <strong>{{ $errors->first('last_name') }}</strong>
-                                        </span> 
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -139,11 +133,11 @@
 
                             <div class="mb-4">
                                 <input type="password" placeholder="Password" class="control{{ $errors->has('password') ? ' border-red' : '' }}" name="password"
-                                    required> 
+                                    required>
                                 @if ($errors->has('password'))
                                     <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
-                                    </span> 
+                                    </span>
                                 @endif
                             </div>
 
