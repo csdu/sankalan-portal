@@ -29,13 +29,15 @@ class VerifyQuizToken
         }
 
         $participation = $request->quiz->participations()->where('team_id', $teamId)->first();
-        
+
         if ($participation && $participation->finished_at) {
             throw new QuizVerificationException('you have already taken this quiz.');
         }
 
         if (! Session::has('quiz_token') || ! $request->quiz->verify(Session::get('quiz_token'))) {
-            throw new QuizNotVerifiedException('you have not verified quiz token.');
+            // throw new QuizNotVerifiedException('you have not verified quiz token.');
+
+            return redirect($request->getRequestUri().'/verify');
         }
 
         return $next($request);
