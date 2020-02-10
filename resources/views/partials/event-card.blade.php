@@ -50,6 +50,25 @@
                                 <button class="btn is-red is-sm">Withdraw</button>
                             </form>
                         </div>
+                    @else
+                        <div class="flex-1 flex items-center">
+                            <p class="flex-1">Participat{{ optional($event->activeQuiz->participationByTeam($participatingTeam))->finished_at ? 'ed' : 'ing' }} as 
+                                <strong class="text-xs">{{ $participatingTeam->name }} - {{ $participatingTeam->uid }}</strong>!
+                            </p>
+                            @if ($event->activeQuiz)
+                                @if (!optional($event->activeQuiz->participationByTeam($participatingTeam))->finished_at)
+                                    <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">
+                                        @if (!!$event->activeQuiz->participationByTeam($participatingTeam) && !$event->activeQuiz->participationByTeam($participatingTeam)->finished_at)
+                                            Resume Quiz
+                                        @else
+                                            Take Quiz                        
+                                        @endif
+                                    </a>
+                                @endif
+                            @else                                
+                                <a href="{{ route('dashboard') }}" class="btn is-blue is-sm">Go to dashboard</a>
+                            @endif
+                        </div>
                     @endif
                 @else 
                     <p>Please <a href="{{ route('login') }}" class="link">sign in</a> to participate</p>
