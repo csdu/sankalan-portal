@@ -52,7 +52,7 @@
                         </div>
                     @else
                         <div class="flex-1 flex items-center">
-                            <p class="flex-1">Participat{{ optional($event->activeQuiz->participationByTeam($participatingTeam))->finished_at ? 'ed' : 'ing' }} as 
+                            <p class="flex-1">Participat{{ !!$event->activeQuiz && optional($event->activeQuiz->participationByTeam($participatingTeam))->finished_at ? 'ed' : 'ing' }} as 
                                 <strong class="text-xs">{{ $participatingTeam->name }} - {{ $participatingTeam->uid }}</strong>!
                             </p>
                             @if ($event->activeQuiz)
