@@ -12,6 +12,7 @@ class EventParticipation extends Model
      * @var array
      */
     protected $appends = ['isActiveQuizAllowed'];
+    protected $fillable = ['disqualified'];
 
     /**
      * Team associated with event participation.
@@ -63,5 +64,15 @@ class EventParticipation extends Model
         }
 
         return $this->event->activeQuiz->participations()->where('team_id', $this->team->id)->exists();
+    }
+
+    public function setDisqualify()
+    {
+        return $this->update(['disqualified' => true]);
+    }
+
+    public function revertDisqualify()
+    {
+        return $this->update(['disqualified' => false]);
     }
 }

@@ -8,6 +8,12 @@ Route::get('dashboard', 'DashboardController@index')
 Route::get('events_teams/{event?}', 'EventTeamController@index')
     ->name('admin.events.teams.index');
 
+Route::get('events_teams/{event_team}/disqualify', 'EventTeamController@disqualify')
+    ->name('admin.events.teams.disqualify');
+
+Route::get('events_teams/{event_team}/undisqualify', 'EventTeamController@undisqualify')
+    ->name('admin.events.teams.undisqualify');
+
 Route::get('teams', 'TeamController@index')
     ->name('admin.teams.index');
 

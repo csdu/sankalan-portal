@@ -53,14 +53,18 @@
                             @if(!$event)
                             <td class="text-left px-4-6 py-2 capitalize" v-text="event.title"></td>
                             @endif
-                            <td class="table-fit text-right pr-6 py-2 capitalize">
-                                <ajax-button v-if="allowed === false"
+                            <td class="text-left pr-6 py-2 capitalize">
+                                {{-- <ajax-button v-if="allowed === false"
                                 :action="route('admin.events.teams.allow-active-quiz', [event.slug, team.id])" 
                                 method="POST" 
                                 @success="onComplete"
                                 @failure="onComplete"
-                                class="btn is-green is-sm font-normal">Allow Quiz</ajax-button>
-                                <button onsubmit="return confirm('Are you sure about it.')" class="btn is-red is-sm font-normal">Disqualify</button>
+                                class="btn is-green is-sm font-normal">Allow Quiz</ajax-button> --}}
+                                @if (! $event_team->disqualified)
+                                    <a href="{{ route('admin.events.teams.disqualify', $event_team->id) }}" onsubmit="return confirm('Are you sure about it.')" class="btn is-red is-sm font-normal">Disqualify</a>
+                                @else
+                                    <a href="{{ route('admin.events.teams.undisqualify', $event_team->id) }}" onsubmit="return confirm('Are you sure about it.')" class="btn is-blue is-sm font-normal">Mercy</a>                                
+                                @endif
                             </td>
                         </template>
                     </tr>

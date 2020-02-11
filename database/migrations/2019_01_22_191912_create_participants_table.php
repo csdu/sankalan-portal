@@ -18,6 +18,7 @@ class CreateParticipantsTable extends Migration
             $table->unsignedInteger('event_id')->index();
             $table->unsignedInteger('team_id')->index();
             $table->unique(['event_id', 'team_id']);
+            $table->boolean('disqualified')->default(false);
             $table->timestamps();
 
             $table->foreign('event_id')->references('id')->on('events');

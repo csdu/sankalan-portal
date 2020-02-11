@@ -19,7 +19,7 @@ Route::delete(
     'EventParticipationController@destroy'
 )->name('events.withdraw-part');
 
-Route::middleware('quiz_token_verified')->group(function () {
+Route::middleware(['quiz_token_verified', 'participant_disqualify_check'])->group(function () {
     Route::get('/quizzes/{quiz}', 'QuizController@instructions')
     ->name('quizzes.show');
 

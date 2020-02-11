@@ -24,4 +24,24 @@ class EventTeamController extends Controller
 
         return view('admin.events_teams.index', compact('events_teams', 'events', 'event'));
     }
+
+    public function disqualify($eventParticipationId)
+    {
+        $eventParticipation = EventParticipation::findOrFail($eventParticipationId);
+        $eventParticipation->setDisqualify();
+
+        flash('Team disqualified!');
+
+        return redirect()->back();
+    }
+
+    public function undisqualify($eventParticipationId)
+    {
+        $eventParticipation = EventParticipation::findOrFail($eventParticipationId);
+        $eventParticipation->revertDisqualify();
+
+        flash('Team undisqualified!');
+
+        return redirect()->back();
+    }
 }
