@@ -96,7 +96,7 @@
 		</div>
 	</div>
 	<div
-		class="fixed pin-x pin-t z-50 bg-white h-screen flex flex-col justify-center items-center"
+		class="fixed pin-x pin-t z-50 w-full h-screen flex flex-col justify-center items-center"
 		v-else
 	>
 		<svg viewBox="0 0 100 100" class="text-green w-32" v-if="submission.done && submission.success">
@@ -209,9 +209,7 @@ export default {
 		},
 		currentQuestionAttachments() {
 			return this.dataQuestionsAttachments.filter(questionAttachment => {
-				return (
-					questionAttachment.question_id === this.currentQuestion.id
-				);
+				return questionAttachment.question_id === this.currentQuestion.id;
 			});
 		},
 		currentResponse() {
@@ -311,11 +309,7 @@ export default {
 					flash("Error occurred in saving response!", "danger");
 				})
 				.then(({ data }) => {
-					this.responses.splice(
-						this.currentQuestionIndex,
-						1,
-						response
-					);
+					this.responses.splice(this.currentQuestionIndex, 1, response);
 
 					flash(data.message, "info");
 				})

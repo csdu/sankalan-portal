@@ -22479,7 +22479,7 @@ var render = function() {
         "div",
         {
           staticClass:
-            "fixed pin-x pin-t z-50 bg-white h-screen flex flex-col justify-center items-center"
+            "fixed pin-x pin-t z-50 w-full h-screen flex flex-col justify-center items-center"
         },
         [
           _vm.submission.done && _vm.submission.success
@@ -22717,7 +22717,7 @@ var render = function() {
                             "div",
                             {
                               staticClass:
-                                "absolute ml-3 pin-l pin-y flex items-center"
+                                "absolute -ml-3 pin-l pin-y flex items-center"
                             },
                             [
                               _c("span", {
@@ -22740,7 +22740,7 @@ var render = function() {
                         },
                         domProps: { value: choice.key },
                         on: {
-                          input: function($event) {
+                          click: function($event) {
                             return _vm.toggleOption(choiceIndex)
                           }
                         }

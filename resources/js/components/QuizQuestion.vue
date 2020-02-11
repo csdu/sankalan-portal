@@ -34,7 +34,7 @@
                         'text-white hover:bg-green-dark border-green-dark': isSelected(choiceIndex),
                     }"
 				>
-					<div v-if="isHighlighted(choiceIndex)" class="absolute ml-3 pin-l pin-y flex items-center">
+					<div v-if="isHighlighted(choiceIndex)" class="absolute -ml-3 pin-l pin-y flex items-center">
 						<span
 							class="inline-block w-2 h-2 rounded-full"
 							:class="isSelected(choiceIndex) ? 'bg-white' : 'bg-green'"
@@ -45,7 +45,7 @@
 						type="radio"
 						class="hidden"
 						:name="`question-${choice.question_id}`"
-						@input="toggleOption(choiceIndex)"
+						@click="toggleOption(choiceIndex)"
 						:value="choice.key"
 					/>
 					<div>

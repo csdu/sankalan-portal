@@ -23,7 +23,7 @@ href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.
             save-action="{{ route('quizzes.response.save', $quiz) }}"
             :data-questions="{{ $quiz->questions }}"
             :data-questions-attachments="{{ $questionsAttachments }}" 
-            :time-limit="{{ $participation->timeLeft }}">
+            :time-limit="{{ abs($participation->timeLeft) }}">
         </quiz-area>
     </div>    
 @endsection
