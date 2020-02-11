@@ -15,7 +15,8 @@ class QuizController extends Controller
 
         $team = Team::find($teamId);
 
-        $quiz->loadMissing('questions.choices');
+        $quiz->loadMissing(['questions.choices']);
+        $quiz_response = $quiz->participations()->with(['responses'])->where('team_id', $teamId)->first();
 
         $participation = $team->beginQuiz($quiz);
 
@@ -25,7 +26,7 @@ class QuizController extends Controller
 
         $questionsAttachments = QuestionAttachment::whereIn('question_id', $questionIds)->get();
 
-        return view('quizzes.show', compact('quiz', 'participation', 'questionsAttachments'));
+        return view('quizzes.show', compact('quiz', 'participation', 'questionsAttachments', 'quiz_response'));
     }
 
     public function instructions(Quiz $quiz)

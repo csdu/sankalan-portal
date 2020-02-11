@@ -100,4 +100,9 @@ class Question extends Model
     {
         return $this->belongsTo(Quiz::class);
     }
+
+    public function userResponse()
+    {
+        return $this->belongsTo(QuestionResponse::class, 'user_response_id');
+    }
 }

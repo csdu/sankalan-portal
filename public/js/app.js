@@ -2416,6 +2416,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     timeLimit: {
       "default": 30
+    },
+    dataResponses: {
+      "default": function _default() {
+        return [];
+      }
     }
   },
   data: function data() {
@@ -2544,23 +2549,37 @@ __webpack_require__.r(__webpack_exports__);
       })["finally"](function () {
         _this3.loading = false;
       });
+      console.log(this.responses);
     }
   },
   created: function created() {
+    var _this4 = this;
+
     this.responses = new Array(this.dataQuestions.length).fill(null);
     this.questions = this.dataQuestions.map(function (question) {
       question.visited = false;
       return question;
     });
+    this.dataResponses.forEach(function (response) {
+      var index = _this4.dataQuestions.findIndex(function (question) {
+        return response.question_id == question.id;
+      });
+
+      if (index > -1) {
+        _this4.responses[index] = {
+          key: response.response_keys
+        };
+      }
+    });
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this5 = this;
 
     window.addEventListener("keydown", function (_ref4) {
       var code = _ref4.code;
 
-      if (_this4.keyEvents.hasOwnProperty(code)) {
-        _this4.keyEvents[code]();
+      if (_this5.keyEvents.hasOwnProperty(code)) {
+        _this5.keyEvents[code]();
 
         return false;
       }

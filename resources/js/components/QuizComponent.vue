@@ -181,7 +181,8 @@ export default {
 		saveAction: { required: true },
 		dataQuestions: { default: [] },
 		dataQuestionsAttachments: { default: [] },
-		timeLimit: { default: 30 }
+		timeLimit: { default: 30 },
+		dataResponses: { default: () => [] }
 	},
 	data() {
 		return {
@@ -316,6 +317,7 @@ export default {
 				.finally(() => {
 					this.loading = false;
 				});
+			console.log(this.responses);
 		}
 	},
 	created() {
@@ -323,6 +325,16 @@ export default {
 		this.questions = this.dataQuestions.map(question => {
 			question.visited = false;
 			return question;
+		});
+
+		this.dataResponses.forEach(response => {
+			const index = this.dataQuestions.findIndex(question => {
+				return response.question_id == question.id;
+			});
+
+			if (index > -1) {
+				this.responses[index] = { key: response.response_keys };
+			}
 		});
 	},
 	mounted() {
