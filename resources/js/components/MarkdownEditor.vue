@@ -1,26 +1,20 @@
 <template>
 	<div class>
-		<div class="my-2">
-			<button v-if="preview" class="btn is-blue is-sm" @click.prevent="preview = false">Edit</button>
-			<button v-else class="btn is-blue is-sm" @click.prevent="convertToHtml(); preview = true">Preview</button>
-		</div>
-		<div class="control">
-			<div
-				v-show="preview"
-				class="markdown-body control border rounded py-2 my-2 px-4 h-64 overflow-y-scroll"
-				v-html="compiledHTML"
-			></div>
+		<div class="control flex">
 			<textarea
 				@keydown.tab.prevent="tabber($event)"
 				:name="name"
 				rows="10"
-				v-show="!preview"
 				v-model="markdown"
 				@input="convertToHtml()"
 				class="control"
 				style="resize: none;"
 				placeholder="Use Markdown"
 			></textarea>
+			<div
+				class="markdown-body control border rounded py-2 w-full ml-1 px-4 mb-2 overflow-y-scroll"
+				v-html="compiledHTML"
+			></div>
 			<input type="hidden" name="compiledHTML" v-model="compiledHTML" />
 		</div>
 	</div>
@@ -36,7 +30,6 @@ export default {
 	data() {
 		return {
 			parser: null,
-			preview: false,
 			markdown: this.value,
 			compiledHTML: ""
 		};

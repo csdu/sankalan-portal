@@ -2028,12 +2028,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2048,7 +2042,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       parser: null,
-      preview: false,
       markdown: this.value,
       compiledHTML: ""
     };
@@ -21930,60 +21923,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", {}, [
-    _c("div", { staticClass: "my-2" }, [
-      _vm.preview
-        ? _c(
-            "button",
-            {
-              staticClass: "btn is-blue is-sm",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.preview = false
-                }
-              }
-            },
-            [_vm._v("Edit")]
-          )
-        : _c(
-            "button",
-            {
-              staticClass: "btn is-blue is-sm",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.convertToHtml()
-                  _vm.preview = true
-                }
-              }
-            },
-            [_vm._v("Preview")]
-          )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "control" }, [
-      _c("div", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.preview,
-            expression: "preview"
-          }
-        ],
-        staticClass:
-          "markdown-body control border rounded py-2 my-2 px-4 h-64 overflow-y-scroll",
-        domProps: { innerHTML: _vm._s(_vm.compiledHTML) }
-      }),
-      _vm._v(" "),
+    _c("div", { staticClass: "control flex" }, [
       _c("textarea", {
         directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: !_vm.preview,
-            expression: "!preview"
-          },
           {
             name: "model",
             rawName: "v-model",
@@ -22018,6 +21960,12 @@ var render = function() {
             }
           ]
         }
+      }),
+      _vm._v(" "),
+      _c("div", {
+        staticClass:
+          "markdown-body control border rounded py-2 w-full ml-1 px-4 mb-2 overflow-y-scroll",
+        domProps: { innerHTML: _vm._s(_vm.compiledHTML) }
       }),
       _vm._v(" "),
       _c("input", {
