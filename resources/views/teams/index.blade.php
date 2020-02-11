@@ -43,12 +43,12 @@
                         <li class="py-1 px-2 hover:bg-grey-lighter">
                             <div class="flex justify-between items-center">
                                 <span class="capitalize mr-2">{{ $event->title }}</span>
-                                @if (! $event->started_at || $event->ended_at)
+                                {{-- @if (! $event->started_at || $event->ended_at)
                                     <form action="{{ route('events.withdraw-part', $event) }}" method="POST">
                                         @csrf @method('delete')
                                         <button class="btn is-red is-sm">Withdraw</button>
                                     </form>
-                                @endif
+                                @endif --}}
                             </div>
                         </li>
                         @empty

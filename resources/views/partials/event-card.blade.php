@@ -68,6 +68,12 @@
                             @else                                
                                 <a href="{{ route('dashboard') }}" class="btn is-blue is-sm">Go to dashboard</a>
                             @endif
+                            @if(!$event->hasEnded && !$event->activeQuiz->participationByTeam($participatingTeam))
+                                <form action="{{ route('events.withdraw-part', $event) }}" method="POST" class="inline-block ml-2">
+                                    @csrf @method('delete')
+                                    <button class="btn is-red p-1 text-xs">Withdraw</button>
+                                </form>
+                            @endif
                         </div>
                     @endif
                 @else 

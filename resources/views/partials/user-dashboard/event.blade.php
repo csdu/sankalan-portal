@@ -21,7 +21,7 @@
             </p>
         @endif
         <div class="mt-auto flex-items-center">
-            @if(!$event->isLive && !$event->hasEnded)
+            @if(!$event->hasEnded && !$event->activeQuiz->participationByTeam($team))
             <form action="{{ route('events.withdraw-part', $event) }}" method="POST" class="inline-block mr-2">
                 @csrf @method('delete')
                 <button class="btn is-red p-1 text-xs">Withdraw</button>

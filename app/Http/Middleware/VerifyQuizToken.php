@@ -36,8 +36,7 @@ class VerifyQuizToken
 
         if (! Session::has('quiz_token') || ! $request->quiz->verify(Session::get('quiz_token'))) {
             // throw new QuizNotVerifiedException('you have not verified quiz token.');
-
-            return redirect($request->getRequestUri().'/verify');
+            return redirect()->route('quizzes.verify', $request->route('quiz'));
         }
 
         return $next($request);
