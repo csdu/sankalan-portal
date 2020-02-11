@@ -21,7 +21,7 @@
             </p>
         @endif
         <div class="mt-auto flex-items-center">
-            @if(!$event->isLive)
+            @if(!$event->isLive && !$event->hasEnded)
             <form action="{{ route('events.withdraw-part', $event) }}" method="POST" class="inline-block mr-2">
                 @csrf @method('delete')
                 <button class="btn is-red p-1 text-xs">Withdraw</button>
