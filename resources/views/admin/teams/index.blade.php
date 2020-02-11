@@ -33,9 +33,8 @@
                 <td class="table-fit text-center px-4 py-2">
                     <span class="px-2 py-1 bg-grey rounded-full text-xs">{{ $team->events_count }}</span>
                 </td>
-                <td class="table-fit text-right pr-6 py-2">
-                    <button onsubmit="return confirm('Are you about it.')" class="btn is-sm is-red">End</button>
-                    <button class="btn is-sm is-green">Begin</button>
+                <td class="text-right pr-6 py-2">
+                    No Actions
                 </td>
             </tr>
             @endforeach
