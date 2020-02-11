@@ -47,7 +47,6 @@
                 </div>
             </div>
 
-            <label class="control">Question</label>
             <markdown-editor name="text" value="{{ old('text') }}"></markdown-editor>
             
             <label class="control">File</label>

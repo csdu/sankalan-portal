@@ -2028,6 +2028,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2065,7 +2071,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.parser = markdown_it__WEBPACK_IMPORTED_MODULE_0___default()();
+    this.parser = markdown_it__WEBPACK_IMPORTED_MODULE_0___default()().disable(["heading"]);
     this.parser.use(markdown_it_katex__WEBPACK_IMPORTED_MODULE_1___default.a);
     this.convertToHtml();
   }
@@ -21943,49 +21949,55 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", {}, [
     _c("div", { staticClass: "control flex" }, [
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.markdown,
-            expression: "markdown"
-          }
-        ],
-        staticClass: "control",
-        staticStyle: { resize: "none" },
-        attrs: { name: _vm.name, rows: "10", placeholder: "Use Markdown" },
-        domProps: { value: _vm.markdown },
-        on: {
-          keydown: function($event) {
-            if (
-              !$event.type.indexOf("key") &&
-              _vm._k($event.keyCode, "tab", 9, $event.key, "Tab")
-            ) {
-              return null
+      _c("div", { staticClass: "w-1/2" }, [
+        _c("label", { staticClass: "control" }, [_vm._v("Question")]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.markdown,
+              expression: "markdown"
             }
-            $event.preventDefault()
-            return _vm.tabber($event)
-          },
-          input: [
-            function($event) {
-              if ($event.target.composing) {
-                return
+          ],
+          staticClass: "control",
+          staticStyle: { resize: "none" },
+          attrs: { name: _vm.name, rows: "10", placeholder: "Use Markdown" },
+          domProps: { value: _vm.markdown },
+          on: {
+            keydown: function($event) {
+              if (
+                !$event.type.indexOf("key") &&
+                _vm._k($event.keyCode, "tab", 9, $event.key, "Tab")
+              ) {
+                return null
               }
-              _vm.markdown = $event.target.value
+              $event.preventDefault()
+              return _vm.tabber($event)
             },
-            function($event) {
-              return _vm.convertToHtml()
-            }
-          ]
-        }
-      }),
+            input: [
+              function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.markdown = $event.target.value
+              },
+              _vm.convertToHtml
+            ]
+          }
+        })
+      ]),
       _vm._v(" "),
-      _c("div", {
-        staticClass:
-          "markdown-body control border rounded py-2 w-full ml-1 px-4 mb-2 overflow-y-scroll",
-        domProps: { innerHTML: _vm._s(_vm.compiledHTML) }
-      }),
+      _c("div", { staticClass: "w-1/2 flex flex-col" }, [
+        _c("label", { staticClass: "control" }, [_vm._v("Markdown Preview")]),
+        _vm._v(" "),
+        _c("div", {
+          staticClass:
+            "markdown-body control h-full border rounded py-2 w-full ml-1 px-4 mb-2 overflow-y-scroll",
+          domProps: { innerHTML: _vm._s(_vm.compiledHTML) }
+        })
+      ]),
       _vm._v(" "),
       _c("input", {
         directives: [

@@ -1,20 +1,26 @@
 <template>
 	<div class>
 		<div class="control flex">
-			<textarea
-				@keydown.tab.prevent="tabber($event)"
-				:name="name"
-				rows="10"
-				v-model="markdown"
-				@input="convertToHtml()"
-				class="control"
-				style="resize: none;"
-				placeholder="Use Markdown"
-			></textarea>
-			<div
-				class="markdown-body control border rounded py-2 w-full ml-1 px-4 mb-2 overflow-y-scroll"
-				v-html="compiledHTML"
-			></div>
+			<div class="w-1/2">
+				<label class="control">Question</label>
+				<textarea
+					@keydown.tab.prevent="tabber($event)"
+					:name="name"
+					rows="10"
+					v-model="markdown"
+					@input="convertToHtml"
+					class="control"
+					style="resize: none;"
+					placeholder="Use Markdown"
+				></textarea>
+			</div>
+			<div class="w-1/2 flex flex-col">
+				<label class="control">Markdown Preview</label>
+				<div
+					class="markdown-body control h-full border rounded py-2 w-full ml-1 px-4 mb-2 overflow-y-scroll"
+					v-html="compiledHTML"
+				></div>
+			</div>
 			<input type="hidden" name="compiledHTML" v-model="compiledHTML" />
 		</div>
 	</div>
@@ -55,7 +61,7 @@ export default {
 		}
 	},
 	created() {
-		this.parser = md();
+		this.parser = md().disable(["heading"]);
 		this.parser.use(mk);
 		this.convertToHtml();
 	}
