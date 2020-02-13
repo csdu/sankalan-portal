@@ -21,7 +21,7 @@
             </p>
         @endif
         <div class="mt-auto flex-items-center">
-            @if(!$event->hasEnded && !$event->activeQuiz->participationByTeam($team))
+            @if(!$event->hasEnded && !optional($event->activeQuiz)->participationByTeam($team))
             <form action="{{ route('events.withdraw-part', $event) }}" method="POST" class="inline-block mr-2">
                 @csrf @method('delete')
                 <button class="btn is-red p-1 text-xs">Withdraw</button>
@@ -31,7 +31,7 @@
                 @if (optional($event->activeQuiz->participationByTeam($team))->finished_at)
                     <p class="text-xs font-bold">Thank you for taking this quiz.</p>
                 @else
-                    <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">
+                    <a href="{{ route('quizzes.verify', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">
                         @if (!!$event->activeQuiz->participationByTeam($team) && !$event->activeQuiz->participationByTeam($team)->finished_at)
                             Resume Quiz
                         @else

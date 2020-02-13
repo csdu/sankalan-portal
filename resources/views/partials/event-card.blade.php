@@ -57,7 +57,7 @@
                             </p>
                             @if ($event->activeQuiz)
                                 @if (!optional($event->activeQuiz->participationByTeam($participatingTeam))->finished_at)
-                                    <a href="{{ route('quizzes.show', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">
+                                    <a href="{{ route('quizzes.verify', $event->activeQuiz) }}" class="btn is-green p-1 text-xs">
                                         @if (!!$event->activeQuiz->participationByTeam($participatingTeam) && !$event->activeQuiz->participationByTeam($participatingTeam)->finished_at)
                                             Resume Quiz
                                         @else
@@ -68,7 +68,7 @@
                             @else                                
                                 <a href="{{ route('dashboard') }}" class="btn is-blue is-sm">Go to dashboard</a>
                             @endif
-                            @if(!$event->hasEnded && !$event->activeQuiz->participationByTeam($participatingTeam))
+                            @if(!$event->hasEnded && !optional($event->activeQuiz)->participationByTeam($participatingTeam))
                                 <form action="{{ route('events.withdraw-part', $event) }}" method="POST" class="inline-block ml-2">
                                     @csrf @method('delete')
                                     <button class="btn is-red p-1 text-xs">Withdraw</button>

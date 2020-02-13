@@ -34,9 +34,9 @@ Route::middleware(['quiz_token_verified', 'participant_disqualify_check'])->grou
 });
 
 Route::get('/quizzes/{quiz}/verify', 'QuizVerificationController@showVerificationForm')
-    ->name('quizzes.verify');
+    ->name('quizzes.verify')->middleware('quiz_token_not_verified');
 
 Route::post('/quizzes/{quiz}/verify', 'QuizVerificationController@verify')
-->name('quizzes.verify');
+->name('quizzes.verify')->middleware('quiz_token_not_verified');
 
 Route::get('/question_attachments/{attachment}', 'QuestionAttachmentsController@show');
