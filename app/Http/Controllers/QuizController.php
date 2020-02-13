@@ -16,9 +16,10 @@ class QuizController extends Controller
         $team = Team::find($teamId);
 
         $quiz->loadMissing(['questions.choices']);
-        $quiz_response = $quiz->participations()->with(['responses'])->where('team_id', $teamId)->first();
 
         $participation = $team->beginQuiz($quiz);
+
+        $quiz_response = $quiz->participations()->with(['responses'])->where('team_id', $teamId)->first();
 
         $questionIds = collect($quiz->questions)->map(function ($question) {
             return $question->id;

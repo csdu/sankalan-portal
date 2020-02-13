@@ -317,7 +317,6 @@ export default {
 				.finally(() => {
 					this.loading = false;
 				});
-			console.log(this.responses);
 		}
 	},
 	created() {
