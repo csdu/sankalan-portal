@@ -99,7 +99,7 @@ class QuizResponse extends Model
      */
     public function getTimeLeftAttribute()
     {
-        $time_spent = optional($this->started_at)->diffInSeconds(now()) ?? 0;
+        $time_spent = optional($this->started_at)->diffInSeconds(now(), false) ?? 0;
 
         return $this->quiz->time_limit - $time_spent;
     }

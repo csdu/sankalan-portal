@@ -85,7 +85,7 @@ class QuizResponseController extends Controller
     public function storeExtraTime(Request $request, QuizResponse $quizResponse)
     {
         $quizResponse->update([
-            'started_at' => $quizResponse->started_at->add($request->time, 'minutes'),
+            'started_at' => now()->addMinutes($request->time),
             'finished_at' => null,
         ]);
 
