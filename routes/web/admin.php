@@ -95,6 +95,12 @@ Route::get('quizzes/{quiz}/show', 'QuizController@show')
 Route::get('quizzes/{quiz}/questions/create', 'QuestionController@create')
     ->name('admin.quizzes.questions.create');
 
+Route::get('quizzes/{quiz}/questions/{question}/edit', 'QuestionController@edit')
+    ->name('admin.quizzes.questions.edit');
+
+Route::put('quizzes/{quiz}/questions/{question}', 'QuestionController@update')
+    ->name('admin.quizzes.questions.update');
+
 Route::post('quizzes/{quiz}/questions', 'QuestionController@store')
     ->name('admin.quizzes.questions.store');
 

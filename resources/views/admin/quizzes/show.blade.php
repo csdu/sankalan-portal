@@ -57,6 +57,7 @@
                         {{ $question->negative_score }}
                     </td>
                     <td class="text-center pr-6 py-2">
+                        <a href="{{ route('admin.quizzes.questions.edit', [$quiz, $question]) }}" class="btn is-sm is-blue">Edit</a>
                         @unless ($quiz->isactive || $quiz->isClosed)
                             <form onsubmit="return confirm('Are you about deleting it.')" class="inline-block" action="{{ route('admin.quizzes.questions.delete', [$quiz, $question]) }}" method="POST">
                                 @csrf

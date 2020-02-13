@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Question;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class QuestionController extends Controller
 {
@@ -38,7 +37,7 @@ class QuestionController extends Controller
             'options' => 'required_if:type,mcq|array',
             'options.*' => 'required',
             'correct_answer_keys' => 'required_if:type,input|string',
-            'correct_answer_index' => 'required_if:type,mcq|numeric|gte:0|lt:'.count($request->options ?? [])
+            'correct_answer_index' => 'required_if:type,mcq|numeric|gte:0|lt:'.count($request->options ?? []),
         ]);
 
         $question = $quiz->questions()->create([
@@ -46,7 +45,7 @@ class QuestionController extends Controller
             'positive_score' => $request->positive_score,
             'negative_score' => $request->negative_score,
             'text' => $request->compiledHTML,
-            'correct_answer_keys' => $request->correct_answer_keys
+            'correct_answer_keys' => $request->correct_answer_keys,
         ]);
 
         foreach ($request->illustrations ?? [] as $illustration) {
@@ -56,7 +55,7 @@ class QuestionController extends Controller
         }
 
         $options = $question->choices()->createMany(
-            array_map(function($option) use ($question) {
+            array_map(function ($option) use ($question) {
                 return [
                     'key' => strval($question->id).str_random(3),
                     'text' => $option,
@@ -64,13 +63,11 @@ class QuestionController extends Controller
             }, $request->options ?? [])
         );
 
-
-        if($request->type == 'mcq') {
+        if ($request->type == 'mcq') {
             $question->update([
-                'correct_answer_keys' => $options[$request->correct_answer_index]->key
+                'correct_answer_keys' => $options[$request->correct_answer_index]->key,
             ]);
         }
-
 
         flash("Question created for {$quiz->title}!")->success();
 
@@ -85,6 +82,33 @@ class QuestionController extends Controller
         $question->delete();
 
         flash('Question deleted', 'success');
+
+        return redirect()->route('admin.quizzes.show', $quiz);
+    }
+
+    public function edit(Quiz $quiz, Question $question)
+    {
+        return view('admin.questions.edit', compact('quiz', 'question'));
+    }
+
+    public function update(Request $request, Quiz $quiz, Question $question)
+    {
+        $request->validate([
+            'qno' => 'required|numeric|gt:0',
+            'positive_score' => 'required|numeric|gte:1',
+            'negative_score' => 'required|numeric|gte:0',
+            'text' => 'required',
+            'compiledHTML' => 'required',
+        ]);
+
+        $question->update([
+            'qno' => $request->qno,
+            'positive_score' => $request->positive_score,
+            'negative_score' => $request->negative_score,
+            'text' => $request->compiledHTML,
+        ]);
+
+        flash('Question updated!')->success();
 
         return redirect()->route('admin.quizzes.show', $quiz);
     }
