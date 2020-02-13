@@ -17,8 +17,9 @@ class QuestionController extends Controller
     public function show(Quiz $quiz, Question $question)
     {
         $quizTitle = $quiz->title;
+        $questionAttachments = $question->attachments;
 
-        return view('admin.questions.show', compact('question', 'quizTitle'));
+        return view('admin.questions.show', compact('question', 'quizTitle', 'questionAttachments'));
     }
 
     public function store(Request $request, Quiz $quiz)
@@ -93,6 +94,8 @@ class QuestionController extends Controller
 
     public function update(Request $request, Quiz $quiz, Question $question)
     {
+        abort_if($quiz->isactive, 403);
+
         $request->validate([
             'qno' => 'required|numeric|gt:0',
             'positive_score' => 'required|numeric|gte:1',

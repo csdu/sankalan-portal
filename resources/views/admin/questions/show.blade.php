@@ -1,5 +1,10 @@
 @extends('layouts.admin')
 @section('title', 'Quizzes')
+@push('stylesheets')
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css"/>
+@endpush
 @section('content')
 <div class="card seperated">
     <div class="card-header">
@@ -19,7 +24,14 @@
         </div>
     </div>
     <div class="px-6 py-4">
-        {!! $question->text !!}
+        <div class="markdown-body mb-2">
+            {!! $question->text !!}
+        </div>
+
+        @foreach ($questionAttachments as $questionAttachment)
+            <img class="max-w-full" src="/question_attachments/{{ $questionAttachment->id }}">
+        @endforeach
+
     </div>
     @if($question->choices->count() > 0)
     <table class="w-full">
@@ -59,3 +71,11 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
+<script>
+    document.querySelectorAll("pre code").forEach(block => {
+        hljs.highlightBlock(block);
+    });
+</script>
+@endpush
