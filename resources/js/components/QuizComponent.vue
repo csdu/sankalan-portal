@@ -321,6 +321,8 @@ export default {
 	},
 	created() {
 		this.responses = new Array(this.dataQuestions.length).fill(null);
+		this.dataQuestions.sort((a, b) => (a.qno > b.qno ? 1 : -1));
+
 		this.questions = this.dataQuestions.map(question => {
 			question.visited = false;
 			return question;

@@ -2555,13 +2555,15 @@ __webpack_require__.r(__webpack_exports__);
       })["finally"](function () {
         _this3.loading = false;
       });
-      console.log(this.responses);
     }
   },
   created: function created() {
     var _this4 = this;
 
     this.responses = new Array(this.dataQuestions.length).fill(null);
+    this.dataQuestions.sort(function (a, b) {
+      return a.qno > b.qno ? 1 : -1;
+    });
     this.questions = this.dataQuestions.map(function (question) {
       question.visited = false;
       return question;
