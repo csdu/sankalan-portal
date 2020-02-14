@@ -9,7 +9,7 @@
         </h3>
         <p class="mb-1">
             <b class="mr-1">Team:</b>
-            <span class="underline">{{ ucwords(strtolower($team->name)) }}</span>
+            <span class="underline">{{ $team->name }}</span>
         </p>
         @if($event->activeQuiz)
             <p class="text-grey-darker my-1">
