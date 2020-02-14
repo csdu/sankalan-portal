@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+
 class PagesController extends Controller
 {
     public function index()
     {
         return view('welcome', [
-            'timeLeft' => now()->diffInSeconds(config('app.sankalan_start_time'), true),
+            'timeLeft' => now()->diffInSeconds(Carbon::parse(env('SANKALAN_START_TIME')), true),
         ]);
     }
 
