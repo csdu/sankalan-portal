@@ -11,6 +11,11 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
     use ArraySubsetAsserts;
 
+    protected function setUp(): void
+	{
+		parent::setUp();
+	}
+
     public function signIn($user = null)
     {
         $this->be($user ?? create(User::class));
