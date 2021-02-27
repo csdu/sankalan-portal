@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class EventParticipation extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are appended for array.
      *
@@ -48,7 +51,7 @@ class EventParticipation extends Model
                     'quiz_responses.quiz_id',
                     'events.active_quiz_id'
                 )->whereColumn('quiz_responses.team_id', 'teams.id')
-                ->limit(1),
+                    ->limit(1),
             ])->with('activeQuizResponse');
     }
 
@@ -59,7 +62,7 @@ class EventParticipation extends Model
      */
     public function getIsActiveQuizAllowedAttribute()
     {
-        if (! $this->event->activeQuiz) {
+        if (!$this->event->activeQuiz) {
             return;
         }
 

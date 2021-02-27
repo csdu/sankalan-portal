@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are not mass assignable.
      *
@@ -63,7 +66,7 @@ class Question extends Model
      */
     public function getIllustrationAttribute($illustration)
     {
-        if (! $illustration) {
+        if (!$illustration) {
             return $illustration;
         }
 

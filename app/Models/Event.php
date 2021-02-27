@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are NOT mass assignable.
      *
@@ -69,7 +72,7 @@ class Event extends Model
         $memberIds = $members->pluck('id');
         $participantIds = $this->loadMissing('teams.members')->teams->flatMap->members->pluck('id');
 
-        return ! $participantIds->intersect($memberIds)->isEmpty();
+        return !$participantIds->intersect($memberIds)->isEmpty();
     }
 
     /**
@@ -121,7 +124,7 @@ class Event extends Model
      */
     public function getIsLiveAttribute()
     {
-        return $this->hasStarted && ! $this->hasEnded;
+        return $this->hasStarted && !$this->hasEnded;
     }
 
     /**

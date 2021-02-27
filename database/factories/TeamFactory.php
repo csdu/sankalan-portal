@@ -1,9 +1,15 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\Team::class, function (Faker $faker) {
-    return [
-        'name' => $faker->word,
-    ];
-});
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class TeamFactory extends Factory
+{
+    function definition()
+    {
+        return [
+            'name' => $this->faker->word,
+        ];
+    }
+}

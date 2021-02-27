@@ -1,22 +1,34 @@
 <?php
 
+namespace Database\Factories;
+
+use App\Models\Question;
 use App\Models\Quiz;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(App\Models\Question::class, function (Faker $faker) {
-    return [
-        'qno' => $faker->numberBetween(1, 100),
-        'text' => $faker->paragraph,
-        'quiz_id' => function () {
-            return factory(Quiz::class)->create()->id;
-        },
-        'is_multiple' => false,
-        'correct_answer_keys' => null,
-    ];
-});
+class QuestionFactory extends Factory
+{
+    protected $model = Question::class;
 
-$factory->state(App\Models\Question::class, 'multiple', function (Faker $faker) {
-    return [
-        'is_multiple' => true,
-    ];
-});
+    function definition()
+    {
+        return [
+            'qno' => $this->faker->numberBetween(1, 100),
+            'text' => $this->faker->paragraph,
+            'quiz_id' => function () {
+                return Quiz::factory()->create()->id;
+            },
+            'is_multiple' => false,
+            'correct_answer_keys' => null,
+        ];
+    }
+
+    function multiple()
+    {
+        $this->state('multiple', function () {
+            return [
+                'is_multiple' => true,
+            ];
+        });
+    }
+}
