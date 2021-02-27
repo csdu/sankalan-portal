@@ -17,12 +17,8 @@ class QuizResponseFactory extends Factory
     function definition()
     {
         return [
-            'team_id' => function () {
-                return Team::factory()->create()->id;
-            },
-            'quiz_id' => function () {
-                return Quiz::factory()->create()->id;
-            },
+            'team_id' => fn () => Team::factory()->create()->id,
+            'quiz_id' => fn () => Quiz::factory()->create()->id,
             'started_at' => Carbon::now(),
             'finished_at' => null,
         ];

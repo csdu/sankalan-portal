@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Event;
+use App\Models\Question;
+use App\Models\QuestionOption;
+use App\Models\Quiz;
 use Illuminate\Database\Seeder;
 
 class EventAndQuizSeeder extends Seeder
@@ -13,14 +17,15 @@ class EventAndQuizSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\Models\Event', 5)->create()
+        Event::factory()->count(5)->create()
             ->each(function ($event) {
-                factory('App\Models\Quiz', $event->rounds)
+                Quiz::factory()->count($event->rounds)
                     ->create(['event_id' => $event->id])
                     ->each(function ($quiz) {
-                        factory('App\Models\Question', $quiz->questions_limit)->create(['quiz_id' => $quiz->id])
+                        Question::factory()->count($quiz->questions_limit)
+                            ->create(['quiz_id' => $quiz->id])
                             ->each(function ($question) {
-                                $options = factory('App\Models\QuestionOption', 4)->create(['question_id' => $question->id]);
+                                $options = QuestionOption::factory()->count(4)->create(['question_id' => $question->id]);
                                 $correct_answer_keys = $options->random(rand(1, 4))->pluck('key')->implode(':');
                                 $question->update(compact('correct_answer_keys'));
                             });

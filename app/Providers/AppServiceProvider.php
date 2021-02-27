@@ -21,20 +21,19 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Paginator::defaultView('partials.pagination');
 
-        View::composer(['events.*', 'teams.*', 'dashboard'], function ($view) {
-            return $view->with([
+        View::composer(
+            ['events.*', 'teams.*', 'dashboard'],
+            fn ($view) => $view->with([
                 'signedInUser' => auth()->user(),
-            ]);
-        });
+            ])
+        );
 
         Collection::macro('recursive', function () {
-            return $this->map(function ($value) {
-                if (is_array($value) || is_object($value)) {
-                    return collect($value)->recursive();
-                }
-
-                return $value;
-            });
+            return $this->map(
+                fn ($value) => is_array($value) || is_object($value)
+                    ? collect($value)->recursive()
+                    : $value
+            );
         });
     }
 

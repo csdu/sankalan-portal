@@ -15,9 +15,10 @@ class EventTeamController extends Controller
         $query = EventParticipation::query();
 
         if ($event) {
-            $query = $query->whereHas('event', function ($query) use ($event) {
-                $query->where('events.slug', $event->slug);
-            });
+            $query = $query->whereHas(
+                'event',
+                fn ($query) => $query->where('events.slug', $event->slug)
+            );
         }
 
         $events_teams = $query->with(['event', 'team.members'])->paginate(config('app.pagination.perPage'));

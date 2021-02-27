@@ -17,14 +17,10 @@ class QuizFactory extends Factory
         return [
             'title' => $title,
             'slug' => str_slug($title),
-            'instructions' => collect(range(1, 4))->map(function () {
-                return $this->faker->sentence;
-            }),
+            'instructions' => collect(range(1, 4))->map(fn () => $this->faker->sentence),
             'time_limit' => $this->faker->randomElement([25 * 60, 30 * 60, 45 * 60]),
             'questions_limit' => $this->faker->numberBetween(20, 40),
-            'event_id' => function () {
-                return Event::factory()->create()->id;
-            },
+            'event_id' => fn () => Event::factory()->create()->id,
         ];
     }
 }

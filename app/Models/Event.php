@@ -84,9 +84,8 @@ class Event extends Model
     public function participatingTeamByUser(User $user)
     {
         return $this->loadMissing('teams.members')
-            ->teams->first(function ($team) use ($user) {
-                return $team->members->pluck('id')->contains($user->id);
-            });
+            ->teams
+            ->first(fn ($team) => $team->members->pluck('id')->contains($user->id));
     }
 
     /**

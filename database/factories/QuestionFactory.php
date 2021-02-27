@@ -15,9 +15,7 @@ class QuestionFactory extends Factory
         return [
             'qno' => $this->faker->numberBetween(1, 100),
             'text' => $this->faker->paragraph,
-            'quiz_id' => function () {
-                return Quiz::factory()->create()->id;
-            },
+            'quiz_id' => fn () => Quiz::factory()->create()->id,
             'is_multiple' => false,
             'correct_answer_keys' => null,
         ];
@@ -25,10 +23,6 @@ class QuestionFactory extends Factory
 
     function multiple()
     {
-        $this->state('multiple', function () {
-            return [
-                'is_multiple' => true,
-            ];
-        });
+        $this->state('multiple', fn () => ['is_multiple' => true]);
     }
 }

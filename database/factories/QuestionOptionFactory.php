@@ -18,9 +18,7 @@ class QuestionOptionFactory extends Factory
         return [
             'key' => $this->faker->bothify("???##"),
             'text' => $this->faker->sentence,
-            'question_id' => function (array $attributes) {
-                return Question::factory()->create()->id;
-            },
+            'question_id' => fn () => Question::factory()->create()->id,
         ];
     }
 }
