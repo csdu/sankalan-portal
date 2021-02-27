@@ -29,8 +29,7 @@ class QuizGoesLiveTest extends TestCase
         $this->assertArrayHasKey('status', $response);
         $this->assertArrayHasKey('message', $response);
         $this->assertArrayHasKey('quiz', $response);
-        $this->assertEquals($quizzes[0]->fresh()->opened_at->toDateTimeString(), $response['quiz']['opened_at']);
-        $this->assertEquals($quizzes[0]->fresh()->opened_at->toDateTimeString(), $response['quiz']['opened_at']);
+        $this->assertEquals($quizzes[0]->fresh()->opened_at->toJson(), $response['quiz']['opened_at']);
         $this->assertTrue($response['quiz']['isActive']);
         $this->assertFalse($response['quiz']['isClosed']);
         $this->assertArrayHasKey('event', $response['quiz']);
