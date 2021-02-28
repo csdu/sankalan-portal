@@ -2,30 +2,30 @@
     "private": true,
     "scripts": {
         "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "npm run development -- --watch",
-        "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "mix --production"
     },
     "devDependencies": {
-        "autoprefixer": "^9.8.6",
-        "axios": "^0.18",
+        "@tailwindcss/forms": "^0.2.1",
+        "autoprefixer": "^10.2.4",
+        "axios": "^0.21.1",
         "browser-sync": "^2.26.14",
-        "browser-sync-webpack-plugin": "2.0.1",
-        "cross-env": "^5.1",
-        "laravel-mix": "^4.0.7",
-        "laravel-mix-purgecss": "^2.2.0",
-        "laravel-mix-tailwind": "^0.1.2",
-        "lodash": "^4.17.20",
-        "markdown-it": "^10.0.0",
+        "browser-sync-webpack-plugin": "^2.3.0",
+        "laravel-mix": "^6.0.13",
+        "markdown-it": "^12.0.4",
         "markdown-it-katex": "^2.0.3",
-        "resolve-url-loader": "^2.3.1",
-        "sass": "^1.32.7",
-        "sass-loader": "^7.1.0",
-        "tailwindcss": "^1.9.6",
-        "vue": "^2.6.12",
+        "postcss": "^8.2.6",
+        "postcss-import": "^14.0.0",
+        "postcss-nested": "^5.0.4",
+        "tailwindcss": "^2.0.3",
+        "vue-loader": "^15.9.5",
         "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "vue": "^2.6.12"
     }
 }

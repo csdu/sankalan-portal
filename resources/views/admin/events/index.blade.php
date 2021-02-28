@@ -37,7 +37,7 @@
                     </td>
                     <td class="table-fit text-center px-4 py-2">
                         <span v-if="event.rounds > 1" class="px-2 py-1 rounded-full bg-grey text-xs" v-text="event.rounds"></span>
-                        <span v-else class="px-2 py-1 bg-blue text-white font-thin rounded text-xs">No Prelims</span>
+                        <span v-else class="px-2 py-1 bg-blue text-white font-extralight rounded text-xs">No Prelims</span>
                     </td>
                     <td class="table-fit text-center px-4 py-2">
                         <a v-if="event.teams_count" :href="route('admin.events.teams.index', event.slug)" class="link text-xs" v-text="`Participations (${event.teams_count})`"></a>
@@ -48,10 +48,8 @@
                         <span v-else class="text-xs text-red">No Quiz</span>
                     </td>
                     <td class="table-fit text-right pr-6 py-2">
-                        <ajax-button v-if="event.isLive" @success="onComplete" @failure="onComplete"
-                        :action="route('admin.events.end', event.slug)" method="POST" class="btn is-sm is-red">End</ajax-button>
-                        <ajax-button v-else-if="!event.hasEnded" @success="onComplete" @failure="onComplete"
-                        :action="route('admin.events.go-live', event.slug)" method="POST" class="btn is-sm is-green">Begin</ajax-button>
+                        <ajax-button v-if="event.isLive" @success="onComplete" @failure="onComplete" :action="route('admin.events.end', event.slug)" method="POST" class="btn is-sm is-red">End</ajax-button>
+                        <ajax-button v-else-if="!event.hasEnded" @success="onComplete" @failure="onComplete" :action="route('admin.events.go-live', event.slug)" method="POST" class="btn is-sm is-green">Begin</ajax-button>
                         <form onsubmit="return confirm('Are you about deleting it.')" v-if="!event.isLive" class="inline-block" action="{!! route('admin.events.delete', $event) !!}" method="POST">
                             @csrf
                             @method('DELETE')

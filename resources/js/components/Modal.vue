@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="absolute top-0 right-0 bottom-0 left-0 flex items-center content-center self-center justify-center overlay"
+		class="absolute top-0 right-0 bottom-0 left-0 flex items-center content-center self-center justify-center bg-black bg-opacity-20"
 	>
 		<div class="bg-white shadow-md p-4 rounded">
 			<div class="flex justify-between items-center">
@@ -25,9 +25,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss" scoped>
-.overlay {
-	background-color: rgba(0, 0, 0, 0.2);
-}
-</style>

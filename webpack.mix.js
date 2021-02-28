@@ -1,20 +1,20 @@
 let mix = require('laravel-mix')
-require('laravel-mix-purgecss')
-require('laravel-mix-tailwind')
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.sass', 'public/css')
-    .tailwind('tailwind.config.js')
-    .options({
-        postCss: [
-            require('autoprefixer')({
-                browsers: ['last 40 versions'],
-            })
-        ]
-    }).purgeCss()
+mix.js('resources/js/app.js', 'public/js').vue({
+    version: 2,
+    extractStyles: true,
+    globalStyles: false
+});
+
+mix.postCss('resources/css/app.css', 'public/css', [
+    require('postcss-import'),
+    require('tailwindcss'),
+    require('postcss-nested'),
+    require('autoprefixer'),
+]);
 
 if (mix.inProduction()) {
-    mix.version()
+    mix.version();
 }
 
-mix.browserSync('localhost:8000')
+mix.browserSync('localhost:8000');

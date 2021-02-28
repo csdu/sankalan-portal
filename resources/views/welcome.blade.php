@@ -47,70 +47,60 @@
                             @csrf
                             <div class="flex mb-3">
                                 <div class="flex-1 mr-2">
-                                    <input type="text" placeholder="First Name" class="control{{ $errors->has('first_name') ? ' border-red' : '' }}" name="first_name"
-                                        value="{{ old('first_name') }}" required autofocus>
+                                    <input type="text" placeholder="First Name" class="control{{ $errors->has('first_name') ? ' border-red' : '' }}" name="first_name" value="{{ old('first_name') }}" required autofocus>
                                     @if ($errors->has('first_name'))
-                                    <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                                        <strong>{{ $errors->first('first_name') }}</strong>
+                                    <span class="text-red mt-1" role="alert">
+                                        {{ $errors->first('first_name') }}
                                     </span>
                                     @endif
                                 </div>
                                 <div class="flex-1">
-                                    <input type="text" placeholder="Last Name"
-                                        class="control{{ $errors->has('last_name') ? ' border-red' : '' }}"
-                                        name="last_name"
-                                        value="{{ old('last_name') }}" required autofocus>
+                                    <input type="text" placeholder="Last Name" class="control{{ $errors->has('last_name') ? ' border-red' : '' }}" name="last_name" value="{{ old('last_name') }}" required autofocus>
                                     @if ($errors->has('last_name'))
-                                        <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                                            <strong>{{ $errors->first('last_name') }}</strong>
-                                        </span>
+                                    <span class="text-red mt-1" role="alert">
+                                        {{ $errors->first('last_name') }}
+                                    </span>
                                     @endif
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <input type="email" placeholder="Email" class="control{{ $errors->has('email') ? ' border-red' : '' }}" name="email" value="{{ old('email') }}"
-                                    required> @if ($errors->has('email'))
-                                <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                                                                            <strong>{{ $errors->first('email') }}</strong>
-                                                                        </span> @endif
+                                <input type="email" placeholder="Email" class="control{{ $errors->has('email') ? ' border-red' : '' }}" name="email" value="{{ old('email') }}" required> @if ($errors->has('email'))
+                                <span class="text-red mt-1" role="alert">
+                                    {{ $errors->first('email') }}
+                                </span> @endif
                             </div>
                             <div class="mb-3">
-                                <input type="phone" placeholder="Moblie Number (10-digit)" class="control{{ $errors->has('phone') ? ' border-red' : '' }}"
-                                    name="phone" value="{{ old('phone') }}" required> @if ($errors->has('phone'))
-                                <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                                                                        <strong>{{ $errors->first('phone') }}</strong>
-                                                                    </span> @endif
+                                <input type="text" inputmode="tel" placeholder="Moblie Number (10-digit)" class="control{{ $errors->has('phone') ? ' border-red' : '' }}" name="phone" value="{{ old('phone') }}" required> @if ($errors->has('phone'))
+                                <span class="text-red mt-1" role="alert">
+                                    {{ $errors->first('phone') }}
+                                </span> @endif
                             </div>
                             <div class="mb-4">
-                                <input type="text" placeholder="College Name" class="control{{ $errors->has('college') ? ' border-red' : '' }}" name="college"
-                                    required> @if ($errors->has('college'))
-                                <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                                                                    <strong>{{ $errors->first('college') }}</strong>
-                                                                </span> @endif
+                                <input type="text" placeholder="College Name" class="control{{ $errors->has('college') ? ' border-red' : '' }}" name="college" required> @if ($errors->has('college'))
+                                <span class="text-red mt-1" role="alert">
+                                    {{ $errors->first('college') }}
+                                </span> @endif
                             </div>
                             <div class="mb-4">
-                                <input type="text" placeholder="Course (Year)" class="control{{ $errors->has('course') ? ' border-red' : '' }}" name="course"
-                                    required> @if ($errors->has('course'))
-                                <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                                                                            <strong>{{ $errors->first('course') }}</strong>
-                                                                        </span> @endif
+                                <input type="text" placeholder="Course (Year)" class="control{{ $errors->has('course') ? ' border-red' : '' }}" name="course" required> @if ($errors->has('course'))
+                                <span class="text-red mt-1" role="alert">
+                                    {{ $errors->first('course') }}
+                                </span> @endif
                             </div>
                             <div class="mb-4">
-                                <input type="password" placeholder="Password" class="control{{ $errors->has('password') ? ' border-red' : '' }}" name="password"
-                                    required> @if ($errors->has('password'))
-                                <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                                                                            <strong>{{ $errors->first('password') }}</strong>
-                                                                        </span> @endif
+                                <input type="password" placeholder="Password" class="control{{ $errors->has('password') ? ' border-red' : '' }}" name="password" required> @if ($errors->has('password'))
+                                <span class="text-red mt-1" role="alert">
+                                    {{ $errors->first('password') }}
+                                </span> @endif
                             </div>
                             <div class="mb-4">
-                                <input type="password" placeholder="Confirm Password" class="control{{ $errors->has('password') ? ' border-red' : '' }}"
-                                    name="password_confirmation" required>
+                                <input type="password" placeholder="Confirm Password" class="control{{ $errors->has('password') ? ' border-red' : '' }}" name="password_confirmation" required>
                             </div>
                             <div>
                                 <button type="submit" class="btn is-blue">
-                                                                        {{ __('Register') }}
-                                                                    </button>
+                                    {{ __('Register') }}
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -124,24 +114,22 @@
                         <form method="POST" action="{{ route('login') }}" class="card-content">
                             @csrf
                             <div class="mb-3">
-                                <input type="email" placeholder="Email" class="control{{ $errors->has('email') ? ' border-red' : '' }}" name="email" value="{{ old('email') }}"
-                                    required autofocus> @if ($errors->has('email'))
-                                <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                                                        <strong>{{ $errors->first('email') }}</strong>
-                                                    </span> @endif
+                                <input type="email" placeholder="Email" class="control{{ $errors->has('email') ? ' border-red' : '' }}" name="email" value="{{ old('email') }}" required autofocus> @if ($errors->has('email'))
+                                <span class="text-red mt-1" role="alert">
+                                    {{ $errors->first('email') }}
+                                </span> @endif
                             </div>
 
                             <div class="mb-4">
-                                <input type="password" placeholder="Password" class="control{{ $errors->has('password') ? ' border-red' : '' }}" name="password"
-                                    required>
+                                <input type="password" placeholder="Password" class="control{{ $errors->has('password') ? ' border-red' : '' }}" name="password" required>
                                 @if ($errors->has('password'))
-                                    <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                <span class="text-red mt-1" role="alert">
+                                    {{ $errors->first('password') }}
+                                </span>
                                 @endif
                             </div>
 
-                            <div class="whitespace-no-wrap mb-6 flex items-center">
+                            <div class="whitespace-nowrap mb-6 flex items-center">
                                 <input type="checkbox" name="remember" id="remember" {{ old( 'remember') ? 'checked' : '' }}>
                                 <label class="ml-1" for="remember">
                                     {{ __('Remember Me') }}

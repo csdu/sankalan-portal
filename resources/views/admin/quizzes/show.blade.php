@@ -8,11 +8,11 @@
                 <h2 class="text-xl font-normal">Question for <small class="text-blue">{{ $quiz->title }}</small></h2>
                 <div>
                     @if ($quiz->isActive)
-                        <span class="p-1 ml-1 rounded bg-green text-white font-thin text-xs uppercase leading-none">LIVE</span>
+                    <span class="p-1 ml-1 rounded bg-green text-white font-extralight text-xs uppercase leading-none">LIVE</span>
                     @elseif($quiz->isClosed)
-                        <span class="p-1 ml-1 rounded bg-red text-white font-thin text-xs uppercase leading-none">Closed</span>
+                    <span class="p-1 ml-1 rounded bg-red text-white font-extralight text-xs uppercase leading-none">Closed</span>
                     @else
-                        <span class="p-1 ml-1 rounded bg-grey font-thin text-xs uppercase leading-none">Offline</span>
+                    <span class="p-1 ml-1 rounded bg-grey font-extralight text-xs uppercase leading-none">Offline</span>
                     @endif
                 </div>
             </div>
@@ -24,7 +24,7 @@
                 <span class="px-2 py-1 rounded-full bg-blue text-white text-xs">{{ $quiz->questions()->count() }}</span>
                 <span class="px-2"></span>
                 @unless ($quiz->isactive || $quiz->isClosed)
-                    <a href="{{ route('admin.quizzes.questions.create', $quiz) }}" class="btn is-sm is-blue">Add new question</a>
+                <a href="{{ route('admin.quizzes.questions.create', $quiz) }}" class="btn is-sm is-blue">Add new question</a>
                 @endunless
             </div>
         </div>
@@ -41,32 +41,32 @@
         </thead>
         <tbody>
             @foreach ($quiz->questions as $question)
-                <tr class="border-t hover:bg-grey-lighter">
-                    <td class="text-center pl-6 py-2">
-                        {{ $question->qno }}
-                    </td>
-                    <td class="text-left px-4 py-2">
-                        <a href="{{ route('admin.quizzes.questions.show', [$quiz, $question]) }}" class="link">
-                            {{ str_limit(strip_tags($question->text), 100, '...') }}
-                        </a>
-                    </td>
-                    <td class="text-center px-4 py-2">
-                        {{ $question->positive_score }}
-                    </td>
-                    <td class="text-center px-4 py-2">
-                        {{ $question->negative_score }}
-                    </td>
-                    <td class="text-center pr-6 py-2">
-                        <a href="{{ route('admin.quizzes.questions.edit', [$quiz, $question]) }}" class="btn is-sm is-blue">Edit</a>
-                        @unless ($quiz->isactive || $quiz->isClosed)
-                            <form onsubmit="return confirm('Are you about deleting it.')" class="inline-block" action="{{ route('admin.quizzes.questions.delete', [$quiz, $question]) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn is-sm is-red">Delete</button>
-                            </form>
-                        @endunless
-                    </td>
-                </tr>
+            <tr class="border-t hover:bg-grey-lighter">
+                <td class="text-center pl-6 py-2">
+                    {{ $question->qno }}
+                </td>
+                <td class="text-left px-4 py-2">
+                    <a href="{{ route('admin.quizzes.questions.show', [$quiz, $question]) }}" class="link">
+                        {{ str_limit(strip_tags($question->text), 100, '...') }}
+                    </a>
+                </td>
+                <td class="text-center px-4 py-2">
+                    {{ $question->positive_score }}
+                </td>
+                <td class="text-center px-4 py-2">
+                    {{ $question->negative_score }}
+                </td>
+                <td class="text-center pr-6 py-2">
+                    <a href="{{ route('admin.quizzes.questions.edit', [$quiz, $question]) }}" class="btn is-sm is-blue">Edit</a>
+                    @unless ($quiz->isactive || $quiz->isClosed)
+                    <form onsubmit="return confirm('Are you about deleting it.')" class="inline-block" action="{{ route('admin.quizzes.questions.delete', [$quiz, $question]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn is-sm is-red">Delete</button>
+                    </form>
+                    @endunless
+                </td>
+            </tr>
             @endforeach
         </tbody>
     </table>

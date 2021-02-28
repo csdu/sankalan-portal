@@ -1,7 +1,7 @@
 <nav class="py-2">
     <div class="container flex flex-col items-baseline sm:flex-row overflow-x-auto">
         <div class="flex py-2 justify-center sm:mr-3">
-            <a class="inline-flex items-center whitespace-no-wrap" href="{{ Auth::check() ? route('dashboard') : route('homepage') }}">
+            <a class="inline-flex items-center whitespace-nowrap" href="{{ Auth::check() ? route('dashboard') : route('homepage') }}">
                 <h1 class="text-2xl">Sankalan<small class="ml-1 text-xs text-blue uppercase">Portal</small></h1>
             </a>
         </div>
@@ -17,7 +17,7 @@
                 </li>
                 @endauth
             </ul>
-    
+
             <ul class="nav-right list-reset inline-flex items-baseline justify-end ml-2">
                 <li class=" inline-flex text-sm uppercase tracking-wide text-black font-semibold leading-none mr-4">
                     <a href="/help" class="inline-flex items-baseline" title="help">
@@ -33,7 +33,7 @@
                                             document.getElementById('logout-form').submit();">
                             <svg class="h-4" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="currentColor" fill-rule="evenodd" d="M4.16 4.16l1.42 1.42A6.99 6.99 0 0 0 10 18a7 7 0 0 0 4.42-12.42l1.42-1.42a9 9 0 1 1-11.69 0zM9 0h2v8H9V0z"/></svg>
                         </a>
-    
+
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                             @csrf
                         </form>
@@ -44,7 +44,7 @@
                         <a href="{{ route('homepage') }}#register" class="btn is-blue font-semibold">Register</a>
                     </li>
                 @endauth
-                
+
             </ul>
         </div>
     </div>
