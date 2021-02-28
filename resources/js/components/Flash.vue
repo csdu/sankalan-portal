@@ -51,7 +51,9 @@ export default {
         this.dataMessages.forEach(message => this.messages.push(message));
         setTimeout(() => this.clear(), 3000);
 
-        window.Events.$on('flash', message => {
+        console.log(this.$eventBus, Object.keys(this.$eventBus));
+
+        this.$eventBus.on('flash', message => {
             this.flash(message)
         });
     }

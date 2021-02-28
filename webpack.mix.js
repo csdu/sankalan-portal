@@ -1,7 +1,7 @@
 let mix = require('laravel-mix')
 
 mix.js('resources/js/app.js', 'public/js').vue({
-    version: 2,
+    version: 3,
     extractStyles: true,
     globalStyles: false
 });
@@ -17,4 +17,4 @@ if (mix.inProduction()) {
     mix.version();
 }
 
-mix.browserSync('localhost:8000');
+mix.browserSync('localhost:8080');

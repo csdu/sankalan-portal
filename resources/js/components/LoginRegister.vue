@@ -1,3 +1,7 @@
+<template>
+    <slot :isRegister="isRegister" :login="login" :register="register"></slot>
+</template>
+<script>
 export default {
     data() {
         return {
@@ -20,4 +24,4 @@ export default {
         }
     }
 }
-
+</script>

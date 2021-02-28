@@ -5,25 +5,23 @@
         <div class="my-6 lg flex flex-col justify-center items-start flex-1 text-center lg:text-left">
             <h1 class="mb-1 text-4xl">Sankalan <span class="text-2xl text-blue">{{ config('app.sankalan_start_time')->format('Y') }}</span></h1>
             <h3 class="mb-6">Compiling Innovations ...</h3>
-            <countdown-timer :duration="{{ $timeLeft }}" class="flex text-3xl sm:text-5xl -mx-4 mb-4">
-                <template slot-scope="{timer, format}">
-                    <span v-if="timer.days > 0" class="inline-flex flex-col items-center justify-center p-3 md:p-6">
-                        <span v-text="timer.days"></span>
-                        <span class="mt-1 text-xs uppercase text-grey-dark tracking-wide font-semibold">Days</span>
-                    </span>
-                    <span class="inline-flex flex-col items-center justify-center p-3 md:p-6">
-                        <span v-text="format(timer.hours, 2)"></span>
-                        <span class="mt-1 text-xs uppercase text-grey-dark tracking-wide font-semibold">Hours</span>
-                    </span>
-                    <span class="inline-flex flex-col items-center justify-center p-3 md:p-6">
-                        <span v-text="format(timer.minutes, 2)"></span>
-                        <span class="mt-1 text-xs uppercase text-grey-dark tracking-wide font-semibold">Minutes</span>
-                    </span>
-                    <span class="inline-flex flex-col items-center justify-center p-3 md:p-6">
-                        <span v-text="format(timer.seconds, 2)"></span>
-                        <span class="mt-1 text-xs uppercase text-grey-dark tracking-wide font-semibold">Seconds</span>
-                    </span>
-                </template>
+            <countdown-timer :duration="{{ $timeLeft }}" class="flex text-3xl sm:text-5xl -mx-4 mb-4" v-slot="{timer, format}">
+                <span v-if="timer.days > 0" class="inline-flex flex-col items-center justify-center p-3 md:p-6">
+                    <span v-text="timer.days"></span>
+                    <span class="mt-1 text-xs uppercase text-grey-dark tracking-wide font-semibold">Days</span>
+                </span>
+                <span class="inline-flex flex-col items-center justify-center p-3 md:p-6">
+                    <span v-text="format(timer.hours, 2)"></span>
+                    <span class="mt-1 text-xs uppercase text-grey-dark tracking-wide font-semibold">Hours</span>
+                </span>
+                <span class="inline-flex flex-col items-center justify-center p-3 md:p-6">
+                    <span v-text="format(timer.minutes, 2)"></span>
+                    <span class="mt-1 text-xs uppercase text-grey-dark tracking-wide font-semibold">Minutes</span>
+                </span>
+                <span class="inline-flex flex-col items-center justify-center p-3 md:p-6">
+                    <span v-text="format(timer.seconds, 2)"></span>
+                    <span class="mt-1 text-xs uppercase text-grey-dark tracking-wide font-semibold">Seconds</span>
+                </span>
             </countdown-timer>
             <div class="inline-block text-left px-4 py-2 bg-blue-lightest text-blue-dark border border-blue rounded min-w-1/2">
                 <h4 class="text-sm uppercase font-bold my-1">Note</h4>
@@ -34,10 +32,10 @@
                 </p>
             </div>
         </div>
-        <login-register inline-template>
+        <login-register v-slot="{ isRegister, register, login }">
             <div class="w-auto lg:w-1/3 flex flex-col justify-center items-center lg:items-end">
                 <transition name="fade" mode="out-in">
-                    <div v-if="isRegister" class="w-full card my-4" key="register">
+                    <div v-if="isRegister" class="w-full card my-4">
                         <h2 class="card-header">
                             {{ __('Register') }}
                             <span class="text-xs text-grey-dark mx-1">or</span>
@@ -104,7 +102,7 @@
                             </div>
                         </form>
                     </div>
-                    <div v-else class="w-full card my-4" key="login">
+                    <div v-else class="w-full card my-4">
                         <h2 class="card-header">
                             {{ __('Login') }}
                             <span class="text-xs text-grey-dark mx-1">or</span>

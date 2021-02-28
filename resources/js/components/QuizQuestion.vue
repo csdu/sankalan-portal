@@ -83,6 +83,7 @@
 	</div>
 </template>
 <script>
+import {nextTick} from 'vue';
 export default {
 	props: {
 		dataQuestion: { required: true },
@@ -90,6 +91,7 @@ export default {
 		index: { required: true },
 		value: { default: null }
 	},
+    emits: ['input'],
 	data() {
 		return {
 			highlightedOptionIndex: 0,
@@ -152,7 +154,7 @@ export default {
 		},
 		editResponse() {
 			this.editing = true;
-			this.$nextTick(() => this.$refs.input.focus());
+			nextTick(() => this.$refs.input.focus());
 		},
 		saveResponse() {
 			this.editing = false;

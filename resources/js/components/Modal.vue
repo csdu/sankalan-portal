@@ -22,6 +22,7 @@ export default {
 		title: {
 			default: ""
 		}
-	}
+	},
+    emits: ['close']
 };
 </script>
