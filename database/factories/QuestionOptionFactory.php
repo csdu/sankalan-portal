@@ -1,18 +1,24 @@
 <?php
 
+namespace Database\Factories;
+
+
 use App\Models\Question;
+use App\Models\QuestionOption;
 use Faker\Generator as Faker;
 
-$factory->define(App\Models\QuestionOption::class, function (Faker $faker, $attributes) {
-    if (array_key_exists('question_id', $attributes)) {
-        $question_id = $attributes['question_id'];
-    } else {
-        $question_id = factory(Question::class)->create()->id;
-    }
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-    return [
-        'key' => str_before($faker->unique()->bothify("???##-$question_id"), '-'),
-        'text' => $faker->sentence,
-        'question_id' => $question_id,
-    ];
-});
+class QuestionOptionFactory extends Factory
+{
+    protected $model = QuestionOption::class;
+
+    function definition()
+    {
+        return [
+            'key' => $this->faker->bothify("???##"),
+            'text' => $this->faker->sentence,
+            'question_id' => fn () => Question::factory()->create()->id,
+        ];
+    }
+}

@@ -1,0 +1,1358 @@
+{
+    "Mind Matters": [
+        {
+            "quiz_name": "Mind Matters",
+            "team_name": "Tushar Aggarwal",
+            "score": 20,
+            "team_members": [
+                {
+                    "name": "Tushar Aggarwal",
+                    "email": "tusharaggarwa822@gmail.com",
+                    "phone": "7838588328",
+                    "college": "Maharaja Surajmal Institute",
+                    "course": "BCA(1st year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Mind Matters",
+            "team_name": "Sachin Sajeev",
+            "score": 12,
+            "team_members": [
+                {
+                    "name": "Amal Augustine",
+                    "email": "amaledassery@gmail.com",
+                    "phone": "8848637742",
+                    "college": "St Stephen's College",
+                    "course": "2nd Bsc Prog Computer Science"
+                },
+                {
+                    "name": "Sachin Sajeev",
+                    "email": "sachin@itquiz.in",
+                    "phone": "8891915181",
+                    "college": "St Stephen's College",
+                    "course": "1st Economics"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Mind Matters",
+            "team_name": "Saksham Mathur",
+            "score": 12,
+            "team_members": [
+                {
+                    "name": "Saksham Mathur",
+                    "email": "saksham.mathur25@gmail.com",
+                    "phone": "7678160621",
+                    "college": "Institute of Technology and Science Mohan Nagar, Ghaziabad",
+                    "course": "BCA(3rd Year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Mind Matters",
+            "team_name": "Bulbasaur",
+            "score": 11,
+            "team_members": [
+                {
+                    "name": "Vinay Dangwal",
+                    "email": "vinaydangwal001@gmail.com",
+                    "phone": "8700024810",
+                    "college": "BCAS",
+                    "course": "B. SC HONS CS"
+                },
+                {
+                    "name": "Azfar Lari",
+                    "email": "azfarlari1999@gmail.com",
+                    "phone": "6388528132",
+                    "college": "Maharaja Agrasen College, University of Delhi",
+                    "course": "B. Sc. Physical Science"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Mind Matters",
+            "team_name": "Code all star",
+            "score": 11,
+            "team_members": [
+                {
+                    "name": "Himanshu Verma",
+                    "email": "himanshuv0210@gmail.com",
+                    "phone": "8920899744",
+                    "college": "BPIBS",
+                    "course": "MCA (2nd year)"
+                },
+                {
+                    "name": "Sanjeet Kumar",
+                    "email": "sanjeetkumar8285125@gmail.com",
+                    "phone": "8470075063",
+                    "college": "Bhai parmanand institute of Business Studies",
+                    "course": "2019-21"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Mind Matters",
+            "team_name": "Code Crackers",
+            "score": 11,
+            "team_members": [
+                {
+                    "name": "Lakshya Gehlaut",
+                    "email": "laqshay97@gmail.com",
+                    "phone": "8930852619",
+                    "college": "BPIBS",
+                    "course": "MCA 2nd Year"
+                },
+                {
+                    "name": "Yashdeep Bachhas",
+                    "email": "yashdeepbachhas93@gmail.com",
+                    "phone": "8750765449",
+                    "college": "BPIBS",
+                    "course": "MCA 2nd year"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Mind Matters",
+            "team_name": "Specters",
+            "score": 10,
+            "team_members": [
+                {
+                    "name": "Tanshi Nayak",
+                    "email": "tanshitn@gmail.com",
+                    "phone": "9891054795",
+                    "college": "Dyal Singh College  University of Delhi",
+                    "course": "BSC(h) Computer science , 2 year"
+                },
+                {
+                    "name": "Chaitanya Raj",
+                    "email": "chaitanyarajdixit@gmail.com",
+                    "phone": "7982248453",
+                    "college": "Dyal Singh College",
+                    "course": "B.Sc (Hons.) Computer Science (2nd Year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Mind Matters",
+            "team_name": "Websters",
+            "score": 10,
+            "team_members": [
+                {
+                    "name": "Humanshu Joshi",
+                    "email": "himanshujoshi2707@gmail.com",
+                    "phone": "7557322342",
+                    "college": "Sgtb khalsa",
+                    "course": "Bsc physical science (passout)"
+                },
+                {
+                    "name": "Rajat Tyagi",
+                    "email": "rajat498tyagi@gmail.com",
+                    "phone": "8851393488",
+                    "college": "S.G.T.B. KHALSA COLLEGE",
+                    "course": "Bsc physical sciences"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Mind Matters",
+            "team_name": "Tech_Riders",
+            "score": 10,
+            "team_members": [
+                {
+                    "name": "Swayam Gupta",
+                    "email": "swayamgupta5705367@gmail.com",
+                    "phone": "7895165377",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "BSC(H) computer science 2nd year"
+                },
+                {
+                    "name": "Sidharth Sharma",
+                    "email": "sharmasidharth1910@gmail.com",
+                    "phone": "8178764790",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "Bsc Computer Science"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Mind Matters",
+            "team_name": "Kingslayers",
+            "score": 9,
+            "team_members": [
+                {
+                    "name": "Manoj panwar",
+                    "email": "manojpanwar.mj.cr7@gmail.com",
+                    "phone": "0911297527",
+                    "college": "IITM",
+                    "course": "2nd year"
+                },
+                {
+                    "name": "Binul Sharma",
+                    "email": "binulsharma@gmail.com",
+                    "phone": "7048990749",
+                    "college": "IINTM",
+                    "course": "BCA 2nd year"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Mind Matters",
+            "team_name": "Dedeec",
+            "score": 8,
+            "team_members": [
+                {
+                    "name": "Saransh Rajput",
+                    "email": "9999rajput@gmail.com",
+                    "phone": "9990012600",
+                    "college": "SRM University",
+                    "course": "BTech 3rd year"
+                },
+                {
+                    "name": "Yatharth Khosla",
+                    "email": "khoslayatharth@gmail.com",
+                    "phone": "8750775555",
+                    "college": "Dr. Akhilesh Das Gupta Institute Of Technology And Management",
+                    "course": "B.Tech"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Mind Matters",
+            "team_name": "nazgulOP",
+            "score": 8,
+            "team_members": [
+                {
+                    "name": "Piyush sati",
+                    "email": "piyushsati111@gmail.com",
+                    "phone": "7983038625",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "2018"
+                }
+            ]
+        }
+    ],
+    "Code-A-Thon": [
+        {
+            "quiz_name": "Code-A-Thon",
+            "team_name": "spidy",
+            "score": 57,
+            "team_members": [
+                {
+                    "name": "DEEPAK AKHIL",
+                    "email": "deepak.sharma1@iic.ac.in",
+                    "phone": "7683001938",
+                    "college": "IIC, DU",
+                    "course": "Informatics"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Code-A-Thon",
+            "team_name": "Tarun Luthra",
+            "score": 52,
+            "team_members": [
+                {
+                    "name": "Tarun Luthra",
+                    "email": "tluthra987@gmail.com",
+                    "phone": "9911833728",
+                    "college": "SGTB Khalsa College",
+                    "course": "B. Sc(H) Computer Science"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Code-A-Thon",
+            "team_name": "elite coders",
+            "score": 34,
+            "team_members": [
+                {
+                    "name": "Aman Jain",
+                    "email": "amanworks843@gmail.com",
+                    "phone": "7838067855",
+                    "college": "Maharaja Surajmal Institute",
+                    "course": "Bachelor of Computer Applications"
+                },
+                {
+                    "name": "Nitin Solanki",
+                    "email": "nsolanki7788@gmail.com",
+                    "phone": "8375056963",
+                    "college": "NSUT",
+                    "course": "First"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Code-A-Thon",
+            "team_name": "nazgulOP",
+            "score": 26,
+            "team_members": [
+                {
+                    "name": "Piyush sati",
+                    "email": "piyushsati111@gmail.com",
+                    "phone": "7983038625",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "2018"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Code-A-Thon",
+            "team_name": "Specters",
+            "score": 25,
+            "team_members": [
+                {
+                    "name": "Tanshi Nayak",
+                    "email": "tanshitn@gmail.com",
+                    "phone": "9891054795",
+                    "college": "Dyal Singh College  University of Delhi",
+                    "course": "BSC(h) Computer science , 2 year"
+                },
+                {
+                    "name": "Chaitanya Raj",
+                    "email": "chaitanyarajdixit@gmail.com",
+                    "phone": "7982248453",
+                    "college": "Dyal Singh College",
+                    "course": "B.Sc (Hons.) Computer Science (2nd Year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Code-A-Thon",
+            "team_name": "DevGeeks",
+            "score": 24,
+            "team_members": [
+                {
+                    "name": "Rohit Sharma",
+                    "email": "rohitsdec4@gmail.com",
+                    "phone": "8700486627",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "B.sc (h) C.S. 3rd year"
+                },
+                {
+                    "name": "Yashnit Kalra",
+                    "email": "gauravn67@gmail.com",
+                    "phone": "9868011005",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "B.Sc (H) Computer Science, 3rd Year"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Code-A-Thon",
+            "team_name": "Bulbasaur",
+            "score": 23,
+            "team_members": [
+                {
+                    "name": "Vinay Dangwal",
+                    "email": "vinaydangwal001@gmail.com",
+                    "phone": "8700024810",
+                    "college": "BCAS",
+                    "course": "B. SC HONS CS"
+                },
+                {
+                    "name": "Azfar Lari",
+                    "email": "azfarlari1999@gmail.com",
+                    "phone": "6388528132",
+                    "college": "Maharaja Agrasen College, University of Delhi",
+                    "course": "B. Sc. Physical Science"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Code-A-Thon",
+            "team_name": "DedSecc",
+            "score": 21,
+            "team_members": [
+                {
+                    "name": "Faizan Ali",
+                    "email": "faizan.fa76@gmail.com",
+                    "phone": "9891494325",
+                    "college": "IINTM, jankpuri",
+                    "course": "BCA , 2nd year"
+                },
+                {
+                    "name": "Saransh Rajput",
+                    "email": "9999rajput@gmail.com",
+                    "phone": "9990012600",
+                    "college": "SRM University",
+                    "course": "BTech 3rd year"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Code-A-Thon",
+            "team_name": "NeyoX_ST",
+            "score": 18,
+            "team_members": [
+                {
+                    "name": "Shrishti Vaish",
+                    "email": "shivi.shrishti5@gmail.com",
+                    "phone": "8840898553",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "B.Sc(H) Computer Science"
+                },
+                {
+                    "name": "Tushar Agarwal",
+                    "email": "tushargrwl650@gmail.com",
+                    "phone": "8448564517",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "Bsc(H) Computer Science"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Code-A-Thon",
+            "team_name": "Hanky",
+            "score": 18,
+            "team_members": [
+                {
+                    "name": "Pooja Mali",
+                    "email": "pooja016mca19@igdtuw.ac.in",
+                    "phone": "8076998962",
+                    "college": "Igdtuw",
+                    "course": "MCA(1st year)"
+                },
+                {
+                    "name": "Himanshi Kaundal",
+                    "email": "himanshikaundal07@gmail.com",
+                    "phone": "9643770340",
+                    "college": "IGDTUW",
+                    "course": "MCA (1st year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Code-A-Thon",
+            "team_name": "wanna_be_coders",
+            "score": 17,
+            "team_members": [
+                {
+                    "name": "Shoaib Ahmad",
+                    "email": "zestirian2@gmail.com",
+                    "phone": "8707207595",
+                    "college": "Atma Ram Sanatan Dharma College",
+                    "course": "BSc (H) Maths"
+                },
+                {
+                    "name": "Sourav Jha",
+                    "email": "souravjha109@gmail.com",
+                    "phone": "8851167508",
+                    "college": "Atma Ram Sanatan Dharma College",
+                    "course": "BSc (H) Maths (2nd Year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Code-A-Thon",
+            "team_name": "Oblivious",
+            "score": 17,
+            "team_members": [
+                {
+                    "name": "Jatin Dehmiwal",
+                    "email": "jatindehmiwal@gmail.com",
+                    "phone": "8054900192",
+                    "college": "Dyal Singh College",
+                    "course": "B.Sc. Computer Science 2nd year"
+                },
+                {
+                    "name": "Ishita Jain",
+                    "email": "ishitaj37@gmail.com",
+                    "phone": "7678515523",
+                    "college": "Dyal Singh College",
+                    "course": "B.Sc. (h.) Comp. Sci. (2nd year)"
+                }
+            ]
+        }
+    ],
+    "Cipher-O-More": [
+        {
+            "quiz_name": "Cipher-O-More",
+            "team_name": "Tushar Aggarwal",
+            "score": 60,
+            "team_members": [
+                {
+                    "name": "Tushar Aggarwal",
+                    "email": "tusharaggarwa822@gmail.com",
+                    "phone": "7838588328",
+                    "college": "Maharaja Surajmal Institute",
+                    "course": "BCA(1st year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Cipher-O-More",
+            "team_name": "Bulbasaur",
+            "score": 28,
+            "team_members": [
+                {
+                    "name": "Vinay Dangwal",
+                    "email": "vinaydangwal001@gmail.com",
+                    "phone": "8700024810",
+                    "college": "BCAS",
+                    "course": "B. SC HONS CS"
+                },
+                {
+                    "name": "Azfar Lari",
+                    "email": "azfarlari1999@gmail.com",
+                    "phone": "6388528132",
+                    "college": "Maharaja Agrasen College, University of Delhi",
+                    "course": "B. Sc. Physical Science"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Cipher-O-More",
+            "team_name": "nazgulOP",
+            "score": 24,
+            "team_members": [
+                {
+                    "name": "Piyush sati",
+                    "email": "piyushsati111@gmail.com",
+                    "phone": "7983038625",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "2018"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Cipher-O-More",
+            "team_name": "Tecuriouss",
+            "score": 24,
+            "team_members": [
+                {
+                    "name": "Radhika Rajput",
+                    "email": "rajputradhika20176@gmail.com",
+                    "phone": "7982061571",
+                    "college": "Igdtuw",
+                    "course": "Master of Computer Application(MCA)"
+                },
+                {
+                    "name": "Priya Chaturvedi",
+                    "email": "Chaturvedi299priya@gmail.com",
+                    "phone": "8826118533",
+                    "college": "Igdtuw",
+                    "course": "Master of Computer Application(MCA)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Cipher-O-More",
+            "team_name": "Oblivious",
+            "score": 24,
+            "team_members": [
+                {
+                    "name": "Jatin Dehmiwal",
+                    "email": "jatindehmiwal@gmail.com",
+                    "phone": "8054900192",
+                    "college": "Dyal Singh College",
+                    "course": "B.Sc. Computer Science 2nd year"
+                },
+                {
+                    "name": "Tanshi Nayak",
+                    "email": "tanshitn@gmail.com",
+                    "phone": "9891054795",
+                    "college": "Dyal Singh College  University of Delhi",
+                    "course": "BSC(h) Computer science , 2 year"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Cipher-O-More",
+            "team_name": "Kingslayers",
+            "score": 20,
+            "team_members": [
+                {
+                    "name": "Manoj panwar",
+                    "email": "manojpanwar.mj.cr7@gmail.com",
+                    "phone": "0911297527",
+                    "college": "IITM",
+                    "course": "2nd year"
+                },
+                {
+                    "name": "Binul Sharma",
+                    "email": "binulsharma@gmail.com",
+                    "phone": "7048990749",
+                    "college": "IINTM",
+                    "course": "BCA 2nd year"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Cipher-O-More",
+            "team_name": "Abhishek Thakur",
+            "score": 20,
+            "team_members": [
+                {
+                    "name": "Abhishek Thakur",
+                    "email": "abhishekthakur_01@yahoo.com",
+                    "phone": "8882481943",
+                    "college": "vivekananda institute of professional studies,pitampura,delhi",
+                    "course": "BCA(1st year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Cipher-O-More",
+            "team_name": "Websters",
+            "score": 20,
+            "team_members": [
+                {
+                    "name": "Humanshu Joshi",
+                    "email": "himanshujoshi2707@gmail.com",
+                    "phone": "7557322342",
+                    "college": "Sgtb khalsa",
+                    "course": "Bsc physical science (passout)"
+                },
+                {
+                    "name": "Rajat Tyagi",
+                    "email": "rajat498tyagi@gmail.com",
+                    "phone": "8851393488",
+                    "college": "S.G.T.B. KHALSA COLLEGE",
+                    "course": "Bsc physical sciences"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Cipher-O-More",
+            "team_name": "ACE",
+            "score": 20,
+            "team_members": [
+                {
+                    "name": "Ishita Jain",
+                    "email": "ishitaj37@gmail.com",
+                    "phone": "7678515523",
+                    "college": "Dyal Singh College",
+                    "course": "B.Sc. (h.) Comp. Sci. (2nd year)"
+                },
+                {
+                    "name": "Chaitanya Raj",
+                    "email": "chaitanyarajdixit@gmail.com",
+                    "phone": "7982248453",
+                    "college": "Dyal Singh College",
+                    "course": "B.Sc (Hons.) Computer Science (2nd Year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Cipher-O-More",
+            "team_name": "Loosers",
+            "score": 20,
+            "team_members": [
+                {
+                    "name": "Sachin Kumar",
+                    "email": "sachinthecool.dude87@gmail.com",
+                    "phone": "7042675110",
+                    "college": "keshav mahavidyalaya",
+                    "course": "bsc h computer sc(3yr)"
+                },
+                {
+                    "name": "Muskaan Aggarwal",
+                    "email": "muskaan19010@gmail.com",
+                    "phone": "8588975811",
+                    "college": "Keshav mahavidyalaya",
+                    "course": "Bsc (H) Computer Science -- 3rd yr"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Cipher-O-More",
+            "team_name": "Terminal",
+            "score": 16,
+            "team_members": [
+                {
+                    "name": "Masudha Meher",
+                    "email": "kasturimeh@gmail.com",
+                    "phone": "9711843904",
+                    "college": "IGDTUW",
+                    "course": "MCA- 1"
+                },
+                {
+                    "name": "Riya Suntwal",
+                    "email": "carrisun91rio@gmail.com",
+                    "phone": "9891581927",
+                    "college": "IGDTUW",
+                    "course": "MCA- 1"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Cipher-O-More",
+            "team_name": "Simran Saini",
+            "score": 16,
+            "team_members": [
+                {
+                    "name": "Simran Saini",
+                    "email": "simmmrannsaini@gmail.com",
+                    "phone": "8447252107",
+                    "college": "Dyal singh college",
+                    "course": "Bsc computer science"
+                }
+            ]
+        }
+    ],
+    "Brain Spark": [
+        {
+            "quiz_name": "Brain Spark",
+            "team_name": "Tushar Aggarwal",
+            "score": 101,
+            "team_members": [
+                {
+                    "name": "Tushar Aggarwal",
+                    "email": "tusharaggarwa822@gmail.com",
+                    "phone": "7838588328",
+                    "college": "Maharaja Surajmal Institute",
+                    "course": "BCA(1st year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Brain Spark",
+            "team_name": "Stephanians",
+            "score": 65,
+            "team_members": [
+                {
+                    "name": "Alok Bhatt",
+                    "email": "alokbhatt97@gmail.com",
+                    "phone": "9548853131",
+                    "college": "St.Stephens",
+                    "course": "Mathematics"
+                },
+                {
+                    "name": "Devesh Tripathi",
+                    "email": "devesh023197@gmail.com",
+                    "phone": "8376052800",
+                    "college": "St Stephen's College",
+                    "course": "Graduated"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Brain Spark",
+            "team_name": "STEPHEN-ALPHA",
+            "score": 62,
+            "team_members": [
+                {
+                    "name": "APOORVA KUMAR SHARMA",
+                    "email": "97APOORVASHARMA@GMAIL.COM",
+                    "phone": "7060044660",
+                    "college": "ST. STEPHENS",
+                    "course": "2019"
+                },
+                {
+                    "name": "Pukhraj Malhotra",
+                    "email": "pukhraj07malhotra@gmail.com",
+                    "phone": "8585902636",
+                    "college": "St. Stephen's College",
+                    "course": "Msc. (Prev.) Mathematics"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Brain Spark",
+            "team_name": "wanna_be_coders",
+            "score": 52,
+            "team_members": [
+                {
+                    "name": "Shoaib Ahmad",
+                    "email": "zestirian2@gmail.com",
+                    "phone": "8707207595",
+                    "college": "Atma Ram Sanatan Dharma College",
+                    "course": "BSc (H) Maths"
+                },
+                {
+                    "name": "Sourav Jha",
+                    "email": "souravjha109@gmail.com",
+                    "phone": "8851167508",
+                    "college": "Atma Ram Sanatan Dharma College",
+                    "course": "BSc (H) Maths (2nd Year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Brain Spark",
+            "team_name": "elite coders",
+            "score": 50,
+            "team_members": [
+                {
+                    "name": "Aman Jain",
+                    "email": "amanworks843@gmail.com",
+                    "phone": "7838067855",
+                    "college": "Maharaja Surajmal Institute",
+                    "course": "Bachelor of Computer Applications"
+                },
+                {
+                    "name": "Nitin Solanki",
+                    "email": "nsolanki7788@gmail.com",
+                    "phone": "8375056963",
+                    "college": "NSUT",
+                    "course": "First"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Brain Spark",
+            "team_name": "CtrlC+CtrlV",
+            "score": 43,
+            "team_members": [
+                {
+                    "name": "Archie Midha",
+                    "email": "archiemidha10@gmail.com",
+                    "phone": "9953202345",
+                    "college": "Ramanujan College, University of Delhi",
+                    "course": "B.Voc. Software Development (3)"
+                },
+                {
+                    "name": "Sahil Sumit",
+                    "email": "sahil.sumit55@gmail.com",
+                    "phone": "9818689838",
+                    "college": "Ramanujan College,University of Delhi",
+                    "course": "B.Voc(Software Development) 3rd year"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Brain Spark",
+            "team_name": "Oblivious",
+            "score": 37,
+            "team_members": [
+                {
+                    "name": "Jatin Dehmiwal",
+                    "email": "jatindehmiwal@gmail.com",
+                    "phone": "8054900192",
+                    "college": "Dyal Singh College",
+                    "course": "B.Sc. Computer Science 2nd year"
+                },
+                {
+                    "name": "Ishita Jain",
+                    "email": "ishitaj37@gmail.com",
+                    "phone": "7678515523",
+                    "college": "Dyal Singh College",
+                    "course": "B.Sc. (h.) Comp. Sci. (2nd year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Brain Spark",
+            "team_name": "nazgulOP",
+            "score": 36,
+            "team_members": [
+                {
+                    "name": "Piyush sati",
+                    "email": "piyushsati111@gmail.com",
+                    "phone": "7983038625",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "2018"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Brain Spark",
+            "team_name": "Enigma",
+            "score": 32,
+            "team_members": [
+                {
+                    "name": "Mahak Arora",
+                    "email": "mahakarora1301@gmail.com",
+                    "phone": "8279737865",
+                    "college": "Miranda House",
+                    "course": "Mathematics, 2nd year"
+                },
+                {
+                    "name": "Elaine Rose",
+                    "email": "ammuelaine@gmail.com",
+                    "phone": "8826716360",
+                    "college": "Miranda House",
+                    "course": "Mathematics, 2nd year"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Brain Spark",
+            "team_name": "Websters",
+            "score": 32,
+            "team_members": [
+                {
+                    "name": "Humanshu Joshi",
+                    "email": "himanshujoshi2707@gmail.com",
+                    "phone": "7557322342",
+                    "college": "Sgtb khalsa",
+                    "course": "Bsc physical science (passout)"
+                },
+                {
+                    "name": "Rajat Tyagi",
+                    "email": "rajat498tyagi@gmail.com",
+                    "phone": "8851393488",
+                    "college": "S.G.T.B. KHALSA COLLEGE",
+                    "course": "Bsc physical sciences"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Brain Spark",
+            "team_name": "Bulbasaur",
+            "score": 32,
+            "team_members": [
+                {
+                    "name": "Vinay Dangwal",
+                    "email": "vinaydangwal001@gmail.com",
+                    "phone": "8700024810",
+                    "college": "BCAS",
+                    "course": "B. SC HONS CS"
+                },
+                {
+                    "name": "Azfar Lari",
+                    "email": "azfarlari1999@gmail.com",
+                    "phone": "6388528132",
+                    "college": "Maharaja Agrasen College, University of Delhi",
+                    "course": "B. Sc. Physical Science"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Brain Spark",
+            "team_name": "CodeQuick",
+            "score": 32,
+            "team_members": [
+                {
+                    "name": "Bharti Dua",
+                    "email": "bhartidua100@gmail.com",
+                    "phone": "8700566293",
+                    "college": "IGDTUW",
+                    "course": "MCA (1st Year)"
+                }
+            ]
+        }
+    ],
+    "Darwin Coding Challenge": [
+        {
+            "quiz_name": "Darwin Coding Challenge",
+            "team_name": "Tushar Aggarwal",
+            "score": 86,
+            "team_members": [
+                {
+                    "name": "Tushar Aggarwal",
+                    "email": "tusharaggarwa822@gmail.com",
+                    "phone": "7838588328",
+                    "college": "Maharaja Surajmal Institute",
+                    "course": "BCA(1st year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Darwin Coding Challenge",
+            "team_name": "Tarun Luthra",
+            "score": 42,
+            "team_members": [
+                {
+                    "name": "Tarun Luthra",
+                    "email": "tluthra987@gmail.com",
+                    "phone": "9911833728",
+                    "college": "SGTB Khalsa College",
+                    "course": "B. Sc(H) Computer Science"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Darwin Coding Challenge",
+            "team_name": "Bulbasaur",
+            "score": 41,
+            "team_members": [
+                {
+                    "name": "Vinay Dangwal",
+                    "email": "vinaydangwal001@gmail.com",
+                    "phone": "8700024810",
+                    "college": "BCAS",
+                    "course": "B. SC HONS CS"
+                },
+                {
+                    "name": "Azfar Lari",
+                    "email": "azfarlari1999@gmail.com",
+                    "phone": "6388528132",
+                    "college": "Maharaja Agrasen College, University of Delhi",
+                    "course": "B. Sc. Physical Science"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Darwin Coding Challenge",
+            "team_name": "Omega part 2",
+            "score": 38,
+            "team_members": [
+                {
+                    "name": "rajat JAIN",
+                    "email": "rajatjain529@gmail.com",
+                    "phone": "8708254810",
+                    "college": "mait",
+                    "course": "btech (4)"
+                },
+                {
+                    "name": "Nitin kumar",
+                    "email": "nk095291@gmail.com",
+                    "phone": "8800128684",
+                    "college": "maharaja agrasen institute of technology",
+                    "course": "BTECH(4)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Darwin Coding Challenge",
+            "team_name": "DevGeeks",
+            "score": 37,
+            "team_members": [
+                {
+                    "name": "Rohit Sharma",
+                    "email": "rohitsdec4@gmail.com",
+                    "phone": "8700486627",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "B.sc (h) C.S. 3rd year"
+                },
+                {
+                    "name": "Yashnit Kalra",
+                    "email": "gauravn67@gmail.com",
+                    "phone": "9868011005",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "B.Sc (H) Computer Science, 3rd Year"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Darwin Coding Challenge",
+            "team_name": "elite coders",
+            "score": 31,
+            "team_members": [
+                {
+                    "name": "Aman Jain",
+                    "email": "amanworks843@gmail.com",
+                    "phone": "7838067855",
+                    "college": "Maharaja Surajmal Institute",
+                    "course": "Bachelor of Computer Applications"
+                },
+                {
+                    "name": "Nitin Solanki",
+                    "email": "nsolanki7788@gmail.com",
+                    "phone": "8375056963",
+                    "college": "NSUT",
+                    "course": "First"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Darwin Coding Challenge",
+            "team_name": "Websters",
+            "score": 31,
+            "team_members": [
+                {
+                    "name": "Humanshu Joshi",
+                    "email": "himanshujoshi2707@gmail.com",
+                    "phone": "7557322342",
+                    "college": "Sgtb khalsa",
+                    "course": "Bsc physical science (passout)"
+                },
+                {
+                    "name": "Rajat Tyagi",
+                    "email": "rajat498tyagi@gmail.com",
+                    "phone": "8851393488",
+                    "college": "S.G.T.B. KHALSA COLLEGE",
+                    "course": "Bsc physical sciences"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Darwin Coding Challenge",
+            "team_name": "nazgulOP",
+            "score": 29,
+            "team_members": [
+                {
+                    "name": "Piyush sati",
+                    "email": "piyushsati111@gmail.com",
+                    "phone": "7983038625",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "2018"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Darwin Coding Challenge",
+            "team_name": "Specters",
+            "score": 29,
+            "team_members": [
+                {
+                    "name": "Tanshi Nayak",
+                    "email": "tanshitn@gmail.com",
+                    "phone": "9891054795",
+                    "college": "Dyal Singh College  University of Delhi",
+                    "course": "BSC(h) Computer science , 2 year"
+                },
+                {
+                    "name": "Chaitanya Raj",
+                    "email": "chaitanyarajdixit@gmail.com",
+                    "phone": "7982248453",
+                    "college": "Dyal Singh College",
+                    "course": "B.Sc (Hons.) Computer Science (2nd Year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Darwin Coding Challenge",
+            "team_name": "rishabh",
+            "score": 28,
+            "team_members": [
+                {
+                    "name": "Rishabh gupta",
+                    "email": "rishabhg166@gmail.com",
+                    "phone": "7834811650",
+                    "college": "bvicam",
+                    "course": "MCA(2)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Darwin Coding Challenge",
+            "team_name": "Bhai - Bhai",
+            "score": 28,
+            "team_members": [
+                {
+                    "name": "Pranav Rustagi Rustagi",
+                    "email": "pranav001100@gmail.com",
+                    "phone": "9560183338",
+                    "college": "Keshav Mahavidyalaya, Delhi University",
+                    "course": "BSc Hons. Computer Science"
+                },
+                {
+                    "name": "Yash Kashyap",
+                    "email": "yash00kash@gmail.com",
+                    "phone": "8601333799",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "BSc(H) CS (2nd Year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Darwin Coding Challenge",
+            "team_name": "spidy",
+            "score": 27,
+            "team_members": [
+                {
+                    "name": "DEEPAK AKHIL",
+                    "email": "deepak.sharma1@iic.ac.in",
+                    "phone": "7683001938",
+                    "college": "IIC, DU",
+                    "course": "Informatics"
+                }
+            ]
+        }
+    ],
+    "Algoholics": [
+        {
+            "quiz_name": "Algoholics",
+            "team_name": "Tushar Aggarwal",
+            "score": 111,
+            "team_members": [
+                {
+                    "name": "Tushar Aggarwal",
+                    "email": "tusharaggarwa822@gmail.com",
+                    "phone": "7838588328",
+                    "college": "Maharaja Surajmal Institute",
+                    "course": "BCA(1st year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Algoholics",
+            "team_name": "Tarun Luthra",
+            "score": 53,
+            "team_members": [
+                {
+                    "name": "Tarun Luthra",
+                    "email": "tluthra987@gmail.com",
+                    "phone": "9911833728",
+                    "college": "SGTB Khalsa College",
+                    "course": "B. Sc(H) Computer Science"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Algoholics",
+            "team_name": "omega",
+            "score": 41,
+            "team_members": [
+                {
+                    "name": "nitin kumar",
+                    "email": "yotisnk@gmail.com",
+                    "phone": "8700013193",
+                    "college": "maharaja agrasen institute of technology",
+                    "course": "BTECH (4)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Algoholics",
+            "team_name": "Oblivious",
+            "score": 39,
+            "team_members": [
+                {
+                    "name": "Jatin Dehmiwal",
+                    "email": "jatindehmiwal@gmail.com",
+                    "phone": "8054900192",
+                    "college": "Dyal Singh College",
+                    "course": "B.Sc. Computer Science 2nd year"
+                },
+                {
+                    "name": "Ishita Jain",
+                    "email": "ishitaj37@gmail.com",
+                    "phone": "7678515523",
+                    "college": "Dyal Singh College",
+                    "course": "B.Sc. (h.) Comp. Sci. (2nd year)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Algoholics",
+            "team_name": "NerdsCoders",
+            "score": 36,
+            "team_members": [
+                {
+                    "name": "Hitesh Kumar",
+                    "email": "hk824778@gmail.com",
+                    "phone": "9318377082",
+                    "college": "Hansraj College",
+                    "course": "B.Sc(h) computer science 2nd year"
+                },
+                {
+                    "name": "Manoj Bhatt",
+                    "email": "manojbhatt101010@gmail.com",
+                    "phone": "8279557909",
+                    "college": "Hansraj College",
+                    "course": "B.Sc(h) computer science 2nd year"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Algoholics",
+            "team_name": "Bulbasaur",
+            "score": 32,
+            "team_members": [
+                {
+                    "name": "Vinay Dangwal",
+                    "email": "vinaydangwal001@gmail.com",
+                    "phone": "8700024810",
+                    "college": "BCAS",
+                    "course": "B. SC HONS CS"
+                },
+                {
+                    "name": "Azfar Lari",
+                    "email": "azfarlari1999@gmail.com",
+                    "phone": "6388528132",
+                    "college": "Maharaja Agrasen College, University of Delhi",
+                    "course": "B. Sc. Physical Science"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Algoholics",
+            "team_name": "DevGeeks",
+            "score": 31,
+            "team_members": [
+                {
+                    "name": "Rohit Sharma",
+                    "email": "rohitsdec4@gmail.com",
+                    "phone": "8700486627",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "B.sc (h) C.S. 3rd year"
+                },
+                {
+                    "name": "Yashnit Kalra",
+                    "email": "gauravn67@gmail.com",
+                    "phone": "9868011005",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "B.Sc (H) Computer Science, 3rd Year"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Algoholics",
+            "team_name": "ALPHA11",
+            "score": 28,
+            "team_members": [
+                {
+                    "name": "Mahima Jindal",
+                    "email": "mahij9711@gmail.com",
+                    "phone": "8826057567",
+                    "college": "BVICAM",
+                    "course": "MCA(2)"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Algoholics",
+            "team_name": "spidy",
+            "score": 27,
+            "team_members": [
+                {
+                    "name": "DEEPAK AKHIL",
+                    "email": "deepak.sharma1@iic.ac.in",
+                    "phone": "7683001938",
+                    "college": "IIC, DU",
+                    "course": "Informatics"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Algoholics",
+            "team_name": "nazgulOP",
+            "score": 27,
+            "team_members": [
+                {
+                    "name": "Piyush sati",
+                    "email": "piyushsati111@gmail.com",
+                    "phone": "7983038625",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "2018"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Algoholics",
+            "team_name": "Team Infernum",
+            "score": 26,
+            "team_members": [
+                {
+                    "name": "Sandeep Chatterjee",
+                    "email": "sandeepchatterjee66@gmail.com",
+                    "phone": "7290986681",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "2nd year"
+                },
+                {
+                    "name": "Kinshuk Vasisht",
+                    "email": "kinshukvasishtsmart@gmail.com",
+                    "phone": "8468086504",
+                    "college": "Keshav Mahavidhalaya",
+                    "course": "2018"
+                }
+            ]
+        },
+        {
+            "quiz_name": "Algoholics",
+            "team_name": "NeyoX_ST",
+            "score": 26,
+            "team_members": [
+                {
+                    "name": "Shrishti Vaish",
+                    "email": "shivi.shrishti5@gmail.com",
+                    "phone": "8840898553",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "B.Sc(H) Computer Science"
+                },
+                {
+                    "name": "Tushar Agarwal",
+                    "email": "tushargrwl650@gmail.com",
+                    "phone": "8448564517",
+                    "college": "Keshav Mahavidyalaya",
+                    "course": "Bsc(H) Computer Science"
+                }
+            ]
+        }
+    ]
+}

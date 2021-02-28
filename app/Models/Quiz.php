@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 
 class Quiz extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are not mass assignable.
      *
@@ -125,7 +128,7 @@ class Quiz extends Model
     {
         $participation = $this->participationByTeam($team);
 
-        if (! $participation) {
+        if (!$participation) {
             return false;
         }
 
@@ -213,7 +216,7 @@ class Quiz extends Model
 
         return $this->id == $this->event->active_quiz_id
             && $this->opened_at
-            && ! $this->closed_at;
+            && !$this->closed_at;
     }
 
     /**

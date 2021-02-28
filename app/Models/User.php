@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasFactory;
 
     /**
      * The attributes that are NOT mass assignable.
@@ -90,7 +91,7 @@ class User extends Authenticatable
      */
     public function getUidAttribute()
     {
-        return env('ID_PREFIX', 'SNKLN').'-U'.str_pad("$this->id", 3, '0', STR_PAD_LEFT);
+        return env('ID_PREFIX', 'SNKLN') . '-U' . str_pad("$this->id", 3, '0', STR_PAD_LEFT);
     }
 
     /**

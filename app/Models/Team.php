@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Team extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are NOT mass assignable.
      *
@@ -103,6 +106,6 @@ class Team extends Model
      */
     public function getUidAttribute()
     {
-        return env('ID_PREFIX', 'SNKLN').'-T'.str_pad("$this->id", 3, '0', STR_PAD_LEFT);
+        return env('ID_PREFIX', 'SNKLN') . '-T' . str_pad("$this->id", 3, '0', STR_PAD_LEFT);
     }
 }

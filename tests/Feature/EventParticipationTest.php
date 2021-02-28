@@ -103,7 +103,10 @@ class EventParticipationTest extends TestCase
         ]);
 
         $this->assertCount(2, $team->events()->get());
-        $this->assertArraySubset($events->pluck('id'), $team->events()->get()->pluck('id'));
+        $this->assertSame(
+            $events->pluck('id')->all(),
+            $team->events()->get()->pluck('id')->all()
+        );
     }
 
     /** @test */

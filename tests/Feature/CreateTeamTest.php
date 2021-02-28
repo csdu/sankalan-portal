@@ -56,9 +56,9 @@ class CreateTeamTest extends TestCase
         tap($teams->first(), function ($team) use ($name, $user, $anotherUser) {
             $this->assertEquals(1, $team->id);
             $this->assertCount(2, $team->members);
-            $this->assertArraySubset(
+            $this->assertSame(
                 [$user->id, $anotherUser->id],
-                $team->members->pluck('id')
+                $team->members->pluck('id')->all()
             );
             $this->assertEquals($name, $team->name);
         });

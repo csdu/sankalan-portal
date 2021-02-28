@@ -1,14 +1,23 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Models\Event::class, function (Faker $faker) {
-    $title = $faker->unique()->words(3, true);
+use App\Models\Event;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-    return [
-        'title' => $title,
-        'slug' => str_slug($title),
-        'description' => $faker->paragraph(),
-        'rounds' => $faker->numberBetween(1, 3),
-    ];
-});
+class EventFactory extends Factory
+{
+    protected $model = Event::class;
+
+    function definition()
+    {
+        $title = $this->faker->unique()->words(3, true);
+
+        return [
+            'title' => $title,
+            'slug' => str_slug($title),
+            'description' => $this->faker->paragraph(),
+            'rounds' => $this->faker->numberBetween(1, 3),
+        ];
+    }
+}

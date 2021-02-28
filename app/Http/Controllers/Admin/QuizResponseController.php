@@ -18,16 +18,15 @@ class QuizResponseController extends Controller
         $quizzes = Quiz::with('event')->get();
 
         if ($quiz) {
-            $query->whereHas('quiz', function ($query) use ($quiz) {
-                $query->where('slug', $quiz->slug);
-            });
+            $query->whereHas(
+                'quiz',
+                fn ($query) => $query->where('slug', $quiz->slug)
+            );
         }
 
         $query->with([
             'team.members',
-            'quiz' => function ($query) {
-                $query->withCount('questions');
-            },
+            'quiz' => fn ($query) => $query->withCount('questions'),
         ]);
 
         if ($request->has('top_scorers')) {
@@ -44,7 +43,7 @@ class QuizResponseController extends Controller
 
     public function store(Event $event, Team $team)
     {
-        if (! $event->active_quiz_id) {
+        if (!$event->active_quiz_id) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Event doesn\'t have any active quiz!',
@@ -79,7 +78,9 @@ class QuizResponseController extends Controller
 
     public function showExtraTimeForm(QuizResponse $quizResponse)
     {
-        return view('admin.quizzes_teams.extra-time')->withQuizTeam($quizResponse);
+        return view('admin.quizzes_teams.extra-time', [
+            'quiz_team' => $quizResponse
+        ]);
     }
 
     public function storeExtraTime(Request $request, QuizResponse $quizResponse)

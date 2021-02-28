@@ -16,9 +16,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $teams = Team::whereHas('members', function($query){
-            $query->where('users.id', auth()->id());
-        })->with(['members'])->get();
+        $teams = Team::whereHas(
+            'members',
+            fn ($query) => $query->where('users.id', auth()->id())
+        )->with(['members'])->get();
 
         $event_participations = EventParticipation::with(['team', 'event.activeQuiz'])
             ->addSelect(['quizzes_count' => Quiz::selectRaw('COUNT(*)')->whereColumn('event_id', 'event_participations.event_id')])

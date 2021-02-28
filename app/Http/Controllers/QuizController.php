@@ -21,9 +21,7 @@ class QuizController extends Controller
 
         $quiz_response = $quiz->participations()->with(['responses'])->where('team_id', $teamId)->first();
 
-        $questionIds = collect($quiz->questions)->map(function ($question) {
-            return $question->id;
-        });
+        $questionIds = collect($quiz->questions)->map(fn ($question) => $question->id);
 
         $questionsAttachments = QuestionAttachment::whereIn('question_id', $questionIds)->get();
 
