@@ -1,10 +1,11 @@
 <template>
-    <div class="fixed flex flex-col pin-b pin-x mb-4 items-end z-50 pointer-events-none container mx-auto">
+    <div class="fixed flex flex-col bottom-0 right-0 mb-4 items-end z-50 pointer-events-none container mx-auto">
         <transition-group name="fade"
         enter-active-class="fadeIn"
         leave-active-class="fadeOut"
         mode="in-out">
-            <div class="border rounded mb-2 p-3 max-w-5/6 md:max-w-1/3" :class="classes[message.level]" 
+            <div class="border rounded mb-2 p-3 max-w-5/6 md:max-w-1/3"
+                :class="classes[message.level]"
                 v-for="message in messages" :key="message.id">
                 {{ message.message }}
             </div>

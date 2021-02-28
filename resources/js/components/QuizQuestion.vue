@@ -34,7 +34,7 @@
                         'text-white hover:bg-green-dark border-green-dark': isSelected(choiceIndex),
                     }"
 				>
-					<div v-if="isHighlighted(choiceIndex)" class="absolute -ml-3 pin-l pin-y flex items-center">
+					<div v-if="isHighlighted(choiceIndex)" class="absolute -ml-3 inset-y-0 left-0 flex items-center">
 						<span
 							class="inline-block w-2 h-2 rounded-full"
 							:class="isSelected(choiceIndex) ? 'bg-white' : 'bg-green'"
