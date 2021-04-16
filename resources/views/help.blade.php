@@ -50,11 +50,40 @@
 
     <div class="card seperated mb-8">
         <div class="card-header">
-            <h2 class="text-xl font-normal">Still Confused?</h2>
+            <h2 class="text-xl font-normal">Does my teammate also need to login to play the quiz?</h2>
+        </div>
+        <div class="card-content">
+            <p class="leading-normal text-lg">No, Only one of the member needs to login to play the quiz and other can coordinate with him/her online (using google meet or whatever) or offline in-person. <b>Note: All of the member of the team needs to be registered first no matter what.</b></p>
+        </div>
+    </div>
+
+    <div class="card seperated mb-8">
+        <div class="card-header">
+            <h2 class="text-xl font-normal">Why I'm getting "This page isn’t working right now" error in the middle of the gameplay?</h2>
+        </div>
+        <div class="card-content">
+            <p class="leading-normal text-lg">This error usually occur when either the quiz has been ended by the organisers or you might have been disqualified and you're trying to reload the page. In either cases you'll see the exact reason on your home page (<a href="{{ route('dashboard') }}">{{ route('dashboard') }}</a>). In case you see this as an error, reach out to respective quiz organisers. Don't panic as your responses are saved with us.</p>
+        </div>
+    </div>
+
+    <div class="card seperated mb-8">
+        <div class="card-header">
+            <h2 class="text-xl font-normal">Why I'm getting "Error occured in saving response" message?</h2>
+        </div>
+        <div class="card-content">
+            <p class="leading-normal text-lg">This message usually displayed when either the quiz has been ended by the organisers or you might have been disqualified. In either cases you'll see the exact reason on your home page (<a href="{{ route('dashboard') }}">{{ route('dashboard') }}</a>). In case you see this as an error, reach out to respective quiz organisers.</p>
+        </div>
+    </div>
+
+    <div class="card seperated mb-8">
+        <div class="card-header">
+            <h2 class="text-xl font-normal">Still Confused or Facing Some Issue?</h2>
         </div>
         <div class="card-content">
             <p class="leading-normal text-lg">
-                If you are still confused about the registration process, feel free to get in touch with me, Call / WhatsApp at <a class="link" href="tel:8510052301">8510052301</a>, or drop me an email, <a class="link" href="mailto:dev@ducs.in">dev@ducs.in</a>
+                If you are still confused about the registration process, feel free to get in touch with us, Call / WhatsApp at <a class="link" href="tel:{{ config('app.event_management_contact_number') }}">{{ config('app.event_management_contact_number') }}</a>, or drop us an email, <a class="link" href="mailto:dev@ducs.in">dev@ducs.in</a>.
+                <br>
+                If you facing some issue report it to us with your contact details, call / WhatsApp at <a class="link" href="tel:{{ config('app.event_management_contact_number') }}">{{ config('app.event_management_contact_number') }}</a>, or drop us an email, <a class="link" href="mailto:dev@ducs.in">dev@ducs.in</a>.
             </p>
         </div>
     </div>
