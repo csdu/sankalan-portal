@@ -1,0 +1,26 @@
+.fade-enter-active {
+    animation: fade 0.5s;
+}
+.fade-leave-active {
+    animation: fade 0.5s reverse;
+}
+
+.rotate {
+    transform-origin: center;
+    animation: rotate 5s linear infinite;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

@@ -19,7 +19,7 @@
             <ol>
                 <li class="my-1">"John Doe" & "Jane Doe" wants to create a team, with name "The Does", and participate in an event "Brain Spark".</li>
                 <li class="my-1">"John Doe" & "Jane Doe" registers sepereately on the portal using their respective emails.</li>
-                <li class="my-1">Now either "John Doe" or "Jane Doe" can login and create a team with name "The Does", by entering other member's registered email in the <em class="whitespace-no-wrap">partner's email</em> field.</li>
+                <li class="my-1">Now either "John Doe" or "Jane Doe" can login and create a team with name "The Does", by entering other member's registered email in the <em class="whitespace-nowrap">partner's email</em> field.</li>
                 <li class="my-1">Both of the members can see "The Does" on their dashboard, either of them can now participate in "Brain Spark" by selecting "The Does" from dropdown and click on button "Participate".</li>
             </ol>
         </div>

@@ -2,7 +2,7 @@
     @screen md {
         display: flex;
         margin: 0 -.5rem;
-        > * {
+        & > * {
             flex: 1;
             margin: 0 .5rem;
         }
@@ -15,7 +15,7 @@
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(4, minmax(100px, auto));
         grid-template-areas:
-            "create_team create_team create_team create_team" 
+            "create_team create_team create_team create_team"
             "teams teams teams teams"
             "participations participations participations participations";
         grid-gap: 1rem;
@@ -30,7 +30,7 @@
             grid-area: participations;
         }
         @screen md {
-            grid-template-areas: 
+            grid-template-areas:
                 "create_team create_team teams teams"
                 "participations participations teams teams"
                 "participations participations empty empty"

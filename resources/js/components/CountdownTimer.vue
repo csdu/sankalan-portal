@@ -1,13 +1,11 @@
 <template>
-    <div>
-        <slot :timer="timer" :format="format">
-            <span v-if="days" >{{ format(days, 2)}}:</span>
-            <span v-if="hours" >{{ format(hours, 2)}}:</span>
-            <span>{{ format(minutes, 2) }}:</span>
-            <span>{{ format(seconds, 2) }}.</span>
-            <span class="text-sm">{{ format(milliseconds, 3) }}</span>
-        </slot>
-    </div>
+    <slot :timer="timer" :format="format">
+        <span v-if="days" >{{ format(days, 2) }}:</span>
+        <span v-if="hours" >{{ format(hours, 2) }}:</span>
+        <span>{{ format(minutes, 2) }}:</span>
+        <span>{{ format(seconds, 2) }}.</span>
+        <span class="text-sm">{{ format(milliseconds, 3) }}</span>
+    </slot>
 </template>
 <script>
 export default {
@@ -15,6 +13,7 @@ export default {
         duration: {required: true},
         hurry: {default: 15}
     },
+    emits: ['hurryup', 'timeup'],
     data() {
         return {
             intervalTimer: null,

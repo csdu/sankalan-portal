@@ -1,0 +1,17 @@
+/*
+Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito')
+*/
+
+/* Base Styles - Normalise */
+@import 'tailwindcss/base';
+@import './base';
+
+/* Components */
+@import 'tailwindcss/components';
+@import './components';
+@import './animations';
+
+/* Utilities */
+@import 'tailwindcss/utilities';
+@import './utilities';

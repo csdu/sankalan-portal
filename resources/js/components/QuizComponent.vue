@@ -96,7 +96,7 @@
 		</div>
 	</div>
 	<div
-		class="fixed pin-x pin-t z-50 w-full h-screen flex flex-col justify-center items-center"
+		class="fixed inset-x-0 top-0 z-50 w-full h-screen flex flex-col justify-center items-center"
 		v-else
 	>
 		<svg viewBox="0 0 100 100" class="text-green w-32" v-if="submission.done && submission.success">

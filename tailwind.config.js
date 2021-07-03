@@ -1,6 +1,11 @@
 module.exports = {
+  purge: [
+    './resources/**/*.blade.php',
+    './resources/**/*.js',
+    './resources/**/*.vue',
+  ],
   theme: {
-   
+
     container: {
       center: true,
       padding: '1rem',
@@ -95,10 +100,10 @@ module.exports = {
     backgroundColor: theme => theme('colors'),
     textColor: theme => theme('colors'),
     borderColor: theme => ({
-      default: theme('colors.grey-light'),
+      DEFAULT: theme('colors.grey-light'),
       ...theme('colors'),
     }),
-   
+
     screens: {
       'sm': '480px',
       'md': '640px',
@@ -110,26 +115,10 @@ module.exports = {
       'sans': [
         'Nunito',
         'system-ui',
-        'BlinkMacSystemFont',
-        '-apple-system',
-        'Segoe UI',
-        'Roboto',
-        'Oxygen',
-        'Ubuntu',
-        'Cantarell',
-        'Fira Sans',
-        'Droid Sans',
-        'Helvetica Neue',
         'sans-serif',
       ],
       'serif': [
         'Constantia',
-        'Lucida Bright',
-        'Lucidabright',
-        'Lucida Serif',
-        'Lucida',
-        'DejaVu Serif',
-        'Bitstream Vera Serif',
         'Liberation Serif',
         'Georgia',
         'serif',
@@ -148,7 +137,9 @@ module.exports = {
       minWidth: {
         '1/2': '50%',
       },
-  
+      maxWidth: {
+        '64': '16rem',
+      },
       maxHeight: {
         '64': '16rem',
         '96': '24rem',
@@ -160,11 +151,14 @@ module.exports = {
   },
 
   variants: {
-    display: ['responsive', 'group-hover']
+    display: ['responsive', 'group-hover'],
+    margin: ['responsive', 'first', 'last'],
+    padding: ['responsive', 'first', 'last'],
+    fontWeight: ['focus', 'hover'],
+    textOverflow: ['responsive'],
+    borderColor: ['responsive', 'hover', 'focus']
   },
-
   plugins: [
-    
-  ],
-
+    require('@tailwindcss/forms')
+  ]
 }
