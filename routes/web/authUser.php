@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/dashboard', 'DashboardController@index')
     ->name('dashboard');
 
@@ -21,22 +23,22 @@ Route::delete(
 
 Route::middleware(['quiz_token_verified', 'participant_disqualify_check'])->group(function () {
     Route::get('/quizzes/{quiz}', 'QuizController@instructions')
-    ->name('quizzes.show');
+        ->name('quizzes.show');
 
     Route::post('/quizzes/{quiz}', 'QuestionResponseController@store')
-    ->name('quizzes.response.store');
+        ->name('quizzes.response.store');
 
     Route::post('/quizzes/{quiz}/saveQuestionResponse', 'QuestionResponseController@saveQuestionResponse')
-    ->name('quizzes.response.save');
+        ->name('quizzes.response.save');
 
     Route::get('/quizzes/{quiz}/take', 'QuizController@show')
-    ->name('quizzes.take');
+        ->name('quizzes.take');
 });
 
 Route::get('/quizzes/{quiz}/verify', 'QuizVerificationController@showVerificationForm')
     ->name('quizzes.verify')->middleware('quiz_token_not_verified');
 
 Route::post('/quizzes/{quiz}/verify', 'QuizVerificationController@verify')
-->name('quizzes.verify')->middleware('quiz_token_not_verified');
+    ->name('quizzes.verify')->middleware('quiz_token_not_verified');
 
 Route::get('/question_attachments/{attachment}', 'QuestionAttachmentsController@show');

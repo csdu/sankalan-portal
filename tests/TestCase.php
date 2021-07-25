@@ -3,18 +3,16 @@
 namespace Tests;
 
 use App\Models\User;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
-    use ArraySubsetAsserts;
 
     protected function setUp(): void
-	{
-		parent::setUp();
-	}
+    {
+        parent::setUp();
+    }
 
     public function signIn($user = null)
     {

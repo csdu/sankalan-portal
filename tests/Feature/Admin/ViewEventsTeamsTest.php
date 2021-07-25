@@ -19,11 +19,12 @@ class ViewEventsTeamsTest extends TestCase
         $events = create(Event::class, 5);
         $teams = create(Team::class, 20);
 
-        $teams->each(function ($team) use ($events) {
-            $events->random(2)->each(function ($event) use ($team) {
-                $team->participate($event);
-            });
-        });
+        $teams->each(
+            fn ($team) => $events->random(2)->each(
+                fn ($event) => $team->participate($event)
+            )
+        );
+
 
         $this->withoutExceptionHandling()->signInAdmin();
 
@@ -53,11 +54,11 @@ class ViewEventsTeamsTest extends TestCase
         $events = create(Event::class, 3);
         $teams = create(Team::class, 3);
 
-        $events->each(function ($event) use ($teams) {
-            $teams->random(2)->each(function ($team) use ($event) {
-                $team->participate($event);
-            });
-        });
+        $events->each(
+            fn ($event) => $teams->random(2)->each(
+                fn ($team) => $team->participate($event)
+            )
+        );
 
         $this->withoutExceptionHandling()->be(create(User::class, 1, ['is_admin' => true]));
 
