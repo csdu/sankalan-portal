@@ -6,14 +6,14 @@
         <div class="flex justify-between">
             <div class="flex">
                 <h2 class="text-xl font-normal">
-                    Extra Time to <small class="text-blue">{{ $quizTeam->team->name }}</small>
-                    for <small class="text-blue">{{ $quizTeam->quiz->title }}</small>
+                    Extra Time to <small class="text-blue">{{ $quiz_team->team->name }}</small>
+                    for <small class="text-blue">{{ $quiz_team->quiz->title }}</small>
                 </h2>
             </div>
         </div>
     </div>
     <div class="card-content">
-        <form action="{{ route('admin.quizzes.teams.extra-time', $quizTeam) }}" method="post">
+        <form action="{{ route('admin.quizzes.teams.extra-time', $quiz_team) }}" method="post">
             @csrf
             <div class="">
                 <label class="control">
