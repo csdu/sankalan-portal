@@ -2,6 +2,8 @@
 
 Auth::routes();
 
+Route::get('/logout', 'Auth\LoginController@logout');
+
 Route::get('/', 'PagesController@index')->name('homepage')->middleware('guest');
 
 Route::get('/help', 'PagesController@help')->name('help');
