@@ -27,7 +27,7 @@ class QuizGoesOfflineTest extends TestCase
         $this->assertArrayHasKey('message', $response);
         $this->assertArrayHasKey('quiz', $response);
         $this->assertArrayHasKey('event', $response['quiz']);
-        $this->assertEquals($quiz->fresh()->opened_at->toDateTimeString(), $response['quiz']['opened_at']);
+        $this->assertEquals($quiz->fresh()->opened_at->toJson(), $response['quiz']['opened_at']);
         $this->assertFalse($response['quiz']['isActive']);
         $this->assertTrue($response['quiz']['isClosed']);
 

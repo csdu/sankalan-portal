@@ -1,13 +1,24 @@
 <?php
 
+namespace Database\Factories;
+
+
 use App\Models\Question;
 use App\Models\QuestionAttachment;
-use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
-$factory->define(QuestionAttachment::class, function (Faker $faker) {
-    return [
-        'question_id' => factory(Question::class)->create()->id,
-        'path' => 'illustrations/'.Str::random(),
-    ];
-});
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class QuestionAttachmentFactory extends Factory
+{
+    protected $model = QuestionAttachment::class;
+
+    function definition()
+    {
+        return [
+            'question_id' => Question::factory()->create()->id,
+            'path' => 'illustrations/' . Str::random(),
+        ];
+    }
+}

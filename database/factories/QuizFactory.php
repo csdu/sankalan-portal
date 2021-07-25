@@ -1,21 +1,26 @@
 <?php
 
+namespace Database\Factories;
+
 use App\Models\Event;
-use Faker\Generator as Faker;
+use App\Models\Quiz;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(App\Models\Quiz::class, function (Faker $faker) {
-    $title = $faker->unique()->sentence;
+class QuizFactory extends Factory
+{
+    protected $model = Quiz::class;
 
-    return [
-        'title' => $title,
-        'slug' => str_slug($title),
-        'instructions' => collect(range(1, 4))->map(function () use ($faker) {
-            return $faker->sentence;
-        }),
-        'time_limit' => $faker->randomElement([25 * 60, 30 * 60, 45 * 60]),
-        'questions_limit' => $faker->numberBetween(20, 40),
-        'event_id' => function () {
-            return factory(Event::class)->create()->id;
-        },
-    ];
-});
+    function definition()
+    {
+        $title = $this->faker->unique()->sentence;
+
+        return [
+            'title' => $title,
+            'slug' => str_slug($title),
+            'instructions' => collect(range(1, 4))->map(fn () => $this->faker->sentence),
+            'time_limit' => $this->faker->randomElement([25 * 60, 30 * 60, 45 * 60]),
+            'questions_limit' => $this->faker->numberBetween(20, 40),
+            'event_id' => fn () => Event::factory()->create()->id,
+        ];
+    }
+}
