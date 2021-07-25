@@ -1,6 +1,22 @@
 # Sankalan Portal [![Build Status](https://travis-ci.com/csdu/sankalan-portal.svg?branch=master)](https://travis-ci.com/csdu/sankalan-portal)
 Sankalan is the annual tech fest organised by students of Department of Computer Science, University of Delhi. This is student managed portal, built with [Laravel](https://laravel.com), [Vue.js](https://vuejs.org) & [TailwindCSS](https://tailwindcs.com).
 
+## Screenshots
+
+#### Login
+
+![login](https://github.com/csdu/sankalan-portal/blob/master/screenshots/login.png)
+
+#### Admin
+
+![events page](https://github.com/csdu/sankalan-portal/blob/master/screenshots/events.png)
+
+#### User
+
+![dashboard](https://github.com/csdu/sankalan-portal/blob/master/screenshots/dashboard.png)
+
+![quiz area](https://github.com/csdu/sankalan-portal/blob/master/screenshots/quiz.png)
+
 ## Local Development
 This is project is built with Laravel & Vue.js. Before you can start local development you need to take care of a few prerequisites, required by laravel. 
 

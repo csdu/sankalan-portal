@@ -51,6 +51,14 @@ class QuizController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
+		$unFinishedQuizResponses = $quiz->participations()->where('finished_at', null)->get();
+
+        foreach ($unFinishedQuizResponses as $quizResponse) {
+            $quizResponse->update([
+				'finished_at' => now()
+			]);
+        }
+
         return [
             'status' => 'success',
             'message' => 'Quiz is now Closed!',
