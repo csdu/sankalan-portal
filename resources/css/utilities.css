@@ -1,0 +1,5 @@
+/* Custom utilities */
+.table-fit {
+    width: 1%;
+    white-space: nowrap;
+}

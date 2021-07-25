@@ -15,9 +15,9 @@
                 <div class="mb-3">
                     <input type="email" placeholder="Email" class="control{{ $errors->has('email') ? ' border-red' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
                     @if ($errors->has('email'))
-                        <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
+                    <span class="text-red mt-1" role="alert">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
                     @endif
                 </div>
 
@@ -25,20 +25,20 @@
                     <input type="password" placeholder="Password" class="control{{ $errors->has('password') ? ' border-red' : '' }}" name="password" required>
 
                     @if ($errors->has('password'))
-                        <span class="text-red bg-red-lighter px-2 py-1 border-red" role="alert">
-                            <strong>{{ $errors->first('password') }}</strong>
-                        </span>
+                    <span class="text-red mt-1" role="alert">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
                     @endif
                 </div>
 
-                <div class="whitespace-no-wrap mb-3 flex items-center">
+                <div class="whitespace-nowrap mb-3 flex items-center">
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                     <label class="ml-1" for="remember">
                         {{ __('Remember Me') }}
                     </label>
                 </div>
-                
+
                 <div class="flex justify-between items-baseline">
                     <button type="submit" class="btn is-blue">
                         {{ __('Login') }}

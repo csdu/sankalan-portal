@@ -1,0 +1,15 @@
+label.control {
+    @apply block w-full p-1 text-xs font-semibold text-grey-dark uppercase;
+}
+
+input, select, textarea {
+    &.control {
+        @apply w-full rounded;
+        &.is-lg {
+            @apply px-4 py-3 text-lg;
+        }
+        &.is-sm {
+            @apply px-2 py-1 text-sm;
+        }
+    }
+}

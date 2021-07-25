@@ -1,6 +1,7 @@
 require('./bootstrap');
 
-import Vue from 'vue';
+import { createApp } from 'vue';
+import emitter from 'mitt'
 
 import QuizArea from "./components/QuizComponent.vue";
 import CountdownTimer from "./components/CountdownTimer.vue";
@@ -12,33 +13,32 @@ import Modal from './components/Modal.vue';
 import MarkdownEditor from "./components/MarkdownEditor.vue";
 import QuestionType from "./components/QuestionType.vue";
 
-Vue.component("quiz-area", QuizArea);
-Vue.component("v-flash", FlashMessages);
-Vue.component("ajax-button", AjaxButton);
-Vue.component("get-routes", GetRoutes);
-Vue.component("login-register", LoginRegister);
-Vue.component("countdown-timer", CountdownTimer);
-Vue.component("modal", Modal);
-Vue.component("markdown-editor", MarkdownEditor);
-Vue.component("question-type", QuestionType);
+const app = createApp({});
+const eventBus = emitter();
+
+app.component("quiz-area", QuizArea);
+app.component("v-flash", FlashMessages);
+app.component("ajax-button", AjaxButton);
+app.component("get-routes", GetRoutes);
+app.component("login-register", LoginRegister);
+app.component("countdown-timer", CountdownTimer);
+app.component("modal", Modal);
+app.component("markdown-editor", MarkdownEditor);
+app.component("question-type", QuestionType);
 
 const files = require.context('./pages/', true, /\.(vue|js)$/i);
-files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-window.Events = new Vue({});
+files.keys().map(key => app.component(key.split('/').pop().split('.')[0], files(key).default));
 
 window.flash = (message, level = 'success', important = false) => {
-    window.Events.$emit('flash', {
+    eventBus.emit('flash', {
         id: Math.floor(Date.now()).toString(),
         message, level, important
     });
 };
 
-Vue.mixin({
+app.config.globalProperties.$eventBus = eventBus;
+
+app.mixin({
     methods: {
         route: route,
         flash: flash,
@@ -48,6 +48,4 @@ Vue.mixin({
 });
 
 
-const app = new Vue({
-    el: '#app'
-});
+app.mount('#app');

@@ -1,0 +1,32 @@
+.btn {
+    @apply px-3 py-2 bg-grey-light rounded text-black hover:bg-grey focus:outline-none focus:ring-2;
+    &.is-white {
+        @apply bg-white text-black hover:bg-grey-lighter;
+    }
+    &.is-blue {
+        @apply bg-blue text-white hover:bg-blue-dark;
+    }
+    &.is-green {
+        @apply bg-green text-white hover:bg-green-dark;
+    }
+    &.is-red {
+        @apply bg-red text-white hover:bg-red-dark;
+    }
+    &.is-yellow {
+        @apply bg-yellow text-black hover:bg-yellow-dark;
+    }
+    &.btn-block {
+        @apply w-full text-center;
+    }
+    &.is-lg {
+        @apply text-lg px-6 py-2;
+    }
+    &.is-sm {
+        @apply text-sm px-2 py-1;
+    }
+}
+
+
+.link {
+    @apply text-blue hover:underline focus:underline focus:outline-none;
+}
