@@ -20,7 +20,7 @@ Sankalan is the annual tech fest organised by students of Department of Computer
 ## Local Development
 This is project is built with Laravel & Vue.js. Before you can start local development you need to take care of a few prerequisites, required by laravel. 
 
-You can also setup a Local Development Environment using [Laravel Homestead](https://laravel.com/docs/5.7/homestead). Here is one-time setup guide to get you started:
+You can also setup a Local Development Environment using [Laravel Homestead](https://laravel.com/docs/8.x/homestead). Here is one-time setup guide to get you started:
 
 - [Sankalan Portal ![Build Status](https://travis-ci.com/csdu/sankalan-portal)](#sankalan-portal-build-statushttpstravis-cicomcsdusankalan-portal)
   - [Local Development](#local-development)
@@ -35,7 +35,7 @@ You can also setup a Local Development Environment using [Laravel Homestead](htt
   - [Contribution](#contribution)
 
 ### Installing Prerequisites
-You can find the server prequisites listed in [laravel docs](https://laravel.com/docs/5.7/installation#server-requirements), Additionally, you would require to install [composer](https://getcomposer.org/) & [nodejs](https://nodejs.org/en/) to pull in all the project dependencies. For Linux, you can follow the instructions below to get all the prerequisites under the hood.
+You can find the server prequisites listed in [laravel docs](https://laravel.com/docs/8.x/deployment#server-requirements), Additionally, you would require to install [composer](https://getcomposer.org/) & [nodejs](https://nodejs.org/en/) to pull in all the project dependencies. For Linux, you can follow the instructions below to get all the prerequisites under the hood.
 
 > ##### Note:
 > Please note that these instructions are not tested yet, and *may not* work in first place.
@@ -49,7 +49,7 @@ Before you begin installing make sure you run `sudo apt update` to get the lates
 sudo apt install mysql-server
 
 # php & required extensions
-sudo apt install php7.2 php7.2-mysql php7.2-xml php7.2-mbstring php7.2-bcmath php7.2-sqlite php7.2-json
+sudo apt install php8.0 php8.0-mysql php8.0-xml php8.0-mbstring php8.0-bcmath php8.0-sqlite php8.0-json
 
 # composer & nodejs
 sudo apt install nodejs composer
@@ -71,7 +71,7 @@ sudo pacman -S nodejs composer
 
 ##### Make sure you have pdo extension enabled in `php.ini`
 
-Locate your php ini file using `php --ini`. For Ubuntu, it would be something like `/etc/php/7.2/cli/php.ini` and for Archlinux it is something like `/etc/php/php.ini`.
+Locate your php ini file using `php --ini`. For Ubuntu, it would be something like `/etc/php/8.0/cli/php.ini` and for Archlinux it is something like `/etc/php/php.ini`.
 
 Search for the text `pdo-mysql` in this file if this line is commented i.e it is preceded with `;`, make sure you uncomment it by removing `;`.
 
