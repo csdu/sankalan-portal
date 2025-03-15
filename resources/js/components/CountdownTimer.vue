@@ -28,7 +28,7 @@ export default {
             return this.currentTime - this.startTime;
         },
         timeLeft() {
-            return (this.duration * 1000) - this.timeSpent;
+            return Math.max(0, (this.duration * 1000) - this.timeSpent);
         },
         milliseconds() {
             return this.timeLeft % 1000;
