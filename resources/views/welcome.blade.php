@@ -110,7 +110,7 @@
                         </form>
                     </div>
                     @endif
-                    <div v-else class="w-full card my-4">
+                    <div {{ $timeLeft > 0 ? 'v-else' : '' }} class="w-full card my-4">
                         <h2 class="card-header">
                             {{ __('Login') }}
                             @if ($timeLeft > 0)
@@ -122,7 +122,8 @@
                         <form method="POST" action="{{ route('login') }}" class="card-content">
                             @csrf
                             <div class="mb-3">
-                                <input type="email" placeholder="Email" class="control{{ $errors->has('email') ? ' border-red' : '' }}" name="email" value="{{ old('email') }}" required autofocus> @if ($errors->has('email'))
+                                <input type="email" placeholder="Email" class="control{{ $errors->has('email') ? ' border-red' : '' }}" name="email" value="{{ old('email') }}" required autofocus> 
+                                @if ($errors->has('email'))
                                 <span class="text-red mt-1" role="alert">
                                     {{ $errors->first('email') }}
                                 </span> @endif

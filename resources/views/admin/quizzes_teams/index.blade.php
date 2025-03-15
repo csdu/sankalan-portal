@@ -37,54 +37,73 @@
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Finished</th>
                 <th class="text-xs uppercase font-light text-center px-4 py-2">Score</th>
                 <th class="text-xs uppercase font-light text-center pr-6 py-2">Action</th>
-            </tr>
+            </quiz-team-row>
         </thead>
         <tbody>
             @foreach ($quizzes_teams as $quiz_team)
-            <tr class="border-t hover:bg-grey-lighter" v-is="'quiz-team-row'" :data-quiz-team="{{$quiz_team}}" v-slot:default="{quiz, team, responses_count, start_time, finish_time, onComplete, score, participationId}">
+            <tr class="border-t hover:bg-grey-lighter">
                 <td class="table-fit text-left pl-6 py-2 text-sm">
-                    <span v-if="quiz.isSubmitted" class="p-1 ml-1 rounded bg-red text-white font-extralight text-xs uppercase leading-none">Submitted</span>
-                    <span v-else-if="quiz.isStarted" class="p-1 ml-1 rounded bg-green text-white font-extralight text-xs uppercase leading-none">Started</span>
-                    <span v-else class="p-1 ml-1 rounded bg-grey font-extralight text-xs uppercase leading-none">Waiting</span>
+                    @if ($quiz_team->finished_at)
+                        <span class="p-1 ml-1 rounded bg-red text-white font-extralight text-xs uppercase leading-none">Submitted</span>
+                    @elseif ($quiz_team->started_at)
+                        <span class="p-1 ml-1 rounded bg-green text-white font-extralight text-xs uppercase leading-none">Started</span>
+                    @else
+                        <span class="p-1 ml-1 rounded bg-grey font-extralight text-xs uppercase leading-none">Waiting</span>
+                    @endif
                 </td>
                 <td class="table-fit text-left px-4 py-2">
-                    <div class="text-sm mb-1" v-text="team.name"></div>
+                    <div class="text-sm mb-1">{{ $quiz_team->team->name }}</div>
                     <div class="flex -mx-1">
-                        <span v-for="member in team.members" class="p-1 bg-blue text-white text-xs capitalize mx-1 rounded" v-text="member.first_name"></span>
+                        @foreach ($quiz_team->team->members as $member)
+                            <span class="p-1 bg-blue text-white text-xs capitalize mx-1 rounded">{{ $member->first_name }}</span>
+                        @endforeach
                     </div>
                 </td>
                 <td class="text-left px-4 py-2">
-                    <a href="#" v-text="quiz.event.title + ' - ' + quiz.title" class="capitalize link"></a>
-                    <span v-if="quiz.isActive" class="p-1 ml-1 rounded bg-green text-white font-normal text-xs uppercase leading-none">LIVE</span>
+                    <a href="#" class="capitalize link">{{ $quiz_team->quiz->event->title . ' - ' . $quiz_team->quiz->title }}</a>
+                    @if ($quiz_team->quiz->isActive)
+                        <span class="p-1 ml-1 rounded bg-green text-white font-normal text-xs uppercase leading-none">LIVE</span>
+                    @endif
                 </td>
                 <td class="table_fit text-center px-4 py-2">
-                    <span class="px-2 py-1 rounded-full bg-grey text-xs" v-text="quiz.questions_count"></span>
+                    <span class="px-2 py-1 rounded-full bg-grey text-xs">{{ $quiz_team->quiz->questions_count }}</span>
                 </td>
                 <td class="table_fit text-center px-4 py-2">
-                    <span class="px-2 py-1 rounded-full bg-grey text-xs" v-text="responses_count"></span>
+                    <span class="px-2 py-1 rounded-full bg-grey text-xs">{{ $quiz_team->responses_count }}</span>
                 </td>
                 <td class="table_fit text-left text-xs px-4 py-2">
-                    <span v-if="start_time" v-text="start_time"></span>
+                    @if ($quiz_team->started_at)
+                        <span>{{ $quiz_team->started_at }}</span>
+                    @endif
                 </td>
                 <td class="table_fit text-left text-xs px-4 py-2">
-                    <span v-if="finish_time" v-text="finish_time"></span>
+                    @if ($quiz_team->finished_at)
+                        <span>{{ $quiz_team->finish_time }}</span>
+                    @endif
                 </td>
                 <td class="table_fit text-center px-4 py-2">
-                    <span v-if="score != null" class="p-1 bg-green text-white text-xs font-semibold rounded-full" v-text="score"></span>
-                    <span v-else class="p-1 bg-grey text-xs rounded">Not Evaluated</span>
+                    @if ($quiz_team->score !== null)
+                        <span class="p-1 bg-green text-white text-xs font-semibold rounded-full">{{ $quiz_team->score }}</span>
+                    @else
+                        <span class="p-1 bg-grey text-xs rounded">Not Evaluated</span>
+                    @endif
                 </td>
                 <td class="table_fit text-center pl-4 pr-6 py-2">
                     <div class="inline-flex items-center justify-center">
                         <div class="flex items-center justify-center">
-                            <ajax-button v-if="finish_time" class="btn is-green is-sm mr-2 whitespace-nowrap" :action="route('admin.quizzes.teams.evaluate', participationId)" method="POST" title="Evaluate" @success="onComplete">
-                                Evaluate
-                            </ajax-button>
-                            <span v-else class="p-1 bg-grey text-xs rounded mr-2">Not Completed</span>
-                            <a href="{{route('admin.quizzes.teams.extra-time', $quiz_team)}}" class="btn is-blue is-sm mr-2">
-                                Give Extra Time
-                            </a>
+                            @if ($quiz_team->finished_at)
+                                <form action="{{ route('admin.quizzes.teams.evaluate', $quiz_team->id) }}" method="POST" class="mr-2">
+                                    @csrf
+                                    <button type="submit" class="btn is-green is-sm whitespace-nowrap">Evaluate</button>
+                                </form>
+                            @else
+                                <span class="p-1 bg-grey text-xs rounded mr-2">Not Completed</span>
+                                <a href="{{ route('admin.quizzes.teams.extra-time', $quiz_team->id) }}" class="btn is-blue is-sm mr-2">
+                                    Give Extra Time
+                                </a>
+                            @endif
                         </div>
-                        <a :href="route('admin.quiz-participations.show', participationId)" title="View Details">
+                        <a href="{{ route('admin.quiz-participations.show', $quiz_team->id) }}" title="View Details">
                             @include('svg.view-show', ['classes' => 'text-grey hover:text-blue fill-current h-6'])
                         </a>
                     </div>
