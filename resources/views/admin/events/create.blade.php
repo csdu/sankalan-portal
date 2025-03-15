@@ -10,24 +10,32 @@
         </div>
     </div>
     <div class="card-content">
-        <form action="{{ route('admin.events.store') }}" method="POST">
+        <form action="{{ route('admin.events.store') }}" method="POST" class="space-y-3">
             @csrf
-            <label class="control">
-                Title
-            </label>
-            <input class="control" name="title" type="text" placeholder="Sankalan" value="{{ old('title') }}" required>
-            <label class="control">
-                Description
-            </label>
-            <textarea class="control" name="description" type="text" required>
-                {{ old('description') }}
-            </textarea>
-            <label class="control">
-                Rounds
-            </label>
-            <input class="control" name="rounds" min="1" type="number" value="{{ old('rounds', 1) }}" required>
-            <button class="btn is-blue" type="submit">Create</button>
-            <a href="{{ route('admin.events.index') }}" class="btn">Cancel</a>
+            <div>
+                <label class="control">
+                    Title
+                </label>
+                <input class="control" name="title" type="text" placeholder="Sankalan" value="{{ old('title') }}" required>
+            </div>
+            <div>
+                <label class="control">
+                    Description
+                </label>
+                <textarea class="control" name="description" type="text" required>
+                    {{ old('description') }}
+                </textarea>
+            </div>
+            <div>
+                <label class="control">
+                    Rounds
+                </label>
+                <input class="control" name="rounds" min="1" type="number" value="{{ old('rounds', 1) }}" required>
+            </div>
+            <div class="flex justify-end space-x-2">
+                <button class="btn is-blue" type="submit">Create</button>
+                <a href="{{ route('admin.events.index') }}" class="btn">Cancel</a>
+            </div>
         </form>
     </div>
 </div>
