@@ -4,9 +4,9 @@
 <div class="card seperated">
     <div class="card-header">
         <div class="flex justify-between">
-            <div class="flex">
+            <div class="flex items-center">
                 <h2 class="text-xl font-normal">Events</h2>
-                <span class="ml-2 bg-blue text-white rounded-full p-1 text-xs">{{ $events->count() }}</span>
+                <span class="ml-2 bg-blue text-white rounded-full px-2 py-1 text-xs">{{ $events->count() }}</span>
             </div>
             <a href="{{ route('admin.events.create') }}" class="btn is-sm is-blue">Add new</a>
         </div>

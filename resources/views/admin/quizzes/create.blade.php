@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="card-content">
-        <form action="{{ route('admin.quizzes.store') }}" method="POST">
+        <form action="{{ route('admin.quizzes.store') }}" method="POST" class="space-y-3">
             @csrf
 
             <div class="mb-2">
@@ -53,8 +53,10 @@
                 </select>
             </div>
             
-            <button class="btn is-blue" type="submit">Create</button>
-            <a href="{{ route('admin.quizzes.index') }}" class="btn">Cancel</a>
+            <div class="flex justify-end space-x-2">
+                <button class="btn is-blue" type="submit">Create</button>
+                <a href="{{ route('admin.quizzes.index') }}" class="btn">Cancel</a>
+            </div>
         </form>
     </div>
 </div>
