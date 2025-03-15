@@ -9,7 +9,7 @@ class PagesController extends Controller
     public function index()
     {
         return view('welcome', [
-            'timeLeft' => now()->diffInSeconds(Carbon::parse(env('SANKALAN_START_TIME')), true),
+            'timeLeft' => max(0, Carbon::now()->diffInSeconds(Carbon::parse(env('SANKALAN_START_TIME')), false)),
         ]);
     }
 

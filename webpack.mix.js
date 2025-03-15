@@ -17,4 +17,4 @@ if (mix.inProduction()) {
     mix.version();
 }
 
-mix.browserSync('localhost:8080');
+mix.browserSync('localhost');
