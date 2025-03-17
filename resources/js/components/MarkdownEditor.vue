@@ -8,15 +8,15 @@
 					:name="name"
 					rows="10"
 					v-model="markdown"
-					@input="convertToHtml"
+					@input="debouncedConvertToHtml"
 					class="control"
 					style="resize: none;"
 					placeholder="Use Markdown"
 				></textarea>
 			</div>
-			<div class="w-1/2 flex flex-col">
+			<div ref="preview" class="w-1/2 flex flex-col">
 				<label class="control">Markdown Preview</label>
-				<div
+				<div 
 					class="markdown-body control h-full border rounded py-2 w-full ml-1 px-4 mb-2 overflow-y-scroll"
 					v-html="compiledHTML"
 				></div>
@@ -28,6 +28,9 @@
 <script>
 import md from "markdown-it";
 import mk from "markdown-it-katex";
+import { nextTick } from 'vue';
+import debounce from 'lodash/debounce';
+
 export default {
 	props: {
 		value: { default: "" },
@@ -41,12 +44,15 @@ export default {
 		};
 	},
 	methods: {
-		convertToHtml() {
-			document.querySelectorAll("pre code").forEach(block => {
+		async convertToHtml() {
+			this.compiledHTML = this.parser.render(this.markdown);
+			await nextTick();
+			this.highlight();
+		},
+		highlight() {
+			this.$refs?.preview.querySelectorAll("pre code").forEach(block => {
 				hljs.highlightBlock(block);
 			});
-
-			this.compiledHTML = this.parser.render(this.markdown);
 		},
 		tabber(event) {
 			let text = event.target.value,
@@ -63,7 +69,8 @@ export default {
 	created() {
 		this.parser = md().disable(["heading"]);
 		this.parser.use(mk);
+		this.debouncedConvertToHtml = debounce(this.convertToHtml, 500);
 		this.convertToHtml();
-	}
+	},
 };
 </script>
