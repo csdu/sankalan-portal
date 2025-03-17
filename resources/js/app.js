@@ -6,7 +6,6 @@ import emitter from 'mitt'
 import QuizArea from "./components/QuizComponent.vue";
 import CountdownTimer from "./components/CountdownTimer.vue";
 import FlashMessages from "./components/Flash.vue";
-import AjaxButton from "./components/AjaxButton.vue";
 import GetRoutes from "./components/GetRoutes.vue";
 import LoginRegister from "./components/LoginRegister";
 import Modal from './components/Modal.vue';
@@ -18,7 +17,6 @@ const eventBus = emitter();
 
 app.component("quiz-area", QuizArea);
 app.component("v-flash", FlashMessages);
-app.component("ajax-button", AjaxButton);
 app.component("get-routes", GetRoutes);
 app.component("login-register", LoginRegister);
 app.component("countdown-timer", CountdownTimer);

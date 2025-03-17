@@ -66,24 +66,23 @@
                 <td class="table-fit text-left pr-6 py-2">
                     <div class="flex flex-wrap justify-end gap-2">
                         @if($quiz->isActive)
-                            <ajax-button class="btn is-red is-sm font-normal" action="{{ route('admin.quizzes.close', $quiz->slug) }}" method="post">
-                                Close
-                            </ajax-button>
+                            <form action="{{ route('admin.quizzes.close', $quiz->slug) }}" method="post" class="inline-block">
+                                @csrf
+                                <button type="submit" class="btn is-red is-sm font-normal">Close</button>
+                            </form>
                         @elseif(!$quiz->isClosed)
-                            <ajax-button class="btn is-green is-sm font-normal" action="{{ route('admin.quizzes.go-live', $quiz->slug) }}" method="post">
-                                Go Live
-                            </ajax-button>
+                            <form action="{{ route('admin.quizzes.go-live', $quiz->slug) }}" method="post" class="inline-block">
+                                @csrf
+                                <button type="submit" class="btn is-green is-sm font-normal">Go Live</button>
+                            </form>
                         @endif
                         @if($quiz->isClosed)
-                            <ajax-button class="btn is-blue is-sm font-normal" action="{{ route('admin.quizzes.evaluate', $quiz->slug) }}" method="post">
-                                Evaluate
-                            </ajax-button>
-                        @else
-                            <button class="btn is-blue is-sm font-normal">
-                                Evaluate
-                            </button>
+                            <form action="{{ route('admin.quizzes.evaluate', $quiz->slug) }}" method="post" class="inline-block">
+                                @csrf
+                                <button type="submit" class="btn is-blue is-sm font-normal">Evaluate</button>
+                            </form>
                         @endif
-                        @if(!$quiz->is_active)
+                        @if(!$quiz->isActive)
                             <form onsubmit="return confirm('Are you about deleting it.')" class="inline-block" action="{{ route('admin.quizzes.delete', $quiz) }}" method="POST">
                                 @csrf
                                 @method('DELETE')

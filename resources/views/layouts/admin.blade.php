@@ -24,7 +24,10 @@
         <main class="flex-1 flex flex-col my-4">
             <div class="flex items-baseline justify-between mb-6 border-b">
                 <h1 class="mb-3 text-2xl">Sankalan<small class="ml-1 text-sm uppercase text-blue">Admin</small> </h1>
-                <ajax-button action="{{ route('logout') }}" method="post" @success="redirectHandler" class="btn is-red font-normal">Logout</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="btn is-red font-normal">Logout</button>
+                </form>
             </div>
             <div class="flex-1 flex">
                 <aside class="w-48 pt-4 mr-4">
