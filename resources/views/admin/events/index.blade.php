@@ -64,9 +64,15 @@
                     <td class="text-right pr-6 py-2">
                         <div class="flex justify-end space-x-2 flex-wrap">
                             @if($event->is_live)
-                                <ajax-button action="{{ route('admin.events.end', $event) }}" method="POST" class="btn is-sm is-red">End</ajax-button>
+                                <form action="{{ route('admin.events.end', $event) }}" method="POST">
+                                    @csrf
+                                    <button class="btn is-sm is-red">End</button>
+                                </form>
                             @elseif(!$event->ended_at)
-                                <ajax-button action="{{ route('admin.events.go-live', $event) }}" method="POST" class="btn is-sm is-green">Begin</ajax-button>
+                                <form action="{{ route('admin.events.go-live', $event) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn is-sm is-green">Begin</button>
+                                </form>
                             @endif
                             @if (!$event->is_live)
                             <form onsubmit="return confirm('Are you about deleting it.')" class="inline-block" action="{{ route('admin.events.delete', $event) }}" method="POST">

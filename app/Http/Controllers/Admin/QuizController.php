@@ -7,7 +7,6 @@ use App\Models\Event;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\Response;
 
 class QuizController extends Controller
 {
@@ -23,58 +22,38 @@ class QuizController extends Controller
     public function goLive(Quiz $quiz)
     {
         if (! $quiz->setActive()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Something went wrong',
-                'quiz' => $quiz,
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            flash('Something went wrong')->error();
+            return redirect()->back();
         }
 
         $token = strtoupper(Str::random(7));
 
         $quiz->update(['token' => $token]);
 
-        return [
-            'status' => 'success',
-            'message' => 'Quiz is now Live!',
-            'quiz' => $quiz,
-        ];
+        flash('Quiz is now Live!')->success();
+        return redirect()->back();
     }
 
     public function close(Quiz $quiz)
     {
         if (! $quiz->setInactive()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Something went wrong',
-                'quiz' => $quiz,
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            flash('Something went wrong')->error();
+            return redirect()->back();
         }
 
-		$unFinishedQuizResponses = $quiz->participations()->where('finished_at', null)->get();
+        $quiz->participations()->whereNull('finished_at')->update(['finished_at' => now()]);
 
-        foreach ($unFinishedQuizResponses as $quizResponse) {
-            $quizResponse->update([
-				'finished_at' => now()
-			]);
-        }
-
-        return [
-            'status' => 'success',
-            'message' => 'Quiz is now Closed!',
-            'quiz' => $quiz,
-        ];
+        flash('Quiz is now Closed!')->success();
+        return redirect()->back();
     }
 
     public function evaluate(Quiz $quiz)
     {
         $scores = $quiz->participations->map->evaluate();
 
-        return [
-            'status' => 'success',
-            'message' => 'All quiz responses have been evaluated',
-            'scores' => $scores->toArray(),
-        ];
+        flash('All quiz responses have been evaluated')->success();
+
+        return redirect()->route('admin.quizzes.teams.index', $quiz)->with('scores', $scores);
     }
 
     public function create()

@@ -8,7 +8,6 @@ use App\Models\Quiz;
 use App\Models\QuizResponse;
 use App\Models\Team;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class QuizResponseController extends Controller
 {
@@ -44,18 +43,14 @@ class QuizResponseController extends Controller
     public function store(Event $event, Team $team)
     {
         if (!$event->active_quiz_id) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Event doesn\'t have any active quiz!',
-            ], Response::HTTP_BAD_REQUEST);
+            flash('Event doesn\'t have any active quiz!')->error();
+            return redirect()->back();
         }
 
         $event->activeQuiz->allowTeam($team);
 
-        return [
-            'status' => 'success',
-            'message' => 'Team is now ready to take quiz!',
-        ];
+        flash('Team is now ready to take quiz!')->success();
+        return redirect()->back();
     }
 
     public function show(QuizResponse $quizResponse)
@@ -67,13 +62,11 @@ class QuizResponseController extends Controller
 
     public function evaluate(QuizResponse $quizResponse)
     {
-        $score = $quizResponse->evaluate();
+        $quizResponse->evaluate();
 
-        return [
-            'status' => 'success',
-            'message' => 'Score has been evaluated.',
-            'score' => $score,
-        ];
+        flash('Score has been evaluated.')->success();
+
+        return redirect()->back();
     }
 
     public function showExtraTimeForm(QuizResponse $quizResponse)
