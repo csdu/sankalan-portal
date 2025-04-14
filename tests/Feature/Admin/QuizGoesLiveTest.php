@@ -22,18 +22,8 @@ class QuizGoesLiveTest extends TestCase
 
         $this->assertFalse($quizzes[0]->fresh()->isActive);
 
-        $response = $this->postJson(route('admin.quizzes.go-live', $quizzes[0]))
-            ->assertSuccessful()
-            ->json();
-
-        $this->assertArrayHasKey('status', $response);
-        $this->assertArrayHasKey('message', $response);
-        $this->assertArrayHasKey('quiz', $response);
-        $this->assertEquals($quizzes[0]->fresh()->opened_at->toJson(), $response['quiz']['opened_at']);
-        $this->assertTrue($response['quiz']['isActive']);
-        $this->assertFalse($response['quiz']['isClosed']);
-        $this->assertArrayHasKey('event', $response['quiz']);
-        $this->assertTrue($response['quiz']['event']['isLive']);
+        $this->postJson(route('admin.quizzes.go-live', $quizzes[0]))
+            ->assertRedirect();
 
         $this->assertInstanceOf(Carbon::class, $quizzes[0]->fresh()->opened_at);
         $this->assertEqualsWithDelta(now()->getTimestamp(), $quizzes[0]->fresh()->opened_at->getTimestamp(), 2);

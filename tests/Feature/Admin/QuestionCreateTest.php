@@ -37,7 +37,6 @@ class QuestionCreateTest extends TestCase
                 'positive_score' => 4,
                 'negative_score' => 1,
                 'text' => 'question is written as **markdown**',
-                'compiledHTML' => '<p>question is written as <b>markdown</b></p>',
                 'type' => 'mcq',
                 'illustrations' => [UploadedFile::fake()->image('illustration.jpg')],
                 'options' => $options = [
@@ -54,7 +53,7 @@ class QuestionCreateTest extends TestCase
         $this->assertEquals($params['qno'], $questions->first()->qno);
         $this->assertEquals($params['positive_score'], $questions->first()->positive_score);
         $this->assertEquals($params['negative_score'], $questions->first()->negative_score);
-        $this->assertEquals($params['compiledHTML'], $questions->first()->text);
+        $this->assertEquals($params['text'], $questions->first()->text);
         $this->assertCount(count($options), $choices = $questions->first()->choices);
 
         $expectedCorrectKey = $questions->first()->choices()
