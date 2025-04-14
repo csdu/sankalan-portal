@@ -11,6 +11,7 @@ import LoginRegister from "./components/LoginRegister";
 import Modal from './components/Modal.vue';
 import MarkdownEditor from "./components/MarkdownEditor.vue";
 import QuestionType from "./components/QuestionType.vue";
+import MarkdownPreview from './components/MarkdownPreview.vue';
 
 const app = createApp({});
 const eventBus = emitter();
@@ -22,6 +23,7 @@ app.component("login-register", LoginRegister);
 app.component("countdown-timer", CountdownTimer);
 app.component("modal", Modal);
 app.component("markdown-editor", MarkdownEditor);
+app.component("markdown-preview", MarkdownPreview);
 app.component("question-type", QuestionType);
 
 const files = require.context('./pages/', true, /\.(vue|js)$/i);

@@ -24,9 +24,7 @@
         </div>
     </div>
     <div class="px-6 py-4">
-        <div class="markdown-body mb-2">
-            {!! $question->text !!}
-        </div>
+        <markdown-preview class="mb-2" markdown="{{ $question->text }}" />
 
         @foreach ($questionAttachments as $questionAttachment)
             <img class="max-w-full" src="/question_attachments/{{ $questionAttachment->id }}">
@@ -71,11 +69,3 @@
     </div>
 </div>
 @endsection
-@push('scripts')
-<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
-<script>
-    document.querySelectorAll("pre code").forEach(block => {
-        hljs.highlightBlock(block);
-    });
-</script>
-@endpush

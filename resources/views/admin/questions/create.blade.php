@@ -60,6 +60,3 @@
     </div>
 </div>
 @endsection
-@push('scripts')
-<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
-@endpush

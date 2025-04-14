@@ -2,7 +2,7 @@
 	<div class="question outline-none">
 		<div class="card px-3 pt-3 pb-6 relative overflow-hidden flex">
 			<strong class="float-left mr-2" v-text="`Q${dataQuestion.qno}.`"></strong>
-			<article class="markdown-body w-full" v-html="dataQuestion.text"></article>
+			<MarkdownPreview class="w-full" :markdown="dataQuestion.text"></MarkdownPreview>
 		</div>
 		<pre
 			v-if="dataQuestion.code"
@@ -84,7 +84,11 @@
 </template>
 <script>
 import {nextTick} from 'vue';
+import MarkdownPreview from './MarkdownPreview.vue';
 export default {
+	components: {
+		MarkdownPreview
+	},
 	props: {
 		dataQuestion: { required: true },
 		dataQuestionAttachments: { required: true },
