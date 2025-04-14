@@ -18,7 +18,6 @@ class QuizVerifyTest extends TestCase
      * A basic feature test example.
      *
      * @return void
-     *
      */
     public function test_user_should_redirect_to_quiz_verify_page_if_quiz_is_not_verified()
     {

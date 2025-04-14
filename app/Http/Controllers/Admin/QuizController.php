@@ -23,6 +23,7 @@ class QuizController extends Controller
     {
         if (! $quiz->setActive()) {
             flash('Something went wrong')->error();
+
             return redirect()->back();
         }
 
@@ -31,6 +32,7 @@ class QuizController extends Controller
         $quiz->update(['token' => $token]);
 
         flash('Quiz is now Live!')->success();
+
         return redirect()->back();
     }
 
@@ -38,12 +40,14 @@ class QuizController extends Controller
     {
         if (! $quiz->setInactive()) {
             flash('Something went wrong')->error();
+
             return redirect()->back();
         }
 
         $quiz->participations()->whereNull('finished_at')->update(['finished_at' => now()]);
 
         flash('Quiz is now Closed!')->success();
+
         return redirect()->back();
     }
 

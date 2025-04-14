@@ -59,8 +59,8 @@ class User extends Authenticatable
     /**
      * Create and return team for user with the given name and member.
      *
-     * @param string $name Team's name.
-     * @param \App\Models\User|null $member (optional) Other member of team.
+     * @param  string  $name  Team's name.
+     * @param  \App\Models\User|null  $member  (optional) Other member of team.
      * @return \App\Models\Team Created Team
      */
     public function createTeam($name, $member = null)
@@ -91,7 +91,7 @@ class User extends Authenticatable
      */
     public function getUidAttribute()
     {
-        return env('ID_PREFIX', 'SNKLN') . '-U' . str_pad("$this->id", 3, '0', STR_PAD_LEFT);
+        return env('ID_PREFIX', 'SNKLN').'-U'.str_pad("$this->id", 3, '0', STR_PAD_LEFT);
     }
 
     /**

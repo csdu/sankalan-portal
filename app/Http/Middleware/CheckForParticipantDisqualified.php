@@ -18,7 +18,7 @@ class CheckForParticipantDisqualified
     {
         $event = $request->route('quiz')->event;
         $team = $request->route('quiz')->event->participatingTeamByUser($request->user());
-        if (! ! EventParticipation::where([
+        if ((bool) EventParticipation::where([
             'event_id' => $event->id,
             'team_id' => $team->id,
         ])->first()->disqualified) {

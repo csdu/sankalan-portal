@@ -39,12 +39,12 @@ class QuestionOption extends Model
     /**
      * Accessor for related illustration's absolute path.
      *
-     * @param string $illustration
+     * @param  string  $illustration
      * @return string
      */
     public function getIllustrationAttribute($illustration)
     {
-        if (!$illustration) {
+        if (! $illustration) {
             return $illustration;
         }
 
@@ -55,7 +55,7 @@ class QuestionOption extends Model
      * Accessor for answer's key, removes any special characters
      * and spaces to avoid mismatch correct answers.
      *
-     * @param string $value
+     * @param  string  $value
      * @return string
      */
     public function getKeyAttribute($key)

@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\Models\QuestionOption;
 use App\Models\Question;
+use App\Models\QuestionOption;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Tests\TestCase;

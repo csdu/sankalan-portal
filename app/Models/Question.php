@@ -46,7 +46,7 @@ class Question extends Model
     /**
      * Mutator implodes array of answer keys to string.
      *
-     * @param array|string $value
+     * @param  array|string  $value
      * @return void
      */
     public function setCorrectAnswerKeysAttribute($value)
@@ -61,12 +61,12 @@ class Question extends Model
     /**
      * Accessor for illustraton's absolute path.
      *
-     * @param string $illustration
+     * @param  string  $illustration
      * @return string
      */
     public function getIllustrationAttribute($illustration)
     {
-        if (!$illustration) {
+        if (! $illustration) {
             return $illustration;
         }
 
@@ -78,7 +78,7 @@ class Question extends Model
      * all keys are converted to lowercase after removing all
      * special characters and spaces.
      *
-     * @param string $keys
+     * @param  string  $keys
      * @return \Illuminate\Support\Collection
      */
     public function getCorrectAnswerKeysAttribute($keys)

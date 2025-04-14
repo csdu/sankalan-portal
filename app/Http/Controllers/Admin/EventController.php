@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
 {
@@ -23,6 +22,7 @@ class EventController extends Controller
         $message = $success ? 'Event is live now!' : 'Something went wrong';
 
         flash($message, $status);
+
         return redirect()->back();
     }
 
@@ -33,6 +33,7 @@ class EventController extends Controller
         $message = $success ? 'Event has ended!' : 'Something went wrong';
 
         flash($message, $status);
+
         return redirect()->back();
     }
 

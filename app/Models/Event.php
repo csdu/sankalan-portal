@@ -64,7 +64,7 @@ class Event extends Model
     /**
      * Is any of the given members participating in the event?
      *
-     * @param \Illuminate\Database\Eloquent\Collection $members
+     * @param  \Illuminate\Database\Eloquent\Collection  $members
      * @return bool
      */
     public function isAnyParticipating(Collection $members)
@@ -72,13 +72,13 @@ class Event extends Model
         $memberIds = $members->pluck('id');
         $participantIds = $this->loadMissing('teams.members')->teams->flatMap->members->pluck('id');
 
-        return !$participantIds->intersect($memberIds)->isEmpty();
+        return ! $participantIds->intersect($memberIds)->isEmpty();
     }
 
     /**
      * Gives Team, through which the given user is participating.
      *
-     * @param \App\Models\User $user
+     * @param  \App\Models\User  $user
      * @return \App\Models\Team|null
      */
     public function participatingTeamByUser(User $user)
@@ -123,7 +123,7 @@ class Event extends Model
      */
     public function getIsLiveAttribute()
     {
-        return $this->hasStarted && !$this->hasEnded;
+        return $this->hasStarted && ! $this->hasEnded;
     }
 
     /**

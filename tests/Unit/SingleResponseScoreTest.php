@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\Models\QuestionOption;
 use App\Models\Question;
+use App\Models\QuestionOption;
 use App\Models\Quiz;
 use App\Models\QuizResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;

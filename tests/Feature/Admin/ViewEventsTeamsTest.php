@@ -25,7 +25,6 @@ class ViewEventsTeamsTest extends TestCase
             )
         );
 
-
         $this->withoutExceptionHandling()->signInAdmin();
 
         $response = $this->get(route('admin.events.teams.index'))

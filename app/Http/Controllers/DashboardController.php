@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\EventParticipation;
 use App\Models\Quiz;
-use App\Models\QuizResponse;
 use App\Models\Team;
 
 class DashboardController extends Controller

@@ -110,7 +110,7 @@ class Quiz extends Model
     /**
      * Is the given team allowed for this quiz?
      *
-     * @param Team $team
+     * @param  Team  $team
      * @return bool
      */
     public function isTeamAllowed(Team $team)
@@ -121,14 +121,14 @@ class Quiz extends Model
     /**
      * Has the given team exceeded the time limit?
      *
-     * @param \App\Models\Team $team
+     * @param  \App\Models\Team  $team
      * @return bool
      */
     public function isTimeLimitExceeded(Team $team)
     {
         $participation = $this->participationByTeam($team);
 
-        if (!$participation) {
+        if (! $participation) {
             return false;
         }
 
@@ -140,7 +140,7 @@ class Quiz extends Model
     /**
      * Allow the given team for this quiz.
      *
-     * @param Team $team
+     * @param  Team  $team
      * @return void
      */
     public function allowTeam(Team $team)
@@ -151,7 +151,7 @@ class Quiz extends Model
     /**
      * The quiz participation by the given team.
      *
-     * @param Team $team
+     * @param  Team  $team
      * @return \App\Models\QuizResponse|null
      */
     public function participationByTeam(Team $team)
@@ -162,7 +162,7 @@ class Quiz extends Model
     /**
      * Is the quiz completed by the team?
      *
-     * @param Team $team
+     * @param  Team  $team
      * @return bool
      */
     public function isCompletedBy(Team $team)
@@ -173,7 +173,7 @@ class Quiz extends Model
     /**
      * Mutator to implode instructions to a string.
      *
-     * @param array|Illuminate\Support\Collection $instructions
+     * @param  array|Illuminate\Support\Collection  $instructions
      * @return void
      */
     public function setInstructionsAttribute($instructions)
@@ -191,7 +191,7 @@ class Quiz extends Model
     /**
      * Accessor to explode retrived string to an array of instrucutons.
      *
-     * @param string $instructions
+     * @param  string  $instructions
      * @return array
      */
     public function getInstructionsAttribute($instructions)
@@ -216,7 +216,7 @@ class Quiz extends Model
 
         return $this->id == $this->event->active_quiz_id
             && $this->opened_at
-            && !$this->closed_at;
+            && ! $this->closed_at;
     }
 
     /**

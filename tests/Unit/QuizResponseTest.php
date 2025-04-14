@@ -16,7 +16,7 @@ class QuizResponseTest extends TestCase
         $quiz = create(Quiz::class, 1, ['time_limit' => 300]); // 5 mins
         $quizResponse = create(QuizResponse::class, 1, [
             'quiz_id' => $quiz->id,
-            'started_at' => now()
+            'started_at' => now(),
         ]);
 
         $this->assertEqualsWithDelta(300, $quizResponse->timeLeft, 2);

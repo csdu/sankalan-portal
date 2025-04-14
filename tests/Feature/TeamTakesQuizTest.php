@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Models\QuestionOption;
 use App\Models\Event;
 use App\Models\Question;
+use App\Models\QuestionOption;
 use App\Models\Quiz;
 use App\Models\QuizResponse;
 use App\Models\User;
@@ -32,7 +32,7 @@ class TeamTakesQuizTest extends TestCase
         $this->get(route('quizzes.take', $quiz))
             ->assertRedirect('/')
             ->assertSessionHas('flash_notification');
-        
+
         $this->assertEquals('warning', Session::get('flash_notification')->first()->level);
     }
 
@@ -66,7 +66,7 @@ class TeamTakesQuizTest extends TestCase
         $team = $user->createTeam($user->name);
         $team->participate($event);
         $quiz->setActive();
-    
+
         $this->get(route('quizzes.take', $quiz))
             ->assertRedirect(route('quizzes.verify', $quiz));
     }
@@ -77,13 +77,13 @@ class TeamTakesQuizTest extends TestCase
         $user = create(User::class);
         $event = create(Event::class);
         $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => $token = '1234567']);
-        
+
         $this->be($user)->withoutExceptionHandling();
 
         $team = $user->createTeam($user->name);
         $team->participate($event);
         $quiz->setActive();
-    
+
         $this->withSession(['quiz_token' => $token])
             ->get(route('quizzes.take', $quiz))
             ->assertSuccessful();
@@ -117,7 +117,6 @@ class TeamTakesQuizTest extends TestCase
         $this->assertArrayHasKey('timeLeft', $viewParticipation->toArray());
         $this->assertEquals($startTime->getTimestamp(), $viewParticipation->started_at->getTimestamp());
         $this->assertEquals($quiz->time_limit - (10 * 60), $viewParticipation->timeLeft);
-        
     }
 
     /** @test */

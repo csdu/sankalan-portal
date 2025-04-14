@@ -46,7 +46,7 @@ class Team extends Model
     /**
      * Take part in the event.
      *
-     * @param \App\Models\Event $event
+     * @param  \App\Models\Event  $event
      * @return bool true if participation successful, else false.
      */
     public function participate(Event $event)
@@ -62,7 +62,7 @@ class Team extends Model
     /**
      * Withdraw participation form the event.
      *
-     * @param \App\Models\Event $event
+     * @param  \App\Models\Event  $event
      * @return bool
      */
     public function withdrawParticipation(Event $event)
@@ -75,20 +75,21 @@ class Team extends Model
     /**
      * End Quiz, submit all responses, update finish time.
      *
-     * @param \App\Models\Quiz $quiz
-     * @param array $responses
+     * @param  \App\Models\Quiz  $quiz
+     * @param  array  $responses
      * @return \App\Models\QuestionResponse
      */
     public function endQuiz(Quiz $quiz)
     {
         $participation = $quiz->participationByTeam($this);
+
         return $participation->update(['finished_at' => now()]);
     }
 
     /**
      * Start quiz, record start time.
      *
-     * @param Quiz $quiz
+     * @param  Quiz  $quiz
      * @return bool
      */
     public function beginQuiz(Quiz $quiz)
@@ -106,6 +107,6 @@ class Team extends Model
      */
     public function getUidAttribute()
     {
-        return env('ID_PREFIX', 'SNKLN') . '-T' . str_pad("$this->id", 3, '0', STR_PAD_LEFT);
+        return env('ID_PREFIX', 'SNKLN').'-T'.str_pad("$this->id", 3, '0', STR_PAD_LEFT);
     }
 }

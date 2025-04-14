@@ -37,7 +37,7 @@ class QuestionController extends Controller
             'options' => 'required_if:type,mcq|array',
             'options.*' => 'required',
             'correct_answer_keys' => 'required_if:type,input|string',
-            'correct_answer_index' => 'required_if:type,mcq|numeric|gte:0|lt:' . count($request->options ?? []),
+            'correct_answer_index' => 'required_if:type,mcq|numeric|gte:0|lt:'.count($request->options ?? []),
         ]);
 
         $question = $quiz->questions()->create([
@@ -56,7 +56,7 @@ class QuestionController extends Controller
 
         $options = $question->choices()->createMany(
             array_map(fn ($option) => [
-                'key' => strval($question->id) . str_random(3),
+                'key' => strval($question->id).str_random(3),
                 'text' => $option,
             ], $request->options ?? [])
         );

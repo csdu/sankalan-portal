@@ -227,5 +227,5 @@ return [
     ],
 
     'sankalan_start_time' => \Carbon\Carbon::parse(env('SANKALAN_START_TIME', '15 February 2020, 9:00 AM')),
-    'event_management_contact_number' => env("EVENT_MANAGEMENT_CONTACT_NUMBER", "+910000000000"),
+    'event_management_contact_number' => env('EVENT_MANAGEMENT_CONTACT_NUMBER', '+910000000000'),
 ];

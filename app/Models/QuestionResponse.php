@@ -29,7 +29,7 @@ class QuestionResponse extends Model
     /**
      * Is it given choice chosen?
      *
-     * @param QuestionOption $choice
+     * @param  QuestionOption  $choice
      * @return bool
      */
     public function isChosen(QuestionOption $choice)
@@ -55,7 +55,7 @@ class QuestionResponse extends Model
      * Response keys accessor, removes any special characters
      * and spaces to avoid mismatch correct answers.
      *
-     * @param string $value
+     * @param  string  $value
      * @return string
      */
     public function getResponseKeysAttribute($value)

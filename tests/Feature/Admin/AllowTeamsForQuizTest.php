@@ -6,7 +6,6 @@ use App\Models\Event;
 use App\Models\Quiz;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class AllowTeamsForQuizTest extends TestCase

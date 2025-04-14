@@ -13,7 +13,7 @@ class QuestionAttachmentsController extends Controller
         $questionAttachment = QuestionAttachment::findOrFail($id);
 
         if (! \Auth::user()->isAdmin()) {
-            abort_unless(! ! $questionAttachment->question->quiz->opened_at, 403);
+            abort_unless((bool) $questionAttachment->question->quiz->opened_at, 403);
         }
 
         try {

@@ -32,7 +32,7 @@ class QuizTest extends TestCase
         $quiz = create(Quiz::class);
         $questions = create(Question::class, 3, ['quiz_id' => $quiz->id]);
 
-        tap($quiz->questions, function ($relatedQuestions) use ($quiz, $questions) {
+        tap($quiz->questions, function ($relatedQuestions) use ($questions) {
             $this->assertInstanceOf(Collection::class, $relatedQuestions);
             $this->assertCount(3, $relatedQuestions);
             $this->assertSame($relatedQuestions->pluck('id')->toArray(), $questions->pluck('id')->toArray());

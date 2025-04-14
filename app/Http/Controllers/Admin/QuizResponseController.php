@@ -42,14 +42,16 @@ class QuizResponseController extends Controller
 
     public function store(Event $event, Team $team)
     {
-        if (!$event->active_quiz_id) {
+        if (! $event->active_quiz_id) {
             flash('Event doesn\'t have any active quiz!')->error();
+
             return redirect()->back();
         }
 
         $event->activeQuiz->allowTeam($team);
 
         flash('Team is now ready to take quiz!')->success();
+
         return redirect()->back();
     }
 
@@ -72,7 +74,7 @@ class QuizResponseController extends Controller
     public function showExtraTimeForm(QuizResponse $quizResponse)
     {
         return view('admin.quizzes_teams.extra-time', [
-            'quiz_team' => $quizResponse
+            'quiz_team' => $quizResponse,
         ]);
     }
 

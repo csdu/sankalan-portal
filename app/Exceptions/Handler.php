@@ -28,7 +28,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable $exception
+     * @param  \Throwable  $exception
      * @return void
      */
     public function report(Throwable $exception)
