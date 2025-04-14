@@ -58,7 +58,7 @@
                         <markdown-preview markdown="{{ $response->question->text }}" />
                     </div>
                     @if($response->question->code)
-                    <pre 
+                    <pre
                     class="card p-4 font-mono my-4 leading-normal tracking-wide whitespace-pre-wrap max-h-64 overflow-y-auto"
                     >{{ str_replace('<br>', "\n", $response->question->code) }}</pre>
                     @endif
@@ -81,7 +81,7 @@
                                             @include('svg.close', ['classes' => "fill-current h-4"])
                                         </div>
                                     @endif
-                                    
+
                                     @if($choice->illustration)
                                         <img src="{{ $choice->illustration }}" alt="{{ $choice->text }}" class="rounded my-2 max-w-full">
                                     @endif

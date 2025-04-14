@@ -31,14 +31,14 @@
                     </label>
                     <input class="control w-100" name="qno" type="number" value="{{ old('qno', $question->qno) }}" min="1" required>
                 </div>
-    
+
                 <div class="w-1/3 px-2">
                     <label class="control">
                         Positive score
                     </label>
                     <input class="control" name="positive_score" min="1" type="number" value="{{ old('positive_score', $question->positive_score) }}" required>
                 </div>
-    
+
                 <div class="w-1/3 px-2">
                     <label class="control">
                         Negative score

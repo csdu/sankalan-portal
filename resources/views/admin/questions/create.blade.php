@@ -31,14 +31,14 @@
                     </label>
                     <input class="control w-100" name="qno" type="number" value="{{ old('qno') }}" min="1" required>
                 </div>
-    
+
                 <div class="w-1/3 px-2">
                     <label class="control">
                         Positive score
                     </label>
                     <input class="control" name="positive_score" min="1" type="number" value="{{ old('positive_score', 4) }}" required>
                 </div>
-    
+
                 <div class="w-1/3 px-2">
                     <label class="control">
                         Negative score
@@ -48,10 +48,10 @@
             </div>
 
             <markdown-editor name="text" value="{{ old('text') }}"></markdown-editor>
-            
+
             <label class="control">File</label>
             <input type="file" class="control" name="illustrations[]" multiple>
-            
+
             <question-type></question-type>
 
             <button class="btn is-blue mt-4" type="submit">Create</button>

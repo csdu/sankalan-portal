@@ -15,7 +15,7 @@
 			</div>
 			<div ref="preview" class="w-1/2 flex flex-col">
 				<label class="control">Markdown Preview</label>
-				<MarkdownPreview 
+				<MarkdownPreview
 					class="control h-full border rounded py-2 w-full ml-1 px-4 mb-2 overflow-y-scroll"
 					:markdown="markdown"
 				></MarkdownPreview>

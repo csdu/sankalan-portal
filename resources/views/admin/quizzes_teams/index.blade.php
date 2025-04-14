@@ -37,7 +37,7 @@
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Finished</th>
                 <th class="text-xs uppercase font-light text-center px-4 py-2">Score</th>
                 <th class="text-xs uppercase font-light text-center pr-6 py-2">Action</th>
-            </quiz-team-row>
+            </tr>
         </thead>
         <tbody>
             @foreach ($quizzes_teams as $quiz_team)

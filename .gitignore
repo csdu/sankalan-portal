@@ -1,4 +1,6 @@
 /node_modules
+/public/app.js
+/public/app.css
 /public/hot
 /public/storage
 /public/images/events/*
