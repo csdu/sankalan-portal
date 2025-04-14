@@ -9,6 +9,7 @@
 <link rel="stylesheet"
 href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css"/>
 @endpush
 @section('body')
     <div class="flex flex-col min-h-screen px-12">
@@ -28,6 +29,3 @@ href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.
         </quiz-area>
     </div>    
 @endsection
-@push('scripts')
-<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
-@endpush

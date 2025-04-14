@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('title', 'Quiz Participation Details | ')
 @section('content')
+@push('stylesheets')
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css"/>
+@endpush
 <div class="card seperated mb-8">
     <div class="card-header">
         <h2 class="text-xl font-normal">Quiz Participation</h2>
@@ -49,9 +54,8 @@
             </h3>
             <div class="card-content bg-blue-lightest flex items-start">
                 <div class="question mr-4 flex-1">
-                    <div class="card px-3 pt-3 pb-6 relative overflow-hidden">
-                        <strong class="float-left mr-2">Q.{{ $response->question->qno }}.</strong>
-                        <p>{!! $response->question->text !!}</p>
+                    <div class="card px-3 pt-3 pb-6 relative">
+                        <markdown-preview markdown="{{ $response->question->text }}" />
                     </div>
                     @if($response->question->code)
                     <pre 
@@ -100,7 +104,7 @@
                             </li>
                             @foreach($response->question->correct_answer_keys as $answer_key)
                             <li class="mb-3 w-1/2 px-2">
-                                <div class="card py-2 pr-3 pl-8 flex border-0 {{ $answer_key == $response->response_keys ? 'bg-green text-white' : '' }}">
+                                <div class="relative card py-2 pr-3 pl-8 flex border-0 {{ $answer_key == $response->response_keys ? 'bg-green' : 'bg-white' }}">
                                     <div class="absolute left-0 inset-y-0 flex items-center ml-2">
                                         @include('svg.checkmark', ['classes' => "fill-current h-4"])
                                     </div>

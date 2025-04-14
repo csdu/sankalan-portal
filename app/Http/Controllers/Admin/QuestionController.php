@@ -31,7 +31,6 @@ class QuestionController extends Controller
             'positive_score' => 'required|numeric|gte:1',
             'negative_score' => 'required|numeric|gte:0',
             'text' => 'required',
-            'compiledHTML' => 'required',
             'type' => 'required|in:mcq,input',
             'illustrations' => 'nullable|array|max:4',
             'illustrations.*' => 'required|file|image',
@@ -45,7 +44,7 @@ class QuestionController extends Controller
             'qno' => $request->qno,
             'positive_score' => $request->positive_score,
             'negative_score' => $request->negative_score,
-            'text' => $request->compiledHTML,
+            'text' => $request->text,
             'correct_answer_keys' => $request->correct_answer_keys,
         ]);
 
@@ -99,14 +98,13 @@ class QuestionController extends Controller
             'positive_score' => 'required|numeric|gte:1',
             'negative_score' => 'required|numeric|gte:0',
             'text' => 'required',
-            'compiledHTML' => 'required',
         ]);
 
         $question->update([
             'qno' => $request->qno,
             'positive_score' => $request->positive_score,
             'negative_score' => $request->negative_score,
-            'text' => $request->compiledHTML,
+            'text' => $request->text,
         ]);
 
         flash('Question updated!')->success();
