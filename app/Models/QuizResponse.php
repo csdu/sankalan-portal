@@ -83,17 +83,6 @@ class QuizResponse extends Model
     }
 
     /**
-     * Save all the responses to database and return saved responses.
-     *cleanup not required
-     * @param array $responses
-     * @return \App\Models\QuestionResponse[]
-     */
-    // public function recordResponses(array $responses)
-    // {
-    //     return $this->responses()->createMany($responses);
-    // }
-
-    /**
      * Accessor for time left (seconds) in finishing the quiz.
      *
      * @return int
