@@ -9,15 +9,16 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-                "bmewburn.vscode-intelephense-client",
-                "calebporzio.better-phpunit",
-                "mikestead.dotenv",
-                "EditorConfig.EditorConfig",
-                "porifa.laravel-intelephense",
-                "christian-kohler.npm-intellisense",
-                "patbenatar.advanced-new-file",
-                "laravel.vscode-laravel",
-                "Vue.volar"
+				"bmewburn.vscode-intelephense-client",
+				"calebporzio.better-phpunit",
+				"mikestead.dotenv",
+				"EditorConfig.EditorConfig",
+				"porifa.laravel-intelephense",
+				"christian-kohler.npm-intellisense",
+				"patbenatar.advanced-new-file",
+				"laravel.vscode-laravel",
+				"Vue.volar",
+				"junstyle.php-cs-fixer"
 			],
 			"settings": {}
 		}

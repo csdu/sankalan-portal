@@ -9,7 +9,7 @@ class EventFactory extends Factory
 {
     protected $model = Event::class;
 
-    function definition()
+    public function definition()
     {
         $title = $this->faker->unique()->words(3, true);
 

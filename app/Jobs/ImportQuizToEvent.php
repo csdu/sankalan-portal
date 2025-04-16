@@ -10,7 +10,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 class ImportQuizToEvent
 {
-    use Dispatchable, Queueable;
+    use Dispatchable;
+    use Queueable;
 
     protected $file;
     protected $events;

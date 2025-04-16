@@ -23,7 +23,8 @@ class CreateQuestionOptionsTable extends Migration
             $table->unique(['key', 'question_id']);
             $table->timestamps();
 
-            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade')->onUpdate('cascade');
+            ;
         });
     }
 

@@ -8,9 +8,9 @@ class QuizNotVerifiedException extends Exception
 {
     public function render($request)
     {
-        if(!$request->expectsJson()) {
+        if (!$request->expectsJson()) {
             flash($this->getMessage())->error();
-            
+
             return redirect()->route('quizzes.verify', $request->quiz);
         }
 

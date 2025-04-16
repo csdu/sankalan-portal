@@ -13,7 +13,7 @@ class QuizGoesLiveTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function quiz_is_set_active_in_the_event()
+    public function quiz_is_set_active_in_the_event(): void
     {
         $events = create(Event::class, 2, ['started_at' => null]);
         $quizzes = create(Quiz::class, 2, ['event_id' => $events[0]->id]);

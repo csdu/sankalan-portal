@@ -10,7 +10,7 @@ class QuestionFactory extends Factory
 {
     protected $model = Question::class;
 
-    function definition()
+    public function definition()
     {
         return [
             'qno' => $this->faker->numberBetween(1, 100),
@@ -21,7 +21,7 @@ class QuestionFactory extends Factory
         ];
     }
 
-    function multiple()
+    public function multiple()
     {
         $this->state('multiple', fn () => ['is_multiple' => true]);
     }

@@ -10,7 +10,7 @@ class QuizFactory extends Factory
 {
     protected $model = Quiz::class;
 
-    function definition()
+    public function definition()
     {
         $title = $this->faker->unique()->sentence;
 
