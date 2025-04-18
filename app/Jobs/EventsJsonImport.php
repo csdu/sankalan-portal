@@ -11,7 +11,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 class EventsJsonImport
 {
-    use Dispatchable, Queueable;
+    use Dispatchable;
+    use Queueable;
 
     protected $file;
     protected $events;

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TeamFactory extends Factory
 {
-    function definition()
+    public function definition()
     {
         return [
             'name' => $this->faker->word,

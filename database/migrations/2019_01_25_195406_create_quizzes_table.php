@@ -26,7 +26,8 @@ class CreateQuizzesTable extends Migration
             $table->timestamp('closed_at')->nullable();
             $table->timestamps();
 
-            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade')->onUpdate('cascade');
+            ;
         });
     }
 

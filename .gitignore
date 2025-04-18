@@ -1,4 +1,6 @@
 /node_modules
+/public/app.js
+/public/app.css
 /public/hot
 /public/storage
 /public/images/events/*
@@ -7,6 +9,7 @@
 /vendor
 .env
 .phpunit.result.cache
+.php-cs-fixer.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log

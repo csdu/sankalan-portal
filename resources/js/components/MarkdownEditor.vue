@@ -8,46 +8,38 @@
 					:name="name"
 					rows="10"
 					v-model="markdown"
-					@input="convertToHtml"
 					class="control"
 					style="resize: none;"
 					placeholder="Use Markdown"
 				></textarea>
 			</div>
-			<div class="w-1/2 flex flex-col">
+			<div ref="preview" class="w-1/2 flex flex-col">
 				<label class="control">Markdown Preview</label>
-				<div
-					class="markdown-body control h-full border rounded py-2 w-full ml-1 px-4 mb-2 overflow-y-scroll"
-					v-html="compiledHTML"
-				></div>
+				<MarkdownPreview
+					class="control h-full border rounded py-2 w-full ml-1 px-4 mb-2 overflow-y-scroll"
+					:markdown="markdown"
+				></MarkdownPreview>
 			</div>
-			<input type="hidden" name="compiledHTML" v-model="compiledHTML" />
 		</div>
 	</div>
 </template>
 <script>
-import md from "markdown-it";
-import mk from "markdown-it-katex";
+import MarkdownPreview from "./MarkdownPreview.vue";
+
 export default {
+	components: {
+		MarkdownPreview,
+	},
 	props: {
 		value: { default: "" },
 		name: { default: "text" }
 	},
 	data() {
 		return {
-			parser: null,
 			markdown: this.value,
-			compiledHTML: ""
 		};
 	},
 	methods: {
-		convertToHtml() {
-			document.querySelectorAll("pre code").forEach(block => {
-				hljs.highlightBlock(block);
-			});
-
-			this.compiledHTML = this.parser.render(this.markdown);
-		},
 		tabber(event) {
 			let text = event.target.value,
 				originalSelectionStart = event.target.selectionStart,
@@ -60,10 +52,5 @@ export default {
 				originalSelectionStart + 1;
 		}
 	},
-	created() {
-		this.parser = md().disable(["heading"]);
-		this.parser.use(mk);
-		this.convertToHtml();
-	}
 };
 </script>

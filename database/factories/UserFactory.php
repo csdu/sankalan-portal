@@ -9,7 +9,7 @@ class UserFactory extends Factory
 {
     protected $mode = User::class;
 
-    function definition()
+    public function definition()
     {
         return [
             'first_name' => $this->faker->firstName,

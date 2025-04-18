@@ -26,17 +26,13 @@ class AllowTeamsForQuizTest extends TestCase
 
         $this->withoutExceptionHandling()->signInAdmin();
 
-        $response = $this->postJson(
+        $this->postJson(
             route('admin.events.teams.allow-active-quiz', [$events->first(), $team])
-        )->assertSuccessful()->json();
+        )->assertRedirect();
 
         tap($events->first()->fresh()->activeQuiz, function ($activeQuiz) {
             $this->assertCount(1, $activeQuiz->teams()->get());
         });
-
-        $this->assertArrayHasKey('status', $response);
-        $this->assertArrayHasKey('message', $response);
-        $this->assertEquals('success', $response['status']);
     }
 
     /** @test */
@@ -53,16 +49,11 @@ class AllowTeamsForQuizTest extends TestCase
 
         $this->withoutExceptionHandling()->signInAdmin();
 
-        $response = $this->postJson(
-            route('admin.events.teams.allow-active-quiz', [$events->first(), $team])
-        )->assertStatus(Response::HTTP_BAD_REQUEST)->json();
+        $route = route('admin.events.teams.allow-active-quiz', [$events->first(), $team]);
+        $this->postJson($route)->assertRedirect()->assertSessionHas('flash_notification.0.level', 'danger');
 
         tap($events->first()->quizzes->first()->fresh(), function ($activeQuiz) {
             $this->assertCount(0, $activeQuiz->teams()->get());
         });
-
-        $this->assertArrayHasKey('status', $response);
-        $this->assertArrayHasKey('message', $response);
-        $this->assertEquals('error', $response['status']);
     }
 }
