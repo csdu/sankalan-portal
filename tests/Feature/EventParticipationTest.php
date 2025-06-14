@@ -6,13 +6,14 @@ use App\Models\Event;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class EventParticipationTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function user_can_participate_in_any_event_as_a_single_member_team_when_he_has_no_team()
     {
         $event = create(Event::class);
@@ -37,7 +38,7 @@ class EventParticipationTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function user_can_participate_in_any_event_as_a_single_member_team_when_he_has_a_single_member_team()
     {
         $event = create(Event::class);
@@ -60,7 +61,7 @@ class EventParticipationTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function user_can_participate_in_any_event_as_a_team_when_he_specifies_team_explicitly()
     {
         $event = create(Event::class);
@@ -86,7 +87,7 @@ class EventParticipationTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function a_team_can_participate_in_multiple_different_events()
     {
         $users = create(User::class, 2);
@@ -109,7 +110,7 @@ class EventParticipationTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function a_team_cannot_participate_in_same_event_again()
     {
         $users = create(User::class, 2);
@@ -129,7 +130,7 @@ class EventParticipationTest extends TestCase
         $this->assertEquals($event->id, $team->events()->first()->id);
     }
 
-    /** @test */
+    #[Test]
     public function a_team_cannot_participate_in_a_event_if_any_of_its_member_is_already_participating()
     {
         $users = create(User::class, 3);
@@ -151,7 +152,7 @@ class EventParticipationTest extends TestCase
         $this->assertCount(0, $team2->events()->get());
     }
 
-    /** @test */
+    #[Test]
     public function user_cannot_participate_as_team_of_which_he_is_not_a_member()
     {
         $users = create(User::class, 2);

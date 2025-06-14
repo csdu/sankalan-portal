@@ -3,15 +3,16 @@
 namespace Tests\Feature\Admin;
 
 use App\Models\Quiz;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class QuizGoesOfflineTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_closes_quiz_with_a_closed_at_timestamp(): void
     {
         $quiz = create(Quiz::class);
@@ -23,7 +24,7 @@ class QuizGoesOfflineTest extends TestCase
             ->assertRedirect();
 
         $this->assertFalse($quiz->fresh()->isActive, 'quiz is still active after being closed.');
-        $this->assertInstanceOf(Carbon::class, $quiz->fresh()->closed_at);
+        $this->assertInstanceOf(\DateTimeInterface::class, $quiz->fresh()->closed_at);
         $this->assertEqualsWithDelta(now()->getTimestamp(), $quiz->fresh()->closed_at->getTimestamp(), 1);
     }
 }

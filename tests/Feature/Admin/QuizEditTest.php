@@ -5,13 +5,14 @@ namespace Tests\Feature\Admin;
 use App\Models\Event;
 use App\Models\Quiz;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class QuizEditTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_sees_edit_form()
     {
         $quiz = create(Quiz::class, 1);
@@ -22,7 +23,7 @@ class QuizEditTest extends TestCase
         $res->assertOk();
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_edit_an_event()
     {
         $quiz = create(Quiz::class, 1);

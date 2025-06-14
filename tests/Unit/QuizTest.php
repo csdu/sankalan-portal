@@ -7,6 +7,7 @@ use App\Models\Question;
 use App\Models\Quiz;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
+use PHPUnit\Framework\Attributes\Test;
 use Session;
 use Tests\TestCase;
 
@@ -14,7 +15,7 @@ class QuizTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function quiz_belongs_to_an_event()
     {
         $event = create(Event::class);
@@ -26,7 +27,7 @@ class QuizTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function quiz_has_many_questions()
     {
         $quiz = create(Quiz::class);
@@ -39,7 +40,7 @@ class QuizTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function quiz_has_a_time_limit_with_1800_as_default()
     {
         $quiz = make(Quiz::class);
@@ -52,7 +53,7 @@ class QuizTest extends TestCase
         $this->assertEquals(2700, $quiz->fresh()->time_limit);
     }
 
-    /** @test */
+    #[Test]
     public function quiz_verifies_token()
     {
         $quiz = create(Quiz::class, 1, ['token' => $token = 'valid_token']);

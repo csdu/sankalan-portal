@@ -6,13 +6,14 @@ use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\QuizResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ViewAllQuizzesTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_can_view_all_quizzes_with_event_questions_participations_count()
     {
         $quizzes = create(Quiz::class, 10);

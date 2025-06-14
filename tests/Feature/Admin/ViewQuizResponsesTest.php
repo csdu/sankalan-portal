@@ -6,13 +6,14 @@ use App\Models\Quiz;
 use App\Models\Team;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ViewQuizResponsesTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_can_view_all_quiz_responses()
     {
         $quizzes = create(Quiz::class, 4);
@@ -51,7 +52,7 @@ class ViewQuizResponsesTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_view_specific_quiz_responses()
     {
         $quizzes = create(Quiz::class, 4);

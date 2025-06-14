@@ -4,23 +4,28 @@ namespace Tests\Feature\Admin;
 
 use App\Models\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Date;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class EventDeleteTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_can_delete_event_if_it_has_not_started()
     {
         $event = create(Event::class, 1);
         $this->withoutExceptionHandling()->signInAdmin();
 
         $this->delete(route('admin.events.delete', $event));
-        $this->assertDeleted($event);
+
+        $this->assertDatabaseMissing('events', [
+            'id' => $event->id
+        ]);
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_not_delete_event_if_it_has_started()
     {
         $event = create(Event::class, 1, [

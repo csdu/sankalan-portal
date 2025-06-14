@@ -7,13 +7,14 @@ use App\Models\Quiz;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Symfony\Component\HttpFoundation\Response;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class AllowTeamsForQuizTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_allows_participating_teams_for_active_quiz()
     {
         $users = create(User::class, 2);
@@ -35,7 +36,7 @@ class AllowTeamsForQuizTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function admin_gets_error_when_making_teams_participate_for_active_quiz_if_no_active_quiz_is_there()
     {
         $users = create(User::class, 2);

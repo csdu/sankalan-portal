@@ -3,15 +3,16 @@
 namespace Tests\Feature\Admin;
 
 use App\Models\Event;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class EventGoesLiveTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function event_can_be_set_live_by_admin()
     {
         $events = create(Event::class, 4);
@@ -22,7 +23,7 @@ class EventGoesLiveTest extends TestCase
             ->assertRedirect();
 
         $this->assertTrue($events[0]->fresh()->isLive);
-        $this->assertInstanceOf(Carbon::class, $events[0]->fresh()->started_at);
+        $this->assertInstanceOf(\DateTimeInterface::class, $events[0]->fresh()->started_at);
         $this->assertEqualsWithDelta(now()->getTimestamp(), $events[0]->fresh()->started_at->getTimestamp(), 2);
     }
 }

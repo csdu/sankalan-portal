@@ -5,13 +5,14 @@ namespace Tests\Feature\Admin;
 use App\Models\Event;
 use App\Models\Quiz;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ViewEventsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function list_all_events()
     {
         $events = create(Event::class, 5);

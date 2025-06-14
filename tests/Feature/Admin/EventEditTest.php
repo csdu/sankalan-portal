@@ -4,13 +4,14 @@ namespace Tests\Feature\Admin;
 
 use App\Models\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class EventEditTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_sees_edit_form()
     {
         $event = create(Event::class, 1);
@@ -21,7 +22,7 @@ class EventEditTest extends TestCase
         $res->assertOk();
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_edit_an_event()
     {
         $event = create(Event::class, 1);

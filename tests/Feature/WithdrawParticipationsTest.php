@@ -5,13 +5,14 @@ namespace Tests\Feature;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class WithdrawParticipationsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function user_can_withdraw_individual_participation_from_an_event()
     {
         $user = create(User::class);
@@ -33,7 +34,7 @@ class WithdrawParticipationsTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function user_can_withdraw_group_participation_from_an_event()
     {
         $users = create(User::class, 2);

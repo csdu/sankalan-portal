@@ -6,13 +6,14 @@ use App\Models\QuestionOption;
 use App\Models\Question;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class QuestionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function question_has_many_options()
     {
         $question = create(Question::class);

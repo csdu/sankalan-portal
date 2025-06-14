@@ -4,13 +4,14 @@ namespace Tests\Feature\Admin;
 
 use App\Models\Quiz;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class QuizViewTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_can_see_questions_of_a_quiz()
     {
         $quiz = create(Quiz::class);
@@ -21,7 +22,7 @@ class QuizViewTest extends TestCase
         $res->assertSuccessful();
     }
 
-    /** @test */
+    #[Test]
     public function normal_user_can_not_see_questions_of_a_quiz()
     {
         $quiz = create(Quiz::class);

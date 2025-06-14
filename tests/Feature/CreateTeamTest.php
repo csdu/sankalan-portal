@@ -5,15 +5,14 @@ namespace Tests\Feature;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CreateTeamTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function user_can_create_individual_team()
     {
         $this->withoutExceptionHandling();
@@ -35,9 +34,7 @@ class CreateTeamTest extends TestCase
         $this->assertEquals(1, $user->fresh()->individualTeam->id);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function user_can_create_two_members_team()
     {
         $this->withoutExceptionHandling();
@@ -65,7 +62,7 @@ class CreateTeamTest extends TestCase
         $this->assertNull($user->individualTeam);
     }
 
-    /** @test */
+    #[Test]
     public function user_can_not_create_team_with_himself()
     {
         $this->withExceptionHandling();
@@ -86,9 +83,7 @@ class CreateTeamTest extends TestCase
         $this->assertStringContainsString('cannot teamup with yourself', \Session::get('errors')->first());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function user_can_not_create_team_with_more_than_two_members()
     {
         $this->withExceptionHandling();
@@ -110,9 +105,7 @@ class CreateTeamTest extends TestCase
         $this->assertNull($user->individualTeam);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function user_can_create_single_member_team_with_empty_member_email()
     {
         $this->withExceptionHandling();
@@ -132,9 +125,7 @@ class CreateTeamTest extends TestCase
         $this->assertInstanceOf(Team::class, $user->individualTeam);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function user_cannot_create_single_member_team_if_already_exists()
     {
         $user = create(User::class);

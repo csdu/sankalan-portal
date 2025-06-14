@@ -7,13 +7,14 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ViewEventsTeamsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_lists_all_particpating_teams()
     {
         $events = create(Event::class, 5);
@@ -48,7 +49,7 @@ class ViewEventsTeamsTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function admin_lists_all_particpating_teams_filtered_by_events()
     {
         $events = create(Event::class, 3);

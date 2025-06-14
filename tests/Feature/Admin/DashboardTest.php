@@ -4,13 +4,14 @@ namespace Tests\Feature\Admin;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Symfony\Component\HttpFoundation\Response;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DashboardTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_can_access_admins_dashboard()
     {
         $this->withoutExceptionHandling()->signInAdmin();
@@ -20,7 +21,7 @@ class DashboardTest extends TestCase
             ->assertViewIs('admin.dashboard');
     }
 
-    /** @test */
+    #[Test]
     public function normal_user_cannot_access_admins_dashboard()
     {
         $this->withExceptionHandling()->signIn();

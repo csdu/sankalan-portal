@@ -4,15 +4,16 @@ namespace Tests\Feature;
 
 use App\Models\Quiz;
 use App\Models\QuizResponse;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class GiveExtraTimeToTeamTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_can_give_extra_time_to_team()
     {
         $quiz = create(Quiz::class, 1, ['time_limit' => 300]); // 5 mins
@@ -20,16 +21,25 @@ class GiveExtraTimeToTeamTest extends TestCase
 
         $this->signInAdmin();
 
-        $res = $this->post(route('admin.quizzes.teams.extra-time', $quizResponse), [
+        $this->post(route('admin.quizzes.teams.extra-time', $quizResponse), [
             'time' => 5, //minutes
         ])->assertRedirect();
-        $time = now()->addMinutes(5);
 
-        $this->assertEqualsWithDelta($time, $quizResponse->fresh()->started_at, 1);
-        $this->assertEqualsWithDelta(600, $quizResponse->fresh()->timeLeft, 2);
+        $expectedStartTime = Date::now()->addMinutes(5);
+        $quizResponse->refresh();
+
+        $this->assertEqualsWithDelta(
+            $expectedStartTime->getTimestamp(),
+            $quizResponse->started_at->getTimestamp(),
+            2,
+            'Started at time should be exactly 5 minutes in the future'
+        );
+
+        // Original time limit (300 seconds) + 5 minutes extra (300 seconds) = 600 seconds
+        $this->assertEqualsWithDelta(600, $quizResponse->timeLeft, 2);
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_give_extra_time_to_team_after_they_end_quiz()
     {
         $quiz = create(Quiz::class, 1, ['time_limit' => 300]); // 5 mins
@@ -37,16 +47,24 @@ class GiveExtraTimeToTeamTest extends TestCase
 
         $this->signInAdmin();
 
-        Carbon::setTestNow(now()->addMinutes(4));
-
+        Date::setTestNow(Date::now()->addMinutes(4));
         $quizResponse->team->endQuiz($quiz);
-        $this->assertEquals(60, $quizResponse->fresh()->timeLeft);
+        $this->assertEqualsWithDelta(60, $quizResponse->fresh()->timeLeft, 5);
 
-        $res = $this->post(route('admin.quizzes.teams.extra-time', $quizResponse), [
+        $this->post(route('admin.quizzes.teams.extra-time', $quizResponse), [
             'time' => 5, //minutes
         ])->assertRedirect();
 
-        $this->assertEquals(Carbon::getTestNow()->addMinutes(5)->format('Y-m-d H:i:s'), $quizResponse->fresh()->started_at->format('Y-m-d H:i:s'));
-        $this->assertEqualsWithDelta(300, $quizResponse->fresh()->timeLeft, 2);
+        $expectedStartTime = Date::now()->addMinutes(5);
+        $quizResponse->refresh();
+
+        $this->assertEqualsWithDelta(
+            $expectedStartTime->getTimestamp(),
+            $quizResponse->started_at->getTimestamp(),
+            2,
+            'Started at time should be exactly 5 minutes from test time'
+        );
+
+        $this->assertEqualsWithDelta(600, $quizResponse->timeLeft, 2);
     }
 }

@@ -68,6 +68,10 @@ return [
 
     'timezone' => 'Asia/Kolkata',
 
+    'date_format' => 'Y-m-d',
+    'time_format' => 'H:i:s',
+    'datetime_format' => 'Y-m-d H:i:s',
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -226,6 +230,6 @@ return [
         'perPage' => 100,
     ],
 
-    'sankalan_start_time' => \Carbon\Carbon::parse(env('SANKALAN_START_TIME', '15 February 2020, 9:00 AM')),
+    'sankalan_start_time' => \Illuminate\Support\Facades\Date::parse(env('SANKALAN_START_TIME', '15 February 2020, 9:00 AM')),
     'event_management_contact_number' => env("EVENT_MANAGEMENT_CONTACT_NUMBER", "+910000000000"),
 ];
