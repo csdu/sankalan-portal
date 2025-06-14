@@ -1,5 +1,5 @@
 <template>
-	<div class>
+	<div>
 		<div class="control flex">
 			<div class="w-1/2">
 				<label class="control">Question</label>
@@ -16,7 +16,7 @@
 			<div ref="preview" class="w-1/2 flex flex-col">
 				<label class="control">Markdown Preview</label>
 				<MarkdownPreview
-					class="control h-full border rounded py-2 w-full ml-1 px-4 mb-2 overflow-y-scroll"
+					class="control h-full border border-slate-200 rounded py-2 w-full ml-1 px-4 mb-2 overflow-y-scroll"
 					:markdown="markdown"
 				></MarkdownPreview>
 			</div>

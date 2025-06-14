@@ -4,7 +4,7 @@
     </p>
     <p class="flex items-center justify-center">
         <span>Made with</span>
-        <svg class="h-4 text-red mx-1" viewBox="0 0 20 20">
+        <svg class="h-4 text-red-500 mx-1" viewBox="0 0 20 20">
             <path fill="currentColor" d="M10 3.22l-.61-.6a5.5 5.5 0 0 0-7.78 7.77L10 18.78l8.39-8.4a5.5 5.5 0 0 0-7.78-7.77l-.61.61z" />
         </svg>
         <span>
