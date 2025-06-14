@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed flex flex-col bottom-0 right-0 mb-4 items-end z-50 pointer-events-none container mx-auto">
+    <div class="fixed flex flex-col inset-x-0 bottom-24 p-4 items-center z-50 pointer-events-none">
         <transition-group name="fade"
         enter-active-class="fadeIn"
         leave-active-class="fadeOut"
@@ -24,10 +24,10 @@ export default {
         return {
             messages : [],
             classes: {
-                success: 'bg-green-lighter border-green-dark text-green-dark',
-                danger: 'bg-red-lighter border-red-dark text-red-dark',
-                info: 'bg-blue-lighter border-blue-dark text-blue-dark',
-                warning: 'bg-yellow-lighter border-yellow-darker text-yellow-darker',
+                success: 'bg-emerald-100 border-emerald-700 text-emerald-700',
+                danger: 'bg-red-100 border-red-700 text-red-700',
+                info: 'bg-blue-100 border-blue-700 text-blue-700',
+                warning: 'bg-amber-100 border-amber-800 text-amber-800',
             }
         }
     },
@@ -41,7 +41,7 @@ export default {
         },
         flash(message) {
             this.messages.push(message);
-            setTimeout(() => this.clear(), 3000);
+            setTimeout(() => this.clear(), 5000);
         },
         schema() {
             return ['id', 'message', 'level', 'important'];
@@ -49,7 +49,7 @@ export default {
     },
     mounted() {
         this.dataMessages.forEach(message => this.messages.push(message));
-        setTimeout(() => this.clear(), 3000);
+        setTimeout(() => this.clear(), 5000);
 
         console.log(this.$eventBus, Object.keys(this.$eventBus));
 

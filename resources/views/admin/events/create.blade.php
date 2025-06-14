@@ -16,21 +16,19 @@
                 <label class="control">
                     Title
                 </label>
-                <input class="control" name="title" type="text" placeholder="Sankalan" value="{{ old('title') }}" required>
+                <input class="control rounded border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500" name="title" type="text" placeholder="Sankalan" value="{{ old('title') }}" required>
             </div>
             <div>
                 <label class="control">
                     Description
                 </label>
-                <textarea class="control" name="description" type="text" required>
-                    {{ old('description') }}
-                </textarea>
+                <textarea class="control rounded border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500" name="description" type="text" required>{{ old('description') }}</textarea>
             </div>
             <div>
                 <label class="control">
                     Rounds
                 </label>
-                <input class="control" name="rounds" min="1" type="number" value="{{ old('rounds', 1) }}" required>
+                <input class="control rounded border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500" name="rounds" min="1" type="number" value="{{ old('rounds', 1) }}" required>
             </div>
             <div class="flex justify-end space-x-2">
                 <button class="btn is-blue" type="submit">Create</button>

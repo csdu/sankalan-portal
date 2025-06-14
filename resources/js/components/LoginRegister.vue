@@ -5,7 +5,7 @@
 export default {
     data() {
         return {
-            isRegister: true
+            isRegister: false
         }
     },
     methods: {

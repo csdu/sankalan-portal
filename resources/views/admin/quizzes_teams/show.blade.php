@@ -15,7 +15,7 @@
             <dt class="w-64 font-bold">Team Members</dt>
             <dd class="flex-1 -mx-1">
                 @foreach($quizResponse->team->members as $member)
-                    <span class="mx-1 p-1 bg-blue text-white rounded text-xs font-bold">{{ title_case($member->name) }}</span>
+                    <span class="mx-1 p-1 bg-blue-500 text-white rounded text-xs font-bold">{{ title_case($member->name) }}</span>
                 @endforeach
             </dd>
         </dl>
@@ -64,17 +64,17 @@
                     @endif
                     @if($response->question->illustration)
                     <div class="flex justify-center my-4">
-                        <img src="{{ $response->question->illustration}}" class="max-w-full rounded shadow-lg">
+                        <img src="{{ $response->question->illustration}}" class="max-w-full rounded shadow-3">
                     </div>
                     @endif
                     @if(count($response->question->choices))
                         <ul class="choices-list list-reset mt-8 flex flex-wrap -mx-2">
                             @foreach($response->question->choices as $choice)
                             <li class="mb-3 w-full md:w-1/2 px-2">
-                                <label class="relative card flex items-center py-2 pr-3 pl-8 {{ $choice->isCorrect() && $response->isChosen($choice) ? 'bg-green text-white' : ($response->isChosen($choice) ? 'bg-red text-white' : '') }}">
+                                <label class="relative card flex items-center py-2 pr-3 pl-8 {{ $choice->isCorrect() && $response->isChosen($choice) ? 'bg-emerald-500 text-white' : ($response->isChosen($choice) ? 'bg-red-500 text-white' : '') }}">
                                     @if($choice->isCorrect())
                                         <div class="absolute left-0 inset-y-0 flex items-center ml-2">
-                                            @include('svg.checkmark', ['classes' => ($response->isChosen($choice) ? '': 'text-green ') . "fill-current h-4"])
+                                            @include('svg.checkmark', ['classes' => ($response->isChosen($choice) ? '': 'text-emerald-500 ') . "fill-current h-4"])
                                         </div>
                                     @elseif($response->isChosen($choice) && !$choice->isCorrect())
                                         <div class="absolute left-0 inset-y-0 flex items-center ml-2">
@@ -98,13 +98,13 @@
                     @else
                         <ul class="list-reset mt-8 flex flex-wrap -mx-2">
                             <li class="w-full mb-3 px-2">
-                                <p class="{{ $response->question->correct_answer_keys->contains($response->response_keys) ? 'text-green' : 'text-red' }}">
+                                <p class="{{ $response->question->correct_answer_keys->contains($response->response_keys) ? 'text-emerald-500' : 'text-red-500' }}">
                                     {{ $response->response_keys }}
                                 </p>
                             </li>
                             @foreach($response->question->correct_answer_keys as $answer_key)
                             <li class="mb-3 w-1/2 px-2">
-                                <div class="relative card py-2 pr-3 pl-8 flex border-0 {{ $answer_key == $response->response_keys ? 'bg-green' : 'bg-white' }}">
+                                <div class="relative card py-2 pr-3 pl-8 flex border-0 {{ $answer_key == $response->response_keys ? 'bg-emerald-500' : 'bg-white' }}">
                                     <div class="absolute left-0 inset-y-0 flex items-center ml-2">
                                         @include('svg.checkmark', ['classes' => "fill-current h-4"])
                                     </div>
@@ -115,7 +115,7 @@
                         </ul>
                     @endif
                 </div>
-                <div class="card flex text-white border-0 {{ $response->score <= 0 ? 'bg-red' : 'bg-green' }}">
+                <div class="card flex text-white border-0 {{ $response->score <= 0 ? 'bg-red-500' : 'bg-emerald-500' }}">
                     <div class="card-content flex flex-col items-center justify-center">
                         <span class="text-5xl">{{ $response->score }}</span>
                         <span class="uppercase text-sm">score</span>

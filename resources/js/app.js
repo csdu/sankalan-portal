@@ -1,5 +1,4 @@
-require('./bootstrap');
-
+import '../css/app.css';
 import { createApp } from 'vue';
 import emitter from 'mitt'
 
@@ -7,11 +6,12 @@ import QuizArea from "./components/QuizComponent.vue";
 import CountdownTimer from "./components/CountdownTimer.vue";
 import FlashMessages from "./components/Flash.vue";
 import GetRoutes from "./components/GetRoutes.vue";
-import LoginRegister from "./components/LoginRegister";
+import LoginRegister from "./components/LoginRegister.vue";
 import Modal from './components/Modal.vue';
 import MarkdownEditor from "./components/MarkdownEditor.vue";
 import QuestionType from "./components/QuestionType.vue";
-import MarkdownPreview from './components/MarkdownPreview.vue';
+import MarkdownPreview from "./components/MarkdownPreview.vue";
+import './bootstrap';
 
 const app = createApp({});
 const eventBus = emitter();

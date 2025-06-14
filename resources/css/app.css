@@ -1,17 +1,227 @@
-/*
-Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito')
-*/
+/* Import Tailwind CSS */
+@import "tailwindcss";
 
-/* Base Styles - Normalise */
-@import 'tailwindcss/base';
-@import './base';
+/* Tailwind content sources */
+/* app blade templates */
+/* vendor blade templates */
+/* js and vue components */
+
+:root {
+    /* Base theme */
+    --font-sans: 'Nunito', ui-sans-serif, system-ui;
+    --container-width: 80rem;
+}
+
+/* Base styles */
+@layer base {
+    html {
+        font-family: var(--font-sans);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: 700;
+    }
+
+    h1 {
+        font-size: 2.25rem;
+    }
+
+    h2 {
+        font-size: 1.875rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    h4 {
+        font-size: 1.25rem;
+    }
+
+    a,
+    span {
+        display: inline-block;
+    }
+
+    /* Table defaults */
+    table {
+        border-color: var(--color-slate-200);
+    }
+
+    th,
+    td {
+        border-color: inherit;
+    }
+
+    /* Form control defaults */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="url"],
+    textarea,
+    select {
+        border-color: var(--color-slate-200);
+    }
+}
 
 /* Components */
-@import 'tailwindcss/components';
-@import './components';
-@import './animations';
+@layer components {
 
-/* Utilities */
-@import 'tailwindcss/utilities';
-@import './utilities';
+    /* Card Component */
+    .card {
+        background-color: white;
+        border-radius: 0.5rem;
+        border: 1px solid var(--color-slate-200);
+        overflow: hidden;
+
+        &.seperated {
+            border: none;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+            & .card-header {
+                border-bottom: 1px solid var(--color-slate-200);
+                background-color: var(--color-slate-50);
+            }
+
+            & .card-footer {
+                border-top: 1px solid var(--color-slate-200);
+                background-color: var(--color-slate-50);
+            }
+        }
+    }
+
+    .card-header {
+        padding: 1rem 1.5rem;
+        border-bottom: none;
+        font-weight: 600;
+    }
+
+    .card-content {
+        padding: 1.5rem;
+        background-color: white;
+    }
+
+    .card-footer {
+        padding: 1rem 1.5rem;
+        border-top: none;
+        gap: 0.5rem;
+    }
+
+    /* Form Controls */
+    .control {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--color-slate-200);
+        border-radius: 0.375rem;
+        background-color: white;
+        color: var(--color-slate-900);
+        transition: all 200ms;
+
+        &.is-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            border-radius: 0.375rem;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: var(--color-blue-500);
+            box-shadow: 0 0 0 2px var(--color-blue-100);
+        }
+
+        &:disabled {
+            background-color: var(--color-slate-100);
+            cursor: not-allowed;
+        }
+    }
+
+    /* Button Component */
+    .btn {
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.5rem;
+        background-color: var(--color-slate-200);
+        color: var(--color-slate-900);
+        transition: all 200ms;
+        font-weight: var(--font-weight-semibold);
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--color-slate-300);
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 var(--ring-offset-width) var(--ring-offset-color),
+                0 0 0 calc(var(--ring-width) + var(--ring-offset-width)) var(--ring-color);
+        }
+
+        &.is-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            border-radius: 0.375rem;
+        }
+
+        &.is-white {
+            background-color: white;
+            border: 1px solid var(--color-slate-200);
+
+            &:hover {
+                background-color: var(--color-slate-50);
+            }
+        }
+
+        &.is-blue {
+            background-color: var(--color-blue-600);
+            color: white;
+
+            &:hover {
+                background-color: var(--color-blue-800);
+            }
+        }
+
+        &.is-green {
+            background-color: var(--color-emerald-500);
+            color: white;
+
+            &:hover {
+                background-color: var(--color-emerald-700);
+            }
+        }
+
+        &.is-red {
+            background-color: var(--color-red-500);
+            color: white;
+
+            &:hover {
+                background-color: var(--color-red-700);
+            }
+        }
+    }
+
+    .link {
+        color: var(--color-blue-600);
+        text-decoration: none;
+        transition: all 200ms;
+
+        &:hover {
+            color: var(--color-blue-700);
+            text-decoration: underline;
+        }
+    }
+}
+
+/* Custom utilities */
+@layer utilities {
+    .table-fit {
+        width: 1%;
+        white-space: nowrap;
+    }
+}

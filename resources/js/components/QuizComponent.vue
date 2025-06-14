@@ -25,7 +25,7 @@
 					@click="nextQuestion()"
 				>Next</button>
 				<span v-if="loading" class="inline-flex items-center ml-auto">
-					<svg viewBox="0 0 110 110" class="text-blue w-8 mr-2">
+					<svg viewBox="0 0 110 110" class="text-blue-500 w-8 mr-2">
 						<circle
 							id="loader-circle"
 							cx="55"
@@ -48,125 +48,39 @@
 							values="314.16; 0; -314.16; 0; 314.16;"
 							repeatCount="indefinite"
 						/>
-						<animateTransform
-							xlink:href="#loader-circle"
-							attributeName="transform"
-							attributeType="XML"
-							type="rotate"
-							from="0 55 55"
-							to="360 55 55"
-							dur="3s"
-							repeatCount="indefinite"
-						/>
 					</svg>
-					<span class="text-gray-600">saving response...</span>
+					<span>Saving...</span>
 				</span>
-				<!-- <button v-else class="btn is-green" @click="submit()">End Quiz</button> -->
-				<!-- <button :disabled=loading class="btn is-green mx-2" :class="{'cursor-wait' : loading}" @click="saveResponse()">Save</button> -->
 			</div>
 		</div>
-		<div class="navigation flex flex-col md:w-64 px-3 overflow-auto py-4">
-			<ul class="questions-nav list-reset justify-center flex flex-wrap -mx-1 -mb-1 mt-4">
-				<li v-for="questionNumber in questions.length" :key="questionNumber">
-					<button
-						class="mx-1 my-1 w-6 h-6 p-0 flex justify-center items-center text-xs border border-black text-black rounded"
-						v-text="questionNumber"
-						@click.prevent="setCurrentQuestion(questionNumber-1)"
-						:class="{
-                    'border-black bg-black text-white': isCurrentQuestion(questionNumber-1),
-                    'border-green bg-green hover:bg-green-dark text-white': isQuestionAnswered(questionNumber-1),
-                    'border-red bg-red hover:bg-red-dark text-white': isQuestionSkipped(questionNumber-1)
-                }"
-					></button>
-				</li>
-			</ul>
-			<div class="flex justify-center">
-				<countdown-timer
-					:duration="timeLimit"
-					:hurry="300"
-					class="inline-flex justify-center items-baseline my-8 text-lg font-bold font-mono"
-					:class="{'animation-vibrate text-red': hurry}"
-					@timeup="endQuiz"
-					@hurryup="hurry=true"
-				></countdown-timer>
+		<div class="question-navigation hidden lg:flex flex-col w-1/4 p-4 bg-slate-50">
+			<h4 class="mb-4">Question Navigation</h4>
+			<div class="flex flex-wrap -mx-1">
+				<button
+					v-for="(question, index) in questions"
+					:key="question.id"
+					class="w-10 h-10 m-1 rounded flex items-center justify-center bg-white shadow-1 text-sm hover:shadow-2 transition-all duration-200"
+					:class="{
+						'bg-emerald-500 text-white': responses[question.id],
+						'ring-2 ring-blue-500': currentQuestionIndex === index
+					}"
+					@click="goToQuestion(index)"
+				>{{ index + 1 }}</button>
 			</div>
-			<div class="mb-auto text-center">
-				<button class="btn is-red" @click.prevent="submit">End Quiz</button>
-			</div>
+			<button
+				:disabled="loading"
+				class="mt-auto btn is-green"
+				:class="{'cursor-wait' : loading}"
+				@click="finish"
+			>Finish Quiz</button>
 		</div>
 	</div>
-	<div
-		class="fixed inset-x-0 top-0 z-50 w-full h-screen flex flex-col justify-center items-center"
-		v-else
-	>
-		<svg viewBox="0 0 100 100" class="text-green w-32" v-if="submission.done && submission.success">
-			<path
-				d="M10 50 L40 80 L90 10"
-				stroke="currentColor"
-				fill="none"
-				stroke-width="15"
-				stroke-dasharray="129"
-			/>
-		</svg>
-		<svg viewBox="0 0 100 100" class="text-red w-32" v-else-if="submission.done">
-			<path
-				d="M10 10 L90 90"
-				stroke="currentColor"
-				fill="none"
-				stroke-width="15"
-				stroke-dasharray="114"
-			/>
-			<path
-				d="M90 10 L10 90"
-				stroke="currentColor"
-				fill="none"
-				stroke-width="15"
-				stroke-dasharray="114"
-			/>
-		</svg>
-		<svg viewBox="0 0 110 110" class="text-blue w-32" v-else>
-			<circle
-				id="loader-circle"
-				cx="55"
-				cy="55"
-				r="50"
-				stroke-dasharray="314.16"
-				stroke="currentColor"
-				fill="none"
-				stroke-width="10"
-			/>
-			<animate
-				xlink:href="#loader-circle"
-				attributeName="stroke-dashoffset"
-				attributeType="XML"
-				from="314.16"
-				to="314.16"
-				dur="2s"
-				begin="0s"
-				keyTimes="0; 0.25; 0.5; 0.75; 1;"
-				values="314.16; 0; -314.16; 0; 314.16;"
-				repeatCount="indefinite"
-			/>
-			<animateTransform
-				xlink:href="#loader-circle"
-				attributeName="transform"
-				attributeType="XML"
-				type="rotate"
-				from="0 55 55"
-				to="360 55 55"
-				dur="3s"
-				repeatCount="indefinite"
-			/>
-		</svg>
-		<p class="text-center my-6" v-text="submission.text"></p>
-		<p class="text-center my-6" v-if="submission.success">
-			You will be redirected to dashboard in 3 seconds.
-			Click
-			<button
-				@click="redirect"
-				class="font-normal text-blue hover:undeline"
-			>here</button> to redirect manually.
-		</p>
+	<div v-else class="flex flex-col items-center justify-center flex-1">
+		<div class="text-center">
+			<h3 class="text-2xl mb-4">Time's Up!</h3>
+			<p class="text-slate-600 mb-6">Your quiz has been automatically submitted.</p>
+			<a :href="redirectTo" class="btn is-blue">Go to Dashboard</a>
+		</div>
 	</div>
 </template>
 
