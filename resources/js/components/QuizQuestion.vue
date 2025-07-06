@@ -1,5 +1,5 @@
 <template>
-	<div class="question outline-none">
+	<div class="question outline-hidden">
 		<div class="card px-3 pt-3 pb-6 relative overflow-hidden flex">
 			<strong class="float-left mr-2" v-text="`Q${dataQuestion.qno}.`"></strong>
 			<MarkdownPreview class="w-full" :markdown="dataQuestion.text"></MarkdownPreview>
@@ -14,7 +14,7 @@
 			v-for="questionAttachment in dataQuestionAttachments"
 			:key="questionAttachment.id"
 		>
-			<img :src="'/question_attachments/' +questionAttachment.id" class="max-w-full rounded shadow-lg" />
+			<img :src="'/question_attachments/' +questionAttachment.id" class="max-w-full rounded shadow-3" />
 		</div>
 		<ul class="choices-list list-reset my-8 flex flex-wrap -mx-2" v-if="choicesCount">
 			<li
@@ -24,20 +24,20 @@
 			>
 				<label
 					:for="`choice-${choice.key}`"
-					class="relative flex items-center btn hover:bg-grey-light border shadow cursor-pointer pl-6 h-full"
+					class="relative flex items-center btn hover:bg-slate-200 border border-slate-200 shadow cursor-pointer pl-6 h-full"
 					@mouseover="highlightOption(choiceIndex)"
 					:class="{
                         'bg-white': !isHighlighted(choiceIndex) && !isSelected(choiceIndex),
-                        'bg-green-dark': isHighlighted(choiceIndex) && isSelected(choiceIndex),
-                        'bg-green': !isHighlighted(choiceIndex) && isSelected(choiceIndex),
-                        'bg-grey-light border border-grey-darker': isHighlighted(choiceIndex),
-                        'text-white hover:bg-green-dark border-green-dark': isSelected(choiceIndex),
+                        'bg-emerald-700': isHighlighted(choiceIndex) && isSelected(choiceIndex),
+                        'bg-emerald-500': !isHighlighted(choiceIndex) && isSelected(choiceIndex),
+                        'bg-slate-200 border border-slate-500': isHighlighted(choiceIndex),
+                        'text-white hover:bg-emerald-700 border-emerald-700': isSelected(choiceIndex),
                     }"
 				>
 					<div v-if="isHighlighted(choiceIndex)" class="absolute -ml-3 inset-y-0 left-0 flex items-center">
 						<span
 							class="inline-block w-2 h-2 rounded-full"
-							:class="isSelected(choiceIndex) ? 'bg-white' : 'bg-green'"
+							:class="isSelected(choiceIndex) ? 'bg-white' : 'bg-emerald-500'"
 						></span>
 					</div>
 					<input
@@ -76,7 +76,7 @@
 				<button @click="saveResponse" class="btn btn-green is-sm">Save</button>
 			</div>
 			<div class="flex" v-else>
-				<p class="flex-1 mr-1" :class="{'text-grey': !answer}" v-text="answer.key"></p>
+				<p class="flex-1 mr-1" :class="{'text-slate-500': !answer}" v-text="answer.key"></p>
 				<button @click="editResponse" class="btn is-blue is-sm">Edit</button>
 			</div>
 		</div>

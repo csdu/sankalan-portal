@@ -3,7 +3,7 @@
         @if($event->started_at != null)
         <span class="absolute top-0 right-0 px-2 py-1 uppercase text-xs text-white bg-{{$event->ended_at ? 'red' : 'green'}}">
             {{ $event->ended_at ? 'Ended' : 'Live' }}
-        </span> 
+        </span>
         @endif
 
         <h4 class="card-header capitalize">
@@ -22,7 +22,7 @@
                             @csrf
                             <button type="submit" class="btn is-blue is-sm">
                                 {{ count($signedInUser->teams) ? 'Participate' : 'Participate Alone' }}
-                            </button> 
+                            </button>
                             @if(count($signedInUser->teams))
                                 <span class="ml-3">as:</span>
                                 <select name="team_id" class="ml-1 control is-sm">
@@ -32,16 +32,16 @@
                                     @foreach($signedInUser->teams as $team)
                                         <option value="{{ $team->id }}">{{$team->name}} - {{$team->uid}}{{ $team->id == $signedInUser->team_id ? ' (Individual)' : '' }}</option>
                                     @endforeach
-                                </select> 
+                                </select>
                             @else
                                 <p class="text-xs text-grey-dark ml-3">
                                     You have not created any teams yet, you can participate <em>alone</em> or <a href="{{ route('teams') }}"
-                                        class="hover:underline text-blue">Create Team</a>. When you participate <em>alone</em>, a team will be
+                                        class="hover:underline text-blue-500">Create Team</a>. When you participate <em>alone</em>, a team will be
                                     created with a name <strong>"{{ $signedInUser->name }}"</strong>
                                 </p>
                             @endif
                         </form>
-                        
+
                     @elseif(!$event->isLive)
                         <div class="flex-1 flex items-center">
                             <p class="flex-1">Participating as <strong class="text-xs">{{ $participatingTeam->name }} - {{ $participatingTeam->uid }}</strong>!</p>
@@ -52,7 +52,7 @@
                         </div>
                     @else
                         <div class="flex-1 flex items-center">
-                            <p class="flex-1">Participat{{ !!$event->activeQuiz && optional($event->activeQuiz->participationByTeam($participatingTeam))->finished_at ? 'ed' : 'ing' }} as 
+                            <p class="flex-1">Participat{{ !!$event->activeQuiz && optional($event->activeQuiz->participationByTeam($participatingTeam))->finished_at ? 'ed' : 'ing' }} as
                                 <strong class="text-xs">{{ $participatingTeam->name }} - {{ $participatingTeam->uid }}</strong>!
                             </p>
                             @if ($event->activeQuiz)
@@ -61,11 +61,11 @@
                                         @if (!!$event->activeQuiz->participationByTeam($participatingTeam) && !$event->activeQuiz->participationByTeam($participatingTeam)->finished_at)
                                             Resume Quiz
                                         @else
-                                            Take Quiz                        
+                                            Take Quiz
                                         @endif
                                     </a>
                                 @endif
-                            @else                                
+                            @else
                                 <a href="{{ route('dashboard') }}" class="btn is-blue is-sm">Go to dashboard</a>
                             @endif
                             @if(!$event->hasEnded && !optional($event->activeQuiz)->participationByTeam($participatingTeam))
@@ -76,7 +76,7 @@
                             @endif
                         </div>
                     @endif
-                @else 
+                @else
                     <p>Please <a href="{{ route('login') }}" class="link">sign in</a> to participate</p>
                 @endauth
             </div>

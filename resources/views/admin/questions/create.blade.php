@@ -10,13 +10,13 @@
     <div class="card-header">
         <div class="flex justify-between">
             <div class="flex">
-                <h2 class="text-xl font-normal">New Question for <small class="text-blue">{{ $quiz->title }}</small></h2>
+                <h2 class="text-xl font-normal">New Question for <small class="text-blue-500">{{ $quiz->title }}</small></h2>
             </div>
             <div>
                 <span class="text-sm font-normal">
                     Total Questions
                 </span>
-                <span class="px-2 py-1 rounded-full bg-blue text-white text-xs">{{ $quiz->questions()->count() }}</span>
+                <span class="px-2 py-1 rounded-full bg-blue-500 text-white text-xs">{{ $quiz->questions()->count() }}</span>
             </div>
         </div>
     </div>

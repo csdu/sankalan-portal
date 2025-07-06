@@ -6,21 +6,21 @@
         <div class="card">
 
             <h2 class="card-header">{{ __('Reset Password') }}</h2>
-    
+
             <div class="card-content">
                 @if (session('status'))
-                    <div class="bg-green-lighter px-4 py-2 mb-6 border-green-dark text-green-dark" role="alert">
+                    <div class="bg-emerald-100 px-4 py-2 mb-6 border-emerald-700 text-emerald-700" role="alert">
                         {{ session('status') }}
                     </div>
                 @endif
-        
+
                 <form method="POST" action="{{ route('password.update') }}">
                     @csrf
                     <input type="hidden" name="token" value="{{ $token }}">
                     <div class="mb-3">
                         <input type="email" class="control{{ $errors->has('email') ? ' border-red' : '' }}" name="email" value="{{ old('email') }}" required placeholder="Email">
                         @if ($errors->has('email'))
-                            <span class="inline-block  text-red w-full mt-2" role="alert">
+                            <span class="inline-block  text-red-500 w-full mt-2" role="alert">
                                 <strong>{{ $errors->first('email') }}</strong>
                             </span>
                         @endif
@@ -28,7 +28,7 @@
                     <div class="mb-3">
                         <input type="password" class="control{{ $errors->has('password') ? ' border-red' : '' }}" name="password" value="{{ old('password') }}" required placeholder="New Password">
                         @if ($errors->has('password'))
-                            <span class="inline-block text-red w-full mt-2" role="alert">
+                            <span class="inline-block text-red-500 w-full mt-2" role="alert">
                                 <strong>{{ $errors->first('password') }}</strong>
                             </span>
                         @endif
