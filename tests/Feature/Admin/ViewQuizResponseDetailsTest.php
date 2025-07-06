@@ -5,13 +5,14 @@ namespace Tests\Feature\Admin;
 use App\Models\QuizResponse;
 use App\Models\QuestionResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ViewQuizResponseDetailsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function view_quiz_participation_details_with_all_responses_and_individual_scores()
     {
         $this->signInAdmin();

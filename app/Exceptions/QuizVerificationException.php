@@ -12,7 +12,7 @@ class QuizVerificationException extends Exception
             return response()->json([
                 'status' => 'error',
                 'message' => $this->getMessage()
-            ], 401);
+            ], 403);
         }
 
         flash($this->getMessage())->warning();

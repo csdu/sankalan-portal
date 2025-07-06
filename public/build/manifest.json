@@ -1,0 +1,32 @@
+{
+  "_highlight.js-vUbNfHyZ.js": {
+    "file": "assets/highlight.js-vUbNfHyZ.js",
+    "name": "highlight.js"
+  },
+  "_markdown-it-CwWAZVAy.js": {
+    "file": "assets/markdown-it-CwWAZVAy.js",
+    "name": "markdown-it",
+    "imports": [
+      "_highlight.js-vUbNfHyZ.js"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-8XUELu1W.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-85mmn6Wg.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_markdown-it-CwWAZVAy.js",
+      "_highlight.js-vUbNfHyZ.js"
+    ],
+    "css": [
+      "assets/app-DY81fLej.css",
+      "assets/app-8XUELu1W.css"
+    ]
+  }
+}

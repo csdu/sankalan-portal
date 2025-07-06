@@ -5,13 +5,14 @@ namespace Tests\Feature\Admin;
 use App\Models\Team;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ViewTeamsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function list_all_Teams()
     {
         $teams = create(Team::class, 25);

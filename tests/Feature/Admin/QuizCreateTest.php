@@ -4,13 +4,14 @@ namespace Tests\Feature\Admin;
 
 use App\Models\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class QuizCreateTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_sees_create_form()
     {
         $this->withoutExceptionHandling()->signInAdmin();
@@ -18,7 +19,7 @@ class QuizCreateTest extends TestCase
         $res->assertOk();
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_create_a_quiz()
     {
         $event = create(Event::class, 1);

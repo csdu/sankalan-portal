@@ -7,13 +7,14 @@ use App\Models\Quiz;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class QuestionCreateTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_sees_create_form()
     {
         $quiz = create(Quiz::class);
@@ -23,7 +24,7 @@ class QuestionCreateTest extends TestCase
         $res->assertOk();
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_create_a_question()
     {
         Storage::fake();

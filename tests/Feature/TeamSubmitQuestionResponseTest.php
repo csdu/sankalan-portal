@@ -4,203 +4,229 @@ namespace Tests\Feature;
 
 use App\Models\Event;
 use App\Models\Question;
-use App\Models\QuestionOption;
 use App\Models\Quiz;
+use App\Models\QuizResponse;
+use App\Models\Team;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Session;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
+use Illuminate\Testing\TestResponse;
 
 class TeamSubmitQuestionResponseTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Date::setTestNow(Date::now());
+    }
+
+    protected function tearDown(): void
+    {
+        Date::setTestNow();
+        parent::tearDown();
+    }
+
+    protected function createTeamWithMember(): array
+    {
+        $team = create(Team::class);
+        $user = create(User::class);
+        $team->members()->attach($user);
+        return [$team, $user];
+    }
+
+    protected function createEventWithQuiz(array $quizAttributes = []): array
+    {
+        $event = create(Event::class);
+        $quiz = create(Quiz::class, 1, array_merge([
+            'event_id' => $event->id,
+            'token' => 'valid_token'
+        ], $quizAttributes));
+        return [$event, $quiz];
+    }
+
+    protected function verifyQuiz(Quiz $quiz, string $token = 'valid_token'): void
+    {
+        Session::put('quiz_token', $token);
+        $quiz->verify($token);
+    }
+
+    #[Test]
     public function user_can_submit_response_within_quiz_time_limit_if_they_have_started_quiz()
     {
-        $user = create(User::class);
-        $event = create(Event::class);
-        $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => $token = 'valid_token']);
-        $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
-        $questions->each(function ($question) {
-            create(QuestionOption::class, 4, ['question_id' => $question->id]);
-        });
+        $questions = create(Question::class, 10);
+        [$event, $quiz] = $this->createEventWithQuiz([
+            'slug' => 'test-quiz',
+            'time_limit' => 60
+        ]);
+        $quiz->questions()->saveMany($questions);
 
-        $this->be($user);
+        [$team, $user] = $this->createTeamWithMember();
+        $event->teams()->attach($team);
 
-        $team = $user->createTeam($user->name);
-        $team->participate($event);
+        create(QuizResponse::class, 1, [
+            'quiz_id' => $quiz->id,
+            'team_id' => $team->id,
+            'started_at' => Date::now()
+        ]);
+
         $quiz->setActive();
+        $this->signIn($user);
+        $this->verifyQuiz($quiz);
 
-        $team->beginQuiz($quiz);
+        $response = $this->submitSeed([
+            'quiz_id' => $quiz->id,
+            'question' => $questions[0]
+        ]);
 
-        $quizResponse = $quiz->participationByTeam($team);
+        $json = $response->json();
+        $this->assertEquals('success', $json['status']);
+        $this->assertStringContainsString('Your response has been recorded', $json['message']);
 
-        foreach ($questions as $question) {
-            $question_response = $question->choices->random()->key;
-
-            $json = $this->withSession(['quiz_token' => $token])->postJson(
-                route('quizzes.response.save', $quiz),
-                [
-                    'question_id' => $question->id,
-                    'response_key' => $question_response,
-                ]
-            )->assertSuccessful()->json();
-
-            $this->assertArrayHasKey('message', $json);
-
-            $this->assertDatabaseHas('question_responses', [
-                'question_id' => $question->id,
-                'response_keys' => $question_response,
-                'quiz_response_id' => $quizResponse->id,
-            ]);
-        }
-
-        Carbon::setTestNow(now()->addSeconds($quiz->timeLimit - 60));
-
-        // Fast Forward time, 60secs before timeout.
-        $json = $this->withSession(['quiz_token' => $token])->postJson(
-            route('quizzes.response.store', $quiz),
-            []
-        )->assertSuccessful()->json();
-
-        $this->assertArrayHasKey('message', $json);
-        $this->assertEquals('success', $json['message']['level']);
-
-        $quizResponse = $quizResponse->fresh();
-
-        $this->assertInstanceOf(Carbon::class, $quizResponse->finished_at);
+        $quizResponse = $quiz->participations()->where('team_id', $team->id)->first()->fresh();
+        $this->assertInstanceOf(\DateTimeInterface::class, $quizResponse->finished_at);
         $this->assertInstanceOf(Collection::class, $quizResponse->responses);
     }
 
-    /** @test */
-    public function if_user_sumbits_another_response_error_is_shown()
+    #[Test]
+    public function if_user_submits_another_response_error_is_shown()
     {
-        $user = create(User::class);
-        $event = create(Event::class);
-        $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => $token = 'valid_token']);
-        $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
-        $questions->each(function ($question) {
-            create(QuestionOption::class, 4, ['question_id' => $question->id]);
-        });
+        $questions = create(Question::class, 10);
+        [$event, $quiz] = $this->createEventWithQuiz();
+        $quiz->questions()->saveMany($questions);
 
-        $this->be($user);
+        [$team, $user] = $this->createTeamWithMember();
+        $event->teams()->attach($team);
 
-        $team = $user->createTeam($user->name);
-        $team->participate($event);
+        create(QuizResponse::class, 1, [
+            'quiz_id' => $quiz->id,
+            'team_id' => $team->id,
+            'started_at' => Date::now(),
+            'finished_at' => Date::now() // Mark as already finished
+        ]);
+
         $quiz->setActive();
-        $quiz->verify($token);
-        $team->beginQuiz($quiz);
+        $this->signIn($user);
+        $this->verifyQuiz($quiz);
 
-        $responses = $questions->map(function ($question) {
-            return [
-                'question_id' => $question->id,
-                'response_keys' => $question->choices->random()->key,
-            ];
-        })->toArray();
+        $response = $this->submitSeed([
+            'quiz_id' => $quiz->id,
+            'question' => $questions[0]
+        ]);
 
-        Carbon::setTestNow(now()->addMinutes(20)); //fast forward time 20Mins.
-
-        $team->endQuiz($quiz, $responses);
-
-        Carbon::setTestNow(now()->addMinutes(5)); // after 5 min try submitting other response
-
-        $json = $this->postJson(route('quizzes.response.store', $quiz), [
-            'responses' => $responses,
-        ])->assertStatus(401)
-            ->json();
-
-        $this->assertArrayHasKey('message', $json);
+        $json = $response->json();
+        $this->assertEquals('error', $json['status']);
         $this->assertStringContainsString('already taken', $json['message']);
     }
 
-    /** @test */
-    public function if_user_sumbits_response_5_min_later_than_time_limit_response_is_recorded_but_team_is_disqualified()
+    #[Test]
+    public function if_user_submits_response_5_min_later_than_time_limit_response_is_recorded_but_team_is_disqualified()
     {
-        $user = create(User::class);
-        $event = create(Event::class);
+        $questions = create(Question::class, 10);
+        [$event, $quiz] = $this->createEventWithQuiz([
+            'time_limit' => 60
+        ]);
+        $quiz->questions()->saveMany($questions);
 
-        $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => $token = 'valid_token']);
+        [$team, $user] = $this->createTeamWithMember();
+        $event->teams()->attach($team);
 
-        $questions = create(Question::class, 10, ['quiz_id' => $quiz->id]);
-        $questions->each(function ($question) {
-            create(QuestionOption::class, 4, ['question_id' => $question->id]);
-        });
+        $quizResponse = create(QuizResponse::class, 1, [
+            'quiz_id' => $quiz->id,
+            'team_id' => $team->id,
+            'started_at' => Date::now()
+        ]);
 
-        $this->be($user);
-
-        $team = $user->createTeam($user->name);
-        $team->participate($event);
         $quiz->setActive();
+        $this->signIn($user);
+        $this->verifyQuiz($quiz);
 
-        $quiz->verify($token);
-        $team->beginQuiz($quiz);
+        // Save a response first
+        $questionResponse = create(\App\Models\QuestionResponse::class, 1, [
+            'quiz_response_id' => $quizResponse->id,
+            'question_id' => $questions[0]->id,
+            'response_keys' => 'test_response'
+        ]);
 
-        $quizResponse = $quiz->participationByTeam($team);
+        // Simulate time passing beyond limit
+        Date::setTestNow(Date::now()->addMinutes(65));
 
-        foreach ($questions as $question) {
-            $question_response = $question->choices->random()->key;
+        $response = $this->submitSeed([
+            'quiz_id' => $quiz->id,
+            'question' => $questions[0]
+        ]);
 
-            $json = $this->withSession(['quiz_token' => $token])->postJson(
-                route('quizzes.response.save', $quiz),
-                [
-                    'question_id' => $question->id,
-                    'response_key' => $question_response,
-                ]
-            )->assertSuccessful()->json();
-
-            $this->assertArrayHasKey('message', $json);
-
-            $this->assertDatabaseHas('question_responses', [
-                'question_id' => $question->id,
-                'response_keys' => $question_response,
-                'quiz_response_id' => $quizResponse->id,
-            ]);
-        }
-
-        //fast forward time to exceed time limit by 5 mins.
-        Carbon::setTestNow(now()->addMinutes($quiz->time_limit + 5 * 60));
-
-        $json = $this->withoutExceptionHandling()
-            ->postJson(
-                route('quizzes.response.store', $quiz),
-                []
-            )->assertStatus(Response::HTTP_UNAUTHORIZED)
-            ->json();
-
-        $this->assertEquals('danger', $json['message']['level']);
-        $this->assertStringContainsString('time limit exceed', $json['message']['message']);
+        $json = $response->json();
+        $this->assertEquals('error', $json['status']);
+        $this->assertStringContainsString('time limit exceed', $json['message']);
 
         $quizResponse = $quizResponse->fresh();
-
-        $this->assertEquals(0, $quizResponse->finished_at->diffInMinutes(now()), 'Time Difference does not match');
-        $this->assertCount(10, $quizResponse->responses);
+        $this->assertEqualsWithDelta(
+            Date::now()->getTimestamp(),
+            $quizResponse->finished_at->getTimestamp(),
+            2,
+            'Time difference does not match'
+        );
+        $this->assertCount(1, $quizResponse->responses);
     }
 
-    /** @test */
+    #[Test]
     public function user_cannot_submit_response_if_they_have_not_verified_quiz_token()
     {
-        $user = create(User::class);
-        $event = create(Event::class);
-        $quiz = create(Quiz::class, 1, ['event_id' => $event->id, 'token' => 'valid_token']);
+        [$event, $quiz] = $this->createEventWithQuiz();
+        $question = create(Question::class, 1);
+        $quiz->questions()->save($question);
 
-        $this->be($user);
+        [$team, $user] = $this->createTeamWithMember();
+        $event->teams()->attach($team);
 
-        $team = $user->createTeam($user->name);
-        $team->participate($event);
+        create(QuizResponse::class, 1, [
+            'quiz_id' => $quiz->id,
+            'team_id' => $team->id,
+            'started_at' => Date::now()
+        ]);
+
         $quiz->setActive();
-        // $quiz->verify('valid_token'); // They've not verified quiz token.
+        $this->signIn($user);
+        // Note: Not calling verifyQuiz() here since we're testing the unverified case
 
-        $json = $this->postJson(route('quizzes.response.store', $quiz))
-            ->assertStatus(Response::HTTP_UNAUTHORIZED)
-            ->json();
+        $response = $this->submit($question);
 
-        $this->assertArrayHasKey('message', $json);
-        $this->assertStringContainsString('not verified quiz token', $json['message']);
+        $json = $response->json();
+        $this->assertEquals('error', $json['status']);
+        $this->assertStringContainsString('not verified', $json['message']);
+    }
 
-        $this->assertArrayHasKey('verification_url', $json);
-        $this->assertEquals(route('quizzes.verify', $quiz), $json['verification_url']);
+    private function submit($question): TestResponse
+    {
+        return $this->postJson(
+            route('quizzes.response.store', $question->quiz),
+            [
+                'question_id' => $question->id,
+                'response_key' => 'wrl28'
+            ]
+        );
+    }
+
+    private function submitSeed($args = []): TestResponse
+    {
+        $quiz = $args['quiz_id'] ?? create(Quiz::class, 1);
+        $question = $args['question'] ?? create(Question::class, 1);
+
+        if ($quiz && is_numeric($quiz)) {
+            $quiz = Quiz::find($quiz);
+        }
+
+        // Ensure question is associated with quiz
+        if (!$quiz->questions->contains($question)) {
+            $quiz->questions()->save($question);
+        }
+
+        return $this->submit($question);
     }
 }

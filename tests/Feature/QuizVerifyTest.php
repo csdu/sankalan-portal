@@ -8,6 +8,7 @@ use App\Models\QuestionOption;
 use App\Models\Quiz;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class QuizVerifyTest extends TestCase

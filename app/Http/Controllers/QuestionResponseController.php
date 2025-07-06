@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\QuestionResponse;
 use App\Models\Quiz;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuestionResponseController extends Controller
@@ -20,30 +19,46 @@ class QuestionResponseController extends Controller
         if ($quiz->isTimeLimitExceeded($team)) {
             flash('Your time limit exceeded!')->error();
 
-            return $this->getJsonOrRedirect(Response::HTTP_UNAUTHORIZED);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Your time limit exceeded!'
+                ], Response::HTTP_FORBIDDEN);
+            }
+
+            return redirect()->back();
         }
 
         flash('Your response has been recorded! All The Best!')->success();
 
-        return $this->getJsonOrRedirect(Response::HTTP_ACCEPTED);
-    }
-
-    private function getJsonOrRedirect($status = 202)
-    {
-        if (! request()->expectsJson()) {
-            return redirect()->back();
+        if ($request->expectsJson()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Your response has been recorded! All The Best!'
+            ], Response::HTTP_OK);
         }
 
-        return response()->json([
-            'message' => Session::pull('flash_notification')->toArray()[0],
-        ], $status);
+        return redirect()->back();
     }
 
     public function saveQuestionResponse(Request $request, Quiz $quiz)
     {
         $team = $quiz->event->participatingTeamByUser(Auth::user());
-        $quizResponseId = $quiz->participationByTeam($team)->id;
 
+        if (!$quiz->isVerified()) {
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Quiz must be verified before submitting responses.'
+                ], Response::HTTP_FORBIDDEN);
+            }
+
+            flash('Quiz must be verified before submitting responses.')->error();
+            return redirect()->back();
+        }
+
+        $quizResponseId = $quiz->participationByTeam($team)->id;
         $questionId = $request->question_id;
         $responseKey = $request->response_key;
 
@@ -52,13 +67,19 @@ class QuestionResponseController extends Controller
             ['response_keys' => $responseKey]
         );
 
-        return response()->json([
-            'message' => 'Your response has been saved!',
-            'question_response' => [
-                'question_id' => $questionId,
-                'question_response_id' => $questionResponse->id,
-                'response_key' => $responseKey,
-            ],
-        ]);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Your response has been saved!',
+                'question_response' => [
+                    'question_id' => $questionId,
+                    'question_response_id' => $questionResponse->id,
+                    'response_key' => $responseKey,
+                ]
+            ]);
+        }
+
+        flash('Your response has been saved!')->success();
+        return redirect()->back();
     }
 }

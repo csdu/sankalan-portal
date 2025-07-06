@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
 
 class Event extends Model
 {
@@ -13,21 +14,24 @@ class Event extends Model
     /**
      * The attributes that are NOT mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $guarded = [];
 
     /**
-     * The attributes that are of DateTime type, mutated to instance of Carbon.
+     * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $dates = ['started_at', 'ended_at'];
+    protected $casts = [
+        'started_at' => 'datetime',
+        'ended_at' => 'datetime',
+    ];
 
     /**
      * The attributes that are appended for array.
      *
-     * @var array
+     * @var array<string>
      */
     protected $appends = ['isLive', 'hasEnded'];
 
@@ -99,51 +103,41 @@ class Event extends Model
             return true;
         }
 
-        return $this->update(['started_at' => now()]);
+        return $this->update([
+            'started_at' => Date::now(),
+        ]);
     }
 
     /**
-     * End this event (When the event gets over).
-     *
-     * @return bool
-     */
-    public function end()
-    {
-        if ($this->isLive) {
-            return $this->update(['ended_at' => now()]);
-        }
-
-        return false;
-    }
-
-    /**
-     * Accessor to access isLive attribute.
+     * Get is live attribute.
      *
      * @return bool
      */
     public function getIsLiveAttribute()
     {
-        return $this->hasStarted && !$this->hasEnded;
+        return !is_null($this->started_at) && is_null($this->ended_at);
     }
 
     /**
-     * Has the event started?
-     *
-     * @return bool
-     */
-    public function getHasStartedAttribute()
-    {
-        return (bool) $this->started_at;
-    }
-
-    /**
-     * Has the event ended?
+     * Get has ended attribute.
      *
      * @return bool
      */
     public function getHasEndedAttribute()
     {
-        return (bool) $this->ended_at;
+        return !is_null($this->ended_at);
+    }
+
+    /**
+     * End an event.
+     *
+     * @return bool
+     */
+    public function end()
+    {
+        return $this->update([
+            'ended_at' => Date::now(),
+        ]);
     }
 
     /**

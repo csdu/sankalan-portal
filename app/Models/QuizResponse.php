@@ -4,11 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
 
 /**
  * QuizResponse model represents the entity that defines
  * relation between team and quiz. If a team has participation
  * in a quiz, they are allowed to take quiz.
+ *
+ * @property \DateTimeInterface|null $started_at
+ * @property \DateTimeInterface|null $finished_at
  */
 class QuizResponse extends Model
 {
@@ -17,29 +21,32 @@ class QuizResponse extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $guarded = [];
 
     /**
      * The attributes that are appended for array.
      *
-     * @var array
+     * @var array<string>
      */
     protected $appends = ['timeLeft'];
 
     /**
-     * The attributes that have date type.
-     * i.e. they are mutated to instance of Carbon.
+     * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $dates = ['started_at', 'finished_at'];
+    protected $casts = [
+        'started_at' => 'datetime',
+        'finished_at' => 'datetime',
+        'score' => 'integer'
+    ];
 
     /**
      * All Responses for this quiz participation.
      *
-     * @return \Illuminate\Database\Eloquent\Relation\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function responses()
     {
@@ -49,7 +56,7 @@ class QuizResponse extends Model
     /**
      * Quiz associated with this quiz participation.
      *
-     * @return \Illuminate\Database\Eloquent\Relation\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function quiz()
     {
@@ -59,7 +66,7 @@ class QuizResponse extends Model
     /**
      * Team associated with this quiz participation.
      *
-     * @return \Illuminate\Database\Eloquent\Relation\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function team()
     {
@@ -69,7 +76,7 @@ class QuizResponse extends Model
     /**
      * Evaluate Score for this quiz participation.
      *
-     * @return int|bool
+     * @return int|false
      */
     public function evaluate()
     {
@@ -89,8 +96,12 @@ class QuizResponse extends Model
      */
     public function getTimeLeftAttribute()
     {
-        $time_spent = optional($this->started_at)->diffInSeconds(now(), false) ?? 0;
+        if (!$this->started_at) {
+            return $this->quiz->time_limit;
+        }
 
-        return $this->quiz->time_limit - $time_spent;
+        $time_spent = $this->started_at->diffInSeconds(Date::now());
+
+        return max(0, $this->quiz->time_limit - $time_spent);
     }
 }

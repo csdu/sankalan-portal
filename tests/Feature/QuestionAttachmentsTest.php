@@ -6,13 +6,14 @@ use App\Models\Question;
 use App\Models\QuestionAttachment;
 use App\Models\Quiz;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class QuestionAttachmentsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function user_can_not_see_question_attachment_if_quiz_has_not_started()
     {
         $questionAttachment = create(QuestionAttachment::class);
@@ -23,7 +24,7 @@ class QuestionAttachmentsTest extends TestCase
         $res->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function user_can_see_question_attachment_if_quiz_has_started()
     {
         $quiz = create(Quiz::class);

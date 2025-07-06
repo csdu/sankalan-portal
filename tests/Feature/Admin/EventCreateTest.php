@@ -3,13 +3,14 @@
 namespace Tests\Feature\Admin;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class EventCreateTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function admin_sees_create_form()
     {
         $this->withoutExceptionHandling()->signInAdmin();
@@ -17,7 +18,7 @@ class EventCreateTest extends TestCase
         $res->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_create_an_event()
     {
         $this->withoutExceptionHandling()->signInAdmin();

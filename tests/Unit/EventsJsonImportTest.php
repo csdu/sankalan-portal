@@ -5,13 +5,14 @@ namespace Tests\Unit;
 use App\Jobs\EventsJsonImport;
 use App\Models\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class EventsJsonImportTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function events_are_read_from_json_and_imported_to_database()
     {
         $jsonFilepath = base_path('tests/stubs/events.json');

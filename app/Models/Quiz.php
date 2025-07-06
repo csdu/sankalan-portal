@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Session;
 
 class Quiz extends Model
@@ -14,23 +15,27 @@ class Quiz extends Model
     /**
      * The attributes that are not mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $guarded = [];
 
     /**
      * The attributes that are appended for array.
      *
-     * @var array
+     * @var array<string>
      */
     protected $appends = ['isActive', 'isClosed'];
 
     /**
-     * The attributes that are of DateTime type, mutated to Carbon's instance.
+     * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $dates = ['closed_at', 'opened_at'];
+    protected $casts = [
+        'closed_at' => 'datetime',
+        'opened_at' => 'datetime',
+        'time_limit' => 'integer',
+    ];
 
     /**
      * Event to which the quiz belongs.
@@ -79,12 +84,19 @@ class Quiz extends Model
      */
     public function setActive()
     {
+        $now = Date::now();
         return $this->event->update([
-            'started_at' => $this->event->started_at ?? now(),
+            'started_at' => $this->event->started_at ?? $now,
             'active_quiz_id' => $this->id,
-        ]) && $this->update(['opened_at' => now()]);
+        ]) && $this->update(['opened_at' => $now]);
     }
 
+    /**
+     * Verify the quiz token.
+     *
+     * @param string $token
+     * @return bool
+     */
     public function verify(string $token)
     {
         if ($token != $this->token) {
@@ -204,29 +216,23 @@ class Quiz extends Model
     }
 
     /**
-     * Is Quiz Active?
+     * Get is active status.
      *
-     * @return bool|null
+     * @return bool
      */
     public function getIsActiveAttribute()
     {
-        if ($this->event_id === null) {
-            return;
-        }
-
-        return $this->id == $this->event->active_quiz_id
-            && $this->opened_at
-            && !$this->closed_at;
+        return !is_null($this->opened_at) && is_null($this->closed_at);
     }
 
     /**
-     * Is the quiz closed for participation?
+     * Get is closed status.
      *
      * @return bool
      */
     public function getIsClosedAttribute()
     {
-        return (bool) $this->closed_at;
+        return !is_null($this->closed_at);
     }
 
     /**

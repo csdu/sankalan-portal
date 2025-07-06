@@ -7,13 +7,14 @@ use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\QuizResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class SingleResponseScoreTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function multi_choice_questions_are_marked_according_to_questions_scheme()
     {
         $quiz = create(Quiz::class);
@@ -40,7 +41,7 @@ class SingleResponseScoreTest extends TestCase
         $this->assertEquals($question->positive_score, $correctResponse->score);
     }
 
-    /** @test */
+    #[Test]
     public function word_phrase_questions_are_marked_correctly_according_to_questions_scheme()
     {
         $quiz = create(Quiz::class);

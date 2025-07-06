@@ -26,9 +26,6 @@ app.component("markdown-editor", MarkdownEditor);
 app.component("markdown-preview", MarkdownPreview);
 app.component("question-type", QuestionType);
 
-const files = require.context('./pages/', true, /\.(vue|js)$/i);
-files.keys().map(key => app.component(key.split('/').pop().split('.')[0], files(key).default));
-
 window.flash = (message, level = 'success', important = false) => {
     eventBus.emit('flash', {
         id: Math.floor(Date.now()).toString(),
