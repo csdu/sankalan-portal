@@ -1,10 +1,10 @@
-<li class="px-6 py-3 hover:bg-grey-lighter" style="order: {{$event->isLive ? 0 : ($event->hasEnded ? 3 : 1)}};">
+    <li class="px-6 py-3 hover:bg-slate-100"style="order: {{$event->isLive ? 0 : ($event->hasEnded ? 3 : 1)}};">
     <div class="content flex-1 flex flex-col">
         <h3 class="text-lg mb-1 flex items-center">
-            <span>{{ $event->title }}</span> 
+            <span>{{ $event->title }}</span>
             @if($event->hasStarted || $event->hasEnded)
             <span
-                class="ml-1 w-2 h-2 inline-block rounded-full {{ $event->isLive ? 'bg-green-light' : 'bg-red' }}"></span>
+                class="ml-1 w-2 h-2 inline-block rounded-full {{ $event->isLive ? 'bg-emerald-400' : 'bg-red-500' }}"></span>
             @endif
         </h3>
         <p class="mb-1">
@@ -26,7 +26,7 @@
                 @csrf @method('delete')
                 <button class="btn is-red p-1 text-xs">Withdraw</button>
             </form>
-            @endif 
+            @endif
             @if($event->isLive && $quizzes_count && $event->activeQuiz)
                 @if (optional($event->activeQuiz->participationByTeam($team))->finished_at)
                     <p class="text-xs font-bold">Thank you for taking this quiz.</p>
@@ -35,7 +35,7 @@
                         @if (!!$event->activeQuiz->participationByTeam($team) && !$event->activeQuiz->participationByTeam($team)->finished_at)
                             Resume Quiz
                         @else
-                            Take Quiz                        
+                            Take Quiz
                         @endif
                     </a>
                 @endif

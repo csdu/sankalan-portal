@@ -5,14 +5,14 @@
     <div class="card-header">
         <div class="flex justify-between">
             <div class="flex">
-                <h2 class="text-xl font-normal">Question for <small class="text-blue">{{ $quiz->title }}</small></h2>
+                <h2 class="text-xl font-normal">Question for <small class="text-blue-500">{{ $quiz->title }}</small></h2>
                 <div>
                     @if ($quiz->isActive)
-                    <span class="p-1 ml-1 rounded bg-green text-white font-extralight text-xs uppercase leading-none">LIVE</span>
+                    <span class="p-1 ml-1 rounded bg-emerald-500 text-white font-extralight text-xs uppercase leading-none">LIVE</span>
                     @elseif($quiz->isClosed)
-                    <span class="p-1 ml-1 rounded bg-red text-white font-extralight text-xs uppercase leading-none">Closed</span>
+                    <span class="p-1 ml-1 rounded bg-red-500 text-white font-extralight text-xs uppercase leading-none">Closed</span>
                     @else
-                    <span class="p-1 ml-1 rounded bg-grey font-extralight text-xs uppercase leading-none">Offline</span>
+                    <span class="p-1 ml-1 rounded bg-slate-400 font-extralight text-xs uppercase leading-none">Offline</span>
                     @endif
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 <span class="text-sm font-normal">
                     Total Questions
                 </span>
-                <span class="px-2 py-1 rounded-full bg-blue text-white text-xs">{{ $quiz->questions()->count() }}</span>
+                <span class="px-2 py-1 rounded-full bg-blue-500 text-white text-xs">{{ $quiz->questions()->count() }}</span>
                 <span class="px-2"></span>
                 @unless ($quiz->isactive || $quiz->isClosed)
                 <a href="{{ route('admin.quizzes.questions.create', $quiz) }}" class="btn is-sm is-blue">Add new question</a>
@@ -31,17 +31,17 @@
     </div>
     <table class="w-full">
         <thead>
-            <tr class="bg-grey-light">
+            <tr class="bg-slate-100">
                 <th class="text-xs uppercase font-light text-left pl-6 py-2">Qno.</th>
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Question</th>
                 <th class="text-xs uppercase font-light text-left px-4 py-2">Positive Score</th>
-                <th class="text-xs uppercase font-light text-left px-4 py-2">Negative Score</th>
-                <th class="text-xs uppercase font-light text-center pr-6 py-2">Action(s)</th>
+                <th class="text-xs uppercase text-left px-4 py-2">Negative Score</th>
+                <th class="text-xs uppercase text-center pr-6 py-2">Action(s)</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($quiz->questions as $question)
-            <tr class="border-t hover:bg-grey-lighter">
+            <tr class="border-t border-slate-200 hover:bg-slate-50">
                 <td class="text-center pl-6 py-2">
                     {{ $question->qno }}
                 </td>
@@ -71,7 +71,7 @@
         </tbody>
     </table>
     <div class="card-footer">
-        <p class="text-center text-grey-dark">That's all folks!</p>
+        <p class="text-center text-slate-600">That's all folks!</p>
     </div>
 </div>
 @endsection

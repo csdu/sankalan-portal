@@ -7,18 +7,16 @@
         @stack('meta')
 
         <title> @yield('title'){{ config('app.name') }} </title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-        @stack('stylesheets')
         @routes
     </head>
-    <body class="font-sans text-black leading-tight bg-grey-lighter">
+    <body class="font-sans text-black leading-tight bg-slate-100">
         <div id="app" class="min-h-screen flex flex-col">
             @yield('body')
-        </div>        
-        <script src="{{ mix('js/app.js') }}"></script>
-        @stack('scripts')
+        </div>
     </body>
 </html>

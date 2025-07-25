@@ -8,8 +8,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title'){{ config('app.name', 'Laravel') }}</title>
-
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 
     <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicon/apple-icon-60x60.png') }}" />
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon/apple-icon-72x72.png') }}" />
@@ -22,12 +23,12 @@
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon/favicon-96x96.png') }}" />
 
     <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     @routes
     <style>
         body {
-            background-color: #f1f5f8;
+            background-color: var(--color-grey-lighter);
             background-image: url("{{ asset('/svg/circuit-bg.svg') }}");
         }
         body::before {
@@ -43,23 +44,22 @@
             opacity: .3;
             transform: translate(-50%, -50%);
         }
-        body::after { 
-            content: ''; 
-            background-image: url("{{ asset('/svg/logo.svg') }}"); 
+        body::after {
+            content: '';
+            background-image: url("{{ asset('/svg/logo.svg') }}");
             width: calc(30vw + 30vh);
             height: calc(30vw + 30vh);
             background-size: calc(30vw + 30vh);
-            position: fixed; 
-            right: 0; 
-            bottom: 0; 
-            z-index: -10; 
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            z-index: -10;
             opacity: .2;
-            transform: translate(25%, 25%); 
+            transform: translate(25%, 25%);
         }
     </style>
-    <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
-<body class="font-sans bg-grey-lighter text-black">
+<body class="font-sans bg-slate-100 text-black">
     <div id="app" class="min-h-screen flex flex-col">
         @include('partials.navigation')
         <main class="flex flex-col flex-1">

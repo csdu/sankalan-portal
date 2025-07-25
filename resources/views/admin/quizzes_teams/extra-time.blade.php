@@ -6,8 +6,8 @@
         <div class="flex justify-between">
             <div class="flex">
                 <h2 class="text-xl font-normal">
-                    Extra Time to <small class="text-blue">{{ $quiz_team->team->name }}</small>
-                    for <small class="text-blue">{{ $quiz_team->quiz->title }}</small>
+                    Extra Time to <small class="text-blue-500">{{ $quiz_team->team->name }}</small>
+                    for <small class="text-blue-500">{{ $quiz_team->quiz->title }}</small>
                 </h2>
             </div>
         </div>

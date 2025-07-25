@@ -6,8 +6,8 @@
         <div class="card">
             <h2 class="card-header">
                 {{ __('Login') }}
-                <span class="text-xs text-grey-dark mx-1">or</span>
-                <a class="text-sm uppercase text-blue" href="{{ route('register') }}">Register</a>
+                <span class="text-xs text-slate-600 mx-1">or</span>
+                <a class="text-sm uppercase text-blue-500" href="{{ route('register') }}">Register</a>
             </h2>
 
             <form method="POST" action="{{ route('login') }}" class="card-content">
@@ -15,7 +15,7 @@
                 <div class="mb-3">
                     <input type="email" placeholder="Email" class="control{{ $errors->has('email') ? ' border-red' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
                     @if ($errors->has('email'))
-                    <span class="text-red mt-1" role="alert">
+                    <span class="text-red-500 mt-1" role="alert">
                         <strong>{{ $errors->first('email') }}</strong>
                     </span>
                     @endif
@@ -25,7 +25,7 @@
                     <input type="password" placeholder="Password" class="control{{ $errors->has('password') ? ' border-red' : '' }}" name="password" required>
 
                     @if ($errors->has('password'))
-                    <span class="text-red mt-1" role="alert">
+                    <span class="text-red-500 mt-1" role="alert">
                         <strong>{{ $errors->first('password') }}</strong>
                     </span>
                     @endif

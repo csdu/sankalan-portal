@@ -18,7 +18,7 @@
                     @endforeach
                 </ol>
                 @else
-                    <p class="py-2 text-center text-grey-dark">No Instructions provided</p>
+                    <p class="py-2 text-center text-slate-600">No Instructions provided</p>
                 @endif
             </div>
         </div>
@@ -32,15 +32,15 @@
                 <ul class="text-base leading-normal mb-4">
                     <li class="py-1">Your responses are saved when you navigate to other questions, do not click <button class="btn is-green is-sm">submit</button> or press <kbd class="p-1 bg-black text-white rounded text-xs">&crarr; Enter</kbd>, unless you want to finally submit.</li>
                 </ul>
-                
+
                 <h4 class="mb-2">Mouse Controls</h4>
                 <ul class="text-base leading-normal mb-4">
                     <li class="py-1">Use mouse cursor to highlight option.</li>
                     <li class="py-1">
-                        Left Click with mouse to select or unselect the option. 
+                        Left Click with mouse to select or unselect the option.
                         Once you select the option your response is automatically saved,
                         you can proceed to next question.
-                        Make sure you <span class="text-red">do not reload the browser</span>,
+                        Make sure you <span class="text-red-500">do not reload the browser</span>,
                         you will lose all of your progress, no extra time will be provided in that case.
                     </li>
                     <li class="py-1">
@@ -54,10 +54,10 @@
                 <ul class="text-base leading-normal">
                     <li class="py-1">Use <kbd class="p-1 text-xs bg-black text-white rounded">&uarr; Up</kbd> and <kbd class="p-1 text-xs bg-black text-white rounded">&darr; Down</kbd> keys to highlight option.</li>
                     <li class="py-1">
-                        Use <kbd class="p-1 text-xs bg-black text-white rounded">Space</kbd> to select or unselect the option. 
+                        Use <kbd class="p-1 text-xs bg-black text-white rounded">Space</kbd> to select or unselect the option.
                         Once you select the option your response is automatically saved,
                         you can proceed to next question.
-                        Make sure you <span class="text-red">do not reload the browser</span>,
+                        Make sure you <span class="text-red-500">do not reload the browser</span>,
                         you will lose all of your progress, no extra time will be provided in that case.
                     </li>
                     <li class="py-1">
@@ -74,7 +74,7 @@
             @if ($quiz->started_at)
                 Continue Quiz
             @else
-                Go For Quiz                    
+                Go For Quiz
             @endif
         </a>
     </div>
